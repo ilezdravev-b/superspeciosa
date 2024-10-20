@@ -82,7 +82,7 @@
 	{% endcomment %}
 
 
-	<div class="product__details{% if image_count == 0 %} product__details--no-image{% endif %}" style="max-width: 100vw; width: 100%;">
+	<div class="product__details{% if image_count == 0 %} product__details--no-image{% endif %}">
         {%  assign reviews_rating =  product.metafields.reviews.rating.value %}
         {%  assign review_rating_count =  product.metafields.reviews.rating_count %}
         {% if reviews_rating != blank and review_rating_count != blank %}

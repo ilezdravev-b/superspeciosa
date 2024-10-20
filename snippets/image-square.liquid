@@ -1,23 +1,3 @@
-<!-- snippets/image-square.liquid -->
-
-{%- comment -%}
-    Required:
-        image               {Object}   - Use this with the Shopify image object. This is the only required variable.
-
-    Optional:
-		initial_size        {String}   - Value for the "sizes" attribute. Only necessary if loading eagerly.
-        alt                 {String}   - The image alt. Defaults to the image object alt.
-        load                {String}   - How to load the image. Value can be "lazy" or "eager". Defaults to lazy if no value is provided.
-        class               {String}   - Classes for the image, separated by spaces. Note that "class=''" doesn't need to be included, as it's included here.
-        data                {String}   - Data attributes (or any image attributes such as ID). Note that the entire data attribute should be passed. Multiples can be passed, separated by spaces.
-        picture_class       {String}   - Classes to be added to the container of the image
-        picture_data        {String}   - Data to be added to the container of the image
-{%- endcomment -%}
-
-{%- comment -%}
-    Initial Variables
-{%- endcomment -%}
-
 {%- liquid 
 	assign image = image.value | default: image
 	assign load = load | default: 'lazy'
@@ -39,7 +19,6 @@
     Image Markup
 {%- endcomment -%}
 
-
 {%- if image == blank -%}
 	{{ 'image' | placeholder_svg_tag: 'shopify-placeholder' }}
 {%- else -%}
@@ -47,36 +26,21 @@
 	<picture data-image-load="{{ load }}" class="media-image media-square {{ loadedClass }} {{ picture_class }}" {{ picture_data }}>
 
 		<source sizes="{{ initial_size | default: '1px' }}"
-
-		{{ prefix }}srcset="{{ image | image_url: width: 1, height: 1 }} 10w,
-		{{ image | image_url: width: 180, height: 180 }} 180w,
-		{{ image | image_url: width: 360, height: 360 }} 360w,
-		{{ image | image_url: width: 540, height: 540 }} 540w,
-		{{ image | image_url: width: 720, height: 720 }} 720w,
-		{{ image | image_url: width: 900, height: 900 }} 900w,
-		{{ image | image_url: width: 1080, height: 1080 }} 1080w, 
-		{{ image | image_url: width: 1296, height: 1296 }} 1296w,
-		{{ image | image_url: width: 1512, height: 1512 }} 1512w,
-		{{ image | image_url: width: 1728, height: 1728 }} 1728w,
-		{{ image | image_url: width: 1944, height: 1944 }} 1944w,
-		{{ image | image_url: width: 2160, height: 2160 }} 2160w,
-		{{ image | image_url: width: 2376, height: 2376 }} 2376w,
-		{{ image | image_url: width: 2592, height: 2592 }} 2592w,
-		{{ image | image_url: width: 2808, height: 2808 }} 2808w,
-		{{ image | image_url: width: 3024, height: 3024 }} 3024w">
+		{{ prefix }}srcset="{{ image | image_url: width: 720, height: 720 }} 720w,
+		{{ image | image_url: width: 1080, height: 1080 }} 1080w">
 
 		<img width="{{ image.width }}" height="{{ image.height }}"
 			alt="{{ alt | strip_html | default: image.alt }}"
-			class="{{ class }}"
+			class="{{ class }} aspect-image"
 			{{ data }}
 			{{ native_load }}
 			{{ style }}
 			onclick="window.EventBus.emit('picture:preview', '{{ image | image_url }}')"
 			data-original-image="{{ image | image_url }}"
 			src="data:image/svg+xml;charset=utf8,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%3E%3C/svg%3E"
+			loading="lazy"
 			loading="eager"
-			preload="true">
+			style="display: block; width: 100%; height: auto;">
 
 	</picture>
-
 {%- endif -%}

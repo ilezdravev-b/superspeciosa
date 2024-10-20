@@ -26,9 +26,8 @@
     }
   </style>
   
-  <skio-plan-picker key='{{ product.id }}'
-    options='{
-      &quot;form_id&quot;: &quot;product_form_{{ product.id }}&quot;,
+  <skio-plan-picker style="max-width: 100vw; width: 100%;" key='{{ product.id }}'
+      &quot;: &quot;product_form_{{ product.id }}&quot;,
       &quot;external_price_selector&quot;: &quot;.product__price__prices .js-price&quot;,
       &quot;button_add_to_cart_selector&quot;: &quot;.js-add-to-cart&quot;,
       &quot;show_without_subscription&quot;: false,
@@ -69,7 +68,6 @@
       &quot;freeShipping&quot;:&quot;{{section.settings.free_shipping}}&quot;,
       &quot;exclusiveDiscount&quot;:&quot;{{section.settings.exclusive_discounts}}&quot;,
       &quot;update&quot;:&quot;{{section.settings.update}}&quot;
-    }'
     layout='vertical' productHandle='{{ product.handle }}' product='{{ product | json | escape }}'
     selectedVariant='{{ product.selected_or_first_available_variant | json | escape }}'
     >

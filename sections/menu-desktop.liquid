@@ -1,0 +1,119 @@
+<!-- sections/menu-desktop.liquid -->
+
+{%- liquid 
+	assign data = section.settings 
+	assign desktop_link_count = data.menu_desktop.links.size
+	assign half_index = desktop_link_count | divided_by: 2
+-%}
+
+
+
+<mega-menu data-overlay="underHeaderOverlay">
+	<nav aria-label="Desktop" class="menu-desktop__nav">
+		<ul class="menu-desktop__list" aria-label="Navigation">
+
+			{%- for first_level in data.menu_desktop.links -%}
+				{% liquid
+					assign first_level_index = forloop.index
+				%}
+
+				<li class="js-megamenu-parent menu-desktop__item">
+					{%- if first_level.levels == 0 -%}
+						{% comment %}
+							First-Level Link Without Children
+						{% endcomment %}
+
+						<a class="menu-desktop__item-level-one" href="{{ first_level.url }}" data-title="{{ first_level.title }}">
+							{{ first_level.title }}
+						</a>
+
+					{%- else -%}
+						{% comment %}
+							First-Level Link With Children
+						{% endcomment %}
+
+						{%- liquid 
+							if forloop.index > half_index 
+								assign reverse_flyout = true
+							else 
+								assign reverse_flyout = false
+							endif 	
+						-%}
+
+						<button type="button" class="menu-desktop__item-level-one has-dropdown js-megamenu-btn"
+							aria-expanded="false" aria-haspopup="menu" aria-controls="desktopDropdown{{ first_level_index }}"
+							data-title="{{ first_level.title }}" data-url="{{ first_level.url }}">
+							{{ first_level.title }}
+							
+							<span class="e-n-menu-dropdown-icon-closed">
+								<svg aria-hidden="true" class="e-font-icon-svg e-fas-chevron-down" viewBox="0 0 448 512" xmlns="http://www.w3.org/2000/svg" style="
+										width: 16px;
+									">
+									<path d="M207.029 381.476L12.686 187.132c-9.373-9.373-9.373-24.569 0-33.941l22.667-22.667c9.357-9.357 24.522-9.375 33.901-.04L224 284.505l154.745-154.021c9.379-9.335 24.544-9.317 33.901.04l22.667 22.667c9.373 9.373 9.373 24.569 0 33.941L240.971 381.476c-9.373 9.372-24.569 9.372-33.942 0z"></path>
+								</svg>
+							</span>
+							<span class="e-n-menu-dropdown-icon-opened">
+								<svg aria-hidden="true" class="e-font-icon-svg e-fas-chevron-up" viewBox="0 0 448 512" xmlns="http://www.w3.org/2000/svg" style="
+									width: 16px;
+								">
+									<path d="M240.971 130.524l194.343 194.343c9.373 9.373 9.373 24.569 0 33.941l-22.667 22.667c-9.357 9.357-24.522 9.375-33.901.04L224 227.495 69.255 381.516c-9.379 9.335-24.544 9.317-33.901-.04l-22.667-22.667c-9.373-9.373-9.373-24.569 0-33.941L207.03 130.525c9.372-9.373 24.568-9.373 33.941-.001z"></path>
+								</svg>
+							</span>
+						</button>
+
+						{% render 'menu-desktop-dropdown', first_level: first_level, first_level_index: first_level_index, reverse_flyout: reverse_flyout %}
+
+					{%- endif -%}
+				</li>
+			{%- endfor -%}
+
+		</ul>
+	</nav>
+</mega-menu>
+
+{% schema %}
+{
+	"name": "Desktop Menu",
+	"class": "menu-desktop desktop-up",
+	"settings": [
+		{
+			"type": "header",
+			"content": "Navigation"
+		},
+		{
+			"type": "link_list",
+			"id": "menu_desktop",
+			"label": "Menu",
+			"default": "main-menu"
+		}
+	],
+	"blocks": [
+		{
+			"type": "menu_links",
+			"name" : "Menu Links",
+			"settings": [
+				{
+					"type" : "image_picker",
+					"id": "image",
+					"label": "Image"
+				},
+				{
+					"type": "text",
+					"id": "parent_title",
+					"label": "Parent Title"
+				},
+				{
+					"type": "text",
+					"id": "title",
+					"label": "Title"
+				},
+				{
+					"type": "url",
+					"id": "link",
+					"label" : "Link"
+				}
+			]
+		}
+	]
+}
+{% endschema %}

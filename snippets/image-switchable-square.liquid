@@ -1,0 +1,106 @@
+<!-- snippets/image-switchable-square.liquid -->
+
+{%- comment -%}
+    Required:
+        image               {Object}   - Use this with the Shopify image object. This is the only required variable.
+        image_large         {Object}   - If provided, this image will be shown on large devices and image will be shown on small.
+
+    Optional:
+		initial_size        {String}   - Value for the "sizes" attribute. Only necessary if loading eagerly.
+        alt                 {String}   - The image alt. Defaults to the image object alt.
+        load                {String}   - How to load the image. Value can be "lazy", "eager" or "interaction". Defaults to lazy if no value is provided.
+        class               {String}   - Classes for the image, separated by spaces. Note that "class=''" doesn't need to be included, as it's included here.
+        data                {String}   - Data attributes (or any image attributes such as ID). Note that the entire data attribute should be passed. Multiples can be passed, separated by spaces.
+        picture_class       {String}   - Classes to be added to the container of the image
+        picture_data        {String}   - Data to be added to the container of the image
+{%- endcomment -%}
+
+{%- comment -%}
+    Initial Variables
+{%- endcomment -%}
+
+{%- liquid 
+	assign image = image.value | default: image
+	assign image_large = image_large | default: image_large.value | default: image
+	assign load = load | default: 'lazy'
+	assign initial_size = initial_size | default: '1px'
+	assign id = image.id | append: image_large.id
+
+	if load != 'eager'
+		assign prefix = 'data-'
+	else 
+		assign loadedClass = 'loaded'
+		assign native_load = "loading='eager'"
+	endif
+%}
+
+{%- comment -%}
+    Focal Point Inline Styling
+{%- endcomment -%}
+
+{%- style -%}
+	.image-{{ id }} {
+		object-position: {{ image.presentation.focal_point | default: 'center' }};
+	}
+	@media (min-width: 52rem) {
+		.image-{{ id }} {
+			object-position: {{ image_large.presentation.focal_point | default: 'center' }};
+		}
+	}
+{%- endstyle -%}
+
+{%- comment -%}
+    Image Markup
+{%- endcomment -%}
+
+{%- if image == blank -%}
+	{{ 'image' | placeholder_svg_tag: 'shopify-placeholder' }}
+{%- else -%}
+
+	<picture data-image-load="{{ load }}" class="media-image media-square {{ loadedClass }} {{ picture_class }}" {{ picture_data }}>
+
+		{%- comment -%}
+			Desktop Image
+		{%- endcomment -%}
+
+		<source media="(min-width: 52rem)" sizes="{{ initial_size }}"
+		{{ prefix }}srcset="{{ image_large | image_url: width: 1, height: 1 }} 10w,
+		{{ image_large | image_url: width: 769, height: 769 }} 769w,
+		{{ image_large | image_url: width: 900, height: 900 }} 900w,
+		{{ image_large | image_url: width: 1080, height: 1080 }} 1080w, 
+		{{ image_large | image_url: width: 1296, height: 1296 }} 1296w,
+		{{ image_large | image_url: width: 1512, height: 1512 }} 1512w,
+		{{ image_large | image_url: width: 1728, height: 1728 }} 1728w,
+		{{ image_large | image_url: width: 1944, height: 1944 }} 1944w,
+		{{ image_large | image_url: width: 2160, height: 2160 }} 2160w,
+		{{ image_large | image_url: width: 2376, height: 2376 }} 2376w,
+		{{ image_large | image_url: width: 2592, height: 2592 }} 2592w,
+		{{ image_large | image_url: width: 2808, height: 2808 }} 2808w,
+		{{ image_large | image_url: width: 3024, height: 3024 }} 3024w">
+
+		{%- comment -%}
+			Mobile/Tablet Image
+		{%- endcomment -%}
+
+		<source sizes="{{ initial_size }}"
+		{{ prefix }}srcset="{{ image | image_url: width: 1, height: 1 }} 10w,
+		{{ image | image_url: width: 180, height: 180 }} 180w,
+		{{ image | image_url: width: 360, height: 360 }} 360w,
+		{{ image | image_url: width: 540, height: 540 }} 540w,
+		{{ image | image_url: width: 720, height: 720 }} 720w,
+		{{ image | image_url: width: 900, height: 900 }} 900w,
+		{{ image | image_url: width: 1080, height: 1080 }} 1080w,
+		{{ image | image_url: width: 1296, height: 1296 }} 1296w">
+
+		<img width="{{ image.width }}" height="{{ image.height }}"
+			alt="{{ alt | strip_html | default: image.alt }}"
+			class="{{ class }} image-{{ id }}"
+			{{ data }}
+			{{ native_load }}
+
+			data-original-image="{{ image | image_url }}"
+			src="data:image/svg+xml;charset=utf8,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%3E%3C/svg%3E">
+
+	</picture>
+
+{%- endif -%}

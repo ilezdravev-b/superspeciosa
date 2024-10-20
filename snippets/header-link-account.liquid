@@ -1,0 +1,23 @@
+
+
+<!-- snippets/header-link-account.liquid -->
+
+{% comment %}
+	Required:
+		nothing
+{% endcomment %}
+
+{% liquid 
+	if customer
+		assign link = routes.account_url
+		assign text = 'customer.account.title' | t
+	else 
+		assign link = routes.account_login_url 
+		assign text = 'customer.log_in' | t 
+	endif
+%}
+
+<a href="{{ link }}" class="btn btn--icon" aria-label="My Account">
+	{% render 'icon-account', class: 'icon' %}
+	<span class="sr-only">{{ text }}</span>
+</a>

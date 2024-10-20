@@ -1,0 +1,138 @@
+
+{% style %}
+    .section-wrapper {
+        margin-top: {{ section.settings.padding_top }}px;
+        margin-bottom: {{ section.settings.padding_bottom }}px;
+        background-image:url('{{ section.settings.bg_img.src | img_url: 'master' }}');
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+    }
+    @media(max-width: 768px) {
+        .section-wrapper {
+            margin-top: {{ section.settings.m_padding_top }}px;
+            margin-bottom: {{ section.settings.m_padding_bottom }}px;
+        }
+    }
+
+{% endstyle %}
+
+{{ 'featured-quality.css' | asset_url | stylesheet_tag }}
+
+<div class="section-wrapper">
+    <div class="featured-quality-wrapper container">
+        <div class="featured-quality-text">
+            <h2>{{ section.settings.title }}</h2>
+            <div class="section-content">
+                <span>{{ section.settings.content_fomer }}</span><a href="{{ section.settings.link }}"> {{ section.settings.text_link }} </a><span>{{ section.settings.content_later }}</span>
+            </div>
+            <div class="section-button">
+                <a href="{{ section.settings.btn_link }}">
+                    <span>{{ section.settings.btn_title }}</span>
+                </a>
+            </div>
+        </div>
+        <div class="featured-quality-image">
+            <img src="{{ section.settings.image | img_url: 'medium' }}" alt="image" width="{{ section.settings.image.width }}" height="{{ section.settings.image.height }}"> 
+        </div>
+    </div>
+</div>
+
+
+{% schema %}
+    {
+        "name": "Featured Quality Section",
+        "settings": [
+            {
+              "type": "text",
+              "id": "title",
+              "label": "Title"
+            },
+            {
+              "type": "text",
+              "id": "content_fomer",
+              "label": "Content"
+            },
+            {
+              "type": "text",
+              "id": "content_later",
+              "label": "Content"
+            },
+            {
+            "type": "text",
+            "id": "text_link",
+            "label": "Link text"
+            },
+            {
+              "type": "url",
+              "id": "link",
+              "label": "Link"
+            },
+            {
+              "type": "text",
+              "id": "btn_title",
+              "label": "Button title"
+            },
+            {
+              "type": "url",
+              "id": "btn_link",
+              "label": "Link for Button"
+            },
+            {
+              "type": "image_picker",
+              "id": "image",
+              "label": "Section Image"
+            },
+            {
+              "type": "image_picker",
+              "id": "bg_img",
+              "label": "Background image"
+            },
+            {
+              "type": "range",
+              "id": "padding_top",
+              "min": 0,
+              "max": 100,
+              "step": 10,
+              "unit": "px",
+              "label": "Padding top",
+              "default": 60
+            },
+            {
+              "type": "range",
+              "id": "padding_bottom",
+              "min": 0,
+              "max": 100,
+              "step": 10,
+              "unit": "px",
+              "label": "Padding bottom",
+              "default": 60
+            },
+            {
+              "type": "range",
+              "id": "m_padding_top",
+              "min": 0,
+              "max": 80,
+              "step": 10,
+              "unit": "px",
+              "label": "Mobile padding top",
+              "default": 40
+            },
+            {
+              "type": "range",
+              "id": "m_padding_bottom",
+              "min": 0,
+              "max": 80,
+              "step": 10,
+              "unit": "px",
+              "label": "Mobile padding bottom",
+              "default": 40
+            }
+        ],
+        "presets":[
+            {
+                "name":"Featured Quality Section"
+            }
+        ]
+    }
+{% endschema %}

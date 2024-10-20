@@ -1,0 +1,87 @@
+<!-- snippets/footer-navigation.liquid -->
+
+{% comment %}
+	Required:
+		blocks {Object} The section blocks object
+{% endcomment %}
+
+<nav aria-label="Footer">
+				
+	<ul class="footer__nav-list" aria-label="Footer Links">
+
+		{%- for block in blocks -%}
+			{%- assign block_data = block.settings -%}
+
+			{%- if block.type == "navigation" -%}
+				{%- assign menu = linklists[block_data.menu] -%}
+				{%- assign title = block_data.title | default: menu.title -%}
+
+				{% comment %}
+					Individual Nav Column
+				{% endcomment %}
+
+				<li class="footer__nav-menu js-accordion-parent"> 
+
+					{% comment %}
+						Desktop Title
+					{% endcomment %}
+
+					<h2 class="accordion__heading tablet-lg-up" id="footerMenuHeading{{ forloop.index }}">
+						<div class="footer__menu-title">
+							{{ title }}
+						</div>
+					</h2>
+
+					{% comment %}
+						Mobile Accordion Button
+					{% endcomment %}
+
+					<button type="button" class="js-accordion-btn accordion__btn footer__menu-title tablet-sm-down" aria-expanded="false" aria-controls="footerMenu{{ forloop.index }}">
+						{{ title }}
+
+						<span class="accordion__icon"></span>
+					</button>
+
+					<ul class="accordion__content footer__menu" id="footerMenu{{ forloop.index }}" aria-labelledby="footerMenuHeading{{ forloop.index }}">
+						{%- for link in menu.links -%}
+							<li>
+								<a class="footer__menu-link" href="{{ link.url }}">{{ link.title }}</a>
+							</li>
+						{%- endfor -%}
+					</ul>
+
+				</li>
+			
+			{%- elsif block.type == "sitewide_reviews" -%}
+				{%- liquid 
+					assign number_of_stars = block_data.number_of_stars 
+					assign text = block_data.title
+					assign cta_url = block_data.cta_url
+					assign cta_text = block_data.cta_text
+				-%}
+
+				<li class="footer-reviews">
+					<div class="footer-reviews__stars">
+						{%- for num in (1..number_of_stars) -%}
+							{% render "icon-star" %}
+						{%- endfor -%}
+					</div>
+
+					{%- if text != blank -%}
+						<div class="footer-reviews__info">
+							{{ text }}
+						</div>
+					{%- endif -%}
+
+					{%- if cta_url != blank and cta_text != blank -%}
+						<a href="{{ cta_url }}"
+							class="footer-reviews__cta">
+							{{ cta_text }}
+						</a>
+					{%- endif -%}
+				</li>
+			{%- endif -%}
+		{% endfor %}
+
+	</ul>
+</nav>

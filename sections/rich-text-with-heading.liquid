@@ -1,0 +1,252 @@
+<div class="heading-text-wrapper section-{{ section.id }}">
+  <div class="{% if section.settings.enable_full %}full-page-width{% else %}{% if section.settings.narrow_width %}page-narrow-width page-width{% else %}page-width{% endif %}{% endif %}">
+    <div class="rich-text-content">
+      {% if section.settings.heading != blank %}
+        <h2 class="heading">{{ section.settings.heading }}</h2>
+      {% endif %}
+    </div>
+    {% for block in section.blocks %}
+    <div class="img-text-flex dir-{{ block.settings.alignment }}">
+      {% if block.settings.heading_side != blank %}
+      <div class="heading-side">
+        <h2>{{ block.settings.heading_side }}</h2>
+      </div>
+      {% endif %}
+      {% if block.settings.content != blank %}
+      <div class="text-side">
+        {{ block.settings.content }}
+      </div>
+      {% endif %}
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
+<style>
+.section-{{ section.id }} {
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+    background-color: {{ section.settings.bg_color }};
+}
+@media (max-width: 749px) {
+  .section-{{ section.id }} {
+    padding-top: {{ section.settings.padding_top_mobile }}px;
+    padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
+  }
+}
+</style>
+
+{% schema %}
+  {
+    "name": "Rich Text With Heading",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Header"
+      },
+      {
+        "type": "text",
+        "id": "heading",
+        "label": "Heading"
+      },
+      {
+        "type": "header",
+        "content": "Layout"
+      },
+      {
+        "type": "range",
+        "id": "padding_top",
+        "label": "Top Spacing",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "default": 20,
+        "unit": "px"
+      },
+      {
+        "type": "range",
+        "id": "padding_bottom",
+        "label": "Bottom Spacing",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "default": 20,
+        "unit": "px"
+      },
+      {
+        "type": "color",
+        "id": "bg_color",
+        "label": "Background Color"
+      },
+      {
+        "type": "range",
+        "id": "padding_top_mobile",
+        "label": "Top Spacing Mobile",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "default": 10,
+        "unit": "px"
+      },
+      {
+        "type": "range",
+        "id": "padding_bottom_mobile",
+        "label": "Bottom Spacing Mobile",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "default": 10,
+        "unit": "px"
+      },
+      {
+        "type": "checkbox",
+        "id": "narrow_width",
+        "label": "Narrow Width",
+        "default": false
+      },
+      {
+        "type": "checkbox",
+        "id": "enable_full",
+        "default": false,
+        "label": "Enable Full Width"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "block",
+        "name": "Block",
+        "settings": [
+          {
+            "type": "header",
+            "content": "Heading With Text"
+          },
+          {
+            "type": "select",
+            "id": "alignment",
+            "label": "Content Alignment",
+            "options": [
+              {
+                "value": "left",
+                "label": "Left"
+              },
+              {
+                "value": "right",
+                "label": "Right"
+              }
+            ],
+            "default": "left"
+          },
+          {
+            "type": "text",
+            "id": "heading_side",
+            "label": "Heading"
+          },
+          {
+            "type": "richtext",
+            "id": "content",
+            "label": "Content"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Rich Text With Heading"
+      }
+    ]
+  }
+{% endschema %}
+
+<style>
+.heading-text-wrapper .page-width {
+    max-width: 1140px;
+    margin: auto;
+    padding: 10px;
+}
+.heading-text-wrapper .rich-text-content h2.heading {
+    font-size: 35px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    color: #231f20;
+    margin: 0 0 20px;
+    word-spacing: 3px;
+    line-height: 35px;
+    text-align: left;
+    font-family: 'Dilemma', sans-serif;
+}
+.heading-text-wrapper .img-text-flex {
+    display: flex;
+    min-height: 600px;
+}
+.heading-text-wrapper  .media-side {
+    width: 100%;
+    max-width: 350px;
+    padding: 10px;
+}
+.heading-text-wrapper .media-side img {
+    display: block;
+    width: 100%;
+}
+.heading-text-wrapper .text-side p {
+    margin: 0 0 15px;
+}
+.heading-text-wrapper .text-side p a {
+    color: #8ab83f;
+}
+.heading-text-wrapper .text-side p a:hover {
+    color: currentColor;
+}
+.heading-text-wrapper .img-text-flex .heading-side, .heading-text-wrapper .text-side {
+    width: 100%;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    max-width: 50%;
+}
+.heading-text-wrapper .img-text-flex .heading-side {
+    background: #212c1c;
+}
+.heading-text-wrapper .img-text-flex .heading-side h2 {
+    margin: 0;
+    color: #f4f1de;
+    font-size: 35px;
+    line-height: 35px;
+    font-weight: 700;
+    font-family: 'Dilemma', sans-serif;
+    text-transform: uppercase;
+    text-align: center;
+}
+.heading-text-wrapper  .text-side {
+    font-size: 18px;
+    line-height: 27px;
+    padding: 30px;
+    color: #333;
+    background: #fff;
+}
+.heading-text-wrapper .img-text-flex.dir-right {
+    flex-direction: row-reverse;
+}
+  
+  
+@media (max-width: 767px) {
+  .heading-text-wrapper .rich-text-content h2.heading {
+    font-size: 35px;
+  }
+  .heading-text-wrapper  .page-width {
+    padding: 0px;
+  }
+  .heading-text-wrapper .img-text-flex {
+    flex-direction: column;
+    min-height: auto;
+  }
+  .heading-text-wrapper .img-text-flex .heading-side, .heading-text-wrapper .text-side {
+    max-width: 100%;
+  }
+  .heading-text-wrapper .img-text-flex.dir-right {
+    flex-direction: column;
+  }
+}
+</style>
+

@@ -1,0 +1,142 @@
+.checkout-spinner {
+  opacity: 1;
+  z-index: 9;
+  visibility: visible;
+  background: #FFF;
+  width: 200px;
+  height: 160px;
+  padding: 20px;
+  display: none;
+  justify-content: center;
+  box-shadow: 0 0 13px 0 rgba(62, 44, 90, 0.08);
+  border-radius: 0px;
+  border: 1px solid rgba(0, 0, 0, 0.09);
+  border-bottom: 1px solid #e0e0e0;
+  padding:0;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  position: fixed; 
+}
+
+.cart-spinner {
+    opacity: 1;
+    z-index: 9;
+    visibility: visible;
+    background: #FFF;
+    width: 200px;
+    height: 160px;
+    padding: 20px;
+    display: none;
+    justify-content: center;
+    box-shadow: 0 0 13px 0 rgba(62, 44, 90, 0.08);
+    border-radius: 0px;
+    border: 1px solid rgba(0, 0, 0, 0.09);
+    border-bottom: 1px solid #e0e0e0;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    position: absolute !important;
+}
+
+.Checkmark {
+    display: none;
+}
+
+.CircleSpinner {
+    border-left-color: #22486b;
+    -webkit-animation: LoaderSpin 1.2s infinite linear;
+    animation: LoaderSpin 1.2s infinite linear;
+    position: relative;
+    display: inline-block;
+    vertical-align: top;
+    border-radius: 50%;
+    width: 52px;
+    height: 52px;
+    border: 3px solid rgba(0, 0, 0, .2);
+    border-top: 3px #22486b solid;
+    border-right: 3px #22486b solid;
+    border-bottom: 3px #22486b solid;
+    margin-bottom: 14px;
+}
+
+.LoadComplete {
+    -webkit-animation: none;
+    animation: none;
+    border-color: #22486b;
+    transition: border 500ms ease-out;
+
+    .Checkmark {
+        display: block;
+    }
+}
+
+.Checkmark.Draw:after {
+    animation-duration: 1050ms;
+    animation-timing-function: ease;
+    animation-name: Checkmark;
+    -webkit-transform: scaleX(-1) rotate(135deg);
+    -ms-transform: scaleX(-1) rotate(135deg);
+    transform: scaleX(-1) rotate(135deg);
+}
+
+.Checkmark:after {
+    opacity: 1;
+    height: 28px;
+    width: 14px;
+    -webkit-transform-origin: left top;
+    transform-origin: left top;
+    border-right: 3px solid #22486b;
+    border-top: 3px solid #22486b;
+    content: '';
+    left: 10px;
+    top: 26px;
+    position: absolute;
+}
+
+.Message {
+    font-size: 16px;
+    color: #000;
+}
+
+
+.Modal__Content.Rte {
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    justify-content: center
+}
+
+
+.QuantitySelector__CurrentQuantity {
+    display: inline-block;
+    width: 20px;
+    padding: 0;
+    font-size: to-size(10px);
+    text-align: center;
+    letter-spacing: normal;
+    background: transparent;
+    border: none;
+    cursor: default;
+}
+
+.QuantitySelectorMini {
+    display: inline-flex;
+    align-items: center;
+    border: 1px solid #dfe0e1;
+    white-space: nowrap;
+
+}
+
+.CartItem__Remove, .QuantitySelector__Button {
+    cursor: pointer;
+}
+
+.QuantitySelector__Button {
+    display: inline-block;
+    padding: 5px 9px;
+}
+
+.CartItem__PriceList {
+    margin-bottom: 0px;
+}

@@ -1,0 +1,136 @@
+/* CUSTOM STYLE FOR CHECKOUT PAGE */
+
+/* 
+We need to override the order-summary_sections height to make sure our custom "sections" will not be pushed down
+FROM SHOPIFY: `height: calc(100vh - 8em);`
+*/
+.order-summary__sections {
+  height: 100%!important;
+}
+
+/*------------  Checkout Value Props style -------------*/
+.checkout-vp-wrapper {
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid rgba(175,175,175,0.34);
+  padding-top: 20px;
+}
+
+.checkout-vp-wrapper.tablet-down {
+  padding-top: 20px;
+  margin-top: 20px;
+  display: none;
+}
+
+.checkout-vp-heading {
+  font-weight: 700;
+  font-size: 16px;
+  margin-bottom: 30px;
+  line-height: 20px;
+  color: #000000;
+}
+
+.checkout-vp-item {
+  display: flex;
+  margin-bottom: 20px;
+}
+.vp-item-image-wrapper {
+  position: relative;
+  flex: 0 0 50px;
+  margin-right: 10px;
+}
+.vp-item-image-wrapper img {
+  object-fit: contain;
+  object-position: center;
+  width: 100%;
+  height: 100%;
+}
+
+.vp-item-heading {
+  text-transform: uppercase;
+  font-weight: 700;
+  margin-bottom: 5px;
+  color: #000000;
+}
+
+@media screen and (max-width: 1000px) {
+  .checkout-vp-wrapper.desktop {
+      display: none!important;
+  }
+}
+
+@media screen and (max-width: 999px) {
+  .checkout-vp-wrapper.tablet-down {
+    display: block!important;
+  }
+}
+
+/*------------  Checkout Value Props style - END -------------*/
+
+/*------------  ReviewCheckout s style -------------*/
+.checkout-reviews-wrapper {
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid rgba(175,175,175,0.34);
+  padding-top: 20px;
+}
+
+.checkout-reviews-wrapper.tablet-down {
+  padding-top: 20px;
+  margin-top: 20px;
+  display: none;
+}
+
+.checkout-reviews-heading {
+  font-weight: 700;
+  font-size: 16px;
+  margin-bottom: 30px;
+  line-height: 20px;
+  color: #000000;
+}
+
+.checkout-reviews-item {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 30px;
+}
+.reviews-item-image-wrapper {
+  position: relative;
+  flex: 0 0 90px;
+  margin-right: 10px;
+}
+.reviews-item-image-wrapper img {
+  object-fit: contain;
+  object-position: center;
+  width: 100%;
+  height: 100%;
+}
+
+.reviews-item-heading {
+  font-weight: 700;
+  margin-bottom: 5px;
+  color: #000000;
+}
+
+.stars {
+  margin-left: 5px;
+}
+.stars svg {
+  color: rgb(255, 196, 0);
+  height: 12px;
+  margin: 0 1px;
+}
+
+@media screen and (max-width: 1000px) {
+  .checkout-reviews-wrapper.desktop {
+      display: none!important;
+  }
+}
+
+@media screen and (max-width: 999px) {
+  .checkout-reviews-wrapper.tablet-down {
+    display: block!important;
+  }
+}
+/*------------  ReviewCheckout s style - END -------------*/
+

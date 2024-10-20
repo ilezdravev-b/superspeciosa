@@ -1,0 +1,75 @@
+<!-- snippets/form-customer-login.liquid -->
+
+{% comment %}
+	Optional:
+		password_text {String} Text for the "Forgot Password" link
+		submit_text {String} Text for the "Submit" button
+{% endcomment %}
+
+{% liquid 
+	assign password_text = password_text | default: "Forgot Password?"
+	assign submit_text = submit_text | default: "Sign In"
+%}
+
+{% form "customer_login", class: "account__form" %}
+
+	<input type="hidden" name="return_to" value="/account" />
+
+	{% liquid 
+		assign errors = form.errors
+	%}
+
+	{% comment %}
+		Error Message
+	{% endcomment %}
+
+	{% if form.errors %} 
+		{% render 'form-message-errors', errors: errors %}
+	{% endif %}
+
+	{% comment %}
+		Form
+	{% endcomment %}
+
+	<div class="input-group{% if errors contains 'form' %} input-group--error{% endif %}">
+		<label for="login-email">Email <span class="asterisk--required">*</span></label>
+		<input type="email" 
+			id="login-email" 
+			class="input" 
+			name="customer[email]" 
+			placeholder="Email Address" 
+			value="" 
+			autocorrect="off" 
+			autocapitalize="off" 
+			autofocus 
+			required 
+			{% if errors contains 'form' %} aria-invalid="true"{% endif %}/>
+	</div>
+
+	<div class="input-group input-password{% if errors contains 'form' %} input-group--error{% endif %}">
+		<label for="login-password">Password <span class="asterisk--required">*</span></label>
+
+		<div class="password-wrapper">
+			<input type="password" 
+				id="login-password" 
+				class="input" 
+				name="customer[password]" 
+				value="" 
+				placeholder="Password"
+				required
+				{% if errors contains 'form' %} aria-invalid="true"{% endif %} />
+
+			<button type="button" class="btn input-password__reveal js-password-reveal">
+				<span class="sr-only">Toggle Password Visibility</span>
+			</button>
+		</div>
+	</div>
+
+	<div class="input-sublink">
+		<a href="{{ routes.account_login_url }}#recover" data-behavior="toggle-forms">{{ password_text}}</a>
+	</div>
+
+	<button type="submit" class="btn btn--primary">
+		{{ submit_text }}
+	</button>
+{% endform %}

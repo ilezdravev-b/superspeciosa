@@ -1,0 +1,33 @@
+<div class="container">
+    <div class="product-media-with-text">
+        <div class="video-content tab-content-video-wrapper">
+            {{
+                video
+                | video_tag: autoplay: false, loop: false, muted: false, controls: false, image_size: '700x'
+              }}
+              <div class="video-play-button">
+                <a
+                  class="video-action"
+                  href="javascript:;"
+                  aria-label="Btn video play"
+                  button_id="video-index-1"
+                >
+                  {%- render 'icon-video-play' -%}
+                </a>
+              </div>
+        </div>
+        <div class="text-content">
+            {% if subtitle != blank %}
+                <p class="text-content__subtitle">{{ subtitle }}</p>
+            {% endif %}
+            {% if title != blank %}
+                <h2 class="text-content__title">{{ title }}</h2>
+            {% endif %}
+            {% if description != blank %}
+                <div class="text-content__description">
+                    {{ description }}
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>

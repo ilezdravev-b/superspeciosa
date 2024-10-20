@@ -1,0 +1,125 @@
+<!-- sections/featured-links.liquid -->
+
+{% comment %}
+	Load Assets
+{% endcomment %}
+
+{% render 'theme-load-assets', style: 'section-featured-links.min.css', script: 'section-featured-links.min.js' %}
+
+{% comment %}
+	Initial Liquid Variables
+{% endcomment %}
+
+{% liquid
+	assign data = section.settings
+	assign heading = data.title
+	assign description = data.description
+%}
+
+{% comment %}
+	Section Markup
+{% endcomment %}
+
+<section class="featured-links js-featured-links-slider" id="FeaturedLinks{{ section.id }}">
+	<header class="featured-links__header">
+
+		{% if heading != blank %}
+			<h2 class="featured-links__title">{{ heading }}</h2>
+		{% endif %}
+
+		{% if description != blank %}
+			<div class="featured-links__description">
+				{{ description }}
+			</div>
+		{% endif %}
+
+	</header>
+
+	{% comment %}
+        Controls (mobile only)
+    {% endcomment %}
+
+    <fieldset class="featured-links-slider__controls">
+        <legend class="sr-only">{{ title }} Controls</legend>
+
+        <button type="button" class="js-sp-slider-prev featured-links-slider__button">
+            <span class="sr-only">Previous Link</span>
+            {% render 'icon-angle-left-thin', class: 'icon' %}
+        </button>
+
+        <button type="button" class="js-sp-slider-next featured-links-slider__button">
+            <span class="sr-only">Next Link</span>
+            {% render 'icon-angle-right-thin', class: 'icon' %}
+        </button>
+    </fieldset>
+
+	<ul class="featured-links__list js-featured-links-slides" data-id="FeaturedLinks{{ section.id }}" {% if title != blank %} aria-label="{{ title }}"{% endif %}>
+
+		{% for block in section.blocks %}
+
+			{% liquid 
+				assign block_data = block.settings
+			%}
+
+			<li class="featured-links__list-item">
+				{% render 'featured-link', link: block_data.link, title: block_data.title, image: block_data.image %}
+			</li>
+
+		{% endfor %}
+
+	</ul>
+</section>
+
+{% schema %}
+{
+    "name": "Featured Links",
+    "settings": [
+		{
+			"type": "header",
+			"content": "General Settings"
+		},
+		{
+			"type": "text",
+			"id": "title",
+			"label": "Heading",
+			"default": "Heading"
+		}, 
+		{
+			"type": "inline_richtext",
+			"id": "description",
+			"label": "Description"
+		}
+    ],
+    "blocks": [
+        {
+            "name": "Link",
+            "type": "link",
+            "settings": [
+				{
+					"type": "text",
+					"id": "title",
+					"label": "Title"
+				},
+				{
+					"type": "image_picker",
+					"id": "image",
+					"label": "Image"
+				}, 
+				{
+                    "type": "url",
+					"id": "link",
+					"label": "URL"
+                }
+            ]
+        }
+    ],
+    "presets": [
+        {
+            "name": "Featured Links"
+        }
+    ], 
+    "disabled_on": {
+		"groups": ["footer"]
+	}
+}
+{% endschema %}

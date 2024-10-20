@@ -1,0 +1,19 @@
+{
+  "sections": {
+    "main-page": {
+      "type": "main-page",
+      "settings": {
+        "padding_top": 25,
+        "padding_bottom": 25,
+        "bg_color": "",
+        "padding_top_mobile": 25,
+        "padding_bottom_mobile": 25,
+        "narrow_width": false,
+        "enable_full": false
+      }
+    }
+  },
+  "order": [
+    "main-page"
+  ]
+}

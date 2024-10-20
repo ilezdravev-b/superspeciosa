@@ -1,0 +1,204 @@
+.faq-title {
+  font-size: 35px;
+  font-weight: 550;
+  letter-spacing: 2px;
+  text-align: center;
+  font-family: Dilemma;
+}
+
+.faq-description {
+  margin-top: 2em;
+  margin-bottom: 2em;
+}
+
+.faq-main {
+  margin-top: 2em;
+  width: 47%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.faq-container {
+
+}
+
+.faq-checkbox {
+  position: absolute;
+  opacity: 0;
+  z-index: -1;
+}
+
+.tab {
+  width: 100%;
+  color: black;
+  overflow: hidden;
+  border: 1px solid #222D1C;
+  margin-bottom: 10px;
+  font-family: BrownStd;
+}
+
+.tab-label {
+  position: relative;
+  cursor: pointer;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px 10px;
+  font-weight: bold;
+  color: #222D1C;
+  border: solid rgb(237, 237, 237);
+  border-width: 0 0 1px 0;
+  font-size: 20px;
+  font-family: BrownStd;
+}
+
+.tab-label::before {
+  content: "+";
+  position: absolute;
+  right: 10px;
+  font-size: 30px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.tab.active .tab-label::before {
+  content: "ㅡ";
+  font-size: 18px;
+}
+
+.tab-content {
+  max-height: 0;
+  padding: 0 20px;
+  color: black;
+}
+
+.tab-content p {
+  margin: 0;
+}
+
+.faq-checkbox:checked ~ .tab-content {
+  max-height: 100vh;
+  padding: 1em;
+}
+
+.faq-container a {
+  text-decoration: underline;
+  /* color: blue; */
+}
+
+.faq-contact {
+  font-family: BrownStd;
+  text-align: center;
+  color: #222D1C;
+  margin-top: 50px;
+  display: none;
+}
+
+.faq-contact-heading {
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 16.94px;
+}
+
+.faq-contact-content p {
+  font-size: 20px;
+  font-weight: 400;
+}
+
+.faq-button {
+  font-size: 24px;
+  font-weight: 700;
+  color: #222D1C;
+}
+
+.tab.active {
+  background-color: #C0DE81;
+}
+
+.tab.active .tab-label {
+  border-bottom: 0;
+}
+
+.tab.active .tab-content {
+  margin-bottom: 15px;
+  font-size: 15px;
+  font-weight: 400;
+  max-height: 20000px !important;
+}
+
+.product-accordion {
+  width: 100%;  
+}
+.product-accordion .tab {
+  border: 0;
+  border-bottom: 0.6px solid #909090;
+  margin: 0;
+  
+}
+.product-accordion .tab-label {
+  font-family: Dilemma;
+  font-size: 17px;
+  font-weight: 550;
+  line-height: 26px;
+  text-align: left;
+  color: #222D1C;
+  padding: 16px 14px;
+}
+.product-accordion .tab-label::before,
+.product-accordion .tab.active .tab-label:before {
+  content: none;
+}
+.product-accordion .tab.active .tab-label svg {
+  transform: rotate(180deg);
+}
+.product-accordion .tab.active .tab-label {
+  padding-bottom: 10px; 
+}
+.prodduct-accordion .tab-content {
+  font-family: BrownStd;
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 17px;
+  text-align: left;
+  color: black;
+}
+@media only screen and (max-width: 1004px) { 
+    .faq-main {
+      margin: 0 auto;
+      padding: 24px;
+      width: 100%;
+    }
+  }
+
+@media (max-width: 767px) {
+
+  .product .faq-main {
+    padding: 0;
+  }
+  .faq-title {
+    font-size: 28px;
+  }
+  .faq-contact {
+    display: block;
+  }
+  .faq-contact-heading {
+    font-size: 14px;
+    line-height: 16.94px;
+  }
+  .faq-contact-content p {
+    font-size: 13px;
+    line-height: 15.73px;
+  }
+  .faq-button {
+    font-size: 14px;
+    line-height: 16.94px;
+  }
+  .tab-label {
+    font-size: 14px;
+    padding-right: 40px;
+  }
+  .tab.active .tab-content {
+    font-size: 13px;
+  }
+}

@@ -1,0 +1,39 @@
+<!-- snippets/ajax-cart-item-placeholder.liquid -->
+
+{% comment %}
+	Note: 
+		This snippet is used in ajax cart (also called the mini-cart), 
+		as well as the mobile cart page. 
+
+	Required:
+		item {Object} The line_item object
+		index {Integer} The 1-based index of the item
+{% endcomment %}
+
+{% liquid 
+	assign add_time = ''
+	assign is_parent = false
+	assign is_free_gift = false
+
+	for property in item.properties
+		if property.first == "_add-time"
+			assign add_time = property.last
+		endif
+
+		if property.first == "_hasCustomizableOptions"
+			assign is_parent = true
+		endif
+
+		if property.first == "_isFreeGift"
+			assign is_free_gift = true
+		endif 
+	endfor
+%}
+
+<li class="ajax-cart__item js-cart-item sr-only" 
+	data-cart-line="{{ index }}" 
+	data-key="{{ item.key }}"
+	{% if is_free_gift %}data-free-gift="true"{% endif %}
+	{% if is_parent %}data-item-is-parent="true"{% endif %}
+	{% if add_time != blank %}data-add-time="{{ add_time }}"{% endif %}>
+</li>

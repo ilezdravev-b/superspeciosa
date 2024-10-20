@@ -1,0 +1,84 @@
+<!-- snippets/product-price.liquid -->
+
+{% comment %}
+    Required:
+		product         {Object}  - The product object
+        current_variant {Object}  - The current variant object
+        show_range      {Boolean} - Whether to show "From $$" if there are a variety of variant prices. Defaults to false.
+        add_js_classes  {Boolean} - Whether to include JS classes for prices. Default is true.
+		show_subtotal   {Boolean} - Whether to show the product subtotals. Default is false.
+{% endcomment %}
+
+
+{% liquid 
+	assign current_variant =  current_variant | default: product.selected_or_first_available_variant
+	assign onSaleClass = 'hide'
+	assign add_js_classes = add_js_classes | default: true
+
+	if add_js_classes == true
+		assign price_class = 'js-price'
+		assign compare_class = 'js-compare-price'
+	endif 
+
+	if current_variant.compare_at_price and current_variant.compare_at_price > current_variant.price 
+		assign onSaleClass = ''
+	endif
+	%}
+
+{% comment %}  
+    Snippet Markup
+{% endcomment %}
+
+{% if product.price_varies and show_range == true %}
+
+	{% comment %}
+		Price varies, and we should show that 
+		(normally used on the product thumbnail only)
+	{% endcomment %}
+
+    {% assign price = product.price_min | money %}
+	{{ 'products.product.price.from_price_html' | t: price: price }}
+
+{% else %}
+
+	{% comment %}
+		Current Price
+	{% endcomment %}
+
+	<span class="sr-only">
+		{{ 'products.product.price.current_price' | t }}:
+	</span>
+
+	<span style="display: none" class="{{ price_class }}">
+		{{ current_variant.price | money }}
+	</span>
+
+	{% comment %}
+		Original Price
+	{% endcomment %}
+
+	<s class="price-compare {{ compare_class }} {{ onSaleClass }}">
+		<span class="sr-only">
+			{{ 'products.product.price.original_price' | t }}:
+		</span>
+		{{ current_variant.compare_at_price | money }}
+	</s>
+
+	{% comment %}  
+		Optional Product Subtotal
+
+		Notes: This will be updated when the product quantity
+			   is changed or the product variant is changed,
+			   to show the quantity times the base product price.
+	{% endcomment %}
+
+	{% if show_subtotal %}
+		<div role="status">
+			<b>Product Subtotal:</b>
+			<span class="js-product-subtotal" data-product-quantity="1" data-product-price="{{ current_variant.price }}">
+				{{ current_variant.price | money_without_trailing_zeros }}
+			</span>
+		</div>
+	{% endif %}
+
+{% endif %}

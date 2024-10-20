@@ -1,0 +1,571 @@
+{
+  "current": {
+    "ajax_cart_enable": false,
+    "logo": "shopify:\/\/shop_images\/Super-Speciosa-1-600x437.png",
+    "favicon": "shopify:\/\/shop_images\/cropped-602647_Favicon_120919.png",
+    "klaviyo_api_key": "RrYBDX",
+    "klaviyo_list_id": "X8wDXe",
+    "social_instagram": "https:\/\/www.instagram.com\/superspeciosa\/",
+    "social_facebook": "https:\/\/www.facebook.com\/botanicalssuper",
+    "social_pinterest": "#",
+    "social_twitter": "http:\/\/x.com\/superspeciosa",
+    "social_youtube": "https:\/\/www.youtube.com\/@superspeciosa",
+    "social_tiktok": "https:\/\/www.tiktok.com\/@super.speciosa",
+    "theme_color_primary": "#7F9BB6",
+    "theme_logo": "shopify:\/\/shop_images\/logo-9346b4-f7.svg",
+    "cart_recommendations_collection": "10-flower-packs",
+    "cart_recommendations_product_list": [
+
+    ],
+    "page_contact_us": "shopify:\/\/pages\/contact-us",
+    "enable_klaviyo_atc_tracking": true,
+    "klaviyo_manual_onsite_script": true,
+    "enable_klaviyo_bis": true,
+    "klaviyo_bis_list_opt_in": true,
+    "checkout_header_image": "",
+    "checkout_logo_image": "",
+    "checkout_logo_position": "center",
+    "checkout_logo_size": "large",
+    "checkout_body_background_image": "",
+    "checkout_body_background_color": "#ffffff",
+    "checkout_input_background_color_mode": "transparent",
+    "checkout_sidebar_background_image": "",
+    "checkout_sidebar_background_color": "#fafafa",
+    "checkout_heading_font": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'",
+    "checkout_body_font": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'",
+    "checkout_accent_color": "#527399",
+    "checkout_button_color": "#e83866",
+    "checkout_error_color": "#ffaa00",
+    "color_primary": "#ba0101",
+    "sections": {
+      "footer": {
+        "type": "footer",
+        "blocks": {
+          "main-menu": {
+            "type": "navigation",
+            "settings": {
+              "title": "Navigation Title One",
+              "menu": "main-menu"
+            }
+          },
+          "footer": {
+            "type": "navigation",
+            "settings": {
+              "title": "Navigation Title Two",
+              "menu": "footer"
+            }
+          }
+        },
+        "block_order": [
+          "main-menu",
+          "footer"
+        ],
+        "settings": {
+          "copyright_message": "&copy; [current_year]. All rights reserved."
+        }
+      },
+      "promo-bar": {
+        "type": "promo-bar",
+        "blocks": {
+          "promo_text_list_zn4iWy": {
+            "type": "promo_text_list",
+            "settings": {
+              "promo_text": "<p>Get 15% off your first order 👉 <a href=\"#\" onclick=\"aph_popup_open(534527);\">Click Here<\/a>\n<\/p>",
+              "start_date": "",
+              "end_date": ""
+            }
+          },
+          "promo_text_list_k6eQXK": {
+            "type": "promo_text_list",
+            "settings": {
+              "promo_text": "<p>VOLT Powder IS HERE ⚡1.74% MIT – <a href=\"https:\/\/superspeciosa.com\/products\/special-release-volt-kratom-powder\/\">GET IT WHILE IT LASTS!<\/a><\/p>",
+              "start_date": "10\/12\/2024",
+              "end_date": "10\/14\/2024"
+            }
+          },
+          "promo_text_list_QYVXqf": {
+            "type": "promo_text_list",
+            "settings": {
+              "promo_text": "<p>20% OFF SHOTS💧 <a href=\"https:\/\/superspeciosa.com\/collections\/kratom-shots\/\">USE CODE SHOTS20 ⬅️<\/a><\/p>",
+              "start_date": "10\/11\/2024",
+              "end_date": "10\/12\/2024"
+            }
+          },
+          "promo_text_list_BQmdFP": {
+            "type": "promo_text_list",
+            "settings": {
+              "promo_text": "<p>GET 4, 250G BAGS FOR $99❗ <a href=\"https:\/\/superspeciosa.com\/collections\/kratom-powder\/\">USE CODE KILO99<\/a><\/p>",
+              "start_date": "10\/14\/2024",
+              "end_date": "10\/15\/2024"
+            }
+          },
+          "promo_text_list_fTqQzk": {
+            "type": "promo_text_list",
+            "settings": {
+              "promo_text": "<p>BUY TWO 1000CT CAPS &amp; SAVE $90! <a href=\"https:\/\/superspeciosa.com\/collections\/kratom-capsules\/\">CODE: CAP149<\/a><\/p>",
+              "start_date": "10\/16\/2024",
+              "end_date": "10\/17\/2024"
+            }
+          },
+          "promo_text_list_NKEadq": {
+            "type": "promo_text_list",
+            "settings": {
+              "promo_text": "<p>25% OFF SIGNATURE RESERVE ➡️ <a href=\"https:\/\/superspeciosa.com\/collections\/specialty\">CODE: RESERVE25<\/a><\/p>",
+              "start_date": "10\/18\/2024",
+              "end_date": "10\/19\/2024"
+            }
+          }
+        },
+        "block_order": [
+          "promo_text_list_zn4iWy",
+          "promo_text_list_k6eQXK",
+          "promo_text_list_QYVXqf",
+          "promo_text_list_BQmdFP",
+          "promo_text_list_fTqQzk",
+          "promo_text_list_NKEadq"
+        ],
+        "custom_css": [
+
+        ],
+        "settings": {
+          "copy": "<p>First promo<\/p>",
+          "copy_second": "<p>Second promo<\/p>"
+        }
+      },
+      "menu-desktop": {
+        "type": "menu-desktop",
+        "blocks": {
+          "menu_links_6DBrqP": {
+            "type": "menu_links",
+            "settings": {
+              "image": "shopify:\/\/shop_images\/4-3-1024x1024.webp",
+              "parent_title": "Shop By Form",
+              "title": "KRATOM GUMMIES",
+              "link": "shopify:\/\/collections\/kratom-gummies"
+            }
+          },
+          "menu_links_HKa8cr": {
+            "type": "menu_links",
+            "settings": {
+              "image": "shopify:\/\/shop_images\/CAPSULES-1024x1024.webp",
+              "parent_title": "Shop By Form",
+              "title": "KRATOM CAPSULES",
+              "link": "shopify:\/\/collections\/kratom-capsules"
+            }
+          },
+          "menu_links_j6RYfK": {
+            "type": "menu_links",
+            "settings": {
+              "image": "shopify:\/\/shop_images\/POWDER-1024x1024.webp",
+              "parent_title": "Shop By Form",
+              "title": "KRATOM POWDERS",
+              "link": "shopify:\/\/collections\/kratom-powder"
+            }
+          },
+          "menu_links_zNy9jL": {
+            "type": "menu_links",
+            "settings": {
+              "image": "shopify:\/\/shop_images\/TABLETS-1024x1024.webp",
+              "parent_title": "Shop By Form",
+              "title": "KRATOM TABLETS",
+              "link": "shopify:\/\/collections\/kratom-tablets"
+            }
+          },
+          "menu_links_PMAJmL": {
+            "type": "menu_links",
+            "settings": {
+              "image": "shopify:\/\/shop_images\/3-8-1024x1024.webp",
+              "parent_title": "Shop By Form",
+              "title": "KRATOM TEA BAGS",
+              "link": "shopify:\/\/collections\/kratom-tea-bags"
+            }
+          },
+          "menu_links_9WwKhU": {
+            "type": "menu_links",
+            "settings": {
+              "image": "shopify:\/\/shop_images\/superspeciosa-jolt_0001_Layer4.webp",
+              "parent_title": "Shop By Form",
+              "title": "KRATOM EXTRACTS",
+              "link": "shopify:\/\/collections\/kratom-extracts"
+            }
+          },
+          "menu_links_7afHdL": {
+            "type": "menu_links",
+            "settings": {
+              "image": "shopify:\/\/shop_images\/2-10-1024x1024.webp",
+              "parent_title": "Shop By Form",
+              "title": "KRATOM LIQUIDS",
+              "link": "shopify:\/\/collections\/kratom-liquids"
+            }
+          },
+          "menu_links_eWW3bU": {
+            "type": "menu_links",
+            "settings": {
+              "image": "shopify:\/\/shop_images\/1-12-1024x1024.webp",
+              "parent_title": "Shop By Form",
+              "title": "KRATOM SHOTS",
+              "link": "shopify:\/\/collections\/kratom-shots"
+            }
+          },
+          "menu_links_BXM4Jt": {
+            "type": "menu_links",
+            "settings": {
+              "image": "shopify:\/\/shop_images\/big-Untitled-design-2.webp",
+              "parent_title": "Shop By Form",
+              "title": "SUPER MERCH",
+              "link": "shopify:\/\/collections\/super-merch"
+            }
+          },
+          "menu_links_DaYHYM": {
+            "type": "menu_links",
+            "settings": {
+              "image": "shopify:\/\/shop_images\/ENERGY-1024x1024.png",
+              "parent_title": "Shop By Benefits",
+              "title": "KRATOM FOR ENERGY",
+              "link": "shopify:\/\/collections\/energy"
+            }
+          },
+          "menu_links_q8qr8y": {
+            "type": "menu_links",
+            "settings": {
+              "image": "shopify:\/\/shop_images\/RELAXATION-1024x1024.png",
+              "parent_title": "Shop By Benefits",
+              "title": "KRATOM FOR RELAXATION",
+              "link": "shopify:\/\/collections\/relaxation"
+            }
+          },
+          "menu_links_Bp6iHC": {
+            "type": "menu_links",
+            "settings": {
+              "image": "shopify:\/\/shop_images\/BODYMIND-1024x1024.png",
+              "parent_title": "Shop By Benefits",
+              "title": "KRATOM BODY & MIND",
+              "link": "shopify:\/\/collections\/body-and-mind"
+            }
+          },
+          "menu_links_apCWcN": {
+            "type": "menu_links",
+            "settings": {
+              "image": "shopify:\/\/shop_images\/RED-1024x1024.png",
+              "parent_title": "Shop By Color",
+              "title": "RED KRATOM",
+              "link": "shopify:\/\/collections\/red-kratom"
+            }
+          },
+          "menu_links_HNcUMd": {
+            "type": "menu_links",
+            "settings": {
+              "image": "shopify:\/\/shop_images\/GREEN-1024x1024-800x.png",
+              "parent_title": "Shop By Color",
+              "title": "GREEN KRATOM",
+              "link": "shopify:\/\/collections\/green-kratom"
+            }
+          },
+          "menu_links_tVHGcF": {
+            "type": "menu_links",
+            "settings": {
+              "image": "shopify:\/\/shop_images\/WHITE-1024x1024-800x.png",
+              "parent_title": "Shop By Color",
+              "title": "WHITE KRATOM",
+              "link": "shopify:\/\/collections\/white-kratom"
+            }
+          },
+          "menu_links_RE3ibe": {
+            "type": "menu_links",
+            "settings": {
+              "image": "shopify:\/\/shop_images\/SPECIALTY-1024x1024.png",
+              "parent_title": "Shop By Strain",
+              "title": "SPECIALTY KRATOM",
+              "link": "shopify:\/\/collections\/specialty"
+            }
+          },
+          "menu_links_HaRqgF": {
+            "type": "menu_links",
+            "settings": {
+              "image": "shopify:\/\/shop_images\/MAENG-V2-1024x1024.png",
+              "parent_title": "Shop By Strain",
+              "title": "MAENG DA KRATOM",
+              "link": "shopify:\/\/collections\/maeng-da-kratom"
+            }
+          },
+          "menu_links_zjqfwX": {
+            "type": "menu_links",
+            "settings": {
+              "image": "shopify:\/\/shop_images\/BALI-1024x1024.png",
+              "parent_title": "Shop By Strain",
+              "title": "BALI KRATOM",
+              "link": "shopify:\/\/collections\/bali-kratom"
+            }
+          },
+          "menu_links_HDzGkG": {
+            "type": "menu_links",
+            "settings": {
+              "image": "shopify:\/\/shop_images\/MALAY-1024x1024.png",
+              "parent_title": "Shop By Strain",
+              "title": "MALAY KRATOM",
+              "link": "shopify:\/\/collections\/malay-kratom"
+            }
+          },
+          "menu_links_DEmLb4": {
+            "type": "menu_links",
+            "settings": {
+              "image": "shopify:\/\/shop_images\/RED-V2-1024x1024.png",
+              "parent_title": "Shop By Strain",
+              "title": "BORNEO KRATOM",
+              "link": "shopify:\/\/collections\/borneo-kratom"
+            }
+          },
+          "menu_links_ayr6q4": {
+            "type": "menu_links",
+            "settings": {
+              "image": "shopify:\/\/shop_images\/THAI-v2-1024x1024.png",
+              "parent_title": "Shop By Strain",
+              "title": "THAI KRATOM",
+              "link": "shopify:\/\/collections\/thai-kratom"
+            }
+          }
+        },
+        "block_order": [
+          "menu_links_6DBrqP",
+          "menu_links_HKa8cr",
+          "menu_links_j6RYfK",
+          "menu_links_zNy9jL",
+          "menu_links_PMAJmL",
+          "menu_links_9WwKhU",
+          "menu_links_7afHdL",
+          "menu_links_eWW3bU",
+          "menu_links_BXM4Jt",
+          "menu_links_DaYHYM",
+          "menu_links_q8qr8y",
+          "menu_links_Bp6iHC",
+          "menu_links_apCWcN",
+          "menu_links_HNcUMd",
+          "menu_links_tVHGcF",
+          "menu_links_RE3ibe",
+          "menu_links_HaRqgF",
+          "menu_links_zjqfwX",
+          "menu_links_HDzGkG",
+          "menu_links_DEmLb4",
+          "menu_links_ayr6q4"
+        ],
+        "settings": {
+          "menu_desktop": "main-menu"
+        }
+      },
+      "predictive-search-results": {
+        "type": "predictive-search-results",
+        "settings": {
+        }
+      },
+      "menu-mobile": {
+        "type": "menu-mobile",
+        "settings": {
+          "mobile_menu": "main-menu",
+          "show_utility_menu": true,
+          "utility_menu": "mobile-menu-footer",
+          "button_text": "SHOP ALL KRATOM PRODUCTS",
+          "button_link": "shopify:\/\/collections\/store",
+          "subscribe_text": "SUBSCRIBE AND SAVE 20% OFF",
+          "subscribe_link": ""
+        }
+      },
+      "header-high-value-links": {
+        "type": "header-high-value-links",
+        "blocks": {
+          "727e3df2-1506-4285-9c3d-f88ce54e1d47": {
+            "type": "link",
+            "settings": {
+              "title": "Super Speciosa",
+              "url": "shopify:\/\/collections\/9346b4-f7"
+            }
+          },
+          "1b02c2b4-f419-4571-95cc-d4e8e4d0d63c": {
+            "type": "link",
+            "settings": {
+              "title": "Shop By Theme",
+              "url": "shopify:\/\/collections\/wedding-kits"
+            }
+          },
+          "7ed3e01b-9ee7-40fa-92ee-0b98e0d0518d": {
+            "type": "link",
+            "settings": {
+              "title": "Greenery",
+              "url": "shopify:\/\/collections\/craft-filler"
+            }
+          },
+          "3334534c-03b4-4511-9549-85f7bd029cb1": {
+            "type": "link",
+            "settings": {
+              "title": "Supplies",
+              "url": "shopify:\/\/collections\/craft-supplies"
+            }
+          }
+        },
+        "block_order": [
+          "727e3df2-1506-4285-9c3d-f88ce54e1d47",
+          "1b02c2b4-f419-4571-95cc-d4e8e4d0d63c",
+          "7ed3e01b-9ee7-40fa-92ee-0b98e0d0518d",
+          "3334534c-03b4-4511-9549-85f7bd029cb1"
+        ],
+        "settings": {
+        }
+      },
+      "account-login": {
+        "type": "account-login",
+        "settings": {
+          "login_title": "Log In",
+          "login_description": "<p>Enter your email to access past orders, subscriptions, rewards, and more.<\/p><p>You must activate your account first, you will be prompted with instructions once you enter your email.<\/p>",
+          "login_call_to_action": "Log In",
+          "register_prompt": "Having trouble logging in?",
+          "register_link_label": "Activate Your Account Here.",
+          "forgot_password": "Forgot password?",
+          "recover_title": "Forgot your password?",
+          "recover_description": "<p><\/p><p>Please enter your email below and we will send you instructions to reset your password.<\/p>",
+          "recover_call_to_action": "Submit",
+          "recover_success_title": "Success! Please check your email.",
+          "recover_success": "<p>Allow up to 5 minutes for the email to arrive. If you cannot find it be sure to check the spam folder.<\/p>"
+        }
+      },
+      "account-register": {
+        "type": "account-register",
+        "settings": {
+          "title": "Create Account",
+          "description": "<p><\/p><p>Register with your email and create a password. Once registered, check your email to activate your account.<\/p><p><\/p><h6>Your personal data will be used to support your experience throughout this website, to manage access to your account, and for other purposes described in our <a href=\"https:\/\/superspeciosa.com\/privacy-policy\/\" target=\"_blank\">privacy policy<\/a>.<\/h6><h6><\/h6>",
+          "call_to_action": "Register",
+          "back_to_login": "Already have an account?",
+          "login_link_label": "Sign In."
+        }
+      },
+      "ajax-cart-button": {
+        "type": "ajax-cart-button",
+        "settings": {
+        }
+      },
+      "ajax-cart": {
+        "type": "ajax-cart",
+        "settings": {
+          "checkout_link": "cart",
+          "checkout_button_text": "Checkout",
+          "checkout_footnote": "<p>Tax and shipping will be calculated at checkout.<\/p>",
+          "empty_title": "Your cart is empty!",
+          "show_free_shipping_bar": true,
+          "show_free_gift_tiers": true,
+          "free_gift_tiers_image": "",
+          "show_recommended_products": true
+        }
+      },
+      "account": {
+        "type": "account",
+        "settings": {
+        }
+      }
+    },
+    "content_for_index": [
+
+    ],
+    "blocks": {
+      "14060646107696862457": {
+        "type": "shopify:\/\/apps\/judge-me-reviews\/blocks\/judgeme_core\/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+        "disabled": false,
+        "settings": {
+        }
+      },
+      "5493738229337669960": {
+        "type": "shopify:\/\/apps\/bon-loyalty\/blocks\/app-embed\/63496a04-c097-48d1-8c11-475aec24b12e",
+        "disabled": false,
+        "settings": {
+          "type": "flip",
+          "duration": 2
+        }
+      },
+      "2296928500563504527": {
+        "type": "shopify:\/\/apps\/abra-promotions\/blocks\/abra\/daa1493a-23b5-48bb-8cb5-7ab1267b4642",
+        "disabled": false,
+        "settings": {
+          "popup_preview": true,
+          "popup_background_color": "#222d1c",
+          "popup_border_color": "#8cb93f",
+          "popup_color": "#f4f1df",
+          "popup_icon_color": "#f4f1df",
+          "popup_border_radius": 4,
+          "popup_border_width": 1,
+          "popup_font_size": 14,
+          "popup_icon_size": 16,
+          "popup_padding_y": 16,
+          "popup_padding_x": 16,
+          "popup_placement": "bottom-center",
+          "popup_dismiss": "manual",
+          "popup_dismiss_delay": 5,
+          "announcement_bar_enabled": true,
+          "announcement_bar_background_color": "#222d1c",
+          "announcement_bar_border_color": "#8cb93f",
+          "announcement_bar_color": "#f4f1df",
+          "announcement_bar_icon_color": "#f4f1df",
+          "announcement_bar_border_radius": 0,
+          "announcement_bar_font_size": 14,
+          "announcement_bar_icon_size": 16,
+          "announcement_bar_padding_y": 10,
+          "announcement_bar_padding_x": 10,
+          "sale_price_color": "#222d1c"
+        }
+      },
+      "13768625480086291342": {
+        "type": "shopify:\/\/apps\/forms\/blocks\/forms\/8744a304-fcb1-4347-b211-bb6b4759a76a",
+        "disabled": false,
+        "settings": {
+        }
+      },
+      "10312807297210203588": {
+        "type": "shopify:\/\/apps\/aftersell\/blocks\/utm-triggers\/509ec35d-0632-4dfc-a105-fa799cd9d149",
+        "disabled": true,
+        "settings": {
+        }
+      },
+      "13070091535480640111": {
+        "type": "shopify:\/\/apps\/attrac\/blocks\/app-embed\/b783956d-47a9-4434-91ad-4ec960bd74b0",
+        "disabled": false,
+        "settings": {
+        }
+      },
+      "855628211100114053": {
+        "type": "shopify:\/\/apps\/klaviyo-email-marketing-sms\/blocks\/klaviyo-onsite-embed\/2632fe16-c075-4321-a88b-50b567f42507",
+        "disabled": false,
+        "settings": {
+        }
+      },
+      "17992116214976573926": {
+        "type": "shopify:\/\/apps\/seo-manager-venntov\/blocks\/seomanager\/c54c366f-d4bb-4d52-8d2f-dd61ce8e7e12",
+        "disabled": false,
+        "settings": {
+        }
+      },
+      "8232603958289840080": {
+        "type": "shopify:\/\/apps\/seo-manager-venntov\/blocks\/seomanager-404\/c54c366f-d4bb-4d52-8d2f-dd61ce8e7e12",
+        "disabled": false,
+        "settings": {
+        }
+      },
+      "6810535121229352664": {
+        "type": "shopify:\/\/apps\/monster-cart-upsell-free-gifts\/blocks\/app-embed\/a1b8e58a-bf1d-4e0f-8768-a387c3f643c0",
+        "disabled": false,
+        "settings": {
+          "markets_rounding": false,
+          "send_gtag_atc": false,
+          "disable_tiktok_tracking": false,
+          "disable_klaviyo_tracking": false,
+          "stop_cart_page": false,
+          "apply_discount_before_checkout": false,
+          "do_not_hide_previous_tiers": false,
+          "bag_selector": ".header__cart-count",
+          "hide_when_opened": "",
+          "show_item_properties": false,
+          "show_private_properties": false,
+          "stop_shopify_rate": false,
+          "dev_mode": false,
+          "beta_version": false,
+          "custom_code": "<script>\n    \/\/ custom code here\n<\/script>"
+        }
+      }
+    }
+  }
+}

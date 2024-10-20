@@ -1,0 +1,11 @@
+{%- liquid
+  assign total_saving = 0
+  for item in checkout.line_items
+    if item.variant.compare_at_price > item.variant.price
+      assign saving = item.variant.compare_at_price | minus: item.variant.price | times: item.quantity
+      assign total_saving = saving | plus: total_saving | plus: item.line_level_total_discount
+    endif
+  endfor
+-%}
+
+{{ total_saving | json }}

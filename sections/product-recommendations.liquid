@@ -1,0 +1,124 @@
+<!-- sections/product-recommendations.liquid -->
+
+{% comment %}
+	Load Assets
+{% endcomment %}
+
+{% render 'theme-load-assets', style: 'section-product-recommendations.min.css', script: 'section-product-recommendations.min.js' %}
+
+{% comment %}
+	Initial Liquid Variables
+{% endcomment %}
+
+{% liquid 
+	assign data = section.settings
+%}
+
+{% comment %}
+	Section Markup
+{% endcomment %}
+
+<section class="product-recommendations js-product-recommendations" data-url="{{ routes.product_recommendations_url }}?section_id={{ section.id }}&product_id={{ product.id }}&limit={{ data.max_recommendations }}&intent={{ data.type }}">
+
+	{%- if recommendations.performed and recommendations.products_count > 0 -%}
+		<div class="js-product-recommendations-slider">
+
+			<div class="product-recommendations__header">
+				{% comment %}
+					Title
+				{% endcomment %}
+
+				<h2 class="product-recommendations__title">{{ data.title }}</h2>
+
+				{% comment %}
+					Slider controls
+				{% endcomment %}
+
+				<fieldset class="product-recommendations__slider__controls">
+					<legend class="sr-only">{{ data.title }} Controls</legend>
+
+					<button type="button" class="js-sp-slider-prev product-recommendations__slider__button">
+						<span class="sr-only">Previous Product</span>
+						{% render 'icon-angle-left-thin', class: 'icon' %}
+					</button>
+
+					<button type="button" class="js-sp-slider-next product-recommendations__slider__button">
+						<span class="sr-only">Next Product</span>
+						{% render 'icon-angle-right-thin', class: 'icon' %}
+					</button>
+				</fieldset>
+			</div>
+
+			{% comment %}
+				Slides/Product Thumbnails
+			{% endcomment %}
+
+			<div class="product-recommendations__slides js-product-recommendations-slides">
+				{%- for recommendation in recommendations.products -%}
+					{% unless recommendation.available == false or recommendation.tags contains "BOLD_HIDDEN_PRODUCT" or recommendation.tags contains "OPTIONS_HIDDEN_PRODUCT" or recommendation.tags contains "SWF OPTION" %}
+					<div class="product-recommendations__slide">
+							{% render 'product-thumbnail', product: recommendation %}
+						</div>
+					{% endunless %}
+					{%- endfor -%}
+				</div>
+			</div>
+	{%- endif -%}
+
+</section>
+
+{% schema %}
+{
+    "name": "Product Recommendations",
+    "settings": [
+		{
+			"type": "header",
+			"content": "General Settings"
+		},
+		{
+            "type": "radio",
+            "id": "type",
+            "label": "Recommendation Type",
+			"info": "Choose whether these products should be related products or complementary products. Note that if complementary is chosen, those products will need to be set up for each product within the Search & Discovery app.",
+			"options": [
+				{
+					"value": "complementary",
+					"label": "Complementary"
+				},
+				{
+					"value": "related",
+					"label": "Related"
+				}
+			],
+			"default": "related"
+        },
+		{
+            "type": "range",
+            "id": "max_recommendations",
+            "label": "Maximum number of recommended products to show",
+            "default": 20, 
+            "min": 0, 
+            "max": 20
+        },
+		{
+			"type": "header",
+			"content": "Text Content"
+		},
+        {
+            "type": "text",
+            "id": "title",
+            "label": "Recommendations Title", 
+            "default": "You may also like"
+        }
+    ],
+	"enabled_on": {
+      		"templates": ["product"]
+
+	},
+	"presets": [
+		{
+			"name": "Product Recommendations"
+		}
+	]
+}
+{% endschema %}

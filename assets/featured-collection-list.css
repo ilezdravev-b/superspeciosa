@@ -1,0 +1,40 @@
+.featured-collection-list--warpper {
+    display: flex;
+    justify-content: space-between;
+    gap: 25px;
+}
+.featured-collection-list--warpper .featured-collection-column {
+    width: 33.333%;
+    text-align: center;
+}
+.featured-collection-list--warpper .collection-widget-image {
+    margin-bottom: 25px;
+}
+.featured-collection-list--warpper .collection-widget-title a {
+    padding: 10px;
+    background-color: #212c1c;
+    display: block;
+    margin: 5px auto;
+}
+.featured-collection-list--warpper .collection-widget-title a .title {
+    color: #fff;
+    margin: 0;
+}
+
+.featured-collection-list--warpper .collection-widget-title a:hover {
+    background-color: #658b27;
+}
+.featured-collection-list--warpper .collection-widget-title a:hover .title{
+    color: #000;
+}
+@media(max-width: 768px) {
+    .featured-collection-list--warpper {
+        gap: 0;
+        flex-direction: column;
+    }
+    .featured-collection-list--warpper .featured-collection-column {
+        width: 100%;
+        padding: 10px;
+    }
+    
+}

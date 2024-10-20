@@ -1,0 +1,44 @@
+<!-- snippets/account-navigation.liquid -->
+
+{% comment %}
+	Required:
+		nothing
+{% endcomment %}
+
+<nav class="account-nav" aria-label="Account">
+	{%- capture account_logo -%}
+	<!-- {% render "icon-account-logo" %} -->
+	{%- endcapture -%}
+
+	{{ account_logo | replace: "#DFD9D2", "#CCCCCC" }}
+
+    <h1 class="account-nav__title">
+        Account
+    </h1>
+
+	<ul class="account-nav__list" aria-label="Account Links">
+		<li>
+			<a href="{{ routes.account_url }}" {% if template == "customers/account" %}class="is-active"{% endif %}>Profile</a>
+		</li>
+
+		<li>
+			<a href="{{ routes.account_url }}?view=orders" {% if template == "customers/account.orders" or template == "customers/order" %}class="is-active"{% endif %}>Orders</a>
+		</li>
+      
+      	<li>
+			<a href="#bon-loyalty-widget-toggle" class="">My Points & Rewards</a>
+		</li>
+
+        <li>
+			<a href="https://superspeciosa.com/a/account/orders" class="">Subscriptions</a>
+		</li>
+
+		<li>
+			<a href="{{ routes.account_addresses_url }}" {% if template == "customers/addresses" %}class="is-active"{% endif %}>Addresses</a>
+		</li>            
+
+		<li>
+			<a href="{{ routes.account_logout_url }}">Log Out</a>
+		</li>
+	</ul>
+</nav>

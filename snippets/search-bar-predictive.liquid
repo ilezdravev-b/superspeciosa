@@ -1,0 +1,62 @@
+<!-- snippets/search-bar-predictive.liquid -->
+
+{% comment %}
+    Optional:
+		id_suffix {String} Optional suffix to add to ID. Required if this snippet occurs more than once on a page.
+		label {String} Search label
+
+	Notes:
+		The input is tied to the ID for the markup in
+		sections/predictive-search-results.liquid that is
+		refreshed on search. 
+{% endcomment %}
+
+{% comment %}
+     Load Assets
+
+  Notes: Because this section is currently rendered
+  	   inside a sticky header, we want to be sure
+  	   it's not missed when loading assets, so we're
+  	   skipping loading via JS this time, but still loading
+  	   in a non-render-blocking way.
+{% endcomment %}
+
+<script src="{{ 'section-predictive-search.min.js' | asset_url }}" defer></script>
+
+{% comment %}
+  Initial Liquid Variables
+{% endcomment %}
+
+{% liquid
+  assign id = 'searchBarPredictive' | append: id_suffix
+  assign label = label | default: 'Search'
+  assign placeholder = placeholder | default: 'Search the site'
+%}
+
+{% comment %}
+  Section Markup
+{% endcomment %}
+
+<predictive-search>
+  <form class="search-bar" method="get" action="{{ routes.search_url }}">
+    <input type="hidden" name="type" value="product">
+
+    <div class="input-group input-nested label-moves">
+      <input type="search"
+          id="{{ id }}"
+          name="q"
+          placeholder="{{ placeholder }}"
+          aria-autocomplete="list"
+          aria-owns="predictiveSearchResults"
+          aria-controls="predictiveSearchResults"
+          autocomplete="off"
+          autocapitalize="off"
+          spellcheck="false">
+      <label for="{{ id }}">{{ label }}</label>
+      <button class="btn btn--icon" type="submit" aria-label="Search">
+        {% render 'icon-search' %}
+        <span class="sr-only"> Search </span>
+      </button>
+    </div>
+  </form>
+</predictive-search>

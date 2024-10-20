@@ -1,0 +1,110 @@
+<!-- snippets/product-thumbnail.liquid -->
+
+{% comment %}
+    Required:
+		product {Object} The product object
+
+	Optional:
+		title {String} Product title. 
+		image {Object} Image to show instead of default product image
+		badge {String} Text to show as product badge
+{% endcomment %}
+
+{%- liquid 
+	assign image = image | default: product.featured_image
+	assign title = title | default: product.title
+-%}
+
+
+
+{% comment %}
+	We need to get the current active tags, to see if the user has filtered the PLP
+{% endcomment %}
+{%- assign active_tags = '' -%}
+
+{%- for tag in current_tags -%}
+    {%- assign tag_as_handle = tag | replace: '&#39;', '' | replace: '&#34;', '' | handle -%}
+    {%- assign active_tags = active_tags | append: tag_as_handle -%}
+
+    {%- unless forloop.last -%}
+        {%- assign active_tags = active_tags | append: '+' -%}
+    {%- endunless -%}
+{%- endfor -%}
+
+{%- assign active_tags = active_tags | split: '+' -%}
+
+{% for tag in active_tags %}
+	{% if tag contains "benefits" %}
+		{% assign benefit_filter = tag | split: '_' %}
+		{% assign benefit_filter = benefit_filter[1] | capitalize %}
+
+	{% endif %}
+{% endfor %}
+
+<div class="product-thumb">
+
+	<div class="product-thumb__image-badge-wrapper">
+		{% render 'image-square', image: image %}
+
+		{% liquid
+			assign benefits = ''
+			assign forms = ''
+			for tag in product.tags
+			  if tag contains 'Benefits_'
+				assign benefit = tag | replace: 'Benefits_', ''
+				assign benefits = benefits | append: '_' | append: benefit
+			  endif
+			  if tag contains 'Form_'
+				assign f = tag | replace: 'Form_', ''
+				assign forms = forms | append: '_' | append: f
+			  endif
+			endfor
+			assign benefits = benefits | split: '_'
+			assign forms = forms | split: '_'
+		%}
+		{% if benefits.size > 0 %}
+			{% if benefit_filter %}
+				<span class="ss-product-badge">{{benefit_filter}}</span>
+			{% else %}
+				<span class="ss-product-badge">{{ benefits[1] }}</span>
+			{% endif %}
+		{% elsif forms.size > 0 %}
+			<span class="ss-product-badge">{{ forms[1] }}</span>
+		{% endif %}
+
+		{% comment %}
+			Custom or Sale Badge
+		{% endcomment %}
+
+		{% render 'product-badge', product: product, badge: badge %}
+	</div>
+
+	{% render 'judgeme_widgets', widget_type: 'judgeme_preview_badge', jm_style: '', concierge_install: false, product: product %}
+
+	<h3 class="product-thumb__title">
+		{% if collection %}
+			<a href="{{ product.url }}?colhandle={{ collection.handle }}&coltitle={{ collection.title }}">
+				{{ title | default: 'Product Title' }}
+			</a>
+		{% else %}
+			<a href="{{ product.url }}?colhandle=all&coltitle={{ 'general.breadcrumbs.all_collections' | t }}">
+				{{ title | default: 'Product Title' }}
+			</a>
+		{% endif%}
+	</h3>
+
+	<div class="product-thumb__text">
+
+		{%- comment -%}
+			Price and compare price
+		{%- endcomment -%}
+
+		<span>
+			{% render 'product-price', product: product, show_range: true, add_js_classes: false %}
+		</span>
+
+		{%- comment -%}
+			Judge.me reviews rating / count
+		{%- endcomment -%}
+	</div>
+</div>

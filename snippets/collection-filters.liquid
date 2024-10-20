@@ -1,0 +1,122 @@
+<!-- snippets/collection-filters.liquid -->
+
+{% comment %}
+  Required:
+  	filter_counts_show {Boolean} Whether to show the filter results counts by each filter
+{% endcomment %} 
+
+{% comment %}
+  Load Assets
+{% endcomment %}
+
+{% render 'theme-load-assets', script: 'section-collection-filters.min.js' %}
+
+<form class="collection-filters js-filters">
+  {% comment %}
+	Desktop and Large Tablet Skip Link
+  {% endcomment %}
+
+  <a class="collection-filters__skip-link btn btn--primary" href="#collectionProducts">Skip Filters</a>
+
+  {%- for filter in collection.filters -%}
+	{% comment %}
+	  Basic Filter Data
+	{% endcomment %}
+
+	{% liquid
+	  assign label = filter.label | escape
+	  assign label_handle = label | handle
+	  assign is_color = false
+
+	  if label_handle contains 'color' or label_handle contains 'colour'
+		assign is_color = true
+	  endif
+	%}
+
+	{% case filter.type %}
+		{% comment %}
+		  Checkbox Filters
+		{% endcomment %}
+
+	  {% when 'list' %}
+		<fieldset class="collection-filters__item js-filters-group">
+
+			{% comment %}
+				Legend
+
+				Notes: For the sake of correct HTML and prevention of
+				any screen reader errors, ensure that the legend element
+				comes first inside fieldset, and is not contained by any other element. 
+			{% endcomment %}
+
+			<legend class="collection-filters__item-title">
+				{{ label }}
+			</legend>
+
+			{% comment %}
+				Clear Group
+			{% endcomment %}
+
+			<button type="button" class="collection-filters__clear-group js-filters-clear-group">Clear</button>
+
+			{% comment %}
+				Filter Options
+			{% endcomment %}
+
+			<ul class="collection-filters__item-list">
+				{%- for value in filter.values -%}
+				{% liquid
+					assign id = 'filter' | append: filter.param_name | append: forloop.index | camelcase
+				%}
+
+				{% if is_color %}
+					{% comment %}
+						Color Swatches
+					{% endcomment %}
+
+					<li class="input-swatch input-swatch--small">
+					{% render 'collection-filter-swatch', value: value, id: id, filter_counts_show: filter_counts_show %}
+					</li>
+
+				{% else %}
+					{% comment %}
+						Checkboxes
+					{% endcomment %}
+
+					<li class="input-checkbox">
+					{% render 'collection-filter-checkbox', value: value, id: id, filter_counts_show: filter_counts_show %}
+					</li>
+				{% endif %}
+				{%- endfor -%}
+			</ul>
+		</fieldset>
+
+		{% comment %}
+		  Price Range
+		{% endcomment %}
+
+	  {% when 'price_range' %}
+		<fieldset class="collection-filters__item js-filters-group">
+		  <legend class="collection-filters__item-title">
+			{{ label }}
+		  </legend>
+
+		  {% comment %}
+			Clear Group
+		  {% endcomment %}
+
+		  <button type="button" class="collection-filters__clear-group js-filters-clear-group">Clear</button>
+
+		  <div class="collection-filter__price">
+			{% render 'collection-filter-price-range', filter: filter, label_handle: label_handle %}
+		  </div>
+		</fieldset>
+	{% endcase %}
+  {%- endfor -%}
+
+  {% comment %}
+	Clear All
+  {% endcomment %}
+
+  <button type="button" class="btn btn--hollow js-filters-clear-all">Clear All</button>
+</form>

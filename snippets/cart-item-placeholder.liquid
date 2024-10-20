@@ -1,0 +1,36 @@
+<!-- snippets/cart-item-placeholder.liquid -->
+
+{% comment %}
+	Required:
+		item {Object} The line_item object
+		index {Integer} The 1-based index of the item
+{% endcomment %}
+
+{% liquid 
+	assign add_time = ''
+	assign is_parent = false
+	assign is_free_gift = false
+
+	for property in item.properties
+		if property.first == "_add-time"
+			assign add_time = property.last
+		endif
+
+		if property.first == "_hasCustomizableOptions"
+			assign is_parent = true
+		endif
+
+		if property.first == "_isFreeGift"
+			assign is_free_gift = true
+		endif 
+	endfor
+%}
+
+<tr class="cart-item js-cart-item sr-only" 
+	data-cart-line="{{ index }}" 
+	data-key="{{ item.key }}"
+	{% if is_free_gift %}data-free-gift="true"{% endif %}
+	{% if is_parent %}data-item-is-parent="true"{% endif %}
+	{% if add_time != blank %}data-add-time="{{ add_time }}"{% endif %}>
+    <td colspan="3"></td>
+</tr>

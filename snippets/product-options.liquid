@@ -1,0 +1,95 @@
+<!-- snippets/product-options.liquid -->
+
+{% comment %}
+  Required:
+  	current_variant {Object} The variant object.
+{% endcomment %}
+
+<div class="product-options">
+  {%- for num in (1..product.options.size) -%}
+    {%- liquid
+      assign option_title = product.options[forloop.index0] | default: false
+      assign option_handle = option_title | handle
+      assign option_number = 'option' | append: num
+      assign options = product.variants | map: option_number | uniq
+      assign is_color = true 
+
+      if option_title contains 'Color'
+        assign is_color = false
+      endif
+    -%}
+    {% comment %} The is_color values are switched, replace true by false and viceversa {% endcomment %}
+
+    <fieldset class="product-options__option js-product-options" role="radiogroup">
+      <legend class="product-options__option-title">
+        {{ option_title -}}
+        {%- if is_color == true %}
+          <span class="js-product-option-value" aria-hidden="true">— {{ current_variant[option_number] }}</span>
+        {%- endif %}
+      </legend>
+
+      {%- for option in options -%}
+        {%- liquid
+          assign option_handle = option | handle
+          assign selected = false
+
+          if option == current_variant[option_number]
+            assign selected = true
+          endif
+        -%}
+
+        {% if is_color %}
+          {% comment %}
+            Color Swatch
+          {% endcomment %}
+
+          
+          <div class="input-swatch {% if product.tags contains "Custom-Variants" %}custom{% endif %}">
+            <input
+              type="radio"
+              name="{{ option_number }}"
+              value="{{ option | escape }}"
+              class="js-product-option"
+              title="{{ option_title }}: {{ option }}"
+              id="{{ option_handle }}-{{ product.id }}"
+              {% if selected %}
+                checked
+              {% endif %}
+            >
+
+            <label for="{{ option_handle }}-{{ product.id }}">
+              <div class="swatch" style="background-color:{{ option | escape }};"></div>
+              <span class="sr-only">
+                {{ option }}
+              </span>
+            </label>
+            <span style="font-size: 12px;width: 38px;display: block;overflow: hidden;height: 14px;">{{ option }}</span>
+          </div>
+
+        {% else %}
+          {% comment %}
+            Pill Button
+          {% endcomment %}
+
+          <div class="input-pill">
+            <input
+              type="radio"
+              name="{{ option_number }}"
+              value="{{ option | escape }}"
+              class="js-product-option"
+              title="{{ option_title }}: {{ option }}"
+              id="{{ option_handle }}-{{ product.id }}"
+              {% if selected %}
+                checked
+              {% endif %}
+            >
+
+            <label for="{{ option_handle }}-{{ product.id }}">
+              {{ option }}
+            </label>
+          </div>
+        {% endif %}
+      {%- endfor -%}
+    </fieldset>
+  {%- endfor -%}
+</div>

@@ -1,0 +1,81 @@
+<!-- sections/recently-viewed-products.liquid -->
+
+{% comment %}
+	Load Assets
+{% endcomment %}
+
+{% render 'theme-load-assets', style: 'section-recently-viewed-products.min.css', script: 'section-recently-viewed-products.min.js' %}
+
+{% comment %}
+	Initial Liquid Variables
+{% endcomment %}
+
+{% liquid
+	assign data = section.settings
+%}
+
+<recently-viewed-products class="recently-viewed-products js-recently-viewed-products-slider" data-max-products="{{ data.max_products }}">
+	<div class="recently-viewed-products__header">
+		{% comment %}
+			Title
+		{% endcomment %}
+
+		<h2 class="recently-viewed-products__title">{{ data.title }}</h2>
+
+		{% comment %}
+			Slider controls
+		{% endcomment %}
+
+		<fieldset class="recently-viewed-products__slider__controls">
+			<legend class="sr-only">{{ data.title }} Controls</legend>
+
+			<button type="button" class="js-sp-slider-prev recently-viewed-products__slider__button">
+				<span class="sr-only">Previous Product</span>
+				{% render 'icon-angle-left-thin', class: 'icon' %}
+			</button>
+
+			<button type="button" class="js-sp-slider-next recently-viewed-products__slider__button">
+				<span class="sr-only">Next Product</span>
+				{% render 'icon-angle-right-thin', class: 'icon' %}
+			</button>
+		</fieldset>
+	</div>
+
+	{% comment %}
+		Products (added by JS)
+	{% endcomment %}
+
+	<div class="recently-viewed-products__products js-recently-viewed-products-slides"></div>
+</recently-viewed-products>
+
+{% schema %}
+{
+    "name": "Recently Viewed Products",
+	"class": "recently-viewed-products__wrapper", 
+    "settings": [
+        {
+            "type": "range",
+            "id": "max_products",
+            "min": 0,
+            "max": 20,
+            "step": 1,
+            "default": 8,
+            "label": "Max products to show"
+        }, 
+        {
+            "type": "textarea",
+            "id": "title",
+            "label": "Heading",
+            "default": "Recently Viewed"
+        }
+    ], 
+	"presets": [
+        {
+            "name": "Recently Viewed Products"
+		}
+	], 
+    "disabled_on": {
+		"groups": ["footer"]
+	}
+}
+{% endschema %}

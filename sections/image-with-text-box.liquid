@@ -1,0 +1,90 @@
+<style>
+    #iwtb--{{ section.id }} .iwtb-inner {
+        background-color: {{ section.settings.back_color }};
+        background-image: url({{ section.settings.back_image | image_url: width: 1200 }});
+    }
+</style>
+{% render 'theme-load-assets', style: 'section-image-with-text-box.min.css' %}
+<div class="image-with-text-box" id="iwtb--{{ section.id }}">
+    <div class="container">
+        <div class="iwtb-inner">
+            <div class="iwtb-text">
+                {% if section.settings.heading != blank %}
+                    <h2 class="iwtb-heading">{{ section.settings.heading }}</h2>
+                {% endif %}
+                {% if section.settings.description != blank %}
+                    <div class="iwtb-description">{{ section.settings.description }}</div>
+                {% endif %}
+                {% if section.settings.btn_text != blank and section.settings.btn_link != blank %}
+                    <a class="iwtb-link hero__button btn btn--primary" href="{{ section.settings.btn_link }}">{{ section.settings.btn_text }}</a>
+                {% endif %}
+            </div>
+            <div class="iwtb-image">
+                <div class="iwtb-image-inner" style="aspect-ratio: {{ section.settings.image.aspect_ratio }};">
+                    {{ section.settings.image | image_url: width: 360 | image_tag }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% schema %}
+{
+    "tag": "section",
+    "name": "Image with Text Box",
+    "settings": [
+        {
+            "type": "text",
+            "id": "heading",
+            "label": "Title",
+            "default": "All about Super Speciosa."
+        },
+        {
+            "type": "richtext",
+            "id": "description",
+            "label": "Description",
+            "default": "<p>We understand that our success is a direct result of your experience as a customer, so we pledge to do everything in our power to ensure your satisfaction. Learn more about us, our quality control processes, and our commitment to you.</p>"
+        },
+        {
+            "type": "header",
+            "content": "Button"
+        },
+        {
+            "type": "text",
+            "id": "btn_text",
+            "label": "Button Text",
+            "default": "Learn More"
+        },
+        {
+            "type": "url",
+            "id": "btn_link",
+            "label": "Button Link"
+        },
+        {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image"
+        },
+        {
+            "type": "header",
+            "content": "Backgournd"
+        },
+        {
+            "type": "color",
+            "id": "back_color",
+            "label": "Background Color",
+            "default": "#4e5768"
+        },
+        {
+            "type": "image_picker",
+            "id": "back_image",
+            "label": "Background Image"
+        }
+    ],
+    "presets": [
+        {
+            "name": "Image with Text Box"
+        }
+    ]
+}
+{% endschema %}

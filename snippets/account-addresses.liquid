@@ -1,0 +1,114 @@
+<!-- snippets/account-addresses.liquid -->
+
+{% comment %}
+	Required:
+		nothing
+
+	Notes: The edit and new form dropdowns function
+		   as accordions and use the accordion script.
+{% endcomment %}
+
+<div class="account__section account__section--addresses">
+	<h2 class="account__heading">
+		{{ 'customer.addresses.title' | t }}
+	</h2>
+
+	{% comment %}
+		Primary Address
+	{% endcomment %}
+
+	{%- if customer.default_address != empty and customer.addresses_count > 0 -%}
+		<div class="account-address">
+			<h4 class="account-address__title">
+				{{ 'customer.addresses.default' | t }}
+			</h4>
+
+			<address>
+				{{ customer.default_address | format_address }}
+			</address>
+		</div>
+	{%- endif -%}
+
+	{% comment %}
+		New Address
+	{% endcomment %}
+
+	<div class="account__section account__section--addresses js-accordion-parent">
+
+		<button class="btn btn--primary js-accordion-btn" aria-expanded="false" aria-controls="newAddress">
+			{{ 'customer.addresses.add' | t }}
+		</button>
+
+		{% comment %}
+			New Address Form
+		{% endcomment %}
+
+		<div class="account-address__form" id="newAddress">
+			<div class="account-address">
+				{% render 'form-address-new' %}
+			</div>
+		</div>
+
+	</div>
+</div>
+
+<account-addresses class="account__section account__section--addresses">
+	<h4 class="account__heading account__heading--secondary">
+		{{ 'customer.addresses.all' | t }}
+	</h4>
+
+	{% if customer.addresses.size > 0 %}
+
+		{%- paginate customer.addresses by 20 -%}
+
+			{% comment %}
+				List of All Addresses
+			{% endcomment %}
+
+			<ul class="account__section" aria-label="All Addresses">
+
+				{%- for address in customer.addresses -%}
+
+					<li class="account-address js-accordion-parent">
+
+						<address>
+							{{ address | format_address }}
+						</address>
+
+						{% comment %}
+							Edit/Delete Controls
+						{% endcomment %}
+
+						<div class="account-address__actions">
+							<button type="button" class="btn btn--primary js-accordion-btn" aria-expanded="false" aria-controls="edit{{ address.id }}">
+								{{ 'customer.addresses.edit' | t }}
+							</button>
+
+							<form method="post" action="/account/addresses/{{ address.id }}">
+								<input type="hidden" name="_method" value="delete">
+								<button type="submit" class="btn btn--hollow js-customer-address-delete">{{ 'customer.addresses.delete' | t }}</button>
+							</form>
+						</div>
+
+						{% comment %}
+							Address Edit Form
+						{% endcomment %}
+
+						<div class="account-address__form" id="edit{{ address.id }}">
+							{% render 'form-address-edit', address: address %}
+						</div>
+					</li>
+
+				{%- endfor -%}
+
+			</ul>
+
+			{%- if paginate.pages > 1 -%}
+				{% render 'pagination', paginate: paginate %}             
+			{%- endif -%}
+		{%- endpaginate -%}
+
+	{%- else -%}
+			<p>{{ 'customer.addresses.none' | t }}</p>
+	{%- endif -%}
+</account-addresses>

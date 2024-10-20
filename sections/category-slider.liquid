@@ -1,0 +1,208 @@
+<!-- sections/category-slider.liquid -->
+
+{% comment %}
+	Load Assets
+    Note: not loading styles on homepage -- those are in the index.scss template file
+{% endcomment %}
+
+{%- if template == "index" -%}
+    {% render 'theme-load-assets', script: 'section-category-slider.min.js' %}
+{%- else -%}
+    {% render 'theme-load-assets', style: 'section-category-slider.min.css', script: 'section-category-slider.min.js' %}
+{%- endif -%}
+
+{% comment %}
+	Initial Liquid Variables
+{% endcomment %}
+
+{%- liquid 
+    assign data = section.settings
+    assign title = data.title
+-%}
+
+{% comment %}
+	Section Markup
+{% endcomment %}
+
+
+<style>
+
+.category-slider__title {
+    font-family: "Dilemma", sans-serif;
+	font-weight: 700;
+    text-transform: uppercase;
+	letter-spacing: 1.6px;
+}
+</style>
+
+<section class="category-slider" id="CategorySlider{{ section.id }}">
+
+    <div class="container category-slider__header">
+        {%- if title != blank -%}
+            <h2 class="category-slider__title">{{ title }}</h2>
+        {%- endif -%}
+
+        {% comment %}
+            Controls
+        {% endcomment %}
+
+        <fieldset class="category-slider__controls">
+            <legend class="sr-only">Category Slider Controls</legend>
+
+            <button type="button" class="js-sp-slider-prev category-slider__button">
+                <span class="sr-only">Previous Category</span>
+                {% render 'icon-angle-left-thin', class: 'icon' %}
+            </button>
+
+            <button type="button" class="js-sp-slider-next category-slider__button">
+                <span class="sr-only">Next Category</span>
+                {% render 'icon-angle-right-thin', class: 'icon' %}
+            </button>
+        </fieldset>
+    </div>
+
+	<div class="category-slider__grid js-category-slider" data-id="CategorySlider{{ section.id }}" {% if title != blank %} aria-label="{{ title }}"{% endif %}>
+
+        {% comment %}
+            Slides
+        {% endcomment %}
+        <div class="js-category-slider-slides">
+            {%- for block in section.blocks -%}
+                {%- liquid 
+                    assign block_data = block.settings
+                    assign url = block_data.url
+
+                    assign collection_handle = ""
+                    assign block_title = ""
+                    assign image = ""
+
+                    if url contains "/collections/"
+                        assign collection_handle = url | split: "/collections/" | last | split: "?" | first | strip
+
+                        if collections[collection_handle].title != blank
+                            assign collection = collections[collection_handle]
+                            assign block_title = collections[collection_handle].title
+                            assign image = collections[collection_handle].image
+                        endif
+                    endif
+
+                    if block_data.title != blank
+                        assign block_title = block_data.title
+                    endif 
+
+                    if block_data.image != blank
+                        assign image = block_data.image
+                    endif
+                -%}
+
+                <div class="category-slider__list-item {{ collection_handle }}">
+                    <div class="category-slide">
+                        <div class="category-slide__image-wrapper">
+                            <div class="category-slide__image">
+                                {% render "image-simple", image: image, width: image.width, height: image.height, load: "eager", data: ' loading="lazy" ' %}
+                            </div>
+
+                            {% comment %}
+                                Color family swatches
+                            {% endcomment %}
+
+                            <div class="category-slide__color-swatches">
+                                {%- for num in (1..4) -%}
+                                    {%- liquid 
+                                        assign color_handle = "color_" | append: num 
+                                        assign color = block_data[color_handle]    
+                                    -%}
+
+                                    {%- if color != blank -%}
+                                        <span class="category-slide__color-swatch" style="background-color: {{ color }};"></span>
+                                    {%- endif -%}
+                                {%- endfor -%}
+                            </div>
+                        </div>
+
+                        <div class="category-slide__text">
+                            <a href="{{ url }}" class="cta">{{ block_title }}
+                                <span class="cta__icon-arrow"></span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            {%- endfor -%}
+        </div>
+	</div>
+</section>
+
+{% schema %}
+{
+    "name": "Category Slider",
+    "settings": [
+        {
+            "type": "text",
+            "id": "title",
+            "label": "Title",
+			"default": "Category Slider"
+        }
+    ],
+    "blocks": [
+        {
+            "type": "category",
+            "name": "Category",
+            "settings": [
+                {
+                    "type": "url",
+                    "id": "url",
+                    "label": "Category URL"
+                },
+                {
+                    "type": "text",
+                    "id": "title",
+                    "label": "CTA Text", 
+                    "info": "If the Category URL is a collection, the collection title will show if this field is blank"
+                }, 
+                {
+                    "type": "image_picker",
+                    "id": "image",
+                    "label": "Image",
+                    "info": "Recommended size: 600 x 800px. If the Category URL is a collection, the collection image will show if this field is blank"
+                }, 
+                { 
+                    "type": "header", 
+                    "content": "Color family swatches"
+                }, 
+                { 
+                    "type": "paragraph", 
+                    "content": "Blank/transparent colors will not show"
+                }, 
+                {
+                    "type": "color",
+                    "id": "color_1",
+                    "label": "Color 1"
+                }, 
+                {
+                    "type": "color",
+                    "id": "color_2",
+                    "label": "Color 2"
+                }, 
+                {
+                    "type": "color",
+                    "id": "color_3",
+                    "label": "Color 3"
+                }, 
+                {
+                    "type": "color",
+                    "id": "color_4",
+                    "label": "Color 4"
+                }
+            ]
+        }
+    ],
+    "presets": [
+        {
+            "name": "Category Slider"
+        }
+    ], 
+    "disabled_on": {
+		"groups": ["footer"]
+	}
+}
+{% endschema %}

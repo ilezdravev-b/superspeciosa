@@ -1,0 +1,215 @@
+{{ 'section-free-gift-signup.min.css' | asset_url | stylesheet_tag }}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@23.0.10/build/css/intlTelInput.css">
+
+<div id="free-gift-signup">
+  <div class="popup-btn-container btn-open">
+    <svg x="0px" y="0px" viewBox="0 0 72.722 72.722">
+      <path
+        d="M66.137,18.801h-3.188h-4.962c2.904-1.824,4.811-4.823,4.811-8.214c0-5.549-5.088-10.063-11.341-10.063
+      c-5.306,0-11.589,9.093-15.096,14.97c-3.507-5.876-9.792-14.97-15.097-14.97c-6.253,0-11.341,4.515-11.341,10.063
+      c0,3.391,1.906,6.39,4.811,8.214H10.26H6.586C2.955,18.801,0,21.755,0,25.385v10.439c0,2.586,1.502,4.821,3.676,5.897v23.89
+      c0,3.632,2.954,6.586,6.584,6.586h52.688c3.632,0,6.586-2.954,6.586-6.586V41.456c1.907-1.154,3.188-3.242,3.188-5.63v-10.44
+      C72.723,21.756,69.769,18.801,66.137,18.801z M6.586,36.409C6.263,36.409,6,36.147,6,35.825v-10.44
+      c0-0.322,0.263-0.584,0.586-0.584H33.36v11.607L6.586,36.409L6.586,36.409z M39.361,24.801h26.776c0.323,0,0.586,0.262,0.586,0.584
+      v10.439c0,0.322-0.263,0.584-0.586,0.584H39.361V24.801z M51.456,6.524c2.895,0,5.341,1.861,5.341,4.063s-2.446,4.063-5.341,4.063
+      h-7.41C47.081,10.267,50.199,6.784,51.456,6.524z M21.181,6.519c1.32,0.264,4.454,3.749,7.493,8.133h-7.41
+      c-2.895,0-5.341-1.861-5.341-4.063S18.369,6.524,21.181,6.519z M9.676,65.613V42.409h23.685v23.789H10.26
+      C9.938,66.199,9.676,65.936,9.676,65.613z M62.949,66.199H39.361V42.409h24.174v23.203C63.535,65.936,63.272,66.199,62.949,66.199z">
+      </path>
+    </svg>
+    <span> {{ section.settings['popup-button-text'] }}</span>
+  </div>
+  <div class="free-gift-signup-overlay hidden"></div>
+  <div class="free-gift-signup-modal hidden">
+    <div class="btn-close-wrapper">
+      <span class="btn-close">⨉</span>
+    </div>
+    {%- if section.settings.logo != blank -%}
+      <div class="logo-container">
+        {{ section.settings.logo | image_url: width: 150 | image_tag }}
+      </div>
+    {%- endif -%}
+    <h4 class="title">{{ section.settings.title }}</h4>
+    <div class="step-indicator">
+      <div class="step step-1">1</div>
+      <div class="step step-2">2</div>
+      <div class="step step-3">3</div>
+      <div class="step step-4">4</div>
+    </div>
+
+    <div class="step-content">
+      <div>
+        <p class="subheading-1">{{ section.settings['subheading-1'] }}</p>
+      </div>
+      <div>
+        <p class="subheading-2">{{ section.settings['subheading-2'] }}</p>
+      </div>
+      <input type="tel" id="int-tel-input" placeholder="Phone">
+      <div class="button-group">
+        <button class="send-code-button" data-current-step="1" data-next-step="2">Send Code</button>
+      </div>
+    </div>
+
+    <div class="step-content">
+      <input type="text" id="fake-code-input" class="code-input" placeholder="CODE">
+      <input type="text" id="input-mask-code" class="code-input" placeholder="CODE">
+      <div>
+        <p class="subheading-2">Didn't receive it? <span class="resend-code-button">Resend Code</span></p>
+      </div>
+      <div class="button-group">
+        <button class="back-button" data-current-step="2" data-prev-step="1">Back</button>
+        <button class="submit-button" data-current-step="1" data-next-step="3">Submit</button>
+      </div>
+    </div>
+
+    <div class="step-content">
+      <form>
+        <div>
+          <input type="text" name="first_name" class="first-name-input" placeholder="First name">
+          <input type="text" name="last_name" class="last-name-input" placeholder="Last name">
+        </div>
+        <input type="text" name="address" class="address-input" placeholder="Address">
+        <input type="text" name="apartment" class="apartment-input" placeholder="Apartment, suite, etc. (optional)">
+        <input type="text" name="city" class="city-input" placeholder="City">
+        <select name="state" class="state-select">
+          <option value="" selected disabled>Select State</option>
+          <option value="AL">Alabama</option>
+          <option value="AK">Alaska</option>
+          <option value="AZ">Arizona</option>
+          <option value="AR">Arkansas</option>
+          <option value="CA">California</option>
+          <option value="CO">Colorado</option>
+          <option value="CT">Connecticut</option>
+          <option value="DE">Delaware</option>
+          <option value="DC">District Of Columbia</option>
+          <option value="FL">Florida</option>
+          <option value="GA">Georgia</option>
+          <option value="HI">Hawaii</option>
+          <option value="ID">Idaho</option>
+          <option value="IL">Illinois</option>
+          <option value="IN">Indiana</option>
+          <option value="IA">Iowa</option>
+          <option value="KS">Kansas</option>
+          <option value="KY">Kentucky</option>
+          <option value="LA">Louisiana</option>
+          <option value="ME">Maine</option>
+          <option value="MD">Maryland</option>
+          <option value="MA">Massachusetts</option>
+          <option value="MI">Michigan</option>
+          <option value="MN">Minnesota</option>
+          <option value="MS">Mississippi</option>
+          <option value="MO">Missouri</option>
+          <option value="MT">Montana</option>
+          <option value="NE">Nebraska</option>
+          <option value="NV">Nevada</option>
+          <option value="NH">New Hampshire</option>
+          <option value="NJ">New Jersey</option>
+          <option value="NM">New Mexico</option>
+          <option value="NY">New York</option>
+          <option value="NC">North Carolina</option>
+          <option value="ND">North Dakota</option>
+          <option value="OH">Ohio</option>
+          <option value="OK">Oklahoma</option>
+          <option value="OR">Oregon</option>
+          <option value="PA">Pennsylvania</option>
+          <option value="RI">Rhode Island</option>
+          <option value="SC">South Carolina</option>
+          <option value="SD">South Dakota</option>
+          <option value="TN">Tennessee</option>
+          <option value="TX">Texas</option>
+          <option value="UT">Utah</option>
+          <option value="VT">Vermont</option>
+          <option value="VA">Virginia</option>
+          <option value="WA">Washington</option>
+          <option value="WV">West Virginia</option>
+          <option value="WI">Wisconsin</option>
+          <option value="WY">Wyoming</option>
+          <option value="AS">American Samoa</option>
+          <option value="GU">Guam</option>
+          <option value="MP">Northern Mariana Islands</option>
+          <option value="PR">Puerto Rico</option>
+          <option value="UM">United States Minor Outlying Islands</option>
+          <option value="VI">Virgin Islands</option>
+        </select>
+        <input type="text" name="zip" class="zip-code-input" placeholder="ZIP Code">
+        <input type="email" name="email" class="email-input" placeholder="Email">
+        <div class="button-group">
+          <button class="back-button" type="button" data-current-step="3" data-prev-step="2">Back</button>
+          <button class="submit-button" type="submit" data-current-step="3">Submit</button>
+        </div>
+      </form>
+    </div>
+
+    <div class="step-content">
+      <div class="confirmation-message">Please confirm your shipping information below by pressing submit.</div>
+      <div class="confirmation-details"></div>
+      {% if section.settings.legal_info and section.settings.legal_info != '' %}
+        <p style="font-size:10pt; text-align:center">
+          {{ section.settings.legal_info }}
+        </p>  
+      {% endif %}
+
+      <div class="button-group">
+        <button class="back-button" data-current-step="4" data-prev-step="3">Back</button>
+        <button id="final-submit-button" class="submit-button">Submit</button>
+      </div>
+    </div>
+    <div class="step-content">
+      <p class="subheading-1">Please check your inbox to confirm your signup and verify your shipping address.</p>
+    </div>
+    <div class="error-message"></div>
+  </div>
+</div>
+
+<script src="{{ 'section-free-gift-signup.min.js' | asset_url }}" defer="defer"></script>
+<script src="https://cdn.jsdelivr.net/npm/intl-tel-input@23.0.10/build/js/intlTelInput.min.js" defer></script>
+<script src="https://unpkg.com/imask" defer></script>
+
+{% schema %}
+{
+  "name": "Free Kratom Signup",
+  "settings": [
+    {
+      "id": "popup-button-text",
+      "type": "text",
+      "label": "Popup Button Text",
+      "default": "FREE KRATOM"
+    },
+    {
+      "id": "title",
+      "type": "text",
+      "label": "Free Gift Signup Header",
+      "default": "WANT TO TRY OUR KRATOM FOR FREE?"
+    },
+    {
+      "id": "subheading-1",
+      "type": "text",
+      "label": "Subheading 1",
+      "default": "Don’t even pay for shipping! Just sign up for email/text, and we'll send you two of our most popular items."
+    },
+    {
+      "id": "subheading-2",
+      "type": "text",
+      "label": "Subheading 2",
+      "default": "Offer not valid for existing customers."
+    },
+    {
+      "id": "logo",
+      "type": "image_picker",
+      "label": "Logo"
+    },
+    {
+      "id": "legal_info",
+      "type": "richtext",
+      "label": "legal_info",
+      "default": "<p>By submitting you agree to receive automated promotional messages. This agreement is not a condition of any purchase. See Terms  and Privacy Policy. Frequency varies. Can opt out at any time.</p>"
+    }
+  ],
+  "presets": [
+    {
+      "name": "free-gift-signup",
+      "category": "Custom"
+    }
+  ]
+}
+{% endschema %}

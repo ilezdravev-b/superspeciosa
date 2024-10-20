@@ -1,0 +1,128 @@
+<!-- sections/ajax-cart-button.liquid -->
+
+{% comment %}
+  Required:
+  	nothing
+
+  Notes: The element with the ID of "ajaxCartBtn" will have
+  	   its content refreshed whenever the cart is updated.
+  	   The ID is set in _src/scripts/modules/shopify-cart.js,
+  	   and can be updated or moved as needed.
+{% endcomment %}
+
+{%- liquid
+  assign cart_item_count = cart.item_count | abs
+  for item in cart.items
+    assign show_product = true
+    if item.properties['_add-time'] and item.properties['_add-time'] != blank
+      unless item.properties._hasCustomizableOptions == 'true'
+        assign show_product = false
+      endunless
+    endif
+    if item.properties.is_custom_option
+      assign show_product = false
+    endif
+
+    unless show_product
+      assign cart_item_count = cart_item_count | minus: item.quantity
+    endunless
+  endfor
+-%}
+
+{% capture button_text %}
+	{% render 'icon-bag', class: 'icon' %}
+
+<div class="cart-count-buddle" {% if cart_item_count == 0 %} style="display: none" {% endif %}>
+		<span class="header__cart-count">{{ cart_item_count }}</span>
+
+		<span class="sr-only">
+			{{ cart_item_count | pluralize: 'item', 'items' }} in cart
+		</span>
+	</div>
+{% endcapture %}
+
+{% comment %}
+  Ajax cart button or standard link to cart page
+{% endcomment %}
+<form class="search-bar" method="get" action="/pages/search-results-page">
+  <input type="hidden" name="type" value="product">
+
+  <div class="search-bar__content">
+    <button class="btn btn--icon" type="submit" aria-label="Search">
+      <svg
+        aria-hidden="true"
+        class="e-font-icon-svg e-fas-search"
+        fill="#fff"
+        width="21"
+        height="21"
+        viewBox="0 0 512 512"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"></path>
+      </svg>
+    </button>
+  </div>
+</form>
+{%- if settings.ajax_cart_enable and template.name != 'cart' -%}
+  <button
+    type="button"
+    id="ajaxCartBtn"
+    class="btn btn--icon header__cart-btn js-ajax-btn"
+    aria-controls="ajaxCart"
+    aria-expanded="false"
+    aria-haspopup="menu"
+  >
+    {{ button_text }}
+  </button>
+
+{%- else -%}
+  <a
+    class="btn btn--icon header__cart-btn"
+    href="{{ routes.cart_url }}"
+    id="ajaxCartBtn"
+    title="Cart"
+  >
+    {{ button_text }}
+  </a>
+{%- endif -%}
+
+<style>
+  .header__cart-btn {
+    position: relative;
+  }
+  .cart-count-buddle {
+    position: absolute;
+    background-color: #ffc800;
+    width: 14px;
+    height: 14px;
+    border-radius: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 0.9rem;
+    top: 5px;
+    right: 5px;
+  }
+  .header #ajaxCartBtn .cart-count-buddle .header__cart-count {
+    font-family: 'Dilema', sans-serif;
+    font-weight: 700;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    letter-spacing: -1.5px;
+    color: #050708;
+  }
+  #headerSearch {
+    display: table-row;
+  }
+  .header__nav.header__utilities .btn--icon {
+    padding: 8px;
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Cart Button"
+}
+{% endschema %}

@@ -1,0 +1,81 @@
+<!-- sections/contact-info.liquid -->
+
+{%- liquid 
+    assign data = section.settings
+-%}
+
+<section class="container-text section">
+    <div class="contact-heading">
+        <h2 class="page__title">{{ data.title }}</h2>
+    </div>
+
+    <div class="rte">
+        {{ data.support_content | replace: 'href="#REAMAZE"', 'onclick="Reamaze.popup()" style="cursor: pointer;"' }}
+    </div>
+</section>
+
+<article class="container-text section">
+    <div class="contact-heading rte">
+        {{ data.phone_title }}
+
+        <a href="tel: {{ data.phone }}">{{ data.phone }}</a>
+    </div>
+
+    {{ data.hours }}
+</article>
+
+{% comment %}
+    Reamaze (Live Chat)
+{% endcomment %}
+
+<!-- REAMAZE INTEGRATION START - DO NOT REMOVE -->
+{% include 'reamaze-config' %}
+{% include 'reamaze-sso' %}
+<style>
+    #reamaze-widget-icon {
+        display: none !important;
+    }
+    
+    .close-reamaze {
+        display: none !important;
+    }
+</style>
+<!-- REAMAZE INTEGRATION END - DO NOT REMOVE -->
+
+{% schema %}
+{
+    "name": "Contact Info",
+    "settings": [
+        {
+            "type": "text",
+            "id": "title",
+            "label": "Title",
+            "default": "Ways to Reach Support"
+        },
+        { 
+            "type": "richtext", 
+            "id": "support_content", 
+            "label": "Support content", 
+            "info": "Note: for Reamaze, setting a link's URL to #REAMAZE will trigger the Reamaze live chat popup."
+        }, 
+        {
+            "type": "text",
+            "id": "phone_title",
+            "label": "Phone Heading",
+            "default": "PHONE/SMS SUPPORT HOURS:"
+        },
+        {
+            "type": "text",
+            "id": "phone",
+            "label": "Phone Number",
+            "default": "+1(801) 797-1037"
+        },
+        {
+            "type": "richtext",
+            "id": "hours",
+            "label": "Hours",
+            "default": "<p>7 AM to 7 PM MST <br />6 AM to 6 PM PST <br />9 AM to 9 PM EST</p>"
+        }
+    ]
+}
+{% endschema %}

@@ -1,0 +1,54 @@
+<!-- sections/example-colors.liquid -->
+
+{%- liquid 
+    assign colors = "primary, secondary, tertiary, accent, neutral, black, white" | split: ", " 
+    assign primary_styles = "base" | split: ", "
+    assign secondary_styles = "base" | split: ", "
+    assign tertiary_styles = "base" | split: ", "
+    assign accent_styles = "base" | split: ", "
+    assign neutral_styles = "base" | split: ", "
+    assign black_styles = "base, 70, 50, 30, 10" | split: ", "
+    assign white_styles = "base, 70, 50, 30, 10" | split: ", "
+    assign alert_styles = "base, 100, 200, 300, 400" | split: ", "
+    assign warning_styles = "base, 100, 200, 300, 400" | split: ", "
+    assign error_styles = "base, 100, 200, 300, 400" | split: ", "
+    assign success_styles = "base, 100, 200, 300, 400" | split: ", "
+-%}
+
+<div class="section container-text">
+    <div class="style-guide__color-grid">
+        {%- for color in colors -%}
+            {% case color %}
+                {% when 'primary' %}
+                    {% assign styles = primary_styles %}
+                {% when 'secondary' %}
+                    {% assign styles = secondary_styles %}
+                {% when 'tertiary' %}
+                    {% assign styles = tertiary_styles %}
+                {% when 'accent' %}
+                    {% assign styles = accent_styles %}
+                {% when 'neutral' %}
+                    {% assign styles = neutral_styles %}
+                {% when 'black' %}
+                    {% assign styles = black_styles %}
+                {% when 'white' %}
+                    {% assign styles = white_styles %}
+                {% when 'alert' %}
+                    {% assign styles = alert_styles %}
+                {% when 'warning' %}
+                    {% assign styles = warning_styles %}
+                {% when 'error' %}
+                    {% assign styles = error_styles %}
+                {% when 'success' %}
+                    {% assign styles = success_styles %}
+            {% endcase %}
+
+            {% for style in styles %}
+                <div class="style-guide__color-grid__item">
+                    <div class="style-guide__color-grid__item__color color-{{ color }}-{{ style }}"></div>
+                    <div class="style-guide__label">{{ color }}.{{ style }}</div> 
+                </div>
+            {% endfor %}
+        {%- endfor -%}
+    </div>
+</div>

@@ -1,0 +1,112 @@
+<!-- sections/blog-article-grid.liquid -->
+
+{% comment %}
+  Initial Liquid Variables
+{% endcomment %}
+
+{% liquid
+  assign data = section.settings
+%}
+
+{% comment %}
+  Section Markup
+{% endcomment %}
+
+<section class="blog-articles container section">
+  {% comment %} {% assign latestArticle = "" %} {% endcomment %}
+  {%- if blog.articles.size > 0 -%}    
+    {% assign featuredArticle = blog.articles | sort:'published_at' | reverse %}
+    {% for article in featuredArticle  %}
+      {% if forloop.index == 1 %}
+        {% assign  latestArticle = article.title %}        
+        <div class="blog-desktop__version">
+          {% render 'custom-article-thumbnail', article: article, cta_text: data.article_thumbnail_cta_text %}
+        </div>
+        <div class="blog-mobile__version custom-blog__style">
+          {% render 'article-thumbnail', article: article, cta_text: data.article_thumbnail_cta_text %}
+        </div>
+      {% endif %}
+    {% endfor %}
+  {% endif %}
+
+  {%- paginate blog.articles by data.articles_per_page -%}
+
+    <div class="blog-articles__grid custom-blog__style">
+      {%- if blog.articles.size > 0 -%}
+        {% comment %}
+          Articles Grid
+        {% endcomment %}
+        {%- for article in blog.articles -%}
+          {% if article.title != latestArticle %}            
+            {% render 'article-thumbnail', article: article, cta_text: data.article_thumbnail_cta_text %}
+          {% endif %}
+        {%- endfor -%}
+
+      {%- else -%}
+        {% comment %}
+          No Articles
+        {% endcomment %}
+
+        <div class="blog-articles__empty">
+          {{ data.no_articles_text }}
+        </div>
+      {%- endif -%}
+    </div>
+
+    {% comment %}
+      Article Pagination
+    {% endcomment %}
+
+    {%- if paginate.pages > 1 -%}
+      {% render 'pagination', paginate: paginate %}
+    {%- endif -%}
+  {%- endpaginate -%}
+</section>
+
+<style>
+  .blog-mobile__version {
+    display: none;
+  }
+  @media (max-width: 767px) {
+    .blog-mobile__version {
+      display: block;
+      margin-bottom: 2rem;
+    }
+    .blog-desktop__version {
+      display: none;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Blog Article Grid",
+  "settings": [
+    {
+      "type": "range",
+      "id": "articles_per_page",
+      "min": 8,
+      "max": 50,
+      "step": 1,
+      "default": 9,
+      "label": "Articles per page"
+    },
+    {
+      "type": "text",
+      "id": "article_thumbnail_cta_text",
+      "label": "Article thumbnail CTA text",
+      "default": "Read More"
+    },
+    {
+      "type": "header",
+      "content": "No articles"
+    },
+    {
+      "type": "richtext",
+      "id": "no_articles_text",
+      "label": "No articles found message",
+      "default": "<p>Sorry, no articles could be found.</p>"
+    }
+  ]
+}
+{% endschema %}

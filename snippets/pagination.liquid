@@ -1,0 +1,69 @@
+<!-- snippets/pagination.liquid -->
+
+{% comment %}
+    Renders a set of links for paginated results. Must be used within paginate tags.
+
+    Required:
+    	paginate {Object} The pagination object
+    
+	Optional:
+		anchor {String} This can be added so that on page reload it takes you to wherever you've placed your anchor tag.
+
+	Usage:
+		{% paginate results by 2 %}
+			{% render 'pagination', paginate: paginate, anchor: '#yourID' %}
+		{% endpaginate %}
+{% endcomment %} 
+
+{%- if paginate.parts.size > 0 -%}
+
+	<nav class="pagination section" aria-label="{{ 'general.pagination.label' | t }}">
+		<ul class="pagination__list" aria-label="{{ 'general.pagination.label' | t }}">
+
+			{% comment %}
+				Previous
+			{% endcomment %}
+
+				<li>
+					<a href="{{ paginate.previous.url }}{{ anchor }}" class="pagination__element pagination__element--prev">
+						<span class="sr-only">
+							{{ 'general.pagination.previous' | t }}
+						</span>
+						{% render 'icon-chevron-left' %}
+					</a>
+				</li>
+
+			{% comment %}
+				Pages
+			{% endcomment %}
+
+			{%- for part in paginate.parts -%}
+				<li>
+					{%- if part.is_link -%}
+						<a href="{{ part.url }}{{ anchor }}" class="pagination__element" aria-label="{{ 'general.pagination.page' | t: number: part.title }}">{{ part.title }}</a>
+					{%- else -%}
+						{%- if part.title == paginate.current_page -%}
+							<span class="pagination__element is-active">{{ part.title }}</span>
+						{%- else -%}
+							<span class="pagination__element">{{ part.title }}</span>
+						{%- endif -%}
+					{%- endif -%}
+				</li>
+			{%- endfor -%}
+
+			{% comment %}
+				Next
+			{% endcomment %}
+
+				<li>
+					<a href="{{ paginate.next.url }}{{ anchor }}" class="pagination__element pagination__element--next">
+						<span class="sr-only">
+							{{ 'general.pagination.next' | t }}
+						</span>
+						{%- render 'icon-chevron-right' -%}
+					</a>
+				</li>
+		</ul>
+	</nav>
+
+{%- endif -%}

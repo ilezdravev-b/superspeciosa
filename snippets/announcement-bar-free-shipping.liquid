@@ -1,0 +1,26 @@
+<!-- snippets/announcement-bar-free-shipping.liquid -->
+
+{% comment %}
+    Free shipping
+{% endcomment %}
+
+{%- if settings.enable_free_shipping -%}
+    {% assign message = '' %}
+    {% assign fs_amount = settings.fs_amount | times: 100 %}
+    {% if cart.total_price >= fs_amount %}
+        {% assign message = settings.fs_cart_accepted %}
+    {% elsif cart.total_price > 0 and cart.total_price < fs_amount %}
+        {% assign newAmount = fs_amount | minus: cart.total_price %}
+        {% assign newAmountWithCurrency = newAmount | money | replace: '.00', '' | prepend: '<span id="amount-value-product">' | append: '</span>' %}
+        {% assign message = settings.fs_cart_has | replace: '[amount]', newAmountWithCurrency %}
+    {% else %}
+        {% assign newAmount = fs_amount %}
+        {% assign newAmountWithCurrency = newAmount | money | replace: '.00', '' | prepend: '<span id="amount-value-product">' | append: '</span>' %}
+        {% assign message = settings.fs_cart_empty | replace: '[amount]', newAmountWithCurrency %}
+    {% endif %}
+
+    <div class="announcement-bar--free-shipping" data-amount="{{ newAmount }}">
+        {% render "icon-shipping" %}
+        {{ message }}
+    </div>
+{%- endif -%}

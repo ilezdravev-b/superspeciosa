@@ -1,0 +1,148 @@
+<!-- snippets/cart-free-gifts.liquid -->
+
+{% comment %}
+	Note: this snippet is used in both the mini-cart drawer, 
+    and the cart landing page. 
+{% endcomment %}
+
+{% comment %}
+    Required: 
+        none
+    
+    Optional: 
+        svg_markup {String} SVG markup for decorative image
+{% endcomment %}
+
+{% comment %}
+	Initial Liquid Variables
+    Get free gift price for cart total adjustments: 
+{% endcomment %}
+
+{%- liquid
+    assign cart_total_price = 0
+    assign free_item_price = 0
+    for item in cart.items
+        if item.properties._isFreeGift
+            assign free_item_price = item.price
+        endif
+        assign cart_total_price = cart_total_price | plus: item.line_price
+    endfor
+    
+    assign cart_total_price = cart_total_price | minus: free_item_price
+-%}
+
+{% comment %}
+    Free gift tiers
+{% endcomment %}
+
+<div class="cart-free-gifts">
+    {%- if svg_markup and svg_markup != blank -%}
+        <div class="cart-free-gifts__svg-wrapper">
+            {{ svg_markup }}
+        </div>
+    {%- endif -%}
+
+    <div class="cart-free-gifts__tiers">
+        {% comment %}
+            handle displaying the first promo tier of free gifts
+        {% endcomment %}
+
+        {%- if settings.enable_free_gift -%}
+            {% assign message = '' %}
+            {% assign fg_amount = settings.fg_amount | times: 100 %}
+            {% if cart_total_price >= fg_amount %}
+                {% assign message = settings.fg_cart_accepted %}
+            {% elsif cart_total_price > 0 and cart_total_price < fg_amount %}
+                {% assign newAmount = fg_amount | minus: cart_total_price %}
+                {% assign newAmountWithCurrency = newAmount | money_without_trailing_zeros | prepend: '<span id="amount-value">' | append: '</span>' %}
+                {% capture message %}Spend {{ newAmountWithCurrency }} more - <b>Unlock a free {{ settings.fg_value | times: 100 | money_without_trailing_zeros }} gift</b>{% endcapture %}
+            {% else %}
+                {% assign newAmount = fg_amount %}
+                {% assign newAmountWithCurrency = newAmount | money_without_trailing_zeros | prepend: '<span id="amount-value">' | append: '</span>' %}
+                {% assign message = settings.fg_cart_empty | replace: '[amount]', newAmountWithCurrency %}
+            {% endif %}
+
+            <div class="cart-free-gift__tier" data-amount="{{ newAmount }}"{% if style %} style="{{ style }}"{% endif %}>
+                {% if cart_total_price >= fg_amount %}
+                    {% render "icon-indicator-checked" %}
+                {%- else -%}
+                    {% render "icon-indicator-unchecked" %}
+                {%- endif -%}
+                <div class="message-free-gift-merged">{{ message }}</div>
+            </div>
+        {%- endif -%}
+
+        {% comment %}
+            handle displaying the second promo tier of free gifts
+        {% endcomment %}
+        {%- if settings.enable_second_free_gift -%}
+            {% assign message_2 = '' %}
+            {% assign cart_price = cart_total_price %}
+            {% assign fg_amount_2 = settings.fg_amount_2 | times: 100 %}
+            {% if cart_price >= fg_amount_2 %}
+                {% assign message_2 = settings.fg_cart_accepted_2 %}
+            {% elsif cart_price > 0 and cart_price < fg_amount_2 %}
+                {% assign newAmount_2 = fg_amount_2 | minus: cart_price %}
+                {% assign newAmountWithCurrency_2 = newAmount_2 | money_without_trailing_zeros | prepend: '<span id="amount-value-2">' | append: '</span>' %}
+                {% capture message_2 %}Spend {{ newAmountWithCurrency_2 }} more - <b>Unlock a free {{ settings.fg_value_2 | times: 100 | money_without_trailing_zeros }} gift</b>{% endcapture %}
+            {% else %}
+                {% assign newAmount_2 = fg_amount_2 %}
+                {% assign newAmountWithCurrency_2 = newAmount_2 | money_without_trailing_zeros | prepend: '<span id="amount-value-2">' | append: '</span>' %}
+                {% assign message_2 = settings.fg_cart_empty_2 | replace: '[amount_2]', newAmountWithCurrency_2 %}
+            {% endif %}
+
+            <div class="cart-free-gift__tier" data-amount="{{ newAmount_2 }}"{% if style %} style="{{ style }}"{% endif %}>
+                {% if cart_price >= fg_amount_2 %}
+                    {% render "icon-indicator-checked" %}
+                {%- else -%}
+                    {% render "icon-indicator-unchecked" %}
+                {%- endif -%}
+                <div class="message-free-gift-merged">{{ message_2 }}</div>
+            </div>
+        {%- endif -%}
+
+        {% comment %}
+            handle displaying the third promo tier of free gifts
+        {% endcomment %}
+        {%- if settings.enable_third_free_gift -%}
+            {% assign message_3 = '' %}
+            {% assign cart_price = cart_total_price %}
+            {% assign fg_amount_3 = settings.fg_amount_3 | times: 100 %}
+            {% if cart_price >= fg_amount_3 %}
+                {% assign message_3 = settings.fg_cart_accepted_3 %}
+            {% elsif cart_price > 0 and cart_price < fg_amount_3 %}
+                {% assign newAmount_3 = fg_amount_3 | minus: cart_price %}
+                {% assign newAmountWithCurrency_3 = newAmount_3 | money_without_trailing_zeros | prepend: '<span id="amount-value-3">' | append: '</span>' %}
+                {% capture message_3 %}Spend {{ newAmountWithCurrency_3 }} more - <b>Unlock a free {{ settings.fg_value_3 | times: 100 | money_without_trailing_zeros }} gift</b>{% endcapture %}
+            {% else %}
+                {% assign newAmount_3 = fg_amount_3 %}
+                {% assign newAmountWithCurrency_3 = newAmount_3 | money_without_trailing_zeros | prepend: '<span id="amount-value-3">' | append: '</span>' %}
+                {% assign message_3 = settings.fg_cart_empty_3 | replace: '[amount_3]', newAmountWithCurrency_3 %}
+            {% endif %}
+
+            <div class="cart-free-gift__tier" data-amount="{{ newAmount_3 }}"{% if style %} style="{{ style }}"{% endif %}>
+                {% if cart_price >= fg_amount_3 %}
+                    {% render "icon-indicator-checked" %}
+                {%- else -%}
+                    {% render "icon-indicator-unchecked" %}
+                {%- endif -%}
+                <div class="message-free-gift-merged">{{ message_3 }}</div>
+            </div>
+        {%- endif -%}
+    </div>
+
+    <div class="cart-free-gift__actions">
+        {%- liquid 
+            assign modal_data = ''
+            if cart_total_price < fg_amount 
+                assign modal_data = ' disabled="disabled" '
+            endif             
+        -%}
+
+        {% if free_item_price > 0 %}
+            {% render 'modal-button', text: "Change Gift", class: "btn btn--hollow", modalId: "FreeGiftsPopup", overlay: "aboveHeaderOverlay", data: modal_data %} 
+        {% else %}
+            {% render 'modal-button', text: "Choose Gift", class: "btn btn--hollow", modalId: "FreeGiftsPopup", overlay: "aboveHeaderOverlay", data: modal_data %} 
+        {% endif %}
+    </div>
+</div>

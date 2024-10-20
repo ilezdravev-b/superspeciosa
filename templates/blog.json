@@ -1,0 +1,23 @@
+{
+  "sections": {
+    "banner": {
+      "type": "blog-banner",
+      "settings": {
+        "blog_heading": "<h1>{{ blog.metafields.custom.title.value }}<\/h1>",
+        "blog_subtitle": "<p>{{ blog.metafields.custom.subtitle | metafield_tag }}<\/p>"
+      }
+    },
+    "blog": {
+      "type": "blog-article-grid",
+      "settings": {
+        "articles_per_page": 10,
+        "article_thumbnail_cta_text": "Read More",
+        "no_articles_text": "<p>Sorry, no articles could be found.<\/p>"
+      }
+    }
+  },
+  "order": [
+    "banner",
+    "blog"
+  ]
+}

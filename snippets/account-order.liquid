@@ -1,0 +1,64 @@
+<!-- snippets/account-order.liquid -->
+
+{% comment %}
+	Required:
+		nothing
+{% endcomment %}
+
+{% liquid 
+	assign order_date = order.created_at | time_tag: format: "date_at_time"
+	assign order_cancelled = order.cancelled
+
+	if order_cancelled
+		assign cancelled_at = order.cancelled_at | time_tag: format: "date_at_time"
+	endif
+%}
+
+<div class="account__section">
+
+	{% comment %}
+		Order Summary
+	{% endcomment %}
+
+	<div>
+		<h2 class="account__heading">
+			{{ 'customer.order.title' | t: name: order.name }}
+		</h2>
+
+		<p>
+			{{ 'customer.order.date_html' | t: date: order_date }}
+		</p>
+
+		{%- if order_cancelled -%}
+			<p>
+				<strong>{{ 'customer.order.cancelled' | t }}</strong> {{ cancelled_at }}<br />
+				<strong>{{ 'customer.order.cancelled_reason_title' | t }}</strong> {{ order.cancel_reason_label }}
+			</p>
+		{%- endif -%}
+	</div>
+
+	{% comment %}
+		Large Table and Desktop Table
+	{% endcomment %}
+
+	<div class="tablet-lg-up">
+		{% render 'account-order-details-table', order: order %}
+	</div>
+
+	{% comment %}
+		Small Tablet and Mobile List
+	{% endcomment %}
+
+	<div class="tablet-sm-down">
+		{% render 'account-order-details-list', order: order %}
+	</div>
+
+    {% comment %}
+        Billing / Shipping Addresses
+    {% endcomment %}
+
+	<div class="account-addresses account-addresses-page__addresses">
+		{% render 'account-order-addresses', order: order %}
+	</div>
+
+</div>

@@ -1,0 +1,51 @@
+{% comment %}
+	Load Assets
+{% endcomment %}
+
+{% render 'theme-load-assets', style: 'section-image-with-text-block.min.css' %}
+
+<section id="order-track-bifm">
+  <div class="content">
+    <h1>{{ section.settings.title }}</h1>
+    {{ section.settings.content }}
+  </div>
+</section>
+
+<style>
+  #order-track-bifm {
+    background-image: url({{ section.settings.image | img_url: '1000x' }});
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Image with text block",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image",
+      "info": "1500 x 800px .jpg recommended"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "Your story"
+    },
+    {
+      "type": "richtext",
+      "id": "content",
+      "label": "Text",
+      "default": "<p>Add your own custom content to give more information about your store, availability details...</p>"
+    }
+  ],
+  "presets": [
+    {
+      "category": "Image",
+      "name": "Image with text block",
+      "settings": {}
+    }
+  ]
+}
+{% endschema %}

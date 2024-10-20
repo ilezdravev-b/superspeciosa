@@ -1,0 +1,701 @@
+<!-- sections/product.liquid -->
+
+{% comment %}
+	Initial Liquid Variables
+{% endcomment %}
+{% style %}
+    .review_rating-icon {
+        display: flex;
+        gap: 4px;
+        padding: 2px 0;
+    }
+    .review {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    .review_content {
+        font-family: Dilemma;
+        font-size: 14px;
+        font-weight: 550;
+        line-height: 18.48px;
+        text-align: center;
+        color: #000000;
+        padding-top: 3px;
+    }
+    .review_content a {
+        text-decoration: underline;
+    }
+
+    .jdgm-prev-badge__text {
+        display: none;
+    }
+
+    .rating__container {
+        display: flex;
+    }
+    
+    span.desktop-review {
+        margin-left: 12px;
+    }
+    .product-gallery:not(.sp-slider--loaded) .product-gallery__slide>span {
+        display: none;
+    }
+{% endstyle %}
+{%- liquid
+	assign data = section.settings
+	assign current_variant = product.selected_or_first_available_variant
+	assign image_count = product.media.size
+	-%}
+
+    {% render "breadcrumbs" %}
+<article class="js-product product">
+
+	{% comment %}
+		Product Gallery with optional thumbnails
+	{% endcomment %}
+    {%  assign reviews_rating =  product.metafields.reviews.rating.value %}
+    {%  assign review_rating_count =  product.metafields.reviews.rating_count %}
+    {% if reviews_rating != blank and review_rating_count != blank %}
+        <div class="mobile-review review">        
+            <div class="review_rating-icon">
+                {% for i in (0..4) %}  
+                    {% render 'review_icon' %}  
+                {% endfor %} 
+            </div>            
+            <div class="review_content">
+                <span class="review_rating">|&nbsp;&nbsp;&nbsp;{{ reviews_rating }}/5</span>
+                <span>based on <a href="javascript:;" onclick="document.querySelector('.jdgm-widget').click()">{{ review_rating_count }} reviews</a></span>
+            </div>
+        </div>
+    {% endif %}
+    <h1 class="mobile-product__title product__title">{{ product.title }}</h1>
+
+	{% if image_count > 0 %}
+		<div class="product__media">
+			{% render 'product-gallery', id: "productMain", thumbnails: true, carousel: false %}
+		</div>
+	{% endif %}
+    
+	{% comment %}
+		Product Details
+	{% endcomment %}
+
+
+	<div class="product__details{% if image_count == 0 %} product__details--no-image{% endif %}" style="max-width: 100vw; width: 100%;">
+        {%  assign reviews_rating =  product.metafields.reviews.rating.value %}
+        {%  assign review_rating_count =  product.metafields.reviews.rating_count %}
+        {% if reviews_rating != blank and review_rating_count != blank %}
+            <div class="rating__container">
+                {% render 'judgeme_widgets', widget_type: 'judgeme_preview_badge', jm_style: '', concierge_install: false, product: product %}
+                <span class="desktop-review review">
+                    <span class="review_rating">|&nbsp;&nbsp;&nbsp;{{ reviews_rating }}/5</span>
+                    <span>based on <a href="javascript:;" onclick="document.querySelector('.jdgm-widget').click()">{{ review_rating_count }} reviews</a></span>
+                </span>
+            </div>
+        {% endif %}
+		<h1 class="desktop-product__title product__title">{{ product.title }}</h1>
+
+		<div class="product__price">
+            <span class="product__price__prices">
+			    {% render 'product-price', show_subtotal: false %}
+            </span>
+
+            {%- if product.compare_at_price > product.price -%}
+                {%- assign savings = product.compare_at_price | minus: product.price -%}
+                {%- assign percent_savings = product.selected_or_first_available_variant.compare_at_price | minus: product.selected_or_first_available_variant.price | times: 100.0 | divided_by: product.selected_or_first_available_variant.compare_at_price | money_without_currency | times: 100 | remove: '.0' -%}
+                <span class="product__price__savings">
+                    <span class="product__price__percent-save">Save {{ percent_savings }}%</span> 
+                    <span class="saving-price-value">({{ savings | money }})</span>
+                </span>
+            {%- endif -%}
+		</div>
+
+      
+		{% render "product-form", product: product, current_variant: current_variant %}
+    
+
+        <div class="abra_promotions_banner_gift">
+            {%- for block in section.blocks -%}
+                {% if block.id contains "abra_promotions_banner_gift" %}
+                    {% render block %}
+                {% endif %}
+            {% endfor %}
+        </div>
+
+        {% comment %}
+            Announcment Bars
+                ID allows content to update on cart events (IDs in shopify-cart.js)
+        {% endcomment %}
+        {% render "product-accordion", product: product, section: section %}
+
+
+        {% comment %} announcement  bar {% endcomment %}
+        {% comment %} <div id="announcementBars" class="announcement-bars"> {% endcomment %}
+            {% comment %}
+                Free gifts
+            {% endcomment %}
+
+            {% comment %} {% render "announcement-bar-free-gifts" %} {% endcomment %}
+
+            {% comment %}
+                Free shipping
+            {% endcomment %}
+
+            {% comment %} {% render "announcement-bar-free-shipping" %} {% endcomment %}
+        {% comment %} </div> {% endcomment %}
+
+        {% comment %}
+            Value Props
+        {% endcomment %}
+
+        {% comment %} {% render "product-value-props" %} {% endcomment %}
+
+        {% comment %}
+            Product description
+        {% endcomment %}
+
+		{% comment %} <div class="product__description rte">
+			{{ product.description | remove: "<div><br></div>" | remove: "<div></div>" | remove: "<p></p>" }}
+		</div> {% endcomment %}
+        
+        {% comment %}
+            Product picture preview
+        {% endcomment %}
+        <div class="preview-container" id="previewContainer" onclick="window.EventBus.emit('picture:preview:close')">
+            <span class="close-btn" onclick="window.EventBus.emit('picture:preview:close')">X</span>
+            <img src="" alt="Preview Image" class="preview-image" id="previewImage">
+        </div>
+	</div>
+
+    {% comment %}
+        Product Tabs
+    {% endcomment %}
+
+    <div class="product__tabs__wrapper">
+        {% render "product-tabs" %}
+    </div>
+
+
+</article>
+
+{%- for block in section.blocks -%}
+    {% if block.type == 'media_with_text' %}
+        {% render "product-media-with-text",
+            video: block.settings.video,
+            subtitle: block.settings.subtitle,
+            title: block.settings.title,
+            description: block.settings.description
+        %}
+    {% elsif block.type == 'product_reason' %}
+        {% render "product-reason", 
+            subtitle: block.settings.subtitle, 
+            title: block.settings.title,
+            reason1_title: block.settings.reason1_title,
+            reason1_text: block.settings.reason1_text,
+            reason1_icon: block.settings.reason1_icon,,
+            reason2_title: block.settings.reason2_title,
+            reason2_text: block.settings.reason2_text,
+            reason2_icon: block.settings.reason2_icon,,
+            reason3_title: block.settings.reason3_title,
+            reason3_text: block.settings.reason3_text,
+            reason3_icon: block.settings.reason3_icon,,
+            reason4_title: block.settings.reason4_title,
+            reason4_text: block.settings.reason4_text,
+            reason4_icon: block.settings.reason4_icon,
+         %}
+    {% elsif block.type == 'product_compare' %}
+        {% render "product-compare", 
+            subtitle: block.settings.subtitle, 
+            title: block.settings.title,
+            compare1: block.settings.compare_item1,
+            compare2: block.settings.compare_item2,
+            compare3: block.settings.compare_item3,
+            compare4: block.settings.compare_item4,
+            compare5: block.settings.compare_item5,
+            compare6: block.settings.compare_item6,
+            compare7: block.settings.compare_item7,
+            compare8: block.settings.compare_item8,
+            compare9: block.settings.compare_item9,
+            compare10: block.settings.compare_item10
+        %}
+    {% elsif block.type == 'product_usage' %}
+        {% render "product-usage", 
+          subtitle: block.settings.subtitle, 
+          title: block.settings.title,
+          item1: block.settings.usage_item1,
+          item2: block.settings.usage_item2,
+          item3: block.settings.usage_item3,
+          image: block.settings.image
+          usage1_text: block.settings.usage1_text,
+          usage2_text: block.settings.usage2_text,
+          usage3_text: block.settings.usage3_text,
+          usage4_text: block.settings.usage4_text,
+          usage5_text: block.settings.usage5_text,
+          usage1_icon: block.settings.usage1_icon,
+          usage2_icon: block.settings.usage2_icon,
+          usage3_icon: block.settings.usage3_icon
+          usage4_icon: block.settings.usage4_icon,
+          usage5_icon: block.settings.usage5_icon
+        %}
+    {% elsif block.type == 'product_ingredient' %}
+        {% render "product-ingredient", 
+          version: block.settings.version,
+          subtitle: block.settings.subtitle, 
+          title: block.settings.title,
+          item1: block.settings.ingredient_item1,
+          item2: block.settings.ingredient_item2,
+          item3: block.settings.ingredient_item3,
+          item4: block.settings.ingredient_item4,
+          item5: block.settings.ingredient_item5,
+          item6: block.settings.ingredient_item6
+        %}
+    {% endif %}
+{%- endfor -%}
+
+{% comment %}
+    Fix for product tab content having some CSS 
+    that is breaking the page
+{% endcomment %}
+
+<style>
+    body { 
+        text-align: left; 
+    }
+
+    {% if template.suffix == 'swf-visualizer' %}
+        @media screen and (max-width: 1008px) {
+            .Product__InfoWrapper {
+            background-color: #fff;
+            display: inline-block;
+            position: sticky;
+            width: 100%;
+            }
+        }
+
+        @media screen and (min-width: 1008px) {
+            .Product__Aside {
+            display: inline-block !important;
+            background-color: rgb(255, 255, 255) !important;
+            padding-left: 88px !important;
+            min-height: 2384px !important;
+            margin-left: 0px;
+            width: 100%;
+            }
+        }
+    {% endif %}
+</style>
+
+{% schema %}
+{
+    "class": "product-section",
+    "name": "Product",
+    "settings": [
+        {
+            "type":"text",
+            "id":"free_shipping",
+            "label":"Free Shipping",
+            "default": "Free Shipping"
+        },
+        {
+            "type":"text",
+            "id":"exclusive_discounts",
+            "label":"Exclusive Discounts",
+            "default": "Exclusive Discounts"
+        },
+        {
+            "type":"text",
+            "id":"update",
+            "label":"Pause, Cancel or Update Anytime",
+            "default": "Pause, Cancel or Update Anytime"
+        },
+        {
+            "type":"text",
+            "id":"money_back",
+            "label":"Money back Label",
+            "default": "30-day money back guarantee"
+        },
+        {
+            "type":"text",
+            "id":"shipping_day",
+            "label":"Shipping Label",
+            "default": "Same-day shipping before 2 pm est"
+        }
+    ], 
+    "blocks": [
+        {
+            "name": "Media with text",
+            "type": "media_with_text",
+            "limit": 1,
+            "settings": [
+                {
+                    "type": "video",
+                    "id": "video",
+                    "label": "Video"
+                },
+                {
+                    "type": "text",
+                    "id": "subtitle",
+                    "label": "SubTitle",
+                    "default": "Powered by nature, backed by science"
+                },
+                {
+                    "type": "text",
+                    "id": "title",
+                    "label": "Title",
+                    "default": "See our<br>manufacturing process"
+                },
+                {
+                    "type": "richtext",
+                    "id": "description",
+                    "label": "Description"
+                }
+            ]
+        },
+        {
+            "name": "Product Reason",
+            "type": "product_reason",
+            "limit": 1,     
+            "settings": [
+                {
+                    "label": "Subtitle",
+                    "id": "subtitle",
+                    "type": "text",
+                    "default":"Natural Solution"
+                },
+                {
+                    "label": "Title",
+                    "id": "title",
+                    "type": "text",
+                    "default":"4 Reasons Why You Need Krantom"
+                },
+
+                {
+                    "label": "Reason1 Title",
+                    "type": "text",
+                    "id":"reason1_title",
+                    "default": "Struggling with Low Energy Levels?"
+                },
+                {
+                    "label": "Reason1 Text",
+                    "type": "text",
+                    "id":"reason1_text",
+                    "default": "Kratom provides a natural energy boost, minus the crash."
+                },
+                {
+                    "label": "Reason1 Icon",
+                    "type": "image_picker",
+                    "id":"reason1_icon"
+                },
+
+                {
+                    "label": "Reason2 Title",
+                    "type": "text",
+                    "id":"reason2_title",
+                    "default": "Difficulty Focusing on Tasks?"
+                },
+                {
+                    "label": "Reason2 Text",
+                    "type": "text",
+                    "id":"reason2_text",
+                    "default": "Kratom enhances cognitive functions, improving concentration and clarity."
+                },
+                {
+                    "label": "Reason2 Icon",
+                    "type": "image_picker",
+                    "id":"reason2_icon"
+                },
+
+                {
+                    "label": "Reason3 Title",
+                    "type": "text",
+                    "id":"reason3_title",
+                    "default": "Poor Mood or Depression Symptoms?"
+                },
+                {
+                    "label": "Reason3 Text",
+                    "type": "text",
+                    "id":"reason3_text",
+                    "default": "Kratom lifts mood, easing anxiety and depression symptoms."
+                },
+                {
+                    "label": "Reason3 Icon",
+                    "type": "image_picker",
+                    "id":"reason3_icon"
+                },
+
+                {
+                    "label": "Reason4 Title",
+                    "type": "text",
+                    "id":"reason4_title",
+                    "default": "Weak Immune System?"
+                },
+                {
+                    "label": "Reason4 Text",
+                    "type": "text",
+                    "id":"reason4_text",
+                    "default": "Kratom boosts immunity, aiding in illness prevention."
+                },
+                {
+                    "label": "Reason4 Icon",
+                    "type": "image_picker",
+                    "id":"reason4_icon"
+                }
+            ]
+        },
+        {
+            "name": "Product Compare",
+            "type": "product_compare",
+            "limit": 1,     
+            "settings": [
+                {
+                    "label": "Subtitle",
+                    "id": "subtitle",
+                    "type": "text",
+                    "default":"US VS THEM"
+                },
+                {
+                    "label": "Title",
+                    "id": "title",
+                    "type": "text",
+                    "default":"Energize Your Busy Life"
+                },
+                {
+                    "label": "Compare Item 1",
+                    "id": "compare_item1",
+                    "type": "text",
+                    "default":"GMP Qualified"
+                },
+                {
+                    "label": "Compare Item 2",
+                    "id": "compare_item2",
+                    "type": "text",
+                    "default":"Lab tested"
+                },
+                {
+                    "label": "Compare Item 3",
+                    "id": "compare_item3",
+                    "type": "text",
+                    "default":"free of contaminants"
+                },
+                {
+                    "label": "Compare Item 4",
+                    "id": "compare_item4",
+                    "type": "text",
+                    "default":"No fillers or adittives"
+                },
+                {
+                    "label": "Compare Item 5",
+                    "id": "compare_item5",
+                    "type": "text",
+                    "default":"Good Taste"
+                },
+                {
+                    "label": "Compare Item 6",
+                    "id": "compare_item6",
+                    "type": "text"
+                },
+                {
+                    "label": "Compare Item 7",
+                    "id": "compare_item7",
+                    "type": "text"
+                },
+                {
+                    "label": "Compare Item 8",
+                    "id": "compare_item8",
+                    "type": "text"
+                },
+                {
+                    "label": "Compare Item 9",
+                    "id": "compare_item9",
+                    "type": "text"
+                },
+                {
+                    "label": "Compare Item 10",
+                    "id": "compare_item10",
+                    "type": "text"
+                }
+            ]
+        },
+        {
+            "name": "Product Usage",
+            "type": "product_usage",
+            "limit": 1,     
+            "settings": [
+                {
+                    "type": "image_picker",
+                    "id": "image",
+                    "label": "Image"
+                },
+                {
+                    "label": "Subtitle",
+                    "id": "subtitle",
+                    "type": "text",
+                    "default":"3 easy steps"
+                },
+                {
+                    "label": "Title",
+                    "id": "title",
+                    "type": "text",
+                    "default":"How to use"
+                },
+                {
+                    "label": "Usage1 Icon",
+                    "id": "usage1_icon",
+                    "type": "image_picker"
+                },
+                {
+                    "label": "Usage1 Text",
+                    "id": "usage1_text",
+                    "type": "text"
+                },
+                {
+                    "label": "Usage2 Icon",
+                    "id": "usage2_icon",
+                    "type": "image_picker"
+                },
+                {
+                    "label": "Usage2 Text",
+                    "id": "usage2_text",
+                    "type": "text"
+                },
+                {
+                    "label": "Usage3 Icon",
+                    "id": "usage3_icon",
+                    "type": "image_picker"
+                },
+                {
+                    "label": "Usage3 Text",
+                    "id": "usage3_text",
+                    "type": "text"
+                },
+                {
+                    "label": "Usage4 Icon",
+                    "id": "usage4_icon",
+                    "type": "image_picker"
+                },
+                {
+                    "label": "Usage4 Text",
+                    "id": "usage4_text",
+                    "type": "text"
+                },
+                {
+                    "label": "Usage5 Icon",
+                    "id": "usage5_icon",
+                    "type": "image_picker"
+                },
+                {
+                    "label": "Usage5 Text",
+                    "id": "usage5_text",
+                    "type": "text"
+                }
+            ]
+        },
+        {
+            "name": "Product Ingredient",
+            "type": "product_ingredient",
+            "limit": 1,     
+            "settings": [
+                {
+                    "label": "Version Option",
+                    "id": "version",
+                    "type": "select",
+                    "options": [ 
+                        { 
+                            "label": "V1", 
+                            "value": "v1"
+                        }, 
+                        { 
+                            "label": "V2", 
+                            "value": "v2"
+                        }, 
+                        { 
+                            "label": "V3", 
+                            "value": "v3"
+                        }
+                    ], 
+                    "default": "v1"
+                },
+                {
+                    "label": "Subtitle",
+                    "id": "subtitle",
+                    "type": "text",
+                    "default":"Our quality standards"
+                },
+                {
+                    "label": "Title",
+                    "id": "title",
+                    "type": "text",
+                    "default":"Leading the industry in quality & safety"
+                },
+                {
+                    "label": "Ingredient Item 1",
+                    "id": "ingredient_item1",
+                    "type": "text",
+                    "default":"Exactly what’s inside, so you know how much to take. No guessing games."
+                },
+                {
+                    "label": "Ingredient Item 2",
+                    "id": "ingredient_item2",
+                    "type": "text",
+                    "default":"No cutting corners, only kratom at its best. Quality-sourced ingredients you can give to your friends and family."
+                },
+                {
+                    "label": "Ingredient Item 3",
+                    "id": "ingredient_item3",
+                    "type": "text",
+                    "default":"Proof your kratom passed the test (the lab test). Check it yourself."
+                },
+                {
+                    "label": "Ingredient Item 4",
+                    "id": "ingredient_item4",
+                    "type": "text",
+                    "default":"Transparent labeling: This is how strong your kratom is."
+                },
+                {
+                    "label": "Ingredient Item 5",
+                    "id": "ingredient_item5",
+                    "type": "text", 
+                    "default":"Traceable & clean manufacturing processes in FDA-registered facilities."
+                },
+                {
+                    "label": "Ingredient Item 6",
+                    "id": "ingredient_item6",
+                    "type": "text",
+                    "default":"Certified by the American Kratom Association."
+                }
+            ]
+        },
+        {
+            "name": "Product Accordion",
+            "type": "product_accordion",
+            "settings": [
+                {
+                  "type": "text", 
+                  "id": "title",
+                  "label": "Tab title",
+                  "default": "Ingredients"
+                },
+                {
+                  "type": "richtext",
+                  "id": "tab_content",
+                  "label": "Content"
+                },
+                {
+                    "type": "video",
+                    "id": "tab_content_video",
+                    "label": "Video Content"
+                },
+                {
+                    "type": "checkbox",
+                    "id": "use_video_as_content",
+                    "label": "Use Video as Content"
+                }
+            ]
+        },
+        {
+            "type": "@app"
+        }
+	]
+}
+{% endschema %}

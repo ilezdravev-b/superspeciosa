@@ -1,0 +1,87 @@
+<div class="container">
+    <div class="custom-featured-blog">
+        {% if section.settings.heading %}
+            <h1>{{ section.settings.heading }}</h1>
+        {% endif %}
+        <div class="featured-blog-items">
+            {% for block in section.blocks %}
+                <a href="{{ block.settings.featured_article.url }}" class="featured-blog-item">
+                    <img src="{{ block.settings.featured_article.image | image_url }}" >
+                    <h3>{{ block.settings.featured_article.title }}</h3>
+                    <div class="article__meta">
+                        <address>By {{ block.settings.featured_article.author }}</address>
+                        <time datetime="{{ block.settings.featured_article.published_at | date: '%Y-%m-%d' }}">
+                            {{ block.settings.featured_article.published_at | date: '%b %d, %Y' }}
+                        </time>
+                    </div>
+                </a>        
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<style>
+    .custom-featured-blog {
+        background-color: #fff;
+        padding: 10px;
+        margin-bottom: 70px;
+    }
+    .featured-blog-items {
+        display: grid;
+        grid-gap: 30px;
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+    .featured-blog-item img {
+        max-height: 280px;
+        object-fit: cover;
+    }
+    .custom-featured-blog h1 {
+        color: #231f20;
+        font-family: "Dilemma";
+        font-size: 34px;
+        font-weight: 700;
+        text-transform: uppercase;
+        font-style: normal;
+        letter-spacing: 2.2px;
+    }
+    .featured-blog-item h3 {
+        color: #658b27;
+        font-family: "Dilemma";
+        font-size: 18px;
+        font-weight: 700;
+        text-transform: uppercase;
+        font-style: normal;
+        letter-spacing: 2.2px;
+    }
+</style>
+
+{% schema %}
+    {
+        "name": "Featured blog",
+        "settings": [
+            {
+                "type": "text",
+                "id": "heading",
+                "label": "Heading"
+            }
+        ],
+        "blocks": [
+            {
+                "type": "article",
+                "name": "Article",
+                "settings": [
+                    {
+                        "type": "article",
+                        "id": "featured_article",
+                        "label": "Article"
+                    }
+                ]
+            }
+        ],
+        "presets": [
+            {
+                "name": "Featured Blog"
+            }
+        ]
+    }
+{% endschema %}

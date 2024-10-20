@@ -1,0 +1,300 @@
+<!-- sections/ajax-cart.liquid -->
+
+{% comment %}
+	Hide ajax cart until stylesheet loads
+{% endcomment %}
+
+<style>
+	.ajax-cart {
+		display:none;
+	}
+</style>
+
+{% comment %}
+	Load Assets
+{% endcomment %}
+
+<link rel="stylesheet" href="{{ 'section-ajax-cart.min.css' | asset_url }}" media="print" onload="this.media='all'">
+<script src="{{ 'section-ajax-cart.min.js' | asset_url }}" defer></script>
+
+{% comment %}
+	Initial Liquid Variables
+{% endcomment %}
+
+{% liquid 
+	assign data = section.settings
+	assign cart_has_items = false 
+	assign cart_item_count = cart.item_count
+	assign free_gift_price = 0
+
+	if cart_item_count > 0
+		assign cart_has_items = true 
+	endif 
+
+    for item in cart.items
+        if item.properties._isFreeGift == 'true'
+            assign free_gift_price = item.price
+        endif
+
+		if item.properties._add-time and item.properties._add-time != blank
+			unless item.properties._hasCustomizableOptions == 'true'
+				assign cart_item_count = cart_item_count | minus: item.quantity
+			endunless
+		endif 
+    endfor
+
+    assign cart_total_price = cart.total_price | minus: free_gift_price
+		
+		assign comparedPrice = 0
+    for item in cart.items
+        assign itemPrice = item.product.selected_or_first_available_variant.compare_at_price | times: item.quantity
+        assign comparedPrice = comparedPrice | plus: itemPrice
+    endfor
+%}
+
+{% comment %}
+	Section Markup
+
+	Notes: The section with the ID of "ajaxCart" will have
+		   its content refreshed whenever the cart is updated.
+		   The ID is set in _src/scripts/modules/shopify-cart.js,
+		   and can be updated or moved as needed.
+{% endcomment %}
+
+<div class="ajax-cart" data-aria-label="Shopping Cart" id="ajaxCart">
+    <div class="ajax-cart__wrapper" data-aria-label="Cart Contents" id="ajaxCartContent">
+
+		<div role="status" class="sr-only">
+			{{ cart_item_count }} {{ cart_item_count | pluralize: 'item', 'items' }} in your cart
+		</div>
+
+        {% comment %}
+            Ajax Cart Header
+        {% endcomment %}
+
+        <div class="ajax-cart__header">
+			 <h2 id="ajaxCartTitle" class="ajax-cart__title">
+            	My Cart
+        	</h2>
+
+			<button class="ajax-cart__close btn btn--icon js-ajax-btn"
+				aria-controls="ajaxCart">
+				<span class="sr-only">Close Cart Drawer</span>
+                {% render 'icon-close-thin' %}
+            </button>
+        </div>
+
+		<div class="container">
+
+			{% comment %}
+				Free Shipping Bar
+			{% endcomment %}
+
+			{%- if data.show_free_shipping_bar and settings.enable_free_shipping -%}
+				{% render "free-shipping-bar" %}
+			{%- endif -%}
+
+			{% comment %}
+				Ajax Cart Items List
+			{% endcomment %}
+
+			<div class="ajax-cart__items js-cart-items" id="ajaxCartItems">
+				{% if cart_has_items == true %}
+					<ul aria-label="Items in Cart">
+						{%- for item in cart.items -%} 
+							{%- liquid 
+								assign show_product = true
+								if item.properties._add-time and item.properties._add-time != blank
+									unless item.properties._hasCustomizableOptions == 'true'
+										assign show_product = false
+									endunless
+								endif
+							-%}
+
+							{%- if show_product -%}
+								{% render 'ajax-cart-item', item: item, index: forloop.index %}
+							{%- else -%}
+								{% render 'ajax-cart-item-placeholder', item: item, index: forloop.index %}
+							{%- endif -%}
+						{%- endfor -%}
+					</ul>
+				{% endif %}
+			</div>
+
+			{% comment %}
+				Ajax Cart Checkout Footer
+			{% endcomment %}
+			{% if cart_has_items == true %}
+
+				<footer class="ajax-cart__footer">
+
+					{% comment %}
+						Cart-Level Discounts
+					{% endcomment %}
+
+					{% if cart.cart_level_discount_applications != blank %}
+						<ul class="ajax-cart__discounts" aria-label="Cart Discounts">
+							{%- for discount_application in cart.cart_level_discount_applications -%}
+								<li class="ajax-cart__discount">
+									<span>Discount: {{ discount_application.title }}</span>
+									<span>(-{{ discount_application.total_allocated_amount | money }})</span>
+								</li>
+							{%- endfor -%}
+						</ul>
+					{% endif %}
+
+					{% comment %}
+						Checkout Button
+					{% endcomment %}
+					
+					{% assign totalSavingValue = comparedPrice | minus: cart_total_price %}
+					<p class="red-text">You saved: {{ totalSavingValue | money }}</p>
+
+					{%- assign separator = "<span class='price-separator'>&bull;</span>" -%}
+					{% capture cart_price %}<span style="display:none !important;"></span><span class="cart-total-value final-cart-total">{{ cart_total_price | money }}</span>{% endcapture %}
+					{%- assign button_text = data.checkout_button_text | append: separator | append: cart_price -%}
+
+					{%- if data.checkout_link == "checkout" -%}
+
+						<form action="/checkout" 
+							method="post" 
+							class="ajax-cart__checkout" 
+							novalidate>
+							<button type="submit" class="btn btn--primary btn--wide">
+								{{ button_text }}
+							</button>
+						</form>
+
+					{%- else -%}
+
+						<a href="{{ routes.cart_url }}"
+							class="btn btn--primary btn--wide">
+							{{ button_text }}
+						</a>
+
+					{%- endif -%}
+
+					{% comment %}
+						Checkout Notice
+					{% endcomment %}
+
+					{% if data.checkout_footnote != blank %}
+						<div class="ajax-cart__notice">
+							{{ data.checkout_footnote }}
+						</div>
+					{% endif %}
+
+				</footer>
+
+			{% endif %}
+
+
+			{% comment %}
+				Ajax Cart Empty State
+			{% endcomment %}
+
+			{% if cart_has_items == false %}
+				<footer class="ajax-cart__empty">
+					{% render "icon-cart-empty-large" %}
+
+					<p>
+						{{ data.empty_title }}
+					</p>
+				</footer>
+			{% endif %}
+
+			{% comment %}
+				You may also like / cart upsells
+			{% endcomment %}
+
+			{%- if data.show_recommended_products -%}
+				{% render "ajax-cart-recommendations" %}
+			{%- endif -%}
+		</div>
+	</div>
+</div>
+
+{% schema %}
+{
+    "name": "Cart Drawer (mini-cart)",
+    "settings": [
+        {
+            "type": "header",
+            "content": "Checkout"
+        },
+		{ 
+            "type": "radio", 
+            "id": "checkout_link", 
+            "label": "Checkout button link", 
+            "options": [ 
+                { 
+                    "label": "Checkout", 
+                    "value": "checkout"
+                }, 
+                { 
+                    "label": "Cart", 
+                    "value": "cart"
+                }
+            ], 
+            "default": "cart"
+        }, 
+        {
+            "type": "text",
+            "id": "checkout_button_text",
+            "label":  "Button Text",
+            "default": "Checkout"
+        },
+        {
+            "type": "richtext",
+            "id": "checkout_footnote",
+            "label": "Checkout footnote", 
+            "info": "Optional text below checkout button", 
+            "default": "<p>Tax and shipping will be calculated at checkout.</p>"
+        }, 
+        {
+            "type": "header",
+            "content": "Empty Cart Content"
+        },
+        {
+            "type": "text",
+            "id": "empty_title",
+            "label": "Empty cart title",
+            "default": "Your cart is empty!"
+        },
+		{
+            "type": "header",
+            "content": "Free Shipping Bar"
+        },
+		{ 
+			"type": "checkbox", 
+			"id": "show_free_shipping_bar", 
+			"label": "Show free shipping bar?", 
+			"default": true, 
+			"info": "If checked, free shipping bar will show in cart drawer. Free shipping bar content can be found in Theme Settings > [promo] Free Shipping"
+		}, 
+		{ 
+			"type": "checkbox", 
+			"id": "show_free_gift_tiers", 
+			"label": "Show free gift tiers?", 
+			"default": true, 
+			"info": "If checked, free gift tiers will show in cart drawer. Free gifts content can be found in Theme Settings > [promo] Free Gift"
+		}, 
+		{ 
+			"type": "html", 
+			"id": "free_gift_tiers_image", 
+			"label": "Decorative SVG for free gifts"
+		}, 
+		{
+            "type": "header",
+            "content": "Recommended Products"
+        },
+		{ 
+			"type": "checkbox", 
+			"id": "show_recommended_products", 
+			"label": "Show cart recommended products?", 
+			"default": true, 
+			"info": "If checked, recommended products will be shown in the mini cart. Cart recommended products can be updated in Theme Settings > Cart"
+		}
+    ]
+}
+{% endschema %}

@@ -1,0 +1,51 @@
+{%- comment -%} 
+Reviews to be shown on the checkout page
+{%- endcomment -%}
+
+{%- assign wrapper_classes = wrapper_classes | default: '' -%}
+
+<div class="checkout-reviews-wrapper {{ wrapper_classes }}">
+  <div class="checkout-reviews-heading">
+    Customer reviews:
+  </div>
+  <div class="checkout-reviews-body">
+    <div class="checkout-reviews-list">
+      <div class="checkout-reviews-item">
+        <div class="reviews-item-image-wrapper">
+          <img src="{{ '315879390_5960318684018744_4762559973284847896_n.jpg' | asset_url }}" width="50" height="50" loading="lazy">
+        </div>
+        <div class="reviews-item-text-wrapper">
+          <div class="reviews-item-heading">
+            Christine
+            <span class="stars">
+              {%- for i in (1..5) -%}
+                {%- render 'star_svg' -%}
+              {%- endfor -%}
+            </span>
+          </div>
+          <div class="reviews-item-text">
+    def          </div>
+        </div>
+      </div>
+
+      <div class="checkout-reviews-item">
+        <div class="reviews-item-image-wrapper">
+          <img src="{{ '314670069_5914008795316400_237563333557483393_n.jpg' | asset_url }}" width="50" height="50" loading="lazy">
+        </div>
+        <div class="reviews-item-text-wrapper">
+          <div class="reviews-item-heading">
+            Amanda
+            <span class="stars">
+              {%- for i in (1..5) -%}
+                {%- render 'star_svg' -%}
+              {%- endfor -%}
+            </span>
+          </div>
+          <div class="reviews-item-text">
+Review          </div>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+</div>

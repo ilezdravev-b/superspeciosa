@@ -1,0 +1,290 @@
+{% comment %}
+	Load Assets
+{% endcomment %}
+
+{% render 'theme-load-assets', style: 'snippet-custom-options.min.css', script: 'snippet-custom-options.min.js' %}
+
+{% comment %} SWF Custom Options {% endcomment %}
+{% assign collectionName =  product.metafields.custom.product_options.value.collection %}
+{% assign developmentProducts = collections[collectionName].products %}
+{% assign upsellProducts = collections['upsell-products'].products %}
+{% assign confirmColors = false %}
+{% for customOption in product.metafields.custom.product_options.value.custom_options %}
+  <div id="{{ customOption.option_handle }}-custom-optionset" class="swf-custom-optionset">
+    {% assign customProductsSize = customOption.option_products | split: ',' | size%}
+    {% if customOption.option_title_display and customProductsSize > 1 %}
+      <h1>{{ customOption.option_title }}</h1>
+    {% endif %}
+    {% case customOption.option_type %}
+      {% when 'swf-single-option', 'swf-multiple-option' %}
+        <div id="{{ customOption.option_handle }}-item-options" class="swf-custom-option-item-container">
+          {% assign optionsSku = customOption.option_products | split: ',' %}
+          {% for sku in optionsSku %}
+            {% assign firstPosition = forloop.first %}
+            {% assign optionCounter = forloop.index %}
+            {% assign optionIndex = forloop.index0 %}
+            {% for product in developmentProducts %}
+              {% for variant in product.variants %}
+                {% if variant.sku == sku %}
+                  {% capture variantClass %}{% if variant.id == "DIY_Default" or firstPosition %}selected{% endif %}{% endcapture %}
+                  {% assign titles = customOption.option_products_custom_titles | split: "," %}
+                  {% if titles[optionIndex] %}
+                    {% assign optionName = titles[optionIndex] %}
+                    {% else %}
+                    {% if variant.title != 'Default Title' %}
+                      {% assign optionName = variant.title %}
+                      {% else %}
+                      {% assign optionName = product.title %}
+                    {% endif %}
+                  {% endif %}
+                  <div
+                    class="swf-custom-option-item swf_{{ customOption.option_handle }}_element {{ variantClass }} {% if variant.available == false %}disabled-option{% endif %}"
+                    data-name="{{ optionName }}"
+                    data-id="{{ variant.id }}"
+                    data-sku="{{ variant.sku }}"
+                    data-price="{{ variant.price }}"
+                    data-compared-price="{{ variant.compare_at_price }}"
+                    data-handle="{{ customOption.option_handle }}"
+                    data-available="{{ variant.available }}"
+                    data-message-id="{{ customOption.option_message_id }}"
+                    data-type="{{ customOption.option_type }}"
+                    data-hidden-options="{{ customOption.option_hidden_options }}"
+                    data-hidden-sku="{{ customOption.option_hidden_sku }}"
+                    data-product-id="{{ product.id }}"
+                    data-product-handle="{{ product.handle }}"
+                    data-switcher="{{ customOption.option_switcher }}"
+                    {% if customProductsSize == 1 %}style="display:none;"{% endif %}
+                  >
+                    {% if sku contains "BIFM" %}
+                      {% assign variantImage = 'bifm_swatch_image.jpeg' | asset_url  %}
+                      <img src="{{ variantImage }}">
+                    {% elsif sku contains "RTS" %}
+                      {% assign variantImage = 'rts_swatch_image.jpeg' | asset_url  %}
+                      <img src="{{ variantImage }}">
+                    {% elsif sku contains "SWF-KIT" or titles[optionIndex] contains "DIY" %}
+                      {% assign variantImage = 'diy_swatch_image.jpeg' | asset_url  %}
+                      <img src="{{ variantImage }}">
+                    {% elsif sku contains "CUSTOMDYE" %}
+                      {% assign variantImage = 'dyed_option.jpeg' | asset_url  %}
+                      <img src="{{ variantImage }}">
+                    {% elsif sku contains "SWF-PACK" or titles[optionIndex] contains "Raw Flowers" %}
+                      {% assign variantImage = 'raw_option.jpeg' | asset_url  %}
+                      <img src="{{ variantImage }}">
+                    {% else %}
+                      {% if product.featured_image%}
+                          {% assign variantImage = variant.featured_image | default: product.featured_image %}
+                          {{ variantImage | image_url: width: 200 | image_tag }}
+                        {% else %}
+                          {% assign variantImage = 'swf_empty.png' | asset_url %}
+                          <img src="{{ variantImage }}">
+                      {% endif %}
+                    {% endif %}
+                    {% comment %} Agregar aqui los nombres custom si existen {% endcomment %}
+                    {% if customOption.option_products_custom_titles %}
+                      <span class="product-label">{{ titles[optionIndex] }} {% if variant.available == false %}(Out of stock}{% endif %}</span>
+                    {% elsif customOption.option_labels and variant.title != 'Default Title' %}
+                      <span class="product-label">{{ variant.title }} {% if variant.available == false %}(Out of stock}{% endif %}</span>
+                    {% elsif customOption.option_labels %}
+                      <span class="product-label">{{ product.title }} {% if product.selected_or_first_available_variant.available == false %}(Out of stock}{% endif %}</span>
+                    {% endif %}
+                    <input
+                      id="option-{{ customOption.option_handle }}-value"
+                      class="swf-custom-option-input {% unless firstPosition %}multi-hidden{% endunless %}"
+                      type="hidden"
+                      name="properties[{{ customOption.option_title }}{% if customOption.option_type == "swf-multiple-option"%} #{{ optionCounter }}{% endif %}]"
+                      data-variant="{{ variant.id }}"
+                      data-in-cart="{{ customOption.option_in_cart }}"
+                      data-available="{{ variant.available }}"
+                      data-switcher="{{ customOption.option_switcher }}"
+                      data-handle="{{ variant.product.handle }}"
+                      value="{% unless customOption.option_hidden_sku %}[{{ variant.sku }}]{% endunless %} {{ optionName }} {{ variant.price | money }}"
+                    >
+                  </div>
+                {% endif %}
+              {% endfor %}
+            {% endfor %}
+            {% if sku == "SWF-NULL" %}
+              <div
+                class="swf-custom-option-item swf_{{ customOption.option_handle }}_element {{ variantClass }}"
+                data-name="{{ variant.title }}"
+                data-id="{{ variant.id }}"
+                data-sku="{{ variant.sku }}"
+                data-price="{{ variant.price }}"
+                data-compared-price="{{ variant.compare_at_price }}"
+                data-handle="{{ customOption.option_handle }}"
+                data-available="{{ variant.available }}"
+                data-message-id="{{ customOption.option_message_id }}"
+                data-type="{{ customOption.option_type }}"
+                data-hidden-options="{{ customOption.option_hidden_options }}"
+                data-hidden-sku="{{ customOption.option_hidden_sku }}"
+                data-product-id="{{ product.id }}"
+                data-product-handle="{{ product.handle }}"
+                data-switcher="{{ customOption.option_switcher }}"
+              >
+                {% if customOption.option_title contains 'Bouquet Handle' %}
+                  <img src="{{ 'wire_jute.jpeg' | asset_url }}">
+                  <span class="product-label">Wire Stems + Jute Twine</span>
+                {% else %}
+                <img src="{{ 'empty_picture.png' | asset_url }}">
+                <span class="product-label">None</span>
+                {% endif %}
+                  <input
+                  id="option-{{ customOption.option_handle }}-value"
+                  class="swf-custom-option-input {% unless firstPosition %}multi-hidden{% endunless %}"
+                  type="hidden"
+                  name="properties[{{ customOption.option_title }}{% if customOption.option_type == "swf-multiple-option"%} #{{ optionCounter }}{% endif %}]"
+                  data-variant="{{ variant.id }}"
+                  data-in-cart="{{ customOption.option_in_cart }}"
+                  data-available="{{ variant.available }}"
+                  data-switcher="{{ customOption.option_switcher }}"
+                  value="{% unless customOption.option_hidden_sku %}[{{ variant.sku }}]{% endunless %} {% if customOption.option_labels and variant.title != 'Default Title' %}{{ variant.title }}{% elsif customOption.option_labels %}{{ product.title }}{% endif %} {{ variant.price | money }}"
+                >
+              </div>
+            {% endif %}
+          {% endfor %}
+        </div>
+
+      {% when 'swf-custom-product-dropdown' %}
+        {% assign optionsSku = customOption.option_products | split: ',' %}
+        {% assign titles = customOption.option_products_custom_titles | split: "," %}
+        <div class="swf-custom-product-dropdown">
+          <select
+            id="dropdown-{{ customOption.option_handle }}"
+            data-id="{{ variant.id }}"
+            data-handle="{{ customOption.option_handle }}"
+            data-message-id="{{ customOption.option_message_id }}"
+            data-type="{{ customOption.option_type }}"
+            data-name="{{ customOption.option_title }}"
+            data-variant="{{ variant.id }}"
+            name="properties[{{ customOption.option_title }}]"
+            data-in-cart="{{ customOption.option_in_cart }}"
+          >
+            <option disabled selected>Select option</option>
+            {% for sku in optionsSku %}
+              {% assign optionIndex = forloop.index0 %}
+               {% if sku == "SWF-NULL" %}
+                  <option class="swf-{{ customOption.option_handle }}-dropdown_element">
+                    {{ titles[optionIndex] }}
+                  </option>
+                {% else %}
+                  {% for product in upsellProducts %}
+                  {% for variant in product.variants %}
+                    {% if variant.sku == sku %}
+                      <option
+                        class="swf-{{ customOption.option_handle }}-dropdown_element"
+                        data-name="{{ variant.title }}"
+                        data-id="{{ variant.id }}"
+                        data-price="{{ variant.price }}"
+                        data-variant="{{ variant.id }}"
+                        {% if variant.available == false %}disabled{% endif %}
+                      >
+                        {{ titles[optionIndex] }} (+{{ variant.price | money }})
+                      </option>
+                    {% endif %}
+                  {% endfor %}
+                {% endfor %}
+              {% endif %}
+            {% endfor %}
+          </select>
+        </div>
+
+      {% else %}
+        {% assign dyeColorNumber = customOption.dye_color_number %}
+        {% assign confirmColors = customOption.option_confirmation %}
+        {% comment %} Dye Color products. {% endcomment %}
+        {% assign DIYColors = all_products['copy-of-wood-flower-dye-1oz'] %}
+        {% assign DYEColors = all_products['dye-option-1-mini'] %}
+        {% assign FourOzColors = all_products['copy-of-wood-flower-dye-4oz'] %}
+        {% if dyeColorNumber > 0 %}
+          <div class="dye-color-options">
+            <div id="DIYColorOptions">
+              {% for dye in (1..dyeColorNumber) %}
+                {% assign selectedOption = customOption.options_preselected
+                  | split: 'Color Option #'
+                  | pop
+                  | split: '|'
+                  | first
+                %}
+                <div class="dye_color_option_container">
+                  {% if product.handle contains "4oz" %}
+                    {% assign DIYColors = FourOzColors %}
+                  {% endif %}
+                  <label class="dye-color-option-label" for="DIYColorOptions">Color Option #{{ dye }}</label>
+                  <select name="properties[Color Option #{{ dye }}]" class="diy_color_option">
+                    {% for variant in DIYColors.variants %}
+                      <option
+                        value="[{{ variant.sku }}] {{ variant.title }} {{ variant.price | money }}" data-color="{{ variant.title }}"
+                        {% if variant.title == selectedOption %}
+                          selected
+                        {% endif %}
+                      >
+                        {{ variant.title }}
+                      </option>
+                    {% endfor %}
+                  </select>
+                </div>
+              {% endfor %}
+            </div>
+            <div id="DYEColorOptions">
+              {% for dye in (1..dyeColorNumber) %}
+                {% assign selectedOption = customOption.options_preselected
+                  | split: 'Color Option #'
+                  | pop
+                  | split: '|'
+                  | first
+                %}
+                <div class="dye_color_option_container">
+                  <label class="dye-color-option-label" for="DYEColorOptions">Dye Option #{{ dye }}</label>
+                  <select name="properties[Dye Option #{{ dye }}]" class="dye_color_option">
+                    {% for variant in DYEColors.variants %}
+                      <option
+                        value="[{{ variant.sku }}] {{ variant.title }} {{ variant.price | money }}" data-color="{{ variant.title }}"
+                        {% if variant.title == selectedOption %}
+                          selected
+                        {% endif %}
+                      >
+                        {{ variant.title }}
+                      </option>
+                    {% endfor %}
+                  </select>
+                </div>
+              {% endfor %}
+            </div>
+          </div>
+        {% endif %}
+    {% endcase %}
+
+    <div id="warning-message-{{ customOption.option_handle }}" class="swf-warning-message">
+      <p>
+        <b>
+          {{- customOption.option_message_title }}<span
+            id="warning-message-price-{{ customOption.option_handle }}"
+          ></span
+        ></b>
+        <br>
+        {% comment %} <span>{{ customOption.option_message }}</span> {% endcomment %}
+        <span>NOTE: Adds up to {% if customOption.option_title contains "Build" %}15{% else %}12{% endif %} business days to production time because we custom dye and build the item for you. Need your order rushed? Expedited processing available at checkout!</span>
+      </p>
+    </div>
+  </div>
+  
+  {% if customOption.option_confirmation == "true" and customOption.dye_color_number > 0 %}
+    <div class="confirm-color-options">
+      <label class="dye-color-option-label" for="confirmColors">* Confirm Your Color Selection</label>
+      <select class="dye_color_option" id="confirmColors">
+        <option disabled selected>-- Choose *** Confirm Your Color Selection *** --</option>
+        <option value="yes">Yes, these are the colors I would like!</option>
+      </select>
+      <p>Please confirm your color selection.</p>
+    </div>
+  {% endif %}
+{% endfor %}
+
+<input id="customOptionVariant" type="hidden" value="">
+
+{% assign optionsSize = product.metafields.custom.product_options.value.custom_options | size %}
+{% if optionsSize > 0 %}
+  <div id="swf-extra-prices">
+    <p>Extras: <b id="swf-extra-price-value">$0.00</b></p>
+  </div>
+{% endif %}

@@ -1,0 +1,75 @@
+<!-- snippets/theme-main-assets.liquid -->
+
+{% comment %}
+	Required:
+		nothing
+
+	Notes: This snippet includes all main theme JS and CSS.
+	Combining here allows us to keep the layout files a little more
+	organized and condensed. This file should rarely, if ever, need to be updated
+	besides updating the values for --promo-bar-height and --header-height,
+	which should be set to their initial value on page load.
+{% endcomment %}
+
+{% comment %}
+	A few small inline styles
+		- Visually hide entire website until main stylesheet loads
+		- Set default values for the promo bar and header heights, to be updated with JS later
+{% endcomment %}
+
+{% style %}
+	html {
+		opacity: 0;
+		transition: opacity 0.35s ease;
+	}
+	:root {
+		--promo-bar-height: 0px;
+		--header-height: 57px;
+		--desktop-menu-height: 45px;
+		--breadcrumb-height: 36px;
+	}
+	.stamped-badge {
+		display: flex!important;
+		text-transform: capitalize;
+		gap: 1px;
+	}
+{% endstyle %}
+
+	
+{% comment %}
+Preload our main stylesheet
+{% endcomment %}
+
+<link
+	rel="preload"
+	href="{{ 'main.min.css' | asset_url }}"
+	as="style"
+	onload="this.onload=null; this.rel='stylesheet'; document.documentElement.classList.remove('js-loading');"
+>
+<noscript><link rel="stylesheet" href="{{ 'main.min.css' | asset_url }}"></noscript>
+
+{% comment %}
+	Register JS Loaded
+{% endcomment %}
+
+<script>
+	document.documentElement.className = document.documentElement.className.replace('no-js', 'js');
+</script>
+
+{% comment %}
+	Preload our main JS file and include the script
+	high up to start download as soon as possible. Is not
+	render-blocking due to the defer attribute.
+{% endcomment %}
+
+<link rel="preload" as="script" href="{{ 'main.min.js' | asset_url }}">
+<script src="{{ 'main.min.js' | asset_url }}" defer="defer"></script>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick-theme.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.css">
+<link rel="stylesheet" href="{{ 'section-product-review-custom.min.css' | asset_url }}">
+<link rel="stylesheet" href="{{ 'custom.css' | asset_url }}" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.js"></script>
+
+<script src="{{ 'custom.js' | asset_url }}" defer="defer"></script>

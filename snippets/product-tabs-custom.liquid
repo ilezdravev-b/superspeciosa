@@ -1,0 +1,146 @@
+<!-- snippets/product-tabs-custom.liquid -->
+
+{%- if type == "Raw Assortment" or type == "Raw flowers" or type == "Raw Flowers Singles" -%}
+    {%- assign faq_page = pages["raw-assortment-faq"] -%}
+    {%- assign about = pages["about-raw-assortment"] -%}
+
+    {%- if faq_page != blank -%}
+        <div class="js-accordion-parent">
+            <button class="js-accordion-btn accordion__btn" aria-expanded="false" aria-controls="customProductTab1">
+                {{ faq_page.title }} <span class="accordion__icon"></span>
+            </button>
+
+            <div class="accordion__content" id="customProductTab1">
+                <div class="Collapsible__Content">
+                    <div class="rte">
+                        {{- faq_page.content -}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    {%- endif -%}
+
+    {%- if about != blank -%}
+        <div class="js-accordion-parent">
+            <button class="js-accordion-btn accordion__btn" aria-expanded="false" aria-controls="customProductTab2">
+                {{ about.title }} <span class="accordion__icon"></span>
+            </button>
+
+            <div class="accordion__content" id="customProductTab2">
+                <div class="Collapsible__Content">
+                    <div class="rte">
+                        {{- about.content -}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    {%- endif -%}
+{%- endif -%}
+
+{%- if type == "Dyed flowers" -%}
+    {%- assign faq_page = pages["dyed-flowers-faq"] -%}
+    {%- assign about = pages["about-our-dyed-sola-wood-flower-assortments"] -%}
+
+    {%- if faq_page != blank -%}
+        <div class="js-accordion-parent">
+            <button class="js-accordion-btn accordion__btn" aria-expanded="false" aria-controls="customProductTab3">
+                {{ faq_page.title }} <span class="accordion__icon"></span>
+            </button>
+
+            <div class="accordion__content" id="customProductTab3">
+                <div class="Collapsible__Content">
+                    <div class="rte">
+                        {{- faq_page.content -}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    {%- endif -%}
+
+    {%- if about != blank -%}
+        <div class="js-accordion-parent">
+            <button class="js-accordion-btn accordion__btn" aria-expanded="false" aria-controls="customProductTab4">
+                {{ about.title }} <span class="accordion__icon"></span>
+            </button>
+
+            <div class="accordion__content" id="customProductTab4">
+                <div class="Collapsible__Content">
+                    <div class="rte">
+                        {{- about.content -}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    {%- endif -%}
+{%- endif -%}
+
+{%- if type == "Craft Kit" -%}
+    {%- assign faq_page = pages["sola-wood-craft-kit-faq"] -%}
+    {%- assign about = pages["about-sola-craft-kits"] -%}
+    {%- assign size_comparison = pages["bouquet-size-comparison"] -%}
+
+    {%- if size_comparison != blank -%}
+        <script src="{{ 'bouquet-size-lightbox.js' | asset_url }}" defer></script>
+        {{ 'bouquet-size.css' | asset_url | stylesheet_tag}}
+        <div class="js-accordion-parent">
+            <button class="js-accordion-btn accordion__btn" aria-expanded="false" aria-controls="customProductTab5">
+                {{ size_comparison.title }} <span class="accordion__icon"></span>
+            </button>
+
+            <div class="accordion__content" id="customProductTab5">
+                <div class="Collapsible__Content">
+                    <div class="rte">
+                        {{- size_comparison.content -}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    {%- endif -%}
+    {%- if faq_page != blank -%}
+        <div class="js-accordion-parent">
+            <button class="js-accordion-btn accordion__btn" aria-expanded="false" aria-controls="customProductTab6">
+                {{ faq_page.title }} <span class="accordion__icon"></span>
+            </button>
+
+            <div class="accordion__content" id="customProductTab6">
+                <div class="Collapsible__Content">
+                    <div class="rte">
+                        {{- faq_page.content -}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    {%- endif -%}
+
+    {%- if about != blank -%}
+        <div class="js-accordion-parent">
+            <button class="js-accordion-btn accordion__btn" aria-expanded="false" aria-controls="customProductTab7">
+                {{ about.title }} <span class="accordion__icon"></span>
+            </button>
+
+            <div class="accordion__content" id="customProductTab7">
+                <div class="Collapsible__Content">
+                    <div class="rte">
+                        {{- about.content -}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    {%- endif -%}
+    <div class="js-accordion-parent">
+        <button class="js-accordion-btn accordion__btn" aria-expanded="false" aria-controls="customProductTab8">
+            Build It For Me <span class="accordion__icon"></span>
+        </button>
+        <div class="accordion__content" id="customProductTab8">
+            <div class="Collapsible__Content">
+                <div class="rte">
+                        <p>Our master team of florists in Utah will build handcraft for you!</p>
+                        <p>Simply select the "Build It For Me" option on the product page, and we'll take care of the rest.</p>
+                        <p>Each order is custom built for you. This means we dye everything in the colors you pick, then use greenery and Super Speciosa that make the final product beautiful and cohesive.</p>
+                        <p>Note - picking this option will add production time to your order, which is viewable as red text when you click the Build It For Me option. We do have an expedited option available at checkout. This production time is because everything is custom built just for you!</p>
+                        <p>Can't wait that long? See our ready to ship collections <a href="https://solawoodflowers.com/collections/ready-to-ship">here</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+{%- endif -%}

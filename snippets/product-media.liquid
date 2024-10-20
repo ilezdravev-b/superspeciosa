@@ -1,0 +1,49 @@
+
+
+<!-- snippets/product-media.liquid -->
+
+{% comment %}
+    Required:
+        media {Object}  - The media object from product.media
+		index {Integer} - The 1-based forloop.index
+{% endcomment %}
+
+
+
+{%- case media.media_type -%}
+    {%- when 'image' -%}
+
+        {% comment %}
+            Load the first image immediately when on the PDP, 
+            and load the rest of the images only when the user starts
+            to interact with the site
+        {% endcomment %}
+
+        <span onclick="window.EventBus.emit('picture:preview', '{{ media.preview_image | image_url }}')">
+            {% render 'icon-search' %}
+        </span>
+
+		{% liquid 
+			assign load = 'lazy'
+            assign initial_size = ''
+
+			if index == 1 and template.name == 'product'
+				assign load = 'eager'
+                assign initial_size = '400px'
+			endif
+		%}
+
+        {% render 'image-square', image: media.image, load: load, initial_size: initial_size %}
+
+    {%- when 'video' -%}
+        {{ media | video_tag: controls: true, loop: true, image_size: "768x" }}
+    {%- when 'external_video' -%}
+        {{ media | external_video_tag }}
+    {%- when 'model' -%}
+        {% comment %} 
+            Aspect ratio is defined in product.scss, will probably change per project 
+        {% endcomment %}
+        <div class="product-media__item--model">
+            {{ media | model_viewer_tag }}
+        </div>
+{%- endcase -%} 

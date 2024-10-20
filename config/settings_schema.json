@@ -1,0 +1,116 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "2.0 Starter theme",
+    "theme_version": "1.0.0",
+    "theme_author": "Silver Ponies Web Inc.",
+    "theme_documentation_url": "https:\/\/shopify.dev\/themes\/tools\/dawn",
+    "theme_support_url": "https:\/\/support.shopify.com\/"
+  },
+  {
+    "name": "Cart",
+    "settings": [
+      {
+        "type": "header",
+        "content": "AJAX Cart"
+      },
+      {
+        "type": "checkbox",
+        "id": "ajax_cart_enable",
+        "default": true,
+        "label": "Enable AJAX drawer cart?"
+      }
+    ]
+  },
+  {
+    "name": "Brand Logo",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Logo"
+      },
+      {
+        "type": "image_picker",
+        "id": "logo",
+        "label": "Logo Image",
+        "info": "The primary logo file for your website. SVG preferred"
+      }
+    ]
+  },
+  {
+    "name": "Favicon",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "favicon",
+        "label": "Favicon image",
+        "info": "Will be scaled down to 32 x 32px."
+      }
+    ]
+  },
+  {
+    "name": "Klaviyo",
+    "settings": [
+      {
+        "type": "header",
+        "content": "General Settings"
+      },
+      {
+        "type": "text",
+        "id": "klaviyo_api_key",
+        "label": "Klaviyo Public API Key",
+        "info": "For information on how to find this, refer to Klaviyo documentation on public API keys [here](https:\/\/help.klaviyo.com\/hc\/en-us\/articles\/115005062267-How-to-manage-your-account-s-API-keys#find-your-api-keys2)."
+      },
+      {
+        "type": "text",
+        "id": "klaviyo_list_id",
+        "label": "Klaviyo Newsletter List ID",
+        "info": "For information on how to find this, refer to Klaviyo documentation on list IDs [here](https:\/\/help.klaviyo.com\/hc\/en-us\/articles\/115005078647-How-to-find-a-list-ID#find-your-list-id1)."
+      }
+    ]
+  },
+  {
+    "name": "Social Networks",
+    "settings": [
+      {
+        "type": "url",
+        "id": "social_instagram",
+        "label": "Instagram"
+      },
+      {
+        "type": "url",
+        "id": "social_facebook",
+        "label": "Facebook"
+      },
+      {
+        "type": "url",
+        "id": "social_pinterest",
+        "label": "Pinterest"
+      },
+      {
+        "type": "url",
+        "id": "social_twitter",
+        "label": "Twitter"
+      },
+      {
+        "type": "url",
+        "id": "social_youtube",
+        "label": "YouTube"
+      },
+      {
+        "type": "url",
+        "id": "social_tiktok",
+        "label": "TikTok"
+      }
+    ]
+  },
+  {
+    "name": "Support",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "If you have any questions or concerns, please contact us at [neigh@silverponies.com](mailto:neigh@silverponies.com)"
+      }
+    ]
+  }
+]

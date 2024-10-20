@@ -1,0 +1,15 @@
+{
+  "sections": {
+    "main": {
+      "type": "page",
+      "custom_css": [
+        "h1 {display: none;}"
+      ],
+      "settings": {
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

@@ -1,0 +1,42 @@
+<!-- sections/example-buttons.liquid -->
+
+{% comment %}
+    This is an example of the button classes and how they can be used.
+{% endcomment %}
+
+<div class="container-text section">
+    <h2 class="style-guide__heading">Buttons</h2>
+
+	<button type="button" class="btn btn--primary">
+		Primary
+	</button><br>
+	<div class="style-guide__label">.btn .btn--primary</div>
+
+	<br><br>
+
+	<button type="button" class="btn btn--primary" disabled>
+		Primary Disabled
+	</button><br>
+	<div class="style-guide__label">.btn .btn--primary :disabled</div>
+
+	<br><br>
+
+	<button type="button" class="btn btn--hollow">
+		Hollow
+	</button><br>
+	<div class="style-guide__label">.btn .btn--hollow</div>
+
+	<br><br>
+
+	<button type="button" class="btn btn--hollow" disabled>
+		Hollow Disabled
+	</button><br>
+	<div class="style-guide__label">.btn .btn--hollow :disabled</div>
+</div>
+
+{% schema %}
+    {
+        "name": "Example Buttons",
+        "tag": "section"
+    }
+{% endschema %}

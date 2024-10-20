@@ -1,0 +1,215 @@
+body.page-sitemap article.container-text.section {
+  max-width: 1140px;
+  padding: 0;
+}
+body.page-sitemap article.container-text.section .rte p a {
+  color: #658b27;
+  font-size: 15px;
+  text-decoration: none;
+  line-height: 24px;
+  letter-spacing: -0.3px;
+}
+.page-width {
+  max-width: 1140px;
+  margin: auto;
+}
+.contact-form-section h1.page__title {
+  margin: 0;
+  padding: 30px;
+  text-align: center;
+  font-family: "Dilemma", sans-serif;
+  font-size: 50px;
+  font-weight: 700;
+  text-transform: uppercase;
+  line-height: 1.1em;
+  letter-spacing: 1.3px;
+}
+.contact-form-section .section-content {
+  display: flex;
+}
+.contact-form-section .section-content .column {
+  width: 100%;
+  padding: 10px;
+}
+.form-info h2.heading {
+  margin: 0 0 20px;
+  font-size: 30px;
+}
+.form-info .content {
+  font-size: 15px;
+  line-height: 18px;
+  color: #333;
+}
+.form-info .content a {
+  color: #658b27;
+}
+.form-info .content p {
+  margin: 0 0 15px;
+}
+.contact-form.form-fields-details.column .contact-form {
+  gap: 16px;
+}
+.contact-form.form-fields-details .input-group label {
+  display: inline-block;
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  padding: 0;
+  line-height: 1;
+}
+.contact-form.form-fields-details .input-group label span.gfield_required_text {
+  color: #c02b0a;
+  display: inline-block;
+  font-size: 13.008px;
+  padding-inline-start: 0.125em;
+  font-style: italic;
+  font-weight: 300;
+}
+.contact-form.form-fields-details .input-group input {
+  padding-top: 15px;
+  border-radius: 3px;
+  padding-left: 6px;
+  padding-right: 15px;
+  height: 40px;
+  outline: none;
+  border: 1px solid #666;
+  font-size: 15px;
+  background: #fff;
+}
+.contact-form.form-fields-details .input-group textarea {
+  padding-top: 15px;
+  border-radius: 3px;
+  padding-left: 6px;
+  padding-right: 15px;
+  outline: none;
+  border: 1px solid #666;
+  font-size: 15px;
+  background: #fff;
+}
+.contact-form.form-fields-details .input-group button.btn {
+  background: #212c1c;
+  font-size: 13px;
+  font-weight: 700;
+  font-family: "Dilemma", sans-serif;
+  color: #f4f1de;
+  border-radius: 0;
+  padding: 0.5rem 1rem;
+}
+.main-page .page {
+  padding: 10px;
+}
+.main-page .page h1.page__title {
+  margin: 25px 0 45px;
+  color: #231f20;
+  font-size: 50px;
+  font-weight: 700;
+  font-family: "Dilemma", sans-serif;
+  text-transform: uppercase;
+  line-height: 1.1em;
+  letter-spacing: 1.3px;
+}
+.main-page .page .rte {
+  font-size: 15px;
+  line-height: 24px;
+  color: #333;
+}
+.main-page .page .rte p {
+  margin: 0;
+  margin-bottom: 15px;
+}
+.main-page .page .rte a {
+  color: #658b27;
+  text-decoration: none;
+}
+.main-page .page .rte h2 {
+  color: #231f20;
+  font-family: "Dilemma", sans-serif;
+  font-size: 35px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  word-spacing: 3px;
+  line-height: 1.2;
+}
+.main-page .page .rte h3 {
+  color: #231f20;
+  font-family: "Dilemma", sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  text-transform: uppercase;
+  font-style: normal;
+  letter-spacing: 2.2px;
+  line-height: 1.2;
+}
+.main-page .page .rte h4 {
+  color: #231f20;
+  font-family: "Courier Prime", sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.4em;
+  letter-spacing: -0.1px;
+}
+.main-page .page .rte ol,
+.main-page .page .rte ul {
+  padding-left: 3rem;
+}
+.main-page-heading h1 {
+  text-transform: uppercase;
+}
+.page-kratom-wholesale .shopify-section-group-footer-group,
+.page-kratom-wholesale footer:not(cart-drawer footer) {
+  display: block !important;
+}
+
+@media (max-width: 749px) {
+  .contact-form-section h1.page__title {
+    font-size: 36px;
+  }
+  .contact-form-section .section-content {
+    flex-direction: column;
+  }
+  .main-page .page h1.page__title {
+    font-size: 36px;
+  }
+}
+
+/* ABRA styles start */
+.abra-banner--gift .abra-banner__offer-content .abra-banner__badge .abra-banner__badge-label::after {
+  content: " with subscription";
+}
+/* ABRA styles end */
+#MainContent .shopify-policy_body .rte p {
+    font-size: 15px;
+    line-height: 24px;
+    letter-spacing: -0.3px;
+    color: #333333;
+}  
+#MainContent .shopify-policy__title h1,
+.template--page article.container-text h1.page__title{
+    margin: 0;
+    color: #231f20;
+    font-family: Dilemma, sans-serif !important;
+    font-weight: 700;
+    text-transform: uppercase;
+    line-height: 1.1em;
+    letter-spacing: 1.3px;
+}
+.shopify-policy__body h3,
+.shopify-policy__body h4 {
+    margin: 24px 0 0;
+}
+#MainContent .shopify-policy__container {
+    max-width: 1140px !important;
+    width: 100% !important; 
+}
+
+#MainContent {
+  min-height: 800px;
+}
+.template--policies.page-returns-refunds main#MainContent {
+    min-height: auto;
+}
+.calconic-calculator {
+    z-index: 5 !important;
+    position: relative;
+}

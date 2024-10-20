@@ -1,0 +1,122 @@
+<!-- sections/search-results.liquid -->
+
+{%- liquid 
+	assign data = section.settings
+	-%}
+
+<section class="search-results container section">
+
+	{%- paginate search.results by data.products_per_page -%}
+
+		{%- if search.performed -%}
+
+			{% comment %}
+				Screen-Reader Only Heading
+			{% endcomment %}
+
+			<h1 class="sr-only">Search Results</h1>
+
+			{% if search.results_count > 0 %}
+
+				{% comment %}
+					Search Results
+				{% endcomment %}
+
+				<h2 class="search-results__title">
+					{{ data.title_results | replace: "[search_terms]", search.terms | replace: "[results_count]", search.results.size }}
+				</h2>
+
+				<div class="search-results__grid">
+					{%- for product in search.results -%}
+						
+						{% comment %}
+							Exclude Hidden Products
+						{% endcomment %}
+
+						{%- unless product.template_suffix == 'hidden' -%}
+
+							{% render 'product-thumbnail', product: product %}
+
+						{%- endunless -%}
+					{%- endfor -%}
+				</div>
+
+			{%- else -%}
+
+				{% comment %}
+					No Results
+				{% endcomment %}
+
+				<h2 class="search-results__title">
+					{{ data.no_products_text | replace: "[search_terms]", search.terms }}
+				</h2>
+
+				{% render "search-bar", id_suffix: "Landing", search_label: data.no_search_text %}
+			{%- endif -%}
+
+		{%- else -%}
+
+			{% comment %}
+				No Search Performed
+			{% endcomment %}
+
+			<h1 class="search-results__title">
+				Search
+			</h1>
+
+			{% render "search-bar", id_suffix: "Landing", search_label: data.no_search_text %}
+
+		{%- endif -%}
+
+		{%- if paginate.pages > 1 -%}
+			{% render 'pagination', paginate: paginate %}
+		{%- endif -%}
+	{%- endpaginate -%}
+
+</section>
+
+
+{% schema %}
+{
+    "name": "Search Results",
+    "settings": [
+        {
+            "type": "range",
+            "id": "products_per_page",
+            "min": 8,
+            "max": 50,
+            "step": 2,
+            "default": 24,
+            "label": "Products per page"
+        }, 
+        {
+            "type": "textarea",
+            "id": "title_results",
+            "label": "Title for results",
+            "default": "[results_count] search results for \"[search_terms]\"",
+            "info": "Use placeholder [search_terms] for the phrase that the customer searched for, and [results_count] for the number of results"
+        },
+        {
+            "type": "header",
+            "content": "No products"
+        },
+        { 
+            "type": "textarea", 
+            "id": "no_products_text", 
+            "label": "No products found message", 
+            "default": "Your search for \"[search_terms]\" did not yield any results", 
+            "info": "Use placeholder [search_terms] for the phrase that the customer searched for"
+        }, 
+        {
+            "type": "header",
+            "content": "No search terms"
+        },
+        { 
+            "type": "textarea", 
+            "id": "no_search_text", 
+            "label": "No search terms message", 
+            "default": "Search our site using the search bar below:"
+        }
+    ]
+}
+{% endschema %}

@@ -1,0 +1,46 @@
+<!-- snippets/theme-font-links.liquid -->
+
+{% comment %}
+  Required:
+  	nothing
+
+  Notes: Used to render font links (normally Google Fonts)
+  	   on all existing layout files. Currently the stylesheet
+  	   is being preloaded, but this should be tested to make sure
+  	   it does help with speed. Whether or not it does is dependent on the
+  	   specific project. (Too much preloading, or preloading
+  	   massive resources, will backfire)
+
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link
+  rel="preload"
+  as="style"
+  href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;800&display=swap"
+  onload="this.onload=null; this.rel='stylesheet';"
+  crossorigin
+>
+
+{% endcomment %}
+
+{% comment %}
+  Font-Face Examples
+
+  Notes: Whenever possible, font files should be added to the assets folder
+         in woff2 and woff format, and defined as font faces here. This allows
+         the download of the fonts to be separate from the main stylesheet, and
+         speeds up rendering. Local fonts are preferred for the sake of less
+         third-party network requests.
+{% endcomment %}
+
+{% style %}
+	@font-face {
+  		font-family: "Courier Prime";
+  		font-style: normal;
+  		font-display:swap;
+  		font-weight: 800;
+  		src: url('{{ "courier-prime.woff2" | asset_url }}') format('woff2'),
+			 url('{{ "courier-prime.woff" | asset_url }}') format('woff');
+  	}
+{% endstyle %}

@@ -1,0 +1,87 @@
+<!-- sections/product-usage.liquid -->
+
+{% comment %}
+Required:
+nothing
+{% endcomment %}
+
+
+<div class="product-usage-panel">
+    <div class="product-usage-header">
+        <h5 class="product-usage-subtitle">{{ subtitle }}</h5>
+        <h2 class="product-usage-title">{{ title }}</h2>
+    </div>
+    <div class="product-usage-content">
+        <img class="product-usage-image"
+                src="{{image |  img_url: '1000x'}}" width="480px"
+                height="350px" alt="Product Usage"/>
+
+        <div class="product-usage-description">
+            {% if usage1_text != null and usage1_text != empty %}
+            <div class="product-usage-info-card">
+                <div class="product-usage-card-circle">1</div>
+                <div class="product-usage-card-icon">
+                    <img src="{{ usage1_icon | image_url }}" 
+                    alt="usage1_icon" />
+                </div>
+                <div class="product-usage-info-card-text">
+                    {{ usage1_text }}
+                </div>
+            </div>
+            {% endif %}
+
+            {% if usage2_text != null and usage2_text != empty %}
+            <div class="product-usage-info-card">
+                <div class="product-usage-card-circle">2</div>
+                <div class="product-usage-card-icon">
+                    <img src="{{ usage2_icon | image_url }}" 
+
+                    alt="usage2_icon" />
+                </div>
+                <div class="product-usage-info-card-text">
+                    {{ usage2_text }}
+                </div>
+            </div>
+            {% endif %}
+
+            {% if usage3_text != null and usage3_text != empty %}
+            <div class="product-usage-info-card">
+                <div class="product-usage-card-circle">3</div>
+                <div class="product-usage-card-icon">
+                    <img src="{{ usage3_icon | image_url }}" 
+                    alt="usage3_icon" />
+                </div>
+                <div class="product-usage-info-card-text">
+                    {{ usage3_text }}
+                </div>
+            </div>
+            {% endif %}
+
+            {% if usage4_text != null and usage4_text != empty %}
+            <div class="product-usage-info-card">
+                <div class="product-usage-card-circle">4</div>
+                <div class="product-usage-card-icon">
+                    <img src="{{ usage4_icon | image_url }}" 
+                    alt="usage4_icon" />
+                    </div>
+                <div class="product-usage-info-card-text">
+                    {{ usage4_text }}
+                </div>
+            </div>
+            {% endif %}
+
+            {% if usage5_text != null and usage5_text != empty %}
+            <div class="product-usage-info-card">
+                <div class="product-usage-card-circle">5</div>
+                <div class="product-usage-card-icon">
+                    <img src="{{ usage5_icon | image_url }}" 
+                    alt="usage5_icon" />
+                    </div>
+                <div class="product-usage-info-card-text">
+                    {{ usage5_text }}
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>

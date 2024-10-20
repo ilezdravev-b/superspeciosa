@@ -1,0 +1,110 @@
+<!-- sections/featured-collections.liquid -->
+
+{% comment %}
+	Load Assets
+{% endcomment %}
+
+{% render 'theme-load-assets', style: 'section-featured-collections.min.css', script: 'section-featured-collections.min.js' %}
+
+{% comment %}
+	Initial Liquid Variables
+{% endcomment %}
+
+{%- liquid 
+    assign data = section.settings
+    assign title = data.title
+-%}
+
+{% comment %}
+	Section Markup
+{% endcomment %}
+
+<section class="featured-collections js-featured-collections-slider" id="FeaturedCollections{{ section.id }}">
+
+	{%- if title != blank -%}
+		<h2 class="sr-only">{{ title }}</h2>
+	{%- endif -%}
+
+    {% comment %}
+        Controls
+    {% endcomment %}
+
+    <fieldset class="featured-collections-slider__controls">
+        <legend class="sr-only">{{ title }} Controls</legend>
+
+        <button type="button" class="js-sp-slider-prev featured-collections-slider__button">
+            <span class="sr-only">Previous Collection</span>
+            {% render 'icon-angle-left-thin', class: 'icon' %}
+        </button>
+
+        <button type="button" class="js-sp-slider-next featured-collections-slider__button">
+            <span class="sr-only">Next Collection</span>
+            {% render 'icon-angle-right-thin', class: 'icon' %}
+        </button>
+    </fieldset>
+
+	<ul class="featured-collections__grid js-featured-collections-slides" data-id="FeaturedCollections{{ section.id }}" {% if title != blank %} aria-label="{{ title }}"{% endif %}>
+		{%- for block in section.blocks -%}
+			{%- liquid 
+                assign block_data = block.settings
+                assign collection_title = block_data.title
+				assign collection_url = block_data.url
+				assign collection_image = block_data.background_image
+			-%}
+
+			{%- if collection_title != blank and collection_url != blank and collection_image != blank -%}
+                <li>
+                    {% render "collection-thumbnail", collection_title: collection_title, collection_url: collection_url, collection_image: collection_image %}
+                </li>
+            {%- endif -%}
+		{%- endfor -%}
+	</ul>
+</section>
+
+{% schema %}
+{
+    "name": "Shop By Collection",
+    "settings": [
+        {
+            "type": "text",
+            "id": "title",
+            "label": "Title",
+			"default": "Featured Collections", 
+            "info": "Will not show, only used for SEO purposes"
+        }
+    ],
+    "blocks": [
+        {
+            "type": "collection",
+            "name": "Collection",
+            "limit": 4, 
+            "settings": [
+                { 
+                    "type": "text", 
+                    "id": "title", 
+                    "label": "Collection title"
+                }, 
+                {
+                    "type": "url",
+                    "id": "url",
+                    "label": "URL"
+                },
+                {
+                    "type": "image_picker",
+                    "id": "background_image",
+                    "label": "Image",
+                    "info": "Recommended size: 600 x 600px"
+                }
+            ]
+        }
+    ],
+    "presets": [
+        {
+            "name": "Shop By Collection"
+        }
+    ], 
+    "disabled_on": {
+		"groups": ["footer"]
+	}
+}
+{% endschema %}

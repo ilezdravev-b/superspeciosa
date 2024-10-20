@@ -1,0 +1,62 @@
+<!-- snippets/article-comments.liquid -->
+
+{% comment %}
+    Required:
+        comments_to_show {Integer} Number of comments to show per page
+        form_title {String} Title of the comment form
+
+    Notes: The comment object exists if a user has 
+    just submitted a comment.
+{% endcomment %}
+
+{% render 'theme-load-assets', style: 'section-article-comments.min.css' %}
+
+{% if article.comments_count > 0 or comment %}
+    {% paginate article.comments by comments_to_show %}
+
+        <ul class="article-comments" aria-label="Comments">
+
+            {% comment %}
+                All Comments
+            {% endcomment %}
+
+            {% for comment in article.comments %}
+                <li>
+                    {% render 'article-comment', comment: comment, index: forloop.index %}
+                </li>
+            {% endfor %}
+
+            {% comment %}
+                Newly-posted, pending comment
+
+                Note: This is only shown to the comment author,
+                so they can see that their comment went through,
+                even though it hasn't been approved yet.
+            {% endcomment %}
+
+            {% if comment.staus == 'pending' or comment.status == 'unapproved' %}
+                {% render 'article-comment', comment: comment, is_pending: true %}
+            {% endif %}
+        </ul>
+
+        {% comment %}
+            Comment Pagination
+        {% endcomment %}
+
+        {%- if paginate.pages > 1 -%}
+            {% render 'pagination', paginate: paginate, anchor: '#articleComments' %}
+        {%- endif -%}
+    {% endpaginate %}
+{% endif %}
+
+{% comment %}
+    Comment Form
+{% endcomment %}
+
+<div class="article-comments__form">
+    <h2 class="article-comments__form-title">
+        {{ form_title }}
+    </h2>
+
+    {% render 'form-article-comment' %}
+</div>

@@ -1,0 +1,18 @@
+<!-- snippets/collection-filter-swatch.liquid -->
+
+{% comment %}
+	Required:
+		value {Object} A value inside collection filters
+		id {String} Unique ID for the input
+		filter_counts_show {Boolean} Whether to show the filter results counts by each filter
+{% endcomment %}
+
+<input type="checkbox" class="js-filters-input" name="{{ value.param_name }}" value="{{ value.value }}" id="{{ id }}"
+	{% if value.active %}checked{% endif %}
+	{% if value.count == 0 and value.active == false %}disabled{% endif %}>
+
+<label for="{{ id }}">
+	<div class="swatch swatch--coll-{{ value.label | handle }}" style="background-color:{{ value.label | handle }};">
+	</div>
+	{{ value.label }} {% if filter_counts_show %}({{ value.count }}){% endif %}
+</label>

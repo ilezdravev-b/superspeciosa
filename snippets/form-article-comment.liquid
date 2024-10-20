@@ -1,0 +1,98 @@
+<!-- snippets/form-article-comment.liquid -->
+
+{% comment %}
+	Required:
+		article {Object} The article object. Not required if rendered on the article template.
+
+	Optional: 
+		class {String} Class(es) to add to the form element
+{% endcomment %}
+
+{% liquid 
+    assign success = 'blogs.article.success' | t
+
+    if blog.moderated? and comment.status == 'unapproved'
+        assign success = 'blogs.article.success_moderated' | t
+    endif
+
+%}
+
+{% form 'new_comment', article, class: 'comment-form' %}
+
+    {% comment %}
+		Success Message
+	{% endcomment %}
+
+	{% if form.posted_successfully? %}
+		{% render 'form-message-success', message: success %}
+	{% endif %}
+
+	{% comment %}
+		Error Message
+	{% endcomment %} 
+
+	{% if form.errors %} 
+		{% render 'form-message-errors', errors: form.errors %}
+	{% endif %}
+
+	{% comment %}
+		Form
+	{% endcomment %}
+
+    <div class="input-group label-moves{% if errors contains 'author' %} input-group--error{% endif %}">
+		<input type="text" name="comment[author]"
+            id="comment-form-author" autocomplete="name"
+            value="{{ form.author }}" required
+			{% if errors contains 'author' %}
+				aria-invalid="true"
+				aria-describedby="comment-form-author-error"
+			{% endif %} />
+        <label for="comment-form-author">{{ 'blogs.article.name' | t }}*</label>
+
+		{% if form.errors contains 'email' %} 
+			{% render 'form-message-error-input', id: "comment-form-author-error", error_type: "author", errors: errors %}
+		{% endif %}
+	</div>
+
+    <div class="input-group label-moves{% if errors contains 'email' %} input-group--error{% endif %}">
+		<input type="email" name="comment[email]"
+            id="comment-form-email" autocomplete="email"
+            value="{{ form.email }}" autocapitalize="off" required
+			{% if errors contains 'email' %}
+				aria-invalid="true"
+				aria-describedby="comment-form-author-error"
+			{% endif %} />
+        <label for="comment-form-email">{{ 'blogs.article.email' | t }}*</label>
+
+		{% if form.errors contains 'email' %} 
+			{% render 'form-message-error-input', id: "comment-form-author-error", error_type: "email", errors: errors %}
+		{% endif %}
+	</div>
+
+    <div class="input-group label-moves{% if errors contains 'body' %} input-group--error{% endif %}">
+		<textarea rows="7" name="comment[body]"
+            id="comment-form-body" required
+			{% if errors contains 'body' %}
+				aria-invalid="true"
+				aria-describedby="comment-form-author-error"
+			{% endif %}></textarea>
+        <label for="comment-form-body">{{ 'blogs.article.message' | t }}*</label>
+
+		{% if form.errors contains 'body' %} 
+			{% render 'form-message-error-input', id: "comment-form-body-error", error_type: "body", errors: errors %}
+		{% endif %}
+
+        {% comment %}
+            Moderated Message (If comments must be approved for the blog)
+        {% endcomment %}
+
+        {%- if blog.moderated? -%}
+            <p>{{ 'blogs.article.moderated' | t }}</p>
+          {%- endif -%}
+	</div>
+
+    <button type="submit" class="btn btn--primary">
+        {{ 'blogs.article.post' | t }}
+    </button>
+
+{% endform %}

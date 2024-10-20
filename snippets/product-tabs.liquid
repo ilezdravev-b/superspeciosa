@@ -1,0 +1,185 @@
+<!-- snippets/product-tabs.liquid -->
+
+{%- assign first_page = pages[section.settings.tab_page_1_handle] | default: pages['color-gallery'] -%}
+{%- assign second_page = pages[section.settings.tab_page_2_handle] -%}
+{%- assign first_custom_page = '' -%}
+{%- assign second_custom_page = '' -%}
+{%- assign third_custom_page = '' -%}
+
+{%- comment -%}
+    We allow to add two tabs that are extracted using the tag system. To add such a tag, simply create a page and
+    note the handle somewhere.
+    Next, add a tag to your product in this form: __tab1:page-handle or __tab2:page-handle
+    The theme will automatically link the tab to the page
+{%- endcomment -%}
+
+{%- assign has_unique_tab_1 = false -%}
+{%- assign has_unique_tab_2 = false -%}
+
+{%- comment -%}First, check the metafields{%- endcomment -%}
+
+{%- if product.metafields.sf_product_tabs.tab_1_title != blank and product.metafields.sf_product_tabs.tab_1_content != blank -%}
+    {%- assign unique_tab_1_title = product.metafields.sf_product_tabs.tab_1_title -%}
+    {%- assign unique_tab_1_content = product.metafields.sf_product_tabs.tab_1_content -%}
+    {%- assign has_unique_tab_1 = true -%}
+{%- endif -%}
+
+{%- if product.metafields.sf_product_tabs.tab_2_title != blank and product.metafields.sf_product_tabs.tab_2_content != blank -%}
+    {%- assign unique_tab_2_title = product.metafields.sf_product_tabs.tab_2_title -%}
+    {%- assign unique_tab_2_content = product.metafields.sf_product_tabs.tab_2_content -%}
+    {%- assign has_unique_tab_2 = true -%}
+{%- endif -%}
+
+{%- if product.metafields.sf_product_tabs.tab_3_title != blank and product.metafields.sf_product_tabs.tab_3_content != blank -%}
+    {%- assign unique_tab_3_title = product.metafields.sf_product_tabs.tab_3_title -%}
+    {%- assign unique_tab_3_content = product.metafields.sf_product_tabs.tab_3_content -%}
+    {%- assign has_unique_tab_3 = true -%}
+{%- endif -%}
+
+{%- comment -%}Then, let's try the tags{%- endcomment -%}
+
+{%- for tag in product.tags -%}
+    {%- if tag contains '__tab1' -%}
+        {%- assign first_custom_page = tag | split: ':' | last -%}
+        {%- assign first_custom_page = pages[first_custom_page] -%}
+
+        {%- assign unique_tab_1_title = first_custom_page.title -%}
+        {%- assign unique_tab_1_content = first_custom_page.content -%}
+        {%- assign has_unique_tab_1 = true -%}
+    {%- endif -%}
+
+    {%- if tag contains '__tab2' -%}
+        {%- assign second_custom_page = tag | split: ':' | last -%}
+        {%- assign second_custom_page = pages[second_custom_page] -%}
+
+        {%- assign unique_tab_2_title = second_custom_page.title -%}
+        {%- assign unique_tab_2_content = second_custom_page.content -%}
+        {%- assign has_unique_tab_2 = true -%}
+    {%- endif -%}
+
+    {%- if tag contains '__tab3' -%}
+        {%- assign third_custom_page = tag | split: ':' | last -%}
+        {%- assign third_custom_page = pages[third_custom_page] -%}
+
+        {%- assign unique_tab_3_title = third_custom_page.title -%}
+        {%- assign unique_tab_3_content = third_custom_page.content -%}
+        {%- assign has_unique_tab_3 = true -%}
+    {%- endif -%}
+{%- endfor -%}
+
+<!-- Changes for fixing width of the product "100-random-assortment-no-skin" -->
+<style>
+    .thumb{
+        aspect-ratio: 1 !important;
+    }
+    .thumb > img{
+        max-width: unset !important;
+        width: inherit !important;
+    }
+</style>
+<!-- End of changes for fixing width of the product "100-random-assortment-no-skin" -->
+
+
+{%- if first_page.handle != blank or second_page.handle != blank or has_unique_tab_1 or has_unique_tab_2 or has_unique_tab_3 or section.settings.reviews_enabled -%}
+    <div class="product__tabs">
+        {%- if has_unique_tab_1 -%}
+            <div class="js-accordion-parent">
+                <button class="js-accordion-btn accordion__btn" aria-expanded="false" aria-controls="productTab1">
+                    {{- unique_tab_1_title -}} <span class="accordion__icon"></span>
+                </button>
+
+                <div class="accordion__content" id="productTab1">
+                    <div class="Collapsible__Content">
+                        <div class="Rte">
+                            {{- unique_tab_1_content -}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {%- endif -%}
+
+        {%- if has_unique_tab_2 -%}
+            <div class="js-accordion-parent">
+                <button class="js-accordion-btn accordion__btn" aria-expanded="false" aria-controls="productTab2">
+                    {{- unique_tab_2_title -}} <span class="accordion__icon"></span>
+                </button>
+
+                <div class="accordion__content" id="productTab2">
+                    <div class="Collapsible__Content">
+                        <div class="Rte">
+                            {{- unique_tab_2_content -}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {%- endif -%}
+
+        {%- if has_unique_tab_3 -%}
+            <div class="js-accordion-parent">
+                <button class="js-accordion-btn accordion__btn" aria-expanded="false" aria-controls="productTab3">
+                    {{- unique_tab_3_title -}} <span class="accordion__icon"></span>
+                </button>
+
+                <div class="accordion__content" id="productTab3">
+                    <div class="Collapsible__Content">
+                        <div class="Rte">
+                            {{- unique_tab_3_content -}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {%- endif -%}
+
+        {%- if first_page != empty -%}
+            <div class="js-accordion-parent">
+                <button class="js-accordion-btn accordion__btn" aria-expanded="false" aria-controls="productTab4">
+                    {{- first_page.title -}} <span class="accordion__icon"></span>
+                </button>
+
+                <div class="accordion__content" id="productTab4">
+                    <div class="Collapsible__Content">
+                        <div class="Rte">
+                            {{- first_page.content | replace: '<img', '<img loading="lazy"' -}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {%- endif -%}
+
+        {%- if second_page != empty -%}
+            <div class="js-accordion-parent">
+                <button class="js-accordion-btn accordion__btn" aria-expanded="false" aria-controls="productTab5">
+                    {{- second_page.title -}} <span class="accordion__icon"></span>
+                </button>
+
+                <div class="accordion__content" id="productTab5">
+                    <div class="Collapsible__Content">
+                        <div class="Rte">
+                            {{- second_page.content | replace: '<img', '<img loading="lazy"' -}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {%- endif -%}
+
+        {% render 'product-tabs-custom', type: product.type %}
+
+        {%- if section.settings.reviews_enabled -%}
+            <div class="js-accordion-parent">
+                {%- comment -%}We parse from metafields the number of reviews{%- endcomment -%}
+                {%- assign reviews_count = product.metafields.spr.reviews | split: '<meta itemprop="reviewCount" content="' | last | split: '">' | first | times: 1 -%}
+
+                <button class="js-accordion-btn accordion__btn" aria-expanded="false" aria-controls="productTab6">
+                    <span>{{ 'product.tabs.reviews' | t }} <span class="text--light">({{ reviews_count | default: 0 }})</span></span>
+                    <span class="accordion__icon"></span>
+                </button>
+
+                <div class="accordion__content" id="productTab6">
+                    <div class="Collapsible__Content">
+                        <div id="shopify-product-reviews" data-id="{{product.id}}">{{ product.metafields.spr.reviews }}</div>
+                    </div>
+                </div>
+            </div>
+        {%- endif -%}
+    </div>
+{%- endif -%}

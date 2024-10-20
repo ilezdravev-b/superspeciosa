@@ -1,0 +1,220 @@
+<div class="custom-image-text-slider">
+    <div class="container">
+        {% if section.settings.subheading %}<p class="cit-subheading">{{ section.settings.subheading }}</p>{% endif %}
+        {% if section.settings.heading %}<h2 class="cit-heading">{{ section.settings.heading }}</h2>{% endif %}
+        <div class="custom-it-slider-items slider">
+            {% for block in section.blocks %}
+                <div class="custom-it-slider-item">
+                    {% if block.settings.image %}
+                        <img src="{{ block.settings.image | image_url }}" loading="lazy"  alt="slider image">
+                    {% endif %}
+                    {% if block.settings.text %}<p class="slider-item-title">{{ block.settings.text }}</p>{% endif %}
+                    {% if block.settings.item_content %}<div class="slider-item-content">{{ block.settings.item_content }}</div>{% endif %}
+                    {% if block.settings.item_button %}
+                        <a href="{{ block.settings.item_url }}" class="slider-item-button">{{ block.settings.item_button }}</a>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<style>
+.custom-image-text-slider {
+    margin-top: {{ section.settings.margin_top }}px;
+    margin-bottom: {{ section.settings.margin_bottom }}px;
+    background-color: #222D1C;
+    padding: 70px;
+}
+
+.custom-image-text-slider .slick-slide {
+    margin: 0 10px;
+    padding: 14px;
+    background-color: #F4F1DE;
+    border-radius: 3px;
+}
+
+.cit-subheading {
+    margin: 0;
+    text-align: center;
+    font-size: 21px;
+    color: #F4F1DE;
+    font-family: BrownStd;
+    text-transform: uppercase;
+}
+
+.cit-heading {
+    color: #F4F1DE;
+    font-size: 35px;
+    text-align: center;
+    font-family: Dilemma;
+    font-weight: 550;
+    text-transform: capitalize;
+    margin: 10px 0 60px 0;
+}
+
+.slider-item-title {
+    font-family: Dilemma;
+    color: #222D1C;
+    font-weight: 550;
+    font-size: 20px;
+    margin-bottom: 0px;
+}
+
+.slider-item-content p {
+    font-family: BrownStd;
+    color: #222D1C;
+    font-size: 16px;
+    margin-top: 5px;
+}
+
+.slider-item-button {
+    font-family: BrownStd;
+    font-size: 16px;
+    text-transform: uppercase;
+    background-color: #FFC800;
+    padding: 12px 20px;
+    border-radius: 4px;
+    display: block;
+    margin: 0 0 15px;
+    width: fit-content;
+    color: #222D1C;
+}
+
+.slider-item-content {
+    min-height: 120px;
+}
+
+.custom-image-text-slider .slick-dots {
+    position: unset;
+    margin-top: 40px;
+}
+
+.custom-image-text-slider .slick-dots li button:before {
+    opacity: 1;
+    color: #F4F1DE;
+    font-size: 15px;
+}
+
+.custom-image-text-slider .slick-dots li.slick-active button:before {
+    color: #8CB93F;        
+}
+
+@media (max-width: 767px) {
+    .custom-image-text-slider {
+        padding: 50px 0 30px;
+    }
+    .cit-subheading {
+        font-size: 16px;
+    }
+    .cit-heading {
+        font-size: 28px;
+        margin-top: 10px;
+    }
+    .slider-item-title {
+        font-size: 16px;
+    }
+    .slider-item-content p {
+        font-size: 14px;
+    }
+    .slider-item-button {
+        font-size: 16px;
+    }
+    .custom-image-text-slider .slick-list.draggable {
+        padding-right: 10%;
+    }
+}
+</style>
+
+<script>
+    $(document).ready(function(){
+        $(".custom-it-slider-items").slick({
+            slidesToShow: 4,
+            slidesToScroll: 1,
+            dots: true,
+            infinite: false,
+            speed: 500,
+            touchThreshold: 10,
+            adaptiveHeight: false,
+            centerPadding: '30px',
+            responsive: [{
+                breakpoint: 767,
+                settings: {
+                    dots: true,
+                    arrows: false,
+                    infinite: false,
+                    slidesToShow: 1,
+                    slidesToScroll: 1
+                } 
+            }]
+        });
+    })
+</script>
+
+{% schema %}
+{
+    "name": "Custom Image Text Slider",
+    "settings": [
+        {
+            "type": "text",
+            "id": "subheading",
+            "label": "SubHeading"
+        },
+        {
+            "type": "text",
+            "id": "heading",
+            "label": "Heading"
+        },
+        {
+            "type": "text",
+            "id": "margin_top",
+            "label": "Margin Top",
+            "default": "50"
+        },
+        {
+            "type": "text",
+            "id": "margin_bottom",
+            "label": "Margin Bottom",
+            "default": "50"
+        }
+    ],
+    "blocks": [
+        {
+            "type": "text",
+            "name": "Slider Item",
+            "settings": [
+                {
+                    "type": "image_picker",
+                    "id": "image",
+                    "label": "Image"
+                },
+                {
+                    "type": "text",
+                    "id": "text",
+                    "label": "Item Title"
+                },
+                {
+                    "type": "richtext",
+                    "id": "item_content",
+                    "label": "Item Content"
+                },
+                {
+                    "type": "text",
+                    "id": "item_button",
+                    "label": "Item Button"
+                },
+                {
+                    "type": "url",
+                    "id": "item_url",
+                    "label": "Item URL"
+                }
+            ]
+        }
+    ],
+    "presets": [
+        {
+            "name": "Custom Image Text Slider"
+        }
+    ]
+}
+{% endschema %}

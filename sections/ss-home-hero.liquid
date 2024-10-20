@@ -1,0 +1,482 @@
+<!-- sections/hero.liquid -->
+
+{% comment %}
+	The hero assets are loaded in _src/templates/index.scss
+	so they will be preloaded for this above-the-fold content,
+	when this section is on the homepage.
+
+	If we're not on the homepage, assets will be loaded as usual.
+{% endcomment %}
+
+{%- unless template == "index" -%}
+    {% render 'theme-load-assets', style: 'section-hero.min.css' %}
+{%- endunless -%}
+
+{%- liquid 
+    assign data = section.settings
+    assign section_id = section.id
+    assign desktop_block_alignment_x = data.block_alignment_x
+    assign desktop_block_alignment_y = data.block_alignment_y
+    assign mobile_block_alignment_x = data.mobile_block_alignment_x
+    assign mobile_block_alignment_y = data.mobile_block_alignment_y
+    assign desktop_text_alignment = data.text_alignment
+    assign mobile_text_alignment = data.mobile_text_alignment
+    assign text_color = data.text_color
+    assign title_color = data.title_color
+-%}
+
+{% comment %}
+    Low-res hero background images 
+    for loading purposes
+{% endcomment %}
+
+<style>
+    #Hero{{ section_id }} { 
+        background-position: center; 
+        background-repeat: no-repeat; 
+        background-size: cover; 
+
+        {%- if data.hero_image_mobile != blank -%}
+        background-image: url({{ data.hero_image_mobile | image_url: width: 750 }});
+        background-position: {{ data.hero_image_mobile.presentation.focal_point.x }}% {{ data.hero_image_mobile.presentation.focal_point.y }}%; 
+        {%- endif -%}
+    }
+
+    {%- if data.hero_image_desktop != blank -%}
+        @media screen and (min-width: 64em) { 
+            #Hero{{ section_id }} { 
+                background-image: url({{ data.hero_image_desktop | image_url: width: 1920 }});
+                background-position: {{ data.hero_image_desktop.presentation.focal_point.x }}% {{ data.hero_image_desktop.presentation.focal_point.y }}%; 
+            }
+        }
+    {%- endif -%}
+
+    {% comment %}
+        Min heights
+    {% endcomment %}
+
+    {%- if data.desktop_min_height != blank or data.mobile_min_height != blank -%}
+        {%- if data.mobile_min_height != blank and data.mobile_min_height > 0 -%}
+            #Hero{{ section_id }} { 
+                min-height: {{ data.mobile_min_height }}px; 
+            }
+        {%- endif -%}
+
+        {%- if data.desktop_min_height != blank and data.desktop_min_height > 0 -%}
+            @media screen and (min-width: 64em) { 
+                #Hero{{ section_id }} { 
+                    min-height: {{ data.desktop_min_height }}px; 
+                }
+            }
+        {%- endif -%}
+    {%- endif -%}
+
+
+    /* begin stars ratings container */
+    .ss-hero-content-ratings {
+        display: flex;
+        gap: 10px;
+        margin-top: 20px;
+    }
+
+    .ss-hero-content-ratings .ss-stars-ratings {
+        display: flex;
+        gap: 3px;
+    }
+
+    .ss-hero-content-ratings .ss-stars-ratings svg {
+        width: 15px;
+        height: 15px;
+        fill: #f0ad4e;
+    }
+
+    .ss-hero-content-ratings .ss-hero-content-ratings-text {
+        font-size: 16px;
+        color : {{ section.settings.text_color }};
+    }
+
+    #shopify-section-{{ section.id }} .title {
+        font-size: {{ section.settings.desktop_title_size }}px;
+    }
+
+    #shopify-section-{{ section.id }} .sub-title,
+    #shopify-section-{{ section.id }} .sub-title * {
+        font-size: {{ section.settings.desktop_text_size }}px;
+    }
+
+    @media (max-width : 768px) {
+        #shopify-section-{{ section.id }} .title {
+            font-size: {{ section.settings.mobile_title_size }}px;
+        }
+
+        #shopify-section-{{ section.id }} .sub-title,
+        #shopify-section-{{ section.id }} .sub-title * {
+            font-size: {{ section.settings.mobile_text_size }}px;
+        }
+    }
+</style>
+
+{% comment %}
+    Hero markup
+{% endcomment %}
+
+<section id="Hero{{ section_id }}" class="hero">
+	{% comment %}
+		Image
+
+		Notes: If using mobile and desktop images, use
+			   our regular image system. Otherwise, use Shopify
+			   tags and filters for the sake of preloading the image.
+	{% endcomment %}
+
+    {%- if data.hero_image_mobile != blank and data.hero_image_desktop != blank -%}
+        {%- render 'image-switchable', image: data.hero_image_mobile, image_large: data.hero_image_desktop, picture_class: 'hero__image', initial_size: '100vw' -%}
+    {%- elsif data.hero_image_mobile != blank -%}
+		{{ data.hero_image_mobile | image_url: width: 2500 | image_tag: sizes: '100vw', preload: true, alt: '' }}
+    {%- elsif data.hero_image_desktop != blank -%}
+		{{ data.hero_image_desktop | image_url: width: 2500 | image_tag: sizes: '100vw', preload: true, alt: '' }}
+    {%- endif -%}
+
+	{% comment %}
+		Hero Text Content
+	{% endcomment %}
+
+    {%- if data.title != blank or data.subtitle != blank or section.blocks.size > 0 -%}
+        <div class="hero__container hero__container--{{ mobile_block_alignment_x }} hero__container--{{ mobile_block_alignment_y }} hero__container--{{ desktop_block_alignment_x }} hero__container--{{ desktop_block_alignment_y }}">
+            <div class="hero__content hero__content--{{ mobile_text_alignment }} hero__content--{{ desktop_text_alignment }} {% if data.overlay_activate %}hero__content-overlay--{{ data.overlay_type }}{% endif %}">
+                {%- if data.title != blank -%}
+                    <h1 class="hero__title t-uppercase title" style="color:{{ title_color }};">
+                        {{ data.title }}
+                    </h1>
+                {%- endif -%}
+
+                {%- if data.subtitle != blank -%}
+                    <div class="hero__subtitle t-uppercase sub-title" style="color:{{ text_color }};">
+                        {{ data.subtitle }}
+                    </div>
+                {%- endif -%}
+
+                {%- if section.blocks.size > 0 -%}
+                    <div class="hero__content__buttons t-uppercase">
+                        {%- assign button_count = 0 -%}
+                        {%- for block in section.blocks -%} 
+                            {%- assign button_count = button_count | plus: 1 -%}
+                            {%- assign button_even = button_count | plus: 2 | modulo: 2 -%}
+                            <a class="hero__button btn {% if button_even > 0 %}btn--primary{% else %}btn--hollow{% endif %}" href="{{ block.settings.button_link }}">
+                                {{ block.settings.button_text }}
+                            </a>
+                        {%- endfor -%}
+                    </div>
+                {%- endif -%}
+
+                <a href="/reviews/" class="ss-hero-content-ratings">
+                    <div class="ss-hero-content-ratings-text mobile-hidden">100,000+ Customers Served Since 2016 </div>
+                    <span class="ss-stars-ratings">
+
+                    {% render 'icon-ratingstar', starPercentage: '100%', maskId: 1 %}
+                    {% render 'icon-ratingstar', starPercentage: '100%', maskId: 2 %}
+                    {% render 'icon-ratingstar', starPercentage: '100%', maskId: 3 %}
+                    {% render 'icon-ratingstar', starPercentage: '100%', maskId: 4 %}
+                    {% render 'icon-ratingstar', starPercentage: '50%', maskId: 5 %}
+                    <div class="ss-hero-content-ratings-text desktop-hidden">5,000+ Reviews</div>
+                </a>
+            </div>
+        </div>
+    {%- endif -%}
+
+    {% comment %}
+		Overlay
+        SCSS selectors require overlay to be after .hero__container
+	{% endcomment %}
+
+    {%- if data.overlay_activate -%}
+        <div class="hero__overlay hero__overlay--{{ data.overlay_type }}"></div>
+    {%- endif -%}
+</section>
+
+{% schema %}
+{
+    "name": "Homepage Hero",
+    "class": "ss-home-hero",
+    "settings": [
+        { 
+            "type": "header", 
+            "content": "Text"
+        }, 
+        {
+            "label": "Title",
+            "id": "title",
+            "type": "textarea"
+        }, 
+        {
+            "label": "Subtitle",
+            "id": "subtitle",
+            "type": "richtext"
+        }, 
+        {
+            "type": "header",
+            "content": "Images"
+        },
+        {
+            "type": "image_picker",
+            "id": "hero_image_desktop",
+            "label": "Desktop"
+        },
+        {
+            "type": "image_picker",
+            "id": "hero_image_mobile",
+            "label": "Mobile"
+        },
+        { 
+            "type": "header", 
+            "content": "Text Color"
+        },
+        {
+            "type": "color",
+            "id": "title_color",
+            "label": "Title Color",
+            "default": "#101820"
+        },  
+        {
+            "type": "color",
+            "id": "text_color",
+            "label": "Subtitle Color",
+            "default": "#101820"
+        }, 
+        {
+            "type": "header",
+            "content": "Overlay"
+        },
+        {
+            "type": "checkbox",
+            "id": "overlay_activate",
+            "label": "Enable?", 
+            "info": "If checked, subtle gradient overlays will be added over the hero image based on text position, for better text visibility"
+        },
+        { 
+            "type": "radio", 
+            "id": "overlay_type", 
+            "label": "Overlay gradient type", 
+            "options": [ 
+                { 
+                    "label": "Light (for dark text)", 
+                    "value": "light"
+                }, 
+                { 
+                    "label": "Dark (for light text)", 
+                    "value": "dark"
+                }
+            ], 
+            "default": "light"
+        }, 
+        {
+            "type": "header",
+            "content": "Desktop block settings"
+        },
+        {
+            "type": "select",
+            "id": "block_alignment_x",
+            "label": "Horizontal block alignment",
+            "options": [
+                {
+                    "value": "desktop-block-left",
+                    "label": "Left"
+                },
+                {
+                    "value": "desktop-block-center",
+                    "label": "Center"
+                },
+                {
+                    "value": "desktop-block-right",
+                    "label": "Right"
+                }
+            ],
+            "default": "desktop-block-center"
+        },
+        {
+            "type": "select",
+            "id": "block_alignment_y",
+            "label": "Vertical block alignment",
+            "options": [
+                {
+                    "value": "desktop-block-top",
+                    "label": "Top"
+                },
+                {
+                    "value": "desktop-block-middle",
+                    "label": "Middle"
+                },
+                {
+                    "value": "desktop-block-bottom",
+                    "label": "Bottom"
+                }
+            ],
+            "default": "desktop-block-middle"
+        },
+        {
+            "type": "select",
+            "id": "text_alignment",
+            "label": "Text alignment",
+            "options": [
+                {
+                    "value": "desktop-text-left",
+                    "label": "Left"
+                },
+                {
+                    "value": "desktop-text-center",
+                    "label": "Center"
+                },
+                {
+                    "value": "desktop-text-right",
+                    "label": "Right"
+                }
+            ],
+            "default": "desktop-text-center"
+        }, 
+        {
+            "type": "header",
+            "content": "Mobile block settings"
+        },
+        {
+            "type": "select",
+            "id": "mobile_block_alignment_x",
+            "label": "Horizontal block alignment",
+            "options": [
+                {
+                    "value": "mobile-block-left",
+                    "label": "Left"
+                },
+                {
+                    "value": "mobile-block-center",
+                    "label": "Center"
+                },
+                {
+                    "value": "mobile-block-right",
+                    "label": "Right"
+                }
+            ],
+            "default": "mobile-block-center"
+        },
+        {
+            "type": "select",
+            "id": "mobile_block_alignment_y",
+            "label": "Vertical block alignment",
+            "options": [
+                {
+                    "value": "mobile-block-top",
+                    "label": "Top"
+                },
+                {
+                    "value": "mobile-block-middle",
+                    "label": "Middle"
+                },
+                {
+                    "value": "mobile-block-bottom",
+                    "label": "Bottom"
+                }
+            ],
+            "default": "mobile-block-middle"
+        },
+        {
+            "type": "select",
+            "id": "mobile_text_alignment",
+            "label": "Text alignment",
+            "options": [
+                {
+                    "value": "mobile-text-left",
+                    "label": "Left"
+                },
+                {
+                    "value": "mobile-text-center",
+                    "label": "Center"
+                },
+                {
+                    "value": "mobile-text-right",
+                    "label": "Right"
+                }
+            ],
+            "default": "mobile-text-center"
+        }, 
+        { 
+            "type": "header", 
+            "content": "Minimum heights"
+        }, 
+        {
+            "type": "number",
+            "id": "desktop_min_height",
+            "label":  "Desktop hero min height",
+            "default": 448, 
+            "info": "In pixels. Leave blank for no minimum height; height will be determined by content"
+        },
+        {
+            "type": "number",
+            "id": "mobile_min_height",
+            "label":  "Mobile hero min height",
+            "default": 540, 
+            "info": "In pixels. Leave blank for no minimum height; height will be determined by content"
+        },
+        {
+            "type" : "range",
+            "id" : "desktop_title_size",
+            "min" : 0,
+            "max" : 80,
+            "step": 1,
+            "default" : 50,
+            "label": "Title Size(desktop)"
+        },
+        {
+            "type" : "range",
+            "id" : "mobile_title_size",
+            "min" : 0,
+            "max" : 80,
+            "step": 1,
+            "default" : 40,
+            "label": "Title Size(mobile)"
+        },
+        {
+            "type" : "range",
+            "id" : "desktop_text_size",
+            "min" : 0,
+            "max" : 50,
+            "step": 1,
+            "default" : 18,
+            "label": "Subtitle Size(desktop)"
+        },
+        {
+            "type" : "range",
+            "id" : "mobile_text_size",
+            "min" : 0,
+            "max" : 50,
+            "step": 1,
+            "default" : 15,
+            "label": "Subtitle Size(mobile)"
+        }
+    ],
+    "blocks": [
+        {
+            "name": "Button",
+            "type": "button",
+            "settings": [
+                {
+                    "label": "Text",
+                    "id": "button_text",
+                    "type": "text"
+                },
+                {
+                    "label": "Link",
+                    "id": "button_link",
+                    "type": "url"
+                }
+            ]
+        }
+    ],
+    "presets": [
+        {
+            "name": "Homepage Hero"
+        }
+    ], 
+    "disabled_on": {
+		"groups": ["footer"]
+	}
+}
+{% endschema %}

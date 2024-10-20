@@ -1,0 +1,279 @@
+<div class="custom-video-slider">
+    <div class="container">
+        {% if section.settings.subheading %}
+            <p class="vs-subheading">{{ section.settings.subheading }}</p>
+        {% endif %}
+        {% if section.settings.heading %}
+            <h2 class="vs-heading">{{ section.settings.heading }}</h2>
+        {% endif %}
+        <div class="video-slider-items {{ section.id }} slider">
+            {% for block in section.blocks %}
+                <div class="video-slider-item">
+                    <div class="video-body" data-video-selector video_id="video-index-{{ forloop.index }}">
+                        {% if block.settings.video %}
+                            {{ block.settings.video | video_tag: autoplay: false,loop: false, muted: false, controls: false, image_size: '320x' }}
+                        {% endif %}
+                        <div class="video-play-button">
+                            <a class="btn-video-play" href="javascript:;" aria-label="Btn video play" button_id="video-index-{{ forloop.index }}">{% render 'icon-video-play' %}</a>
+                        </div>
+                        {% if block.settings.title %}
+                            <div class="video-text" title_id="video-index-{{ forloop.index }}">
+                                <p>{{ block.settings.title }}</p>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<style>
+    .custom-video-slider {
+        margin-top: {{ section.settings.margin_top }}px;
+        margin-bottom: {{ section.settings.margin_bottom }}px;
+    }
+
+    .custom-video-slider .container {
+        position: relative;
+    }
+
+    .custom-video-slider .custom-btn-slide {
+        position: absolute;
+        top: 55%;
+        transform: translateY(-55%);
+    }
+
+    .custom-video-slider .custom-btn-slide.custom-prev-icon {
+        left: -30px;
+    }
+
+    .custom-video-slider .custom-btn-slide.custom-next-icon {
+        right: -30px;
+    }
+
+    .custom-video-slider .container .video-slider-items {
+        position: unset;
+    }
+
+    .vs-subheading {
+        color: #222D1C;
+        text-align: center;
+        font-size: 21px;
+        margin: 0;
+        font-family: BrownStd;
+        text-transform: uppercase;
+    }
+
+    .vs-heading {
+        font-size: 35px;
+        font-weight: 550;
+        color: #222D1C;
+        text-align: center;
+        font-family: Dilemma;
+        margin-top: 0;
+    }
+
+    .video-slider-item {
+        position: relative;
+    }
+
+    .video-play-button {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    .video-text {
+        position: absolute;
+        bottom: 18px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 88%;
+        text-align: center;
+        background-color: #fff;
+        border-radius: 5px;
+        color: #222D1C;
+        font-family: BrownStd;
+        font-weight: bold;
+        letter-spacing: 1px;
+    }
+
+    .video-button-max-width {
+        width: 100%;
+        height: 100%;
+    }
+
+    .video-slider-items .slick-slide {
+        margin: 0 16px;
+    }
+
+    .video-body video.playing+.video-play-button {
+        display: none;
+    }
+
+    .video-body video.playing ~ .video-text {
+        display: none;
+    }
+
+    .video-body video {
+        height: 477px;
+        object-fit: cover;
+        border-radius: 3px;
+    }
+
+    .custom-video-slider .slick-dots {
+        position: unset;
+    }
+
+    .custom-video-slider .slick-dots li button:before {
+        opacity: 1;
+        color: #dbd7bf;
+        font-size: 15px;
+    }
+
+    .custom-video-slider .slick-dots li.slick-active button:before {
+        color: #8CB93F;        
+    }
+
+    .btn-video-play {
+        display: block;
+        height: 100%;
+    }
+
+    @media (max-width: 767px) {
+        .custom-video-slider .slick-list.draggable {
+            padding-right: 25%;
+        }    
+        .vs-heading {
+            font-size: 28px;
+        }
+        .vs-subheading {
+            font-size: 15px;
+        }
+        .custom-video-slider .slick-list.draggable {
+            padding-right: 20%;
+        }
+        .video-body video {
+            height: 350px;
+        }
+        .video-slider-items .slick-slide {
+            margin: 0 5px;
+        }
+    }
+</style>
+
+<script>
+    document.querySelectorAll('[data-video-selector]').forEach( ( element ) => {
+        let videoElement = element.querySelector('video');
+        videoElement.addEventListener('click', function(e) {
+
+            let current_video = this.parentElement;
+            let current_txt = current_video.parentElement.querySelector(".video-text");
+            let hide_button = current_video.querySelector(".video-play-button");
+
+            [...document.querySelectorAll('video')].map( (v) => {
+
+                if( e.currentTarget != v ){
+                    v.play ? v.pause() : false;
+                    v.classList.remove('playing');
+                }
+            })
+
+            this.paused ? this.play() : this.pause();            
+            if( this.paused ){
+                this.classList.remove('playing');
+            }else{
+                this.classList.add('playing');         
+            }
+        });
+    });
+    let button = document.querySelectorAll(".btn-video-play").forEach( ( element ) => {
+        let button = element.querySelector(".btn-video-play svg");
+        button.addEventListener('click', function(e) {
+            let button_index = this.parentElement.getAttribute("button_id");
+            let current_video = document.querySelector(`.video-body[video_id="${button_index}"] video`);
+            current_video.dispatchEvent(new Event('click'));
+        })
+    })
+    jQuery(document).ready(function ($) {
+        $(".{{ section.id }}").slick({
+            slidesToShow: 4,
+            slidesToScroll: 1,
+            dots: true,
+            infinite: false,
+            speed: 500,
+            touchThreshold: 10,
+            adaptiveHeight: false,
+            centerPadding: '30px',
+            nextArrow: '<a href="javascript:;" class="custom-btn-slide custom-next-icon"><svg width="45" height="45" viewBox="0 0 45 45" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="22.5" cy="22.5" r="22.5" fill="#8CB93F"/><path d="M34.7071 22.7071C35.0976 22.3166 35.0976 21.6834 34.7071 21.2929L28.3431 14.9289C27.9526 14.5384 27.3195 14.5384 26.9289 14.9289C26.5384 15.3195 26.5384 15.9526 26.9289 16.3431L32.5858 22L26.9289 27.6569C26.5384 28.0474 26.5384 28.6805 26.9289 29.0711C27.3195 29.4616 27.9526 29.4616 28.3431 29.0711L34.7071 22.7071ZM10 23H34V21H10V23Z" fill="#222D1C"/></svg></a>',
+            prevArrow: '<a href="javascript:;" class="custom-btn-slide custom-prev-icon"><svg width="45" height="45" viewBox="0 0 45 45" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="22.5" cy="22.5" r="22.5" transform="rotate(180 22.5 22.5)" fill="#8CB93F"/><path d="M10.2929 22.2929C9.90237 22.6834 9.90237 23.3166 10.2929 23.7071L16.6569 30.0711C17.0474 30.4616 17.6805 30.4616 18.0711 30.0711C18.4616 29.6805 18.4616 29.0474 18.0711 28.6569L12.4142 23L18.0711 17.3431C18.4616 16.9526 18.4616 16.3195 18.0711 15.9289C17.6805 15.5384 17.0474 15.5384 16.6569 15.9289L10.2929 22.2929ZM35 22H11V24H35V22Z" fill="#222D1C"/></svg></a>',
+            responsive: [{
+                breakpoint: 767,
+                settings: {
+                    dots: true,
+                    arrows: false,
+                    infinite: false,
+                    slidesToShow: 1,
+                    slidesToScroll: 1
+                } 
+            }]
+        });
+    })
+</script>
+
+{% schema %}
+{
+    "name": "Custom Video Slider",
+    "settings": [
+        {
+            "type": "text",
+            "id": "subheading",
+            "label": "SubHeading",
+            "default": "3,800+ customers"
+        },
+        {
+            "type": "text",
+            "id": "heading",
+            "label": "Heading",
+            "default": "What everyone is saying"
+        },
+        {
+            "type": "text",
+            "id": "margin_top",
+            "label": "Margin Top",
+            "default": "50"
+        },
+        {
+            "type": "text",
+            "id": "margin_bottom",
+            "label": "Margin Bottom",
+            "default": "50"
+        }
+    ],
+    "blocks": [
+        {
+            "type": "video_item",
+            "name": "Video Item",
+            "settings": [
+                {
+                    "type": "text",
+                    "id": "title",
+                    "label": "Title"
+                },
+                {
+                    "type": "video",
+                    "id": "video",
+                    "label": "Video"
+                }
+            ]
+        }
+    ],
+    "presets": [
+        {
+            "name": "Custom Video Slider"
+        }
+    ]    
+}
+{% endschema %}

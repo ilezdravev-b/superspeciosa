@@ -1,0 +1,54 @@
+<!-- sections/example-accordions.liquid -->
+
+{% comment %}
+	Load Assets
+{% endcomment %}
+
+{% render 'theme-load-assets', style: 'section-example-accordion.min.css', script: 'section-example-accordion.min.js' %}
+
+{% comment %}
+	Section Markup
+
+	Notes: The accordion script has been created to allow
+		   for very flexible markup. Here an unordered list
+		   is used, but any semantic markup can be used as long
+		   as the js- prefixed classes are included, along with
+		   the aria-expanded and aria-controls attributes on the
+		   button (aria-controls is what indicates where the
+		   collapsed content is).
+{% endcomment %}
+
+<div class="container-text section">
+	<h2 class="style-guide__heading">Accordions</h2>
+
+	<ul class="accordion" aria-label="Example Accordions">
+		{%- for num in (1..3) -%}
+
+			<li class="js-accordion-parent">
+				<h3 class="accordion__heading">
+					<button type="button" class="accordion__btn js-accordion-btn headline t-xs" aria-controls="accContent{{ forloop.index }}" aria-expanded="false">
+						Accordion Button
+
+						<span class="accordion__icon"></span>
+					</button>
+				</h3>
+
+				<div class="accordion__content" id="accContent{{ forloop.index }}">
+					<h4 class="t-bold">
+						Heading
+					</h4>
+
+					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris vitae volutpat sem. Nulla maximus nibh viverra eros bibendum pretium. Suspendisse luctus nulla a erat sollicitudin, eu tempus diam congue. Mauris mattis varius est eget dapibus. Donec in dictum libero. Suspendisse id orci laoreet, suscipit nulla id, euismod leo. Ut malesuada finibus purus quis convallis. Aliquam dolor nunc, vestibulum ac felis eget, egestas placerat justo. Phasellus pretium luctus risus.</p>
+				</div>
+			</li>
+
+		{%- endfor -%}
+	</ul>
+</div>
+
+{% schema %}
+	{
+		"name": "Example Accordions",
+		"tag": "section"
+	}
+{% endschema %}

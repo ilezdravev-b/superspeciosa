@@ -1,0 +1,123 @@
+<!-- sections/category-buttons.liquid -->
+
+{% comment %}
+	Load Assets
+{% endcomment %}
+
+{% render 'theme-load-assets', style: 'section-category-buttons.min.css' %}
+
+{% comment %}
+	Initial Liquid Variables
+{% endcomment %}
+
+{%- liquid 
+    assign data = section.settings
+    assign title = data.title
+    assign grid_type = data.grid_type
+-%}
+
+{% comment %}
+	Section Markup
+{% endcomment %}
+
+{%- if section.blocks.size > 0 -%}
+    <section class="category-buttons container">
+
+        {%- if title != blank -%}
+            <h2 class="category-buttons__title">{{ title }}</h2>
+        {%- endif -%}
+
+        <div class="category-buttons__grid {% if grid_type == 'strict' %}category-buttons__grid--strict{% endif %}">
+
+            {% comment %}
+                Buttons
+            {% endcomment %}
+
+            {%- for block in section.blocks -%}
+                {%- liquid 
+                    assign block_data = block.settings
+                    assign url = block_data.url
+
+                    assign collection_handle = ""
+                    assign block_title = ""
+
+                    if url contains "/collections/"
+                        assign collection_handle = url | split: "/collections/" | last | split: "?" | first | strip
+
+                        if collections[collection_handle].title != blank
+                            assign collection = collections[collection_handle]
+                            assign block_title = collections[collection_handle].title
+                        endif
+                    endif
+
+                    if block_data.title != blank
+                        assign block_title = block_data.title
+                    endif 
+                -%}
+
+                <a href="{{ url }}" class="category-buttons__button btn btn--hollow">{{ block_title }}
+                    <span class="cta__icon-arrow"></span>
+                </a>
+            {%- endfor -%}
+        </div>
+
+    </section>
+{%- endif -%}
+
+{% schema %}
+{
+    "name": "Category Buttons",
+    "settings": [
+        {
+            "type": "text",
+            "id": "title",
+            "label": "Title",
+			"default": "Shop by Category"
+        }, 
+        { 
+            "type": "radio", 
+            "id": "grid_type", 
+            "label": "Grid type", 
+            "options": [ 
+                { 
+                    "label": "Loose", 
+                    "value": "loose"
+                }, 
+                { 
+                    "label": "Strict", 
+                    "value": "strict"
+                }
+            ], 
+            "default": "strict", 
+            "info": "The 'Strict' grid will show a 2-column grid on mobile and a 6-column grid on desktop as designed, with buttons all the same width. The 'Loose' grid has no strict column count, and its button widths are defined by the button text."
+        }
+    ],
+    "blocks": [
+        {
+            "type": "category",
+            "name": "Category",
+            "settings": [
+                {
+                    "type": "url",
+                    "id": "url",
+                    "label": "Category URL"
+                },
+                {
+                    "type": "text",
+                    "id": "title",
+                    "label": "CTA Text", 
+                    "info": "If the Category URL is a collection, the collection title will show if this field is blank"
+                }
+            ]
+        }
+    ],
+    "presets": [
+        {
+            "name": "Category Buttons"
+        }
+    ], 
+    "disabled_on": {
+		"groups": ["footer"]
+	}
+}
+{% endschema %}

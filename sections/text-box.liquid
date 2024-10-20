@@ -1,0 +1,69 @@
+{% render 'theme-load-assets', style: 'section-text-box.min.css' %}
+<div class="text-box">
+    <div class="container">
+        <div class="text-box-inner">
+            {% if section.settings.subheading != blank %}
+                <h4 class="text-box-subheading">{{ section.settings.subheading }}</h4>
+            {% endif %}
+            {% if section.settings.heading != blank %}
+                <h2 class="text-box-heading">{{ section.settings.heading }}</h2>
+            {% endif %}
+            {% if section.settings.description != blank %}
+                <div class="text-box-description">
+                    {{ section.settings.description }}
+                </div>
+            {% endif %}
+            {% if section.settings.btn_text != blank and section.settings.btn_link != blank %}
+                <div class="text-box-button">
+                    <a class="hero__button btn btn--primary" href="{{ section.settings.btn_link }}">{{ section.settings.btn_text }}</a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% schema %}
+{
+    "tag": "section",
+    "name": "Text Box",
+    "settings": [
+        {
+            "type": "text",
+            "id": "subheading",
+            "label": "Sub Title",
+            "default": "Information"
+        },
+        {
+            "type": "text",
+            "id": "heading",
+            "label": "Title",
+            "default": "Kratom"
+        },
+        {
+            "type": "richtext",
+            "id": "description",
+            "label": "Description",
+            "default": "<p>Click through to find our resource center for all things kratom. We have just started adding content, and will be continuing to add new information regularly.</p>"
+        },
+        {
+            "type": "header",
+            "content": "Button"
+        },
+        {
+            "type": "text",
+            "id": "btn_text",
+            "label": "Button Text",
+            "default": "Read More"
+        },
+        {
+            "type": "url",
+            "id": "btn_link",
+            "label": "Button Link"
+        }
+    ],
+    "presets": [
+        {
+            "name": "Text Box"
+        }
+    ]
+}
+{% endschema %}

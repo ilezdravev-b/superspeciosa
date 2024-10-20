@@ -1,0 +1,26 @@
+<!-- snippets/collection-thumbnail.liquid -->
+
+{% comment %}
+	Required:
+		collection_title {String} The collection title
+        collection_url {String} The collection URL (can be any page)
+		collection_image {Object} The image object
+{% endcomment %}
+
+{%- liquid 
+    assign title = collection_title
+	assign url = collection_url
+    assign image = collection_image
+-%}
+
+<div class="collection-thumb">
+
+	<div class="collection-thumb__image">
+		{% render 'image-simple', image: image, width: 600, height: 600 %}
+	</div>
+
+	<a href="{{ url }}" class="collection-thumb__title">
+        {{ title | default: "Collection Title" }} 
+    </a>
+
+</div>

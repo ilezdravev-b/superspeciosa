@@ -1,0 +1,89 @@
+{
+  "sections": {
+    "banner": {
+      "type": "collection-header",
+      "settings": {
+        "seo_title": "{{ collection.title }}"
+      }
+    },
+    "product-grid": {
+      "type": "collection-product-grid",
+      "custom_css": [
+
+      ],
+      "settings": {
+        "products_per_page": 24,
+        "enable_filtering": true,
+        "enable_sorting": true,
+        "no_products_text": "<p>Sorry, no products could be found.<\/p>",
+        "filter_row_button": true,
+        "special-card-visiblity": true,
+        "special-card-heading": "get 20% off Subscription",
+        "special-card-content": "New"
+      }
+    },
+    "custom_image_text_slider_YejbVa": {
+      "type": "custom-image-text-slider",
+      "blocks": {
+        "text_YwUDCB": {
+          "type": "text",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/30043916ff0e609d856a66663ea679aa.jpg",
+            "text": "KratomIQ",
+            "item_content": "<p>Testing<\/p>",
+            "item_button": "Read More",
+            "item_url": ""
+          }
+        },
+        "text_N8VGwT": {
+          "type": "text",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/30043916ff0e609d856a66663ea679aa.jpg",
+            "text": "KratomIQ",
+            "item_content": "<p>Testing<\/p>",
+            "item_button": "Read More",
+            "item_url": ""
+          }
+        },
+        "text_DyQiWE": {
+          "type": "text",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/30043916ff0e609d856a66663ea679aa.jpg",
+            "text": "KratomIQ",
+            "item_content": "<p>Testing<\/p>",
+            "item_button": "Read More",
+            "item_url": ""
+          }
+        },
+        "text_HQpKmC": {
+          "type": "text",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/30043916ff0e609d856a66663ea679aa.jpg",
+            "text": "KratomIQ",
+            "item_content": "<p>Testing<\/p>",
+            "item_button": "Read More",
+            "item_url": ""
+          }
+        }
+      },
+      "block_order": [
+        "text_YwUDCB",
+        "text_N8VGwT",
+        "text_DyQiWE",
+        "text_HQpKmC"
+      ],
+      "disabled": true,
+      "settings": {
+        "subheading": "kratom resource hub",
+        "heading": "New to Kratom?",
+        "margin_top": "50",
+        "margin_bottom": "50"
+      }
+    }
+  },
+  "order": [
+    "banner",
+    "product-grid",
+    "custom_image_text_slider_YejbVa"
+  ]
+}

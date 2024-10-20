@@ -1,0 +1,171 @@
+<!-- sections/image-with-text.liquid -->
+
+{% comment %}
+	Load Assets
+{% endcomment %}
+
+{% render 'theme-load-assets', style: 'section-banner-with-desktop-image.min.css' %}
+
+{% comment %}
+	Initial Liquid Variables
+{% endcomment %}
+
+{%- liquid 
+    assign data                    = section.settings 
+    assign title                   = data.title 
+    assign description             = data.description
+    assign image                   = data.image
+    assign cta_text_1              = data.cta_text_1
+    assign cta_url_1               = data.cta_url_1
+    assign cta_text_2              = data.cta_text_2
+    assign cta_url_2               = data.cta_url_2
+    assign color_scheme            = data.color_scheme
+    assign background_svg_desktop  = data.background_svg
+    assign background_svg_mobile   = data.background_svg_mobile
+-%}
+
+{% comment %}
+	Section Markup
+{% endcomment %}
+
+<section class="banner-with-desktop-image banner-with-desktop-image--{{ color_scheme }}">
+    <div class="banner-with-desktop-image__container container">
+        <div class="banner-with-desktop-image__text">
+            {%- if title != blank -%}
+                <h2 class="banner-with-desktop-image__title">{{ title }}</h2>
+            {%- endif -%}
+
+            {%- if description != blank -%}
+                <div class="banner-with-desktop-image__description">{{ description }}</div>
+            {%- endif -%}
+
+            <div class="banner-with-desktop-image__buttons">
+                {%- if cta_url_1 != blank and cta_text_1 != blank -%}
+                    <a class="banner-with-desktop-image__button btn btn--inverse" href="{{ cta_url_1 }}">{{ cta_text_1 }}</a>
+                {%- endif -%}
+
+                {%- if cta_url_2 != blank and cta_text_2 != blank -%}
+                    <a class="banner-with-desktop-image__button btn btn--hollow--inverse" href="{{ cta_url_2 }}">{{ cta_text_2 }}</a>
+                {%- endif -%}
+            </div>
+        </div>
+		
+		<div class="banner-with-desktop-image__image tablet-lg-up">
+		    {% render 'image', image: image %}
+	    </div>
+    </div>
+
+    {%- if background_svg_mobile != blank -%}
+        <div class="banner-with-desktop-image__bg-svg tablet-sm-down">
+            {{ background_svg_mobile }}
+        </div>
+    {%- endif -%}
+
+    {%- if background_svg_desktop != blank -%}
+        <div class="banner-with-desktop-image__bg-svg tablet-lg-up">
+            {{ background_svg_desktop }}
+        </div>
+    {%- endif -%}
+</section>
+
+{% schema %}
+{
+    "name": "Banner with Desktop Image",
+    "settings": [
+        { 
+            "type": "header", 
+            "content": "Banner text"
+        }, 
+        {
+            "id": "title",
+            "type": "text",
+            "label": "Title",
+            "default": "Title"
+        },
+        {
+            "id": "description",
+            "type": "richtext",
+            "label": "Short description",
+			"default": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur nibh purus, auctor viverra leo vitae, fermentum pellentesque felis. In volutpat sem arcu, nec pellentesque turpis tincidunt sed.</p>"
+        },
+        { 
+            "type": "header", 
+            "content": "Banner CTAs"
+        }, 
+        {
+            "id": "cta_text_1",
+            "type": "text",
+            "label": "Button 1 Text",
+			"default": "Button 1", 
+            "info": "This button will show black text on a white background"
+        }, 
+        {
+            "id": "cta_url_1",
+            "type": "url",
+            "label": "Button 1 URL",
+			"default": "/"
+        },
+        {
+            "id": "cta_text_2",
+            "type": "text",
+            "label": "Button 2 Text",
+			"default": "Button 2", 
+            "info": "This button will show black text on a white background"
+        },
+        {
+            "id": "cta_url_2",
+            "type": "url",
+            "label": "Button 2 URL",
+			"default": "/"
+        }, 
+        { 
+            "type": "header", 
+            "content": "Banner image + design"
+        }, 
+        {
+            "id": "image",
+            "type": "image_picker",
+            "label": "Image", 
+            "info": "Desktop only. Suggested size: 1430 x 760px"
+        },
+        {
+            "id": "color_scheme",
+            "type": "select",
+            "label": "Color Scheme",
+            "default": "red",
+            "options": [
+                {
+                    "label": "Red",
+                    "value": "red"
+                },
+                {
+                    "label": "Blue",
+                    "value": "blue"
+                }
+            ]
+        },
+        {
+            "type": "header",
+            "content": "Optional Background SVGs"
+        },
+        {
+            "type": "html",
+            "id": "background_svg_mobile",
+            "label": "Background SVG markup - mobile"
+        }, 
+        {
+            "type": "html",
+            "id": "background_svg",
+            "label": "Background SVG markup - desktop"
+        }
+    ],
+    "presets": [
+        {
+            "name": "Banner with Desktop Image"
+        }
+    ], 
+    "disabled_on": {
+		"groups": ["footer"]
+	}
+}
+{% endschema %}

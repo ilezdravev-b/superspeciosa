@@ -1,0 +1,49 @@
+<!-- sections/header-high-value-links.liquid -->
+
+{% comment %}
+	Load Assets
+
+	Notes: We could load this in the main stylesheet,
+		   but since the mobile menu is not seen until
+		   the button is clicked, it makes sense to lazyload
+		   this for the sake of a smaller overall main stylesheet.
+{% endcomment %}
+
+<link rel="stylesheet" href="{{ 'section-header-high-value-links.min.css' | asset_url }}" media="print" onload="this.media='all'">
+
+{%- if section.blocks.size > 0 -%}
+    <ul class="header__high-value-links">
+        {%- for block in section.blocks -%}
+            {%- if block.settings.url != blank and block.settings.title != blank -%}
+                <li class="header__high-value-links__item">
+                    <a class="header__high-value-links__link" href="{{ block.settings.url }}">{{ block.settings.title }}</a>
+                </li>
+            {%- endif -%}
+        {%- endfor -%}
+    </ul>
+{%- endif -%}
+
+{% schema %}
+{
+    "name": "High Value Links (Mobile)",
+    "class": "mobile-high-value-links", 
+    "blocks": [
+        {
+            "name": "Link",
+            "type": "link",
+            "settings": [
+                {
+                    "label": "Link Title",
+                    "id": "title",
+                    "type": "text"
+                },
+                {
+                    "label": "Link URL", 
+                    "id": "url",
+                    "type": "url"
+                }
+            ]
+        }
+    ]
+}
+{% endschema %}

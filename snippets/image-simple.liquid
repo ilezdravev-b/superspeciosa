@@ -1,0 +1,66 @@
+<!-- snippets/image-simple.liquid -->
+
+{% comment %}
+    Required:
+        image_url   {String}   - This should be the URL of the image. (Either this or the image should be included - never both)
+		image       {Object}   - The image object
+        width       {Integer}  - The image width
+        height      {Integer}  - The image height
+        alt         {String}   - The image alt
+
+    Optional:
+        load        {String}   - How to load the image. Value can be "lazy", "eager" or "interaction". Defaults to lazy if no value is provided.
+        class       {String}   - Classes for the image, separated by spaces. Note that "class=''" doesn't need to be included, as it's included here.
+        data        {String}   - Any image attributes (such as style or ID). Multiples can be passed, separated by spaces.
+
+    Notes:
+        This snippet exists for situations where the image rendered is very small,
+        about icon size, and still needs to be lazyloaded but doesn't need the
+        full-fledged approach of the main image snippets. (i.e. srcsets)
+
+        Note that this snippet is especially made to be used for Custom Fields images,
+		where only the image source is available, and not the image object.
+{% endcomment %}
+
+{% comment %}
+    Loading Type
+{% endcomment %}
+
+{% liquid 
+	assign load = load | default: 'lazy'
+	assign image_url = image_url | default: ''
+
+	if image_url == blank
+		assign image_url = image | image_url: width: width, height: height 
+	endif
+
+	unless data contains 'style=' or image == blank
+		assign focal_point = image.presentation.focal_point | default: 'center'
+		assign style = 'style="object-position:' | append: focal_point | append: ';"'
+	endunless
+%}
+
+{% if load == 'eager' %}
+    {% assign loaded_class = 'loaded' %}
+{% else %}
+	{% assign prefix = 'data-' %}
+    {% capture src %}
+       src="data:image/svg+xml;charset=utf8,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%3E%3C/svg%3E"
+    {% endcapture %}
+{% endif %}
+
+{% comment %}
+    Image Markup
+{% endcomment %}
+
+{% if image == blank and image_url == blank %}
+	{{ 'image' | placeholder_svg_tag: 'shopify-placeholder' }}
+{% else %}
+	<img width="{{ width | default: image.width }}" height="{{ height | default: image.height }}" data-image-load="{{ load }}"
+		alt="{{ alt | strip_html | default: image.alt }}"
+		{{ data }}
+		{{ style }}
+		class="{{ loaded_class }} {{ class }} media-image"
+		{{ src }}
+		{{ prefix }}src="{{ image_url }}">
+{% endif %}

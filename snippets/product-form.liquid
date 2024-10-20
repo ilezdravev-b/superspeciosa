@@ -1,0 +1,108 @@
+<!-- snippets/product-form.liquid -->
+
+{% comment %}
+	Required:
+		product {Object} The product object. Only required if this snippet is being rendered on a non-PDP page.
+		current_variant {Object} The variant object. Only required if this snippet is being rendered on a non-PDP page.
+
+    Optional: 
+		show_product_cta {Boolean} Whether to show a CTA link to the product page. Defaults to false.
+		product_cta_text {String} Text to use for the CTA link, if enabled.
+{% endcomment %}
+
+{%- liquid 
+	assign current_variant = product.selected_or_first_available_variant
+	assign cart_ajax = 'none'
+	assign qty_id = 'qty' | append: product.id
+
+    if settings.ajax_cart_enable
+        assign cart_ajax = 'ajax-cart-form'
+    endif
+-%}
+
+{% form "product", product, class: "js-product-form js-product-form-main product-form", data-behavior: cart_ajax, data-product-id: product.id, tabindex: "-1" %}
+
+	{% comment %}
+		Product JSON
+	{% endcomment %}
+
+    <script class="js-product-json" type="application/json">
+        {{ product | json }}
+    </script>
+
+		{% comment %} We need to refactor this code {% endcomment %}
+	{% if product.id == 1719308582983 or product.id == 1719308484679 %}
+		<select name="id">
+			{% for variant in product.variants %}
+				<option value="{{ variant.id }}">{{ variant.title }}</option>
+			{% endfor %}
+		</select>
+	{% else %}
+    <input type="hidden" name="id" value="{{ current_variant.id }}" />
+	{% endif %}
+
+	{% comment %}
+		Product Options
+	{% endcomment %}
+
+	<h2 class="sr-only">Product Options</h2>
+	{% unless product.has_only_default_variant or product.tags contains "Hidden-Variants" %}
+    	{%- render 'variant-selector', product: product, current_variant: current_variant -%}
+	{% endunless %}
+	
+	{% comment %}
+		Custom Options 
+		(Bold Options replacement using metafields)
+	{% endcomment %}
+
+  {% render 'custom-options' %}
+
+	{% comment %}
+		SKIO App Block
+	{% endcomment %}
+	
+	{% render 'skio-app-block' %}
+	{% comment %}
+		Product Form Actions
+	{% endcomment %}
+
+    <div class="product-form__actions">
+		{% comment %}
+			Product Quantity
+		{% endcomment %}
+
+		<div class="product-form__qty__wrapper">
+			{% render 'product-qty', id: qty_id %}
+		</div>
+
+		{% render 'product-form-atc', current_product: product, current_variant: current_variant, button_class: "product-form__atc-btn" %}
+
+		{% comment %}
+			Not using: 
+
+			{%- if show_product_cta and product_cta_text != blank -%}
+				<a class="btn btn--hollow" href="{{ product.url }}">
+					{{ product_cta_text }}
+				</a>
+			{%- endif -%}
+		{% endcomment %}
+    </div>
+	<div class="product-purchase-description">
+		<p>
+			{% render 'icon-moneyback' %}
+			{{ section.settings.money_back }}
+		</p>
+		<p>
+			{% render 'icon-shippingday' %}
+			{{ section.settings.shipping_day }}
+		</p>
+	</div>
+	
+
+{% endform %}
+
+{% comment %}
+		Dye Color Options Modals
+{% endcomment %}
+
+{% render 'color-options' %}

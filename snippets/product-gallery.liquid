@@ -1,0 +1,111 @@
+<!-- snippets/product-gallery.liquid -->
+
+{% comment %}
+    Required:
+        product {Object} The product object. Only needs to be passed if this snippet is being used outside of the product template.
+
+    Optional:
+        thumbnails {Boolean} Whether to show dots as thumbnail images.
+        carousel {Boolean} Whether to show the gallery as a carousel.
+        id {String} A unique ID for the slideshow.
+{% endcomment %}
+
+
+
+{% liquid 
+	assign id = id | default: 'productGallerySlider'
+	assign product_image_count = product.media.size
+%}
+
+
+{%- style -%}
+    .product-gallery .sp-slider__slides {
+        display: grid;
+        grid-template-columns: repeat({{ product.media.size }}, 100%);
+    }
+
+	@media (max-width: 48rem) {
+    .product-gallery .sp-slider__slides {
+        display: grid;
+        grid-template-columns: repeat({{ product.media.size }}, 85%) !important;
+    }
+	}
+{%- endstyle -%}
+{% comment %}
+    Show single image if only one image exists,
+    otherwise show the gallery
+{% endcomment %}
+
+{% if product_image_count == 1 %}
+
+  {% render 'image-square', image: product.featured_image, picture_class: "product-gallery--single" %}
+
+{% elsif product_image_count > 1 %}
+
+    {% comment %}
+        Slideshow Settings
+
+        Note: These settings could be added directly
+        to a JS file and initialization handled there, but
+        in this case we're showing examples of integrating section
+        settings with slideshow settings, which is why it's being
+        initialized through the data-sp-slider method.
+    {% endcomment %}
+
+    {% capture slideshowSettings %}
+        {
+            "ariaLabel": "Product Gallery",
+            "slidesToShow": 1,
+            "dotsShow": true,
+            "dotsVertical": false,
+            "carousel": {{ carousel | default: false }},
+            "dotThumbnails": {{ thumbnails | default: false }},
+            "responsive": [
+                {
+                    "breakpoint": 1023,
+                    "settings": {
+                        "carousel": false,
+                        "dotsShow": true,
+                        "dotsVertical": false,
+                        "dotThumbnails": true
+                    }
+                }
+            ]
+        }
+    {% endcapture %}
+
+    <div id="{{ id }}" class="product-gallery" data-sp-slider='{{ slideshowSettings }}'>
+
+        {% comment %}
+            SWF Visualizer
+        {% endcomment %}
+
+        {% if template.suffix == "swf-visualizer"%}
+        <div id="visualizerContainer">
+            {% render 'paragram-viewer' %}
+        </div>
+
+        {% else %}
+
+        <div class="js-sp-slider-slides" style="max-width: 100vw; width: 100%;">
+
+			{% for media in product.media %}
+
+				{% comment %}
+					Individual Slide
+				{% endcomment %}
+
+				<div class="product-gallery__slide" data-image-zoom="https://9346b4-f7.myshopify.com/cdn/shop/{{ media.image }}">
+					{% render 'product-media', media: media, index: forloop.index %}
+				</div>
+
+			{% endfor %}
+
+        </div>
+    {% endif %}
+
+        {% render 'slideshow-controls' %}
+
+    </div>
+
+{% endif %}

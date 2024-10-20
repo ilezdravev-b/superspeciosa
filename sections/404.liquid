@@ -1,0 +1,77 @@
+<!-- sections/404.liquid -->
+
+{% comment %}
+	Initial Liquid Variables
+{% endcomment %}
+
+{%- liquid 
+	assign data = section.settings 
+
+    assign title = data.title | default: "404"
+    assign subtitle = data.subtitle
+    assign cta_url = data.cta_url
+-%}
+
+{% comment %}
+	Section Markup
+{% endcomment %}
+
+<section class="container-small section page-404">
+	<h1 class="page-404__heading">{{ title }}</h1>
+
+	{%- if subtitle != blank -%}
+		<h2 class="page-404__subheading">{{ subtitle }}</h2>
+	{%- endif -%}
+
+	{{ data.description }}
+
+	{%- if data.show_cta and cta_url != blank -%}
+		<a href="{{ cta_url }}" class="btn btn--primary btn--wide">
+			{{ data.cta_text }}
+		</a>
+	{%- endif -%}
+</section>
+
+{% schema %}
+{
+    "name": "404 Page",
+    "settings": [
+        {
+            "type": "text",
+            "id": "title",
+            "label": "Title", 
+            "default": "404"
+        },
+        {
+            "type": "textarea",
+            "id": "subtitle",
+            "label": "Subtitle", 
+            "default": "Page not found"
+        },
+        {
+            "type": "richtext",
+            "id": "description",
+            "label": "Description",
+			"default": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla ut feugiat odio. Nulla aliquam purus purus.</p>"
+        },
+        {
+            "type": "checkbox",
+            "id": "show_cta", 
+            "label": "Show CTA", 
+            "default": true
+        }, 
+        {
+            "type": "text",
+            "id": "cta_text", 
+            "label": "CTA text", 
+            "default": "Continue Shopping"
+        }, 
+        {
+            "type": "url",
+            "id": "cta_url", 
+            "label": "CTA URL", 
+            "default": "/"
+        }
+    ]
+}
+{% endschema %}

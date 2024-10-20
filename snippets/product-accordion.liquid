@@ -1,0 +1,79 @@
+<link rel="stylesheet" href="{{ 'faq-style.css' | asset_url }}" media="print" onload="this.media='all'">
+
+<div class="product-accordion faq-main">
+  <div class="faq-container">
+    <div class="tabs">
+      {% for block in section.blocks %}
+        {% if block.type == 'product_accordion' and block.settings.title != blank %}
+          {% if block.settings.tab_content != blank %}
+            <div class="tab">
+              <label class="tab-label button button--primary">
+                {% assign item = block.settings %}
+                {{ item.title }}
+                {% render 'product-accordion-arrow' %}
+              </label>
+              <div class="tab-content">
+                {{ block.settings.tab_content }}
+                {%- if block.settings.use_video_as_content == true and block.settings.tab_content_video != blank -%}
+                  <div class="tab-content-video-wrapper">
+                    {{
+                      block.settings.tab_content_video
+                      | video_tag: autoplay: false, loop: false, muted: false, controls: false, image_size: '700x'
+                    }}
+                    <div class="video-play-button">
+                      <a
+                        class="video-action"
+                        href="javascript:;"
+                        aria-label="Btn video play"
+                        button_id="video-index-{{ forloop.index }}"
+                      >
+                        {%- render 'icon-video-play' -%}
+                      </a>
+                    </div>
+                  </div>
+                {%- endif -%}
+              </div>
+            </div>
+          {% endif %}
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+<script>
+  const updateLabTestLink = (variantLabel) => {
+    const labTestUrl = document.querySelector("a[title='#labtesturl']");
+
+    if (labTestUrl !== null) {
+      let batchNumber = variantLabel.dataset.variantBatchNumber || 'Unknown';
+      if (batchNumber === 'Lot ID') {
+        batchNumber = 'Unknown';
+      }
+
+      labTestUrl.setAttribute('href', `/pages/lab/${batchNumber}`);
+    }
+  };
+
+  document.addEventListener('DOMContentLoaded', function () {
+    const variantSelectors = document.querySelectorAll('.js-product-option');
+    variantSelectors.forEach((selector) => {
+      selector.addEventListener('change', function (event) {
+        const selectedVariantLabel = event.target.closest('label');
+        updateLabTestLink(selectedVariantLabel);
+      });
+    });
+
+    const defaultSelectedVariant = document.querySelector('.js-product-option:checked');
+    if (defaultSelectedVariant) {
+      const defaultVariantLabel = defaultSelectedVariant.closest('label');
+      updateLabTestLink(defaultVariantLabel);
+    } else {
+      const firstVariant = variantSelectors[0];
+      if (firstVariant) {
+        const firstVariantLabel = firstVariant.closest('label');
+        updateLabTestLink(firstVariantLabel);
+      }
+    }
+  });
+</script>

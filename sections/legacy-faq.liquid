@@ -1,0 +1,121 @@
+<link rel="stylesheet" href="{{ 'faq-style.css' | asset_url }}" media="print" onload="this.media='all'">
+
+<div class="page-width page-width--narrow faq-main">
+  <h1 class="faq-title h0">
+    {{ section.settings.faq_title | escape }}
+  </h1>
+
+  {% if section.settings.faq_description %}
+    <div class="rte faq-description">
+      {{ section.settings.faq_description }}
+    </div>
+  {% endif %}
+
+  <div class="faq-container">
+    <div class="tabs">
+    	{% for block in section.blocks %}
+      		{% assign item = block.settings %}
+      		<div class="tab">
+            <label class="tab-label button button--primary">
+              {{ item.text }}
+            </label>
+        		<div class="tab-content">{{ item.answer }}</div>
+      		</div>
+      	{% endfor %}
+    </div>
+    <div class="faq-contact">
+      {% if section.settings.faq_contact_heading %}
+        <p class="faq-contact-heading">{{ section.settings.faq_contact_heading }}</p>
+      {% endif %}
+      {% if section.settings.faq_contact_content %}
+        <div class="faq-contact-content">{{ section.settings.faq_contact_content }}</div>
+      {% endif %}
+      {% if section.settings.button_text %}
+        <a href="{{ section.settings.button_link }}" class="faq-button">{{ section.settings.button_text }}</a>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+<style>
+  .faq-main {
+    margin-top: {{ section.settings.margin_top }}px;
+    margin-bottom: {{ section.settings.margin_bottom }}px;
+  }
+</style>
+
+{% schema %}
+  {
+  "name": "FAQ Section",
+  "tag": "section",
+	"class": "spaced-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "faq_title",
+      "default": "FAQs",
+      "label": "Title"
+    },
+    {
+      "type": "text",
+      "id": "faq_description",
+      "label": "Description"
+    },
+    {
+      "type": "text",
+      "id": "faq_contact_heading",
+      "label": "FAQ Contact Heading"
+    },
+    {
+      "type": "richtext",
+      "id": "faq_contact_content",
+      "label": "FAQ Contact Content"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Contact Button"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "FAQ Button Link"
+    },
+    {
+      "type": "text",
+      "id": "margin_top",
+      "label": "Margin Top",
+      "default": "50"
+    },
+    {
+      "type": "text",
+      "id": "margin_bottom",
+      "label": "Margin Bottom",
+      "default": "50"
+    }
+  ],
+  "blocks": [
+    {
+      "name": "FAQ Item",
+      "type": "text",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Question"
+        },
+        {
+          "type": "richtext",
+          "id": "answer",
+          "label": "Answer"
+        }
+      ]
+    }
+  ],
+   "presets": [
+      {
+        "name": "FAQ Block"
+      }
+    ]
+}
+{% endschema %}

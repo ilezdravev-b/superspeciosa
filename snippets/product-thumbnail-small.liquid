@@ -1,0 +1,42 @@
+<!-- snippets/product-thumbnail-small.liquid -->
+
+{% comment %}
+	Required:
+		product {Object} The product object
+
+	Optional:
+		title {String} Product title
+		image {Object} The image object. If none is passed, the default produt image will be used.
+{% endcomment %}
+
+{%- liquid 
+	assign image = image | default: product.featured_image
+	assign title = title | default: product.title
+-%}
+
+<div class="product-thumb product-thumb--small">
+	{% if image != blank %}
+		{% render 'image-square', image: image %}
+	{% else %}
+	
+		{% comment %}
+			Placeholder when no image exists
+		{% endcomment %}
+
+		<div class="media-image media-square"></div>
+	{% endif %}
+
+	<div>
+
+		<h3 class="product-thumb__title">
+			<a href="{{ product.url }}">
+				{{ title }}
+			</a>
+		</h3>
+
+		<div class="product-thumb__text">
+			{% render 'product-price', product: product, show_range: true, add_js_classes: false %}
+		</div>
+
+	</div>
+</div>

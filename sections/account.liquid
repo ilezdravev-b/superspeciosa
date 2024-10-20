@@ -1,0 +1,24 @@
+<!-- sections/account.liquid -->
+
+<section class="account container section">
+
+	<div class="account__container">
+
+		<div class="account__navigation">
+			{% render "account-navigation" %}
+		</div>
+
+		<div class="account__content">
+			{%- if template.suffix == "orders" -%}
+				{% render "account-orders" %}
+			{%- elsif template == "customers/order" -%}
+				{% render "account-order" %}
+			{%- elsif template == "customers/addresses" -%}
+				{% render "account-addresses" %}
+			{%- else -%}
+				{% render "account-overview" %}
+			{%- endif -%}
+		</div>
+	</div>
+
+</section>

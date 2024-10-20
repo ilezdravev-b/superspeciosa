@@ -1,0 +1,91 @@
+<!-- sections/cart-recommendations.liquid -->
+
+{% comment %}
+	Load Assets
+{% endcomment %}
+
+{% render 'theme-load-assets', style: 'section-cart-recommendations.min.css', script: 'section-cart-recommendations.min.js' %}
+
+{% comment %}
+	Initial Liquid Variables
+{% endcomment %}
+
+{% liquid 
+    if settings.cart_recommendations_type == "collection" 
+        assign recommended_products = settings.cart_recommendations_collection.products
+    else 
+        assign recommended_products = settings.cart_recommendations_product_list
+    endif
+%}
+
+{% comment %}
+	Section Markup
+{% endcomment %}
+
+{%- if cart.item_count > 0 -%}
+
+	<section class="cart-recommendations js-cart-recommendations">
+
+		{%- if recommended_products.count > 0 -%}
+			<div class="js-cart-recommendations-slider">
+
+				<div class="cart-recommendations__header">
+					{% comment %}
+						Title
+					{% endcomment %}
+
+					<h2 class="cart-recommendations__title">{{ settings.cart_recommendations_title }}</h2>
+
+					{% comment %}
+						Slider controls
+					{% endcomment %}
+
+					<fieldset class="cart-recommendations__slider__controls">
+						<legend class="sr-only">{{ settings.cart_recommendations_title }} Controls</legend>
+
+						<button type="button" class="js-sp-slider-prev cart-recommendations__slider__button">
+							<span class="sr-only">Previous Product</span>
+							{% render 'icon-angle-left-thin', class: 'icon' %}
+						</button>
+
+						<button type="button" class="js-sp-slider-next cart-recommendations__slider__button">
+							<span class="sr-only">Next Product</span>
+							{% render 'icon-angle-right-thin', class: 'icon' %}
+						</button>
+					</fieldset>
+				</div>
+
+				{% comment %}
+					Slides/Product Thumbnails
+				{% endcomment %}
+
+				<div class="cart-recommendations__slides js-cart-recommendations-slides">
+					{%- for recommendation in recommended_products -%}
+						{%unless recommendation.tags contains "BOLD_HIDDEN_PRODUCT" or recommendation.tags contains "OPTIONS_HIDDEN_PRODUCT"%}
+							<div class="cart-recommendations__slide">
+								{% render 'product-thumbnail', product: recommendation %}
+							</div>
+						{% endunless %}
+					{%- endfor -%}
+				</div>
+			</div>
+		{%- endif -%}
+
+	</section>
+
+{%- endif -%}
+
+{% schema %}
+{
+    "name": "Cart Recommendations",
+    "settings": [
+		{
+			"type": "paragraph",
+			"content": "All content in this section can be managed in Theme Settings > Cart."
+		}
+    ],
+	"enabled_on": {
+		"templates": ["cart"]
+	}
+}
+{% endschema %}

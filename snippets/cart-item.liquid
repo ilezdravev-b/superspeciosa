@@ -1,0 +1,176 @@
+<!-- snippets/cart-item.liquid -->
+
+{% comment %}
+	Required:
+		item {Object} The line_item object
+		index {Integer} The 1-based index of the item
+{% endcomment %}
+
+{% liquid 
+	assign current_product = item.product
+	assign current_variant = item.variant
+
+	assign discounts = item.discount_allocations
+
+	if item.selling_plan_allocation 
+		assign selling_plan = item.selling_plan_allocation.selling_plan.name
+	endif
+
+	assign add_time = ''
+	assign is_parent = false
+	assign is_free_gift = false
+
+	for property in item.properties
+		if property.first == "_add-time"
+			assign add_time = property.last
+		endif
+
+		if property.first == "_hasCustomizableOptions"
+			assign is_parent = true
+		endif
+
+		if property.first == "_isFreeGift"
+			assign is_free_gift = true
+		endif 
+	endfor
+%}
+
+{% comment %}
+	Note how desktop cart item is a table row: 
+{% endcomment %}
+
+<tr class="cart-item js-cart-item" 
+	data-cart-line="{{ index }}" 
+	data-key="{{ item.key }}"
+	{% if is_free_gift %}data-free-gift="true"{% endif %}
+	{% if is_parent %}data-item-is-parent="true"{% endif %}
+	{% if add_time != blank %}data-add-time="{{ add_time }}"{% endif %}
+	data-custom-key="{{ item.properties.custom_key }}"
+	data-custom-option="{{ item.properties.is_custom_option }}"
+	{% if item.properties.is_custom_option %}style="display:none;"{% endif %}>
+
+	{% comment %}
+		Item Details
+
+		Note: Image is hidden from screen readers and keyboards
+			  so that keyboards doesn't have to tab through the same
+			  link twice.
+	{% endcomment %}
+
+	<td class="cart-item__details-container">
+		{% comment %}
+			Remove Button
+
+			Notes: Include screen-reader-only text to indicate
+				what item the user would be removing.
+		{% endcomment %}
+
+		<button class="cart__item-btn btn" data-behavior="remove-line">
+			<span class="sr-only">Remove {{ item.title }} from cart</span>
+			{% render 'icon-trash', class: 'icon' %}
+		</button>
+
+		{% if is_free_gift %}<div class="cart-item__image">{% else %}<a class="cart-item__image" href="{{ current_variant.url }}" aria-hidden="true" tabindex="-1">{% endif %}
+			{%- if item.image != blank -%}
+				{% render 'image-simple', image: item.image, width: 280, height: 280, alt: "" %}
+			{%- else -%}
+				<div class="media-image media-square"></div>
+			{%- endif -%}
+		{% if is_free_gift %}</div>{% else %}</a>{% endif %}
+
+        <div class="cart-item__details">
+
+            <div class="cart-item__header">
+                {% if is_free_gift %}<span class="cart-item__title">{% else %}<a class="cart-item__title" href="{% if item.properties.main_handle %}{{ item.properties.main_handle }}{% else %}{{ item.variant.url }}{% endif %}">{% endif %}
+                    {{ current_product.title }}
+                {% if is_free_gift %}</span>{% else %}</a>{% endif %}
+            </div>
+
+			<div class="cart-item__info">
+
+				{% comment %}
+					All Details
+				{% endcomment %}
+
+				{% if item.properties != blank or current_product.has_only_default_variant == false or selling_plan %}
+
+					<ul aria-label="Item Details">
+						{% comment %}
+							Options
+						{% endcomment %}
+
+						{% unless current_product.has_only_default_variant %}
+							{% for option in item.options_with_values %}
+								{% unless option.name == "Choose Color" %}
+									<li>{{ option.name }}: {{ option.value }}</li>
+								{% endunless %}
+							{% endfor %}
+						{% endunless %} 
+
+						{% comment %}
+							Properties
+
+							Notes: Only shows properties that have no
+								underscore prefix.
+						{% endcomment %}
+
+						{% if item.properties != blank %} 
+							{% render 'cart-item-properties', properties: item.properties %}
+						{% endif %}
+
+						{% comment %}
+							Subscriptions
+						{% endcomment %}
+
+						{% if selling_plan %} 
+							<li>{{ selling_plan }}</li>
+						{% endif %}
+
+						{% comment %}
+							SKU
+						{% endcomment %}
+						
+						{%- if current_variant.sku != blank -%}
+							<li>SKU: {{ current_variant.sku }}</li>
+						{%- endif -%}
+
+					</ul>
+
+				{% endif %}
+
+				{% comment %}
+					Discounts
+				{% endcomment %}
+
+				{% if discounts.size > 0 %}
+					<ul class="cart-item__discounts" aria-label="Discounts">
+						{% for discount in discounts %} 
+							<li>
+								{{ discount.discount_application.title }} (Save {{ discount.amount | money }})
+							</li>
+						{% endfor %}
+					</ul>
+				{% endif %}
+
+			</div>
+        </div>
+	</td>
+
+	{% comment %}
+		Item Quantity
+	{% endcomment %}
+
+	<td class="cart-item__quantity-container">
+		{% render 'product-qty', index: index, id: 'cartItem', value: item.quantity, min: 0, item: item %} 
+	</td>
+
+	{% comment %}
+		Item Total
+	{% endcomment %}
+
+	<td class="cart-item__total-container">
+        <div class="cart-item__total">
+            {% render 'cart-item-price', item: item, current_variant: current_variant, validate: 'true' %}
+        </div>
+    </td>
+</tr>

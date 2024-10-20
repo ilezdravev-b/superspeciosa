@@ -1,0 +1,108 @@
+<div class="option-container">
+  {% if option.option_type == "swf-single-option" or option.option_type == "swf-multiple-option" %}
+    <div class="option-title-container">
+      <div>
+        <label for="option_type">Type</label>
+        <select id="option_type">
+          <option value="swf-single-option" {% if option.option_type == 'swf-single-option' %}selected{% endif %}>Single Option</option>
+          <option value="swf-multiple-option" {% if option.option_type == 'swf-multiple-option' %}selected{% endif %}>Multiple Option</option>
+          <option value="swf-dye-color-option" {% if option.option_type == 'swf-dye-color-option' %}selected{% endif %}>Color Picker</option>
+        </select>
+      </div>
+      <div>
+        <label for="option_title">Option Title</label>
+        <input type="text" id="option_title" value="{{ option.option_title }}"/>
+      </div>
+      <div>
+        <label for="option_title_display">Title visible?</label>
+        <input type="text" id="option_title_display" value="{{ option.option_title_display }}" />
+      </div>
+    </div>
+    <div class="option-handle-container">
+      <div>
+        <label for="option_handle">Option Handle</label>
+        <input type="text" id="option_handle" value="{{ option.option_handle }}"/>
+      </div>
+      <div>
+        <label for="option_hidden_sku">Hidden Sku</label>
+        <input type="text" id="option_hidden_sku" value="{{ option.option_hidden_sku }}"/>
+      </div>
+    </div>
+    <div>
+      <label for="option_hidden_options">Hidden Options</label>
+      <input type="text" id="option_hidden_options" value="{{ option.option_hidden_options }}"/>
+      {% for productId in linked_products %}
+        {% if option.option_type == "swf-single-option" %}
+          <label for="option_products_{{ productId }}">Product options for: <b>{{ productId }}</b></label>
+          <input type="text" id="option_products_{{ productId }}" value="{{ option.option_products[productId] }}"/>
+          {% else %}
+          <label for="option_products">Product Options</label>
+          <input type="text" id="option_products" value="{{ option.option_products[productId] }}"/>
+        {% endif %}
+        {% endfor %}      
+    </div>
+    <div class="option-handle-container">
+      <div>
+        <label for="option_products_custom_titles">Custom titles</label>
+        <input type="text" id="option_products_custom_titles" value="{{ option.option_products_custom_titles }}"/>
+      </div>
+      <div>
+        <label for="option_labels">Labels</label>
+        <input type="text" id="option_labels" value="{{ option.option_labels }}"/>
+      </div>
+    </div>
+    <div class="message-title-container">
+      <div>
+        <label for="option_message_id">Message id</label>
+        <input type="text" id="option_message_id" value="{{ option.option_message_id }}"/>
+      </div>
+      <div>
+        <label for="option_message_title">Message title</label>
+        <input type="text" id="option_message_title" value="{{ option.option_message_title }}"/>
+      </div>
+    </div>
+    <div>
+      <label for="option_message">Message</label>
+      <input type="text" id="option_message" value="{{ option.option_message }}"/>
+    </div>
+    <div class="swicth-container">
+      <div>
+        <label for="option_switcher">Switcher</label>
+        <input type="text" id="option_switcher" value="{{ option.option_switcher }}"/>
+      </div>
+      <div>
+        <label for="option_in_cart">Create product</label>
+        <input type="text" id="option_in_cart" value="{{ option.option_in_cart }}"/>
+      </div>
+      <div></div>
+    </div>
+  {% elsif option.option_type == "swf-dye-color-option" %}
+    <div class="header-color-options">
+      <div>
+        <label for="option_type">Type</label>
+        <select id="option_type">
+          <option value="swf-single-option" {% if option.option_type == 'swf-single-option' %}selected{% endif %}>Single Option</option>
+          <option value="swf-multiple-option" {% if option.option_type == 'swf-multiple-option' %}selected{% endif %}>Multiple Option</option>
+          <option value="swf-dye-color-option" {% if option.option_type == 'swf-dye-color-option' %}selected{% endif %}>Color Picker</option>
+        </select>
+      </div>
+      <div>
+        <label for="option_handle">Handle</label>
+        <input type="text" id="option_handle" value="{{ option.option_handle }}"/>
+      </div>
+      <div>
+        <label for="dye_color_number"># Options</label>
+        <input type="text" id="dye_color_number" value="{{ option.dye_color_number }}"/>
+      </div>
+      <div>
+        <label for="option_confirmation">Confirmation</label>
+        <input type="text" id="option_confirmation" value="{{ option.option_confirmation }}"/>
+      </div>
+    </div>
+    <div>
+      <label for="options_preselected">Preselected Options</label>
+      <input type="text" id="options_preselected" value="{{ option.options_preselected }}"/>
+    </div>
+  {% endif %}
+   <hr>
+</div>

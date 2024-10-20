@@ -1,0 +1,33 @@
+{
+  "sections": {
+    "main": {
+      "type": "page",
+      "disabled": true,
+      "custom_css": [
+        "h1 {display: none;}"
+      ],
+      "settings": {
+      }
+    },
+    "172434008284867580": {
+      "type": "apps",
+      "blocks": {
+        "bon_loyalty_loyalty_page_block_iHetU4": {
+          "type": "shopify:\/\/apps\/bon-loyalty\/blocks\/loyalty-page-block\/63496a04-c097-48d1-8c11-475aec24b12e",
+          "settings": {
+          }
+        }
+      },
+      "block_order": [
+        "bon_loyalty_loyalty_page_block_iHetU4"
+      ],
+      "settings": {
+        "include_margins": false
+      }
+    }
+  },
+  "order": [
+    "main",
+    "172434008284867580"
+  ]
+}

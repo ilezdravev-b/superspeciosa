@@ -1,0 +1,94 @@
+
+<div class="main-page section-{{ section.id }}">
+  <div class="{% if section.settings.enable_full %}full-page-width{% else %}{% if section.settings.narrow_width %}page-narrow-width page-width{% else %}page-width{% endif %}{% endif %}">
+  	<div class="page">
+      <h1 class="page__title">{{ page.title }}</h1>
+      <div class="rte">
+        {{ page.content }}
+      </div>
+  	</div>
+  </div>
+</div>
+
+<style>
+.section-{{ section.id }} {
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+    background-color: {{ section.settings.bg_color }};
+}
+@media (max-width: 749px) {
+  .section-{{ section.id }} {
+    padding-top: {{ section.settings.padding_top_mobile }}px;
+    padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
+  }
+}
+</style>
+
+{% schema %}
+  {
+    "name": "Main Page",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Layout"
+      },
+      {
+        "type": "range",
+        "id": "padding_top",
+        "label": "Top Spacing",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "default": 20,
+        "unit": "px"
+      },
+      {
+        "type": "range",
+        "id": "padding_bottom",
+        "label": "Bottom Spacing",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "default": 20,
+        "unit": "px"
+      },
+      {
+        "type": "color",
+        "id": "bg_color",
+        "label": "Background Color"
+      },
+      {
+        "type": "range",
+        "id": "padding_top_mobile",
+        "label": "Top Spacing Mobile",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "default": 10,
+        "unit": "px"
+      },
+      {
+        "type": "range",
+        "id": "padding_bottom_mobile",
+        "label": "Bottom Spacing Mobile",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "default": 10,
+        "unit": "px"
+      },
+      {
+        "type": "checkbox",
+        "id": "narrow_width",
+        "label": "Narrow Width",
+        "default": false
+      },
+      {
+        "type": "checkbox",
+        "id": "enable_full",
+        "default": false,
+        "label": "Enable Full Width"
+      }
+    ]
+  }
+{% endschema %}

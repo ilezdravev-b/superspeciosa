@@ -1,0 +1,59 @@
+<!doctype html>
+<html class="no-js" lang="{{ request.locale.iso_code }}">
+
+	<style>
+		html { opacity: 0; }
+	</style>
+
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width,initial-scale=1">
+
+		{% comment %}
+			Hide from search engines
+		{% endcomment %}
+		
+		<meta name="robots" content="noindex">
+		
+		<link rel="canonical" href="{{ canonical_url }}">
+		<link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
+
+		<title>
+			{{ page_title }}
+			{%- if current_tags %} &ndash; tagged "{{ current_tags | join: ', ' }}"{% endif -%}
+			{%- if current_page != 1 %} &ndash; Page {{ current_page }}{% endif -%}
+			{%- unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless -%}
+		</title>
+
+		{%- assign meta_page_description = page_description | default: shop.description | default: shop.name -%}
+		<meta name="description" content="{{ meta_page_description | escape }}">
+
+		{% render 'theme-meta-tags' %}
+
+		{% if settings.favicon != blank %}
+			<link rel="shortcut icon" href="{{ settings.favicon | img_url: '32x32' }}" type="image/png">
+		{% endif %}
+
+		<!-- begin content_for_header -->
+		{{ content_for_header }}
+		<!-- end content_for_header -->
+	
+</head>
+
+	 <body> 
+
+		{% comment %}   
+			Main Content
+		{% endcomment %}
+
+		<main id="MainContent" role="main" tabindex="-1">
+			{{ content_for_layout }}
+		</main>
+
+		<script>
+			window.fmData.theme.template = "{{ template }}"
+		</script>
+
+	</body>
+</html>

@@ -1,0 +1,42 @@
+<!-- snippets/slideshow-controls.liquid -->
+
+{% comment %}
+	Optional:
+		dotsClass {String} Classes added to the dots container
+		fieldsetClass {String} Classes added to the fieldset
+		buttonClass {String} Classes added to both buttons
+
+	Notes: This snippet is meant to make the building
+	       of slideshows easier, so that controls can be
+		   added in a quick and accessible way. Dots will be
+           generated automatically by the slider script, if
+           they are enabled in the slider settings.
+{% endcomment %}
+
+{% comment %}
+	Snippet Markup
+{% endcomment %}
+
+<fieldset class="slider__controls {{ fieldsetClass }}">
+
+	<legend class="sr-only">
+		Carousel Controls
+	</legend>
+
+	<button type="button" class="btn js-sp-slider-prev slider__btn {{ buttonClass }}">
+		{% render 'icon-arrow-left', class: 'icon' %}
+		<span class="sr-only">
+			Previous Slide
+		</span>
+	</button>
+
+	<div class="js-sp-slider-dots slider__dots {{ dotsClass }}"></div>
+
+	<button type="button" class="btn js-sp-slider-next slider__btn {{ buttonClass }}">
+		{% render 'icon-arrow-right', class: 'icon' %}
+		<span class="sr-only">
+			Next Slide
+		</span>
+	</button>
+
+</fieldset>

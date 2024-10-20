@@ -1,0 +1,94 @@
+<!-- sections/featured-collections-large.liquid -->
+
+{% comment %}
+	Load Assets
+    Note: not loading styles on homepage -- those are in the index.scss template file
+{% endcomment %}
+
+{%- unless template == "index" -%}
+    {% render 'theme-load-assets', style: 'section-featured-collections-large.min.css' %}
+{%- endunless -%}
+
+{% comment %}
+	Initial Liquid Variables
+{% endcomment %}
+
+{%- liquid 
+    assign data = section.settings
+    assign title = data.title
+-%}
+
+{% comment %}
+	Section Markup
+{% endcomment %}
+
+<section class="featured-collections-large container">
+
+	{%- if title != blank -%}
+		<h2 class="sr-only">{{ title }}</h2>
+	{%- endif -%}
+
+	<ul class="featured-collections-large__grid"{%- if title != blank -%} aria-label="{{ title }}"{%- endif -%}>
+		{%- for block in section.blocks -%}
+			{%- liquid 
+                assign block_data = block.settings
+                assign collection_title = block_data.title
+				assign collection_url = block_data.url
+				assign collection_image = block_data.background_image
+			-%}
+
+            {%- if collection_title != blank and collection_url != blank and collection_image != blank -%}
+                <li>
+                    {% render "collection-thumbnail-large", collection_title: collection_title, collection_url: collection_url, collection_image: collection_image %}
+                </li>
+            {%- endif -%}
+		{%- endfor -%}
+	</ul>
+</section>
+
+{% schema %}
+{
+    "name": "Shop By Collection, Large",
+    "settings": [
+        {
+            "type": "text",
+            "id": "title",
+            "label": "Title",
+			"default": "Featured Collections", 
+            "info": "Will not show, only used for SEO purposes"
+        }
+    ],
+    "blocks": [
+        {
+            "type": "collection",
+            "name": "Collection",
+            "settings": [
+                { 
+                    "type": "text", 
+                    "id": "title", 
+                    "label": "Collection title"
+                }, 
+                {
+                    "type": "url",
+                    "id": "url",
+                    "label": "URL"
+                },
+                {
+                    "type": "image_picker",
+                    "id": "background_image",
+                    "label": "Image",
+                    "info": "Recommended size: 1220 x 600px"
+                }
+            ]
+        }
+    ],
+    "presets": [
+        {
+            "name": "Shop By Collection, Large"
+        }
+    ],  
+    "disabled_on": {
+		"groups": ["footer"]
+	}
+}
+{% endschema %}

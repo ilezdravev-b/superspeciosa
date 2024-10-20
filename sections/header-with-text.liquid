@@ -1,0 +1,121 @@
+{%- liquid 
+    assign data = section.settings
+    assign section_id = section.id
+-%}
+
+<style>
+    #HeaderWithText{{ section_id }} {
+        display: flex;
+        flex-direction: column;
+        padding: 20px 15px;
+        background-color: {{ data.background-color }};
+        text-align: center;
+    }
+
+    .header-with-text__title {
+        font-family: "Dilemma", sans-serif;
+        font-size: 35px;
+        font-weight: 700;
+        text-transform: uppercase;
+        margin: 0.5em;
+        letter-spacing: 1px;
+        line-height: 1;
+    }
+
+    .header-with-text__content {
+        padding: 5px 10px;
+        margin: 0px 1em;
+    }
+
+    @media (max-width: 768px) {
+        .header-with-text__title {
+            margin: 0 0 0.5em 0;
+        }
+
+        .header-with-text__content {
+            padding: 0;
+            margin: 0;
+            font-size: 18px;
+        }
+    }
+
+    {%- if data.max-width != blank and data.max-width > 0 -%}
+        #HeaderWithText{{ section_id }} {
+            max-width: {{ data.max-width }}px;
+        }
+    {%- endif -%}
+
+    {%- if data.desktop_min_height != blank or data.mobile_min_height != blank -%}
+        {%- if data.mobile_min_height != blank and data.mobile_min_height > 0 -%}
+            #HeaderWithText{{ section_id }} { 
+                min-height: {{ data.mobile_min_height }}px; 
+            }
+        {%- endif -%}
+
+        {%- if data.desktop_min_height != blank and data.desktop_min_height > 0 -%}
+            @media screen and (min-width: 64em) { 
+                #HeaderWithText{{ section_id }} { 
+                    min-height: {{ data.desktop_min_height }}px; 
+                }
+            }
+        {%- endif -%}
+    {%- endif -%}
+</style>
+
+<section id="HeaderWithText{{ section_id }}" class="header-with-text">
+    <h2 class="header-with-text__title">{{ data.header-text }}</h2>
+    <div class="header-with-text__content">{{ data.div-text }}</div>
+</section>
+
+{% schema %}
+{
+    "name": "Header With Text",
+    "settings": [
+        {
+            "type": "number",
+            "id": "desktop_min_height",
+            "label":  "Desktop section min height",
+            "default": 200, 
+            "info": "In pixels. Leave blank for no minimum height; height will be determined by content"
+        },
+        {
+            "type": "number",
+            "id": "mobile_min_height",
+            "label":  "Mobile section min height",
+            "default": 250, 
+            "info": "In pixels. Leave blank for no minimum height; height will be determined by content"
+        },
+        {
+            "type": "number",
+            "id": "max-width",
+            "label":  "Max width of section",
+            "default": 0, 
+            "info": "In pixels. Leave blank for no max width"
+        },
+        {
+            "type": "color",
+            "id": "background-color",
+            "label":  "Background color",
+            "default": "#f4f1df"
+        },
+        {
+            "type": "textarea",
+            "id": "header-text",
+            "label":  "Header",
+            "default": "Why buy KRATOM from Super? We do things right."
+        },
+        {
+            "type": "textarea",
+            "id": "div-text",
+            "label":  "Text",
+            "default": "Since 2016 we have been perfecting certifiably reliable ways to bring your kratom as it was intended - unaltered, untouched, uncompromised."
+        }
+    ],
+    "presets": [
+        {
+            "name": "Header With Text"
+        }
+    ],
+    "tag": "section"
+}
+{% endschema %}

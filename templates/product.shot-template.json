@@ -1,0 +1,380 @@
+{
+  "sections": {
+    "product": {
+      "type": "product",
+      "blocks": {
+        "abra_promotions_banner_gift_B7KzJt": {
+          "type": "shopify:\/\/apps\/abra-promotions\/blocks\/banner-gift\/daa1493a-23b5-48bb-8cb5-7ab1267b4642",
+          "settings": {
+            "name": "Gift",
+            "color": "#222d1c",
+            "icon_color": "#222d1c",
+            "progress_bar_color": "#8cb93f",
+            "font_size": 14,
+            "icon_size": 14,
+            "text_align": "center",
+            "offer_background_color": "#222d1c",
+            "offer_padding_y": 14,
+            "offer_padding_x": 14,
+            "badge_background_color": "#8cb93f",
+            "badge_color": "#222d1c",
+            "badge_icon_color": "#222d1c",
+            "badge_border_radius": 48,
+            "badge_font_size": 12,
+            "badge_icon_size": 10,
+            "offer_title_color": "#f4f1df",
+            "offer_price_color": "#f4f1df",
+            "offer_title_font_size": 16,
+            "offer_price_font_size": 14,
+            "add_variant_color": "#f4f1df",
+            "add_variant_text_color": "#222d1c",
+            "add_variant_disabled_color": "#f4f1df",
+            "add_variant_disabled_text_color": "#222d1c"
+          }
+        },
+        "media_with_text_zYanLc": {
+          "type": "media_with_text",
+          "settings": {
+            "video": "shopify:\/\/files\/videos\/copy_69A79839-7CB7-415D-855B-B6B5DAC0F59F.MOV",
+            "subtitle": "Powered by nature, backed by science",
+            "title": "See our manufacturing process",
+            "description": "<p>Take a peek into our thoughtful manufacturing choices — we’re proud to share how we create our high-quality kratom products.<\/p>"
+          }
+        },
+        "product_reason_jG7jFr": {
+          "type": "product_reason",
+          "settings": {
+            "subtitle": "Why kratom",
+            "title": "Kratom Supports Body And Mind",
+            "reason1_title": "Boosts energy",
+            "reason1_text": "Kratom is your all-natural, crash-free boost for energy & vitality.",
+            "reason1_icon": "shopify:\/\/shop_images\/Energy_86a9f663-311b-4d20-a8a5-8b17ef77b874.svg",
+            "reason2_title": "Increases focus",
+            "reason2_text": "Supports cognitive function for mental clarity & concentration.",
+            "reason2_icon": "shopify:\/\/shop_images\/Focus_9475c41a-2ae5-4ba2-aa57-b54dfbcbffac.svg",
+            "reason3_title": "Enhances mood",
+            "reason3_text": "An alcohol-free boost for increased confidence and lifted spirits.",
+            "reason3_icon": "shopify:\/\/shop_images\/Mood_ca74b675-4a3c-49b8-9522-e86793eb9398.svg",
+            "reason4_title": "Soothing relief",
+            "reason4_text": "Supports body & mind relaxation.",
+            "reason4_icon": "shopify:\/\/shop_images\/Relief_4acef727-7e51-4f51-bbd6-f652f5268310.svg"
+          }
+        },
+        "product_compare_JMmCLA": {
+          "type": "product_compare",
+          "settings": {
+            "subtitle": "OUR KRATOM",
+            "title": "Us vs Them",
+            "compare_item1": "Traceable sourcing",
+            "compare_item2": "Tested for purity and strength",
+            "compare_item3": "Trusted by scientists",
+            "compare_item4": "Honest labeling",
+            "compare_item5": "Traceable, transparent lab-testing",
+            "compare_item6": "American Kratom Association qualified",
+            "compare_item7": "100,000+ customer recommendations",
+            "compare_item8": "30 days of trust guarantee",
+            "compare_item9": "",
+            "compare_item10": ""
+          }
+        },
+        "product_usage_H9mwMb": {
+          "type": "product_usage",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/super-feels-styled-2.jpg",
+            "subtitle": "Three easy steps",
+            "title": "How to use",
+            "usage1_icon": "shopify:\/\/shop_images\/Shaker_-_Solid_Square.svg",
+            "usage1_text": "Shake well before use.",
+            "usage2_icon": "shopify:\/\/shop_images\/Shot_-_Solid_Square.svg",
+            "usage2_text": "Start with a serving size of half a bottle. Wait 30 minutes before enjoying the rest — half a bottle may be enough for you.",
+            "usage3_icon": "shopify:\/\/shop_images\/Mood_copy.svg",
+            "usage3_text": "Enjoy! Do not take more than 2 servings in 24 hours. ",
+            "usage4_text": "",
+            "usage5_text": ""
+          }
+        },
+        "product_ingredient_hLd8mC": {
+          "type": "product_ingredient",
+          "settings": {
+            "version": "v3",
+            "subtitle": "Our quality standards",
+            "title": "Leading the industry in quality & safety",
+            "ingredient_item1": "Exactly what’s inside, so you know how much to take. No guessing games.",
+            "ingredient_item2": "No cutting corners, only kratom at its best. Quality-sourced ingredients you can give to your friends and family.",
+            "ingredient_item3": "Proof your kratom passed the test (the lab test). Check it yourself.",
+            "ingredient_item4": "Transparent labeling: This is how strong your kratom is.",
+            "ingredient_item5": "Traceable & clean manufacturing processes in FDA-registered facilities.",
+            "ingredient_item6": "Certified by the American Kratom Association."
+          }
+        },
+        "product_accordion_RBFHpj": {
+          "type": "product_accordion",
+          "settings": {
+            "title": "Description",
+            "tab_content": "<p>{{ product.metafields.custom.product_description | metafield_tag }}<\/p>",
+            "use_video_as_content": false
+          }
+        },
+        "product_accordion_4BGjDE": {
+          "type": "product_accordion",
+          "settings": {
+            "title": "Ingredients",
+            "tab_content": "<p>{{ product.metafields.product.ingredients | metafield_tag }}<\/p>",
+            "use_video_as_content": false
+          }
+        },
+        "product_accordion_CUHDzB": {
+          "type": "product_accordion",
+          "settings": {
+            "title": "Lab Tests",
+            "tab_content": "<p>Select your product size and then click <a href=\"#labtesturl\" title=\"#labtesturl\">here<\/a> to see its specific batch test results.<\/p><p>We impose strict safety standards on ourselves, using a third-party lab to test our products for purity and strength.<\/p><p>Learn more about lab testing — and how we go beyond —<a href=\"https:\/\/superspeciosa.com\/pages\/about-lab-testing\" title=\"https:\/\/superspeciosa.com\/pages\/about-lab-testing\"> <span style=\"text-decoration:underline\">here<\/span><\/a>.<\/p>",
+            "use_video_as_content": false
+          }
+        },
+        "product_accordion_FRGK6x": {
+          "type": "product_accordion",
+          "settings": {
+            "title": "Shipping & Returns",
+            "tab_content": "<p>All orders placed before 2pm EST are shipped the same day. Orders placed after 2pm EST will be shipped the following day. Expedited shipping is available. Please see our full shipping policy <a href=\"\/pages\/shipping\" title=\"Kratom Shipping\">here<\/a>.<\/p><p>All of our products are covered by our 30 Days of Trust Guarantee. Returns will be accepted within 30 days of the original date the order was placed. Please see our full returns policy<a href=\"https:\/\/9346b4-f7.myshopify.com\/pages\/returns-refunds\"> <span style=\"text-decoration:underline\">here<\/span><\/a>.<\/p>",
+            "use_video_as_content": false
+          }
+        },
+        "product_accordion_rpaGqT": {
+          "type": "product_accordion",
+          "settings": {
+            "title": "Disclaimer",
+            "tab_content": "<p>These products are not intended to diagnose, treat, cure, prevent or mitigate any disease. Not for sale to individuals under the age of 21. Product should only be used as directed on the label. Do not use if pregnant or nursing. Consult with a doctor before use and for possible interaction with drugs. Do not take kratom while operating heavy machinery. May be habit forming.<\/p>",
+            "use_video_as_content": false
+          }
+        }
+      },
+      "block_order": [
+        "abra_promotions_banner_gift_B7KzJt",
+        "media_with_text_zYanLc",
+        "product_reason_jG7jFr",
+        "product_compare_JMmCLA",
+        "product_usage_H9mwMb",
+        "product_ingredient_hLd8mC",
+        "product_accordion_RBFHpj",
+        "product_accordion_4BGjDE",
+        "product_accordion_CUHDzB",
+        "product_accordion_FRGK6x",
+        "product_accordion_rpaGqT"
+      ],
+      "settings": {
+        "free_shipping": "20% off on every order",
+        "exclusive_discounts": "Exclusive discounts",
+        "update": "Update, pause or cancel easily",
+        "money_back": "30-day satisfaction guarantee",
+        "shipping_day": "Same-day shipping before 2 pm EST"
+      }
+    },
+    "custom_video_slider_RC8gy4": {
+      "type": "custom-video-slider",
+      "blocks": {
+        "video_item_zEAypD": {
+          "type": "video_item",
+          "settings": {
+            "title": "\"Ultimate Energy & Focus Elixir\"",
+            "video": "shopify:\/\/files\/videos\/D90012EF-FF60-48B8-9C83-DB6CB66A2B5D (1).mov"
+          }
+        },
+        "video_item_G3pRUj": {
+          "type": "video_item",
+          "settings": {
+            "title": "\"Absolute Favorite, No Coffee Needed!\"",
+            "video": "shopify:\/\/files\/videos\/Tablet - Informative Short.mov"
+          }
+        },
+        "video_item_zt833U": {
+          "type": "video_item",
+          "settings": {
+            "title": "\"All the Good Vibes, Zero Hangover\"",
+            "video": "shopify:\/\/files\/videos\/AT_A0002_Story.mp4"
+          }
+        },
+        "video_item_LmhFNa": {
+          "type": "video_item",
+          "settings": {
+            "title": "\"Chill & Calm Powered by Plants\"",
+            "video": "shopify:\/\/files\/videos\/linbgwdkrm4glw4zwsgj.mov"
+          }
+        }
+      },
+      "block_order": [
+        "video_item_zEAypD",
+        "video_item_G3pRUj",
+        "video_item_zt833U",
+        "video_item_LmhFNa"
+      ],
+      "settings": {
+        "subheading": "3,800+ customers",
+        "heading": "What Everyone Is Saying",
+        "margin_top": "50",
+        "margin_bottom": "50"
+      }
+    },
+    "legacy_faq_hmbQet": {
+      "type": "legacy-faq",
+      "blocks": {
+        "text_WgtEMF": {
+          "type": "text",
+          "settings": {
+            "text": "What do we mean by being a GMP qualified vendor?",
+            "answer": "<p>Explore High-Quality Products from GMP Certified Supplier!<\/p>"
+          }
+        },
+        "text_ehw6mG": {
+          "type": "text",
+          "settings": {
+            "text": "Can I mix the powder with other beverages other than water, such as fruit juices or drinks?",
+            "answer": "<p>Why, yes of course!<\/p>"
+          }
+        },
+        "text_mV77TN": {
+          "type": "text",
+          "settings": {
+            "text": "Is the product recommended for any specific age?",
+            "answer": "<p>6 +<\/p>"
+          }
+        },
+        "text_BF6mVh": {
+          "type": "text",
+          "settings": {
+            "text": "How much should I be taking at the start?",
+            "answer": "<p>10 g<\/p>"
+          }
+        },
+        "text_MP8FcU": {
+          "type": "text",
+          "settings": {
+            "text": "How long does it take to feel the results?",
+            "answer": "<p>2 hours<\/p>"
+          }
+        },
+        "text_QmaFrr": {
+          "type": "text",
+          "settings": {
+            "text": "ABC",
+            "answer": "<p>dksjfdslkfjdsklfj<\/p>"
+          }
+        }
+      },
+      "block_order": [
+        "text_WgtEMF",
+        "text_ehw6mG",
+        "text_mV77TN",
+        "text_BF6mVh",
+        "text_MP8FcU",
+        "text_QmaFrr"
+      ],
+      "disabled": true,
+      "settings": {
+        "faq_title": "FAQs",
+        "faq_description": "",
+        "faq_contact_heading": "Still have questions? We got answers.",
+        "faq_contact_content": "<p>Contact our kratom expert team. We respond to all emails within 1 business day.<\/p>",
+        "button_text": "Contact us",
+        "button_link": "",
+        "margin_top": "10",
+        "margin_bottom": "50"
+      }
+    },
+    "custom_image_text_slider_f6KnNn": {
+      "type": "custom-image-text-slider",
+      "blocks": {
+        "text_PThME6": {
+          "type": "text",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/B0030446-1_1.jpg",
+            "text": "New To Kratom?",
+            "item_content": "<p>Get the basics of this super leaf and how to get started safely and effectively.<\/p>",
+            "item_button": "Get Started",
+            "item_url": "shopify:\/\/pages\/new-to-kratom"
+          }
+        },
+        "text_xxVjcX": {
+          "type": "text",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/super-speciosa-energy-15.jpg",
+            "text": "KratomIQ",
+            "item_content": "<p>Learn about the kratom industry and Super’s role in leading quality and safety.<\/p>",
+            "item_button": "Learn more",
+            "item_url": "shopify:\/\/pages\/kratom"
+          }
+        },
+        "text_7LgnKX": {
+          "type": "text",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/Artboard_1.png",
+            "text": "Blogs & Articles",
+            "item_content": "<p>What’s new with us and our thoughts about the kratom world.<\/p>",
+            "item_button": "Read more",
+            "item_url": "shopify:\/\/blogs\/blog"
+          }
+        },
+        "text_9ypECi": {
+          "type": "text",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/2_60f1add7-debe-4e21-9a91-1f38a17ef66f.png",
+            "text": "Latest Kratom News",
+            "item_content": "<p>The latest in the kratom world, from legislative updates to scientific discoveries..<\/p>",
+            "item_button": "Stay up-to-date",
+            "item_url": "shopify:\/\/blogs\/news"
+          }
+        }
+      },
+      "block_order": [
+        "text_PThME6",
+        "text_xxVjcX",
+        "text_7LgnKX",
+        "text_9ypECi"
+      ],
+      "settings": {
+        "subheading": "Kratom Resources",
+        "heading": "New to Kratom?",
+        "margin_top": "50",
+        "margin_bottom": "50"
+      }
+    },
+    "product-recommendations": {
+      "type": "product-recommendations",
+      "settings": {
+        "type": "related",
+        "max_recommendations": 8,
+        "title": "You Might Also Like"
+      }
+    },
+    "16988133193c90b969": {
+      "type": "apps",
+      "settings": {
+        "include_margins": false
+      }
+    },
+    "17207146924edd846c": {
+      "type": "apps",
+      "blocks": {
+        "judge_me_reviews_review_widget_mDetEY": {
+          "type": "shopify:\/\/apps\/judge-me-reviews\/blocks\/review_widget\/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+          "settings": {
+          }
+        }
+      },
+      "block_order": [
+        "judge_me_reviews_review_widget_mDetEY"
+      ],
+      "settings": {
+        "include_margins": true
+      }
+    }
+  },
+  "order": [
+    "product",
+    "custom_video_slider_RC8gy4",
+    "legacy_faq_hmbQet",
+    "custom_image_text_slider_f6KnNn",
+    "product-recommendations",
+    "16988133193c90b969",
+    "17207146924edd846c"
+  ]
+}

@@ -1,0 +1,202 @@
+<!-- snippets/collection-filters-tags.liquid -->
+
+{% comment %}
+    Most of this markup was copied from the live site (Prestige theme)
+    and modified to work with this newer Online Store 2.0 theme
+{% endcomment %}
+
+{%- if collection.all_products_count > 0 -%}
+    {%- comment -%}
+        In order to provide more predictable results (for instance not showing filters by tag even if the option is checked in settings,
+        but that there are no tags for the given collection to show), we are doing some more logic here. Basically, we try to check if there
+        are tags to show by stripping internal tags (those that start by "__")
+    {%- endcomment -%}
+
+    {%- assign has_visible_tags = false -%}
+
+    {%- for tag in collection.all_tags -%}
+        {%- assign tag_parts = tag | split: '_' -%}
+
+        {%- if tag_parts.size == 2 -%}
+            {%- assign has_visible_tags = true -%}
+        {%- endif -%}
+    {%- endfor -%}
+
+
+    {%- assign show_filters = false -%}
+    {%- assign quick_links = linklists[section.settings.filter_menu] -%}
+
+    {%- if quick_links != blank or has_visible_tags -%}
+        {%- assign show_filters = true -%}
+    {%- endif -%}
+
+    {%- comment -%}
+    --------------------------------------------------------------------------------------------------------------------
+    FILTERS AND SORT BY POPOVER
+    --------------------------------------------------------------------------------------------------------------------
+    {%- endcomment -%}
+
+    {%- if show_filters -%}
+        {%- comment -%}
+            Implementation note: the filters can be displayed in two different ways: in a sidebar menu, always visible, or in a drawer. 
+            Due to that, we are setting the general code here, and then we can output it twice if needed.
+        {%- endcomment -%}
+
+        {%- capture filters_content -%}
+
+            {%- if has_visible_tags -%}
+
+                {%- assign groups = '' -%}
+
+                {%- for tag in collection.all_tags -%}
+                    {%- assign tag_parts = tag | split: '_' -%}
+
+                    {%- if tag == 'daily_deal' or tag == 'kid_friendly' or tag == 'beginner_friendly' or tag == 'steal_of_the_day' or tag == 'assortment_of_the_day' or tag == 'best_seller' or tag == 'limited_time_only' -%}
+                        {%- continue -%}
+                    {%- endif -%}
+
+                    {%- if tag_parts.size != 2 -%}
+                        {%- continue -%}
+                    {%- endif -%}
+
+                    {%- assign groups = groups | append: tag_parts.first | append: ',' -%}
+                {%- endfor -%}
+
+                {%- assign color_label = 'color,colour,couleur,colore,farbe,색,色,färg,farve' | split: ',' -%}
+                {%- assign groups = groups | split: ',' | compact | uniq -%}
+
+                {%- for group in groups -%}
+                    {%- assign group_downcase = group | downcase -%}
+                    {%- assign group_tag_count = 0 -%}
+                    {%- assign group_tag_total = 0 -%}
+
+                    {%- if color_label contains group_downcase and section.settings.show_filter_color_swatch -%}
+                        {%- assign show_color_swatch = true -%}
+                    {%- else -%}
+                        {%- assign show_color_swatch = false -%}
+                    {%- endif -%}
+
+                    <fieldset class="js-accordion-parent js-filters-group collection-filter-group">
+                        {% comment %}
+                            Accordion button header
+                        {% endcomment %}
+
+                        <legend>
+                            <button type="button" class="js-accordion-btn accordion__btn collection-filter-group__btn" aria-expanded="false" aria-controls="collectionFilter{{ forloop.index }}" id="collectionFilterHeading{{ forloop.index }}">
+                                {{- group | escape | capitalize -}}
+                                <span class="accordion__icon"></span>
+                            </button>
+                        </legend>
+
+                        {% comment %}
+                            Absolutely-positioned filter close button
+                            Desktop only, will only show for active groups
+                        {% endcomment %}
+
+                        <button type="button" 
+                            class="btn btn--close-desktop-filter js-filters-clear-group hide">
+                            {% render "icon-close-filter" %}
+                            <span class="sr-only">Clear {{ group }} filters</span>
+                        </button>
+
+                        <div class="accordion__content collection-filter-group__content" id="collectionFilter{{ forloop.index }}" aria-labelledby="collectionFilterHeading{{ forloop.index }}">
+                            <ul class="collection-filter-group__list {% if show_color_swatch %}collection-filter-group__list--color{% endif %} js-collection-filter-group">
+                                {% comment %}
+                                    Get group tag total
+                                {% endcomment %}
+
+                                {%- for tag in collection.all_tags -%}
+                                    {%- assign tag_parts = tag | split: '_' -%}
+
+                                    {%- if tag_parts.size != 2 or tag_parts.first != group -%}
+                                        {%- continue -%}
+                                    {%- endif -%}
+
+                                    {%- assign group_tag_total = group_tag_total | plus: 1 -%}
+                                {%- endfor -%}
+
+                                {% comment %}
+                                    Group tags
+                                {% endcomment %}
+                                {%- for tag in collection.all_tags -%}
+                                    {%- assign tag_parts = tag | split: '_' -%}
+
+                                    {%- if tag_parts.size != 2 or tag_parts.first != group -%}
+                                        {%- continue -%}
+                                    {%- endif -%}
+
+                                    {% comment %}
+                                        Increment group tag count
+                                    {% endcomment %}
+
+                                    {%- assign group_tag_count = group_tag_count | plus: 1 -%}
+
+                                    {%- if show_color_swatch -%}
+                                        <li class="collection-filter__item collection-filter__item--swatch js-collection-filter-item {% if group_tag_count > 3 %}hide{% endif %}">
+                                            {%- assign color_swatch_name = tag_parts.last | handle | append: '.png' -%}
+                                            {%- assign color_swatch_image = images[color_swatch_name] -%}
+
+                                            <button type="button" class="collection-filter__btn {% if current_tags contains tag %}is-active{% endif %}" data-tag="{{ tag | handle }}" data-action="toggle-tag" data-tooltip="{{ tag_parts.last | escape }}" style="background-color: {{ tag_parts.last | replace: ' ', '' | downcase }}; {% if color_swatch_image != blank %}background-image: url({{ color_swatch_image | img_url: '64x64' }}){% endif %}">
+                                                <span class="sr-only">{{ tag_parts.last }}</span>
+                                            </button>
+                                        </li>
+                                    {%- else -%}
+                                        <li class="collection-filter__item {% if current_tags contains tag %}is-active{% endif %} js-collection-filter-item {% if group_tag_count > 3 %}hide{% endif %}">
+                                            <div class="input-checkbox collection-filter__checkbox">
+                                                <input 
+                                                    class="js-collection-filter"
+                                                    type="checkbox" 
+                                                    name="{{ group | handle }}"
+                                                    id="checkbox{{ forloop.index }}" 
+                                                    {% if current_tags contains tag %}checked{% endif %}
+                                                    value="{{ tag | handle }}">
+                                                <label for="checkbox{{ forloop.index }}" class="tag-{{- tag_parts.last | handleize -}}">{{- tag_parts.last -}}</label>
+                                            </div>
+                                        </li>
+                                    {%- endif -%}
+
+                                    {% comment %}
+                                        Group tag 
+                                    {% endcomment %}
+
+                                    {%- if group_tag_count == 3 and group_tag_total > 3 -%}
+                                        <li class="collection-filter__item collection-filter__more">
+                                            <button type="button" class="collection-filter__more__btn js-show-collection-filter-group"><span class="sr-only">View</span> +{{ group_tag_total | minus: group_tag_count }} more <span class="sr-only">filters</span></button>
+                                        </li>
+                                    {%- endif -%}
+                                {%- endfor -%}
+                            </ul>
+                        </div>
+                    </fieldset>
+                {%- endfor -%}
+
+            {%- endif -%}
+        {%- endcapture -%}
+
+        <div id="collection-filter-drawer">
+            {{ filters_content }}
+        </div>
+    {%- endif -%}
+
+    {%- if section.settings.show_sort_by -%}
+        <div id="collection-sort-popover" class="Popover" aria-hidden="true">
+            <header class="Popover__Header">
+                <button class="Popover__Close Icon-Wrapper--clickable" data-action="close-popover">X</button>
+                <span class="Popover__Title Heading u-h4">{{ 'collection.sorting.title' | t }}</span>
+            </header>
+
+            <div class="Popover__Content">
+                <div class="Popover__ValueList" data-scrollable>
+                    {% assign collection_sort_by = collection.sort_by | default: collection.default_sort_by %}
+
+                    {%- for option in collection.sort_options -%}
+                        <button class="Popover__Value {% if option.value == collection_sort_by %}is-selected{% endif %} Heading Link Link--primary u-h6" data-value="{{ option.value }}" data-action="select-value">
+                            {{ option.name }}
+                        </button>
+                    {%- endfor -%}
+                </div>
+            </div>
+        </div>
+    {%- endif -%}
+
+{%- endif -%}

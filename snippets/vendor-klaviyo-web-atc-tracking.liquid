@@ -1,0 +1,67 @@
+<!-- snippets/vendor-klaviyo-web-atc-tracking.liquid -->
+
+{% comment %}
+	Required:
+		nothing
+
+	Notes: This requires that the Klaviyo onsite script
+	is loaded on the site, either by the Klaviyo app embed,
+	or through the theme by manually adding the onsite script.
+	(The native starter theme approach is to lazyload the script
+	via _src/scripts/components/lazyload-third-party.js)
+{% endcomment %}
+
+<script>
+	/**
+	* Fetches the cart object
+	*/
+
+	const getCartForKlaviyo = () => {
+		return fetch(`${window.location.origin}/cart.js`)
+			.then(response => response.json())
+			.then(cart => {
+				return cart
+			})
+			.catch( error => {
+				console.error(error)
+			})
+	}
+
+	/**
+	* Tracks ATC events for Klaviyo
+	*
+	* @param {Object} cart The cart object
+	*/
+
+	const trackAddToCart = () => {
+		// The cart:item:added event will normally pass the added line_item
+		// object, so we'll fetch the cart again as Klaviyo requires it.
+
+		getCartForKlaviyo().then(cart => {
+			let cartForKlaviyo = {
+				total_price: cart.total_price / 100,
+				$value: cart.total_price / 100,
+				total_discount: cart.total_discount,
+				original_total_price: cart.original_total_price / 100,
+				items: cart.items
+			}
+
+			if (window.item !== undefined) {
+				cartForKlaviyo = Object.assign(cartForKlaviyo, item)
+			}
+
+			klaviyo.push(['track', 'Added to Cart', cartForKlaviyo])
+		}).catch(error => {
+			console.error(error)
+		})
+	}
+
+	/*
+	* Whenever a product is added to the cart, we'll
+	* need to grab the data and pass to Klaviyo.
+	*/
+
+	document.addEventListener('DOMContentLoaded', () => {
+		window.EventBus.on('cart:item:added', trackAddToCart)
+	})
+</script>

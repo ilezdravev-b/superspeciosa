@@ -1,0 +1,110 @@
+<!-- sections/account-activate.liquid -->
+
+{%- liquid
+    assign data = section.settings
+    assign title = data.title
+    assign description = data.description
+    assign call_to_action = data.call_to_action
+    assign decline = data.decline
+-%}
+
+<div class="account-login section container">
+
+	<section class="account-login__section">
+
+		<header class="account-login__header">
+            {% render "icon-account-logo" %}
+
+			<h2 class="account__heading">
+				{{ title }}
+			</h2>
+
+			{%- if description != blank -%}
+                <div class="rte account-login__description">
+                    {{ description }}
+                </div>
+            {%- endif -%}
+		</header>
+
+		{% form "activate_customer_password", class: "account__form" %}
+
+			{% liquid 
+				assign errors = form.errors
+			%}
+			
+			{% comment %}
+				Error Message
+			{% endcomment %}
+
+			{% if form.errors %} 
+				{% render 'form-message-errors', errors: errors %}
+			{% endif %}
+
+			{% comment %}
+				Form
+			{% endcomment %}
+
+			<div class="input-group input-password{% if errors contains 'password' %} input-group--error{% endif %}">
+				<label for="activate-password">Password</label>
+
+				<div class="password-wrapper">
+					<input type="password" id="activate-password" class="input" name="customer[password]" value="" autofocus {% if errors contains 'password' %} aria-invalid="true"{% endif %}  />
+					<button type="button" class="btn input-password__reveal js-password-reveal">
+						<span class="sr-only">Toggle Password Visibility</span>
+					</button>
+				</div>
+			</div>
+
+			<div class="input-group input-password{% if errors contains 'password_confirmation' %} input-group--error{% endif %}">
+				<label for="activate-password-confirmation">Password Confirmation</label>
+
+				<div class="password-wrapper">
+					<input type="password" id="activate-password-confirmation" class="input" name="customer[password_confirmation]" value="" {% if errors contains 'password_confirmation' %} aria-invalid="true"{% endif %}  />
+					<button type="button" class="btn input-password__reveal js-password-reveal">
+						<span class="sr-only">Toggle Password Visibility</span>
+					</button>
+				</div>
+			</div>
+
+			<div class="account__section">
+				<button type="submit" class="btn btn--primary">{{ call_to_action }}</button>
+				<button type="submit" class="btn btn--hollow" name="decline">{{ decline }}</button>
+			</div>
+		{% endform %}
+
+	</section>
+
+</div>
+
+{% schema %}
+{
+    "name": "Page Content",
+    "class": "account-activate",
+    "settings": [
+        {
+            "type": "text",
+            "id": "title",
+            "label": "Title",
+            "default": "Activate Account"
+        },
+        {
+            "type": "richtext",
+            "id": "description",
+            "label": "Description",
+            "default": "<p>Create a password to activate your account.</p>"
+        },
+        {
+            "type": "text",
+            "id": "call_to_action",
+            "label": "Call to action",
+            "default": "Create account"
+        },
+        {
+            "type": "text",
+            "id": "decline",
+            "label": "Decline",
+            "default": "Decline invitation"
+        }
+    ]
+}
+{% endschema %}

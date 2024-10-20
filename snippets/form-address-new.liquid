@@ -1,0 +1,76 @@
+<!-- snippets/form-address.liquid -->
+
+{% comment %}
+	Optional:
+		idSuffix {String} - Unique ID appended to the end of each input ID
+{% endcomment %}
+
+{% liquid 
+	assign idSuffix = idSuffix | default: '_new'
+%}
+
+{% form "customer_address", customer.new_address, class: 'account__form js-address' %}
+	<div class="input-group">
+		<label for="address_first_name{{ idSuffix }}">First Name</label>
+		<input type="text" id="address_first_name{{ idSuffix }}" name="address[first_name]" placeholder="{{ settings.placeholder_first_name }}" required />
+	</div>
+
+	<div class="input-group">
+		<label for="address_last_name{{ idSuffix }}">Last Name</label>
+		<input type="text" id="address_last_name{{ idSuffix }}" name="address[last_name]" placeholder="{{ settings.placeholder_last_name }}" required />
+	</div>
+
+	<div class="input-group">
+		<label for="address_company{{ idSuffix }}">Company</label>
+		<input type="text" id="address_company{{ idSuffix }}" name="address[company]" placeholder="{{ settings.placeholder_company }}" />
+	</div>
+
+	<div class="input-group">
+		<label for="address_address1{{ idSuffix }}">Address 1</label>
+		<input type="text" id="address_address1{{ idSuffix }}" name="address[address1]" placeholder="{{ settings.placeholder_address_1 }}" required />
+	</div>
+
+	<div class="input-group">
+		<label for="address_address2{{ idSuffix }}">Address 2</label>
+		<input type="text" id="address_address2{{ idSuffix }}" name="address[address2]" placeholder="{{ settings.placeholder_address_2 }}" />
+	</div>
+
+	<div class="input-group">
+		<label for="address_city{{ idSuffix }}">City</label>
+		<input type="text" id="address_city{{ idSuffix }}" name="address[city]" placeholder="{{ settings.placeholder_city }}" required />
+	</div>
+
+	<div class="input-group">
+		<label for="address_country{{ idSuffix }}">Country</label>
+		<div class="input-select">
+			<select id="address_country{{ idSuffix }}" class="js-address-country" name="address[country]" data-default="{{ form.country }}" formId="{{ idSuffix }}" required>{{ country_option_tags }}</select>
+		</div>
+	</div>
+
+	<div class="input-group" id="address_province_container{{ idSuffix }}">
+		<label for="address_province{{ idSuffix }}">State / Province</label>
+		<div class="input-select">
+			<select id="address_province{{ idSuffix }}" class="address_form" name="address[province]" data-default="{{ form.province }}"></select>
+		</div>
+	</div>
+
+	<div class="input-group">
+		<label for="address_zip{{ idSuffix }}">Postal / Zip Code</label>
+		<input type="text" id="address_zip{{ idSuffix }}" name="address[zip]" placeholder="{{ settings.placeholder_zip_code }}" required />
+	</div>
+
+	<div class="input-group">
+		<label for="address_phone{{ idSuffix }}">Phone</label>
+		<input type="tel" id="address_phone{{ idSuffix }}" name="address[phone]" placeholder="{{ settings.placeholder_phone }}" />
+	</div>
+
+	<div class="input-group input-checkbox">
+		<input type="checkbox" id="address_default_address{{ idSuffix }}" name="address[default]" value="0">
+		<label for="address_default_address{{ idSuffix }}">Set as default address</label>
+	</div>
+
+	<div class="account-address__actions">
+		<button type="submit" class="btn btn--primary">Save</button>
+		<button type="button" class="btn btn--hollow js-accordion-btn" aria-expanded="false" aria-controls="newAddress">Cancel</button>
+	</div>
+{% endform %}

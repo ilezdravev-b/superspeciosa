@@ -1,0 +1,39 @@
+<!-- snippets/product-qty.liquid -->
+
+{% comment %}
+    Required: 
+        id        {String}  - A unique ID used for the label and input association.
+
+	Optional:
+		index     {Integer} - The line item index, only used when this snippet is present in the cart
+		value     {Integer} - An initial quantity value. Defaults to 1.
+		min       {Integer} - A minimum quantity input value. Defaults to 1.
+		max       {Integer} - A maxiumum quantity input value. Defaults to 999.
+{% endcomment %}
+
+{% liquid 
+	assign id = id | default: 'quantity'
+%}
+
+
+{% comment %}
+    Snippet Markup
+{% endcomment %}
+
+<label for="{{ id }}{{ index }}" class="sr-only">{{ 'products.product.quantity.label' | t }}</label>
+
+<div class="input-group input-qty" data-behavior="quantity">
+
+    <button id="{{ id }}{{ index }}Decrement" type="button" class="btn input-qty__button" data-behavior="decrement" aria-controls="{{ id }}{{ index }}">
+        <span class="sr-only">Decrease quantity by 1</span>
+        {% render "icon-minus-thin", class: 'icon' %}
+    </button>
+
+    <input type="number" class="input-qty__input" id="{{ id }}{{ index }}" name="quantity" value="{{ value | default: 1 }}" min="{{ min | default: 1 }}" max="{{ max | default: 999}}" data-custom-key={{ item.properties.custom_key }} data-custom-option={{ item.properties.is_custom_option }}>
+
+    <button id="{{ id }}{{ index }}Increment" type="button" class="btn input-qty__button" data-behavior="increment" aria-controls="{{ id }}{{ index }}">
+        <span class="sr-only">Increase quantity by 1</span>
+        {% render "icon-plus-thin", class: 'icon' %}
+    </button>
+
+</div>

@@ -1,0 +1,181 @@
+{%- liquid
+  assign current_collection = section.settings.collection
+  assign desktop_padding_top = section.settings.desktop_padding_top
+  assign desktop_padding_bottom = section.settings.desktop_padding_bottom
+  assign mobile_padding_top = section.settings.mobile_padding_top
+  assign mobile_padding_bottom = section.settings.mobile_padding_bottom
+-%}
+
+{{ 'section-ss_featured_products.min.css' | asset_url | stylesheet_tag }}
+
+<style>
+  #shopify-section-{{ section.id }} .ss-featued-products-container {
+      display: flex;
+      padding-top: {{ desktop_padding_top }}px;
+      padding-bottom: {{ desktop_padding_bottom }}px;
+  }
+
+  @media (max-width : 768px) {
+      #shopify-section-{{ section.id }} .ss-featued-products-container {
+        padding-top: {{ mobile_padding_top }}px;
+        padding-bottom: {{ mobile_padding_bottom }}px;
+      }
+  }
+</style>
+
+{% comment %} begin featured product code {% endcomment %}
+<ss-featured-products class="ss-featued-products-container">
+  <div class="ss-featued-products-wrapper container">
+    <div class="ss-featured-products-header">
+      {% if section.settings.heading != blank %}
+        <div class="heading">{{ section.settings.heading }}</div>
+      {% endif %}
+    </div>
+    <div class="ss-featured-products-body">
+      {% if current_collection != blank %}
+        <div class="ss-products-list">
+          {% for product in current_collection.products %}
+            <a href="{{ product.url }}" data-product-handle="{{ product.handle }}" class="ss-product-item">
+              <div class="ss-prodcut-media">
+                <img
+                  src="{{ product.featured_image |  image_url: width: 1000  }}"
+                  width="1000"
+                  height="1000"
+                  alt="No product Image"
+                >
+                {% liquid
+                  assign benefits = ''
+                  assign forms = ''
+                  for tag in product.tags
+                    if tag contains 'Benefits_'
+                      assign benefit = tag | replace: 'Benefits_', ''
+                      assign benefits = benefits | append: '_' | append: benefit
+                    endif
+                    if tag contains 'Form_'
+                      assign f = tag | replace: 'Form_', ''
+                      assign forms = forms | append: '_' | append: f
+                    endif
+                  endfor
+                  assign benefits = benefits | split: '_'
+                  assign forms = forms | split: '_'
+                %}
+                {% if benefits.size > 0 %}
+                  <span class="ss-product-badge">{{ benefits[1] }}</span>
+                {% elsif forms.size > 0 %}
+                  <span class="ss-product-badge">{{ forms[1] }}</span>
+                {% endif %}
+              </div>
+              <div class="ss-product-item-body">
+                {% comment %}
+                  <div class="reviews-rating-widget">
+                    <span class="review-ratings">
+                      <svg aria-hidden="true" class="e-font-icon-svg e-eicon-star" viewBox="0 0 1000 1000" xmlns="http://www.w3.org/2000/svg"><path d="M450 75L338 312 88 350C46 354 25 417 58 450L238 633 196 896C188 942 238 975 275 954L500 837 725 954C767 975 813 942 804 896L763 633 942 450C975 417 954 358 913 350L663 312 550 75C529 33 471 33 450 75Z"></path></svg>
+                      <svg aria-hidden="true" class="e-font-icon-svg e-eicon-star" viewBox="0 0 1000 1000" xmlns="http://www.w3.org/2000/svg"><path d="M450 75L338 312 88 350C46 354 25 417 58 450L238 633 196 896C188 942 238 975 275 954L500 837 725 954C767 975 813 942 804 896L763 633 942 450C975 417 954 358 913 350L663 312 550 75C529 33 471 33 450 75Z"></path></svg>
+                      <svg aria-hidden="true" class="e-font-icon-svg e-eicon-star" viewBox="0 0 1000 1000" xmlns="http://www.w3.org/2000/svg"><path d="M450 75L338 312 88 350C46 354 25 417 58 450L238 633 196 896C188 942 238 975 275 954L500 837 725 954C767 975 813 942 804 896L763 633 942 450C975 417 954 358 913 350L663 312 550 75C529 33 471 33 450 75Z"></path></svg>
+                      <svg aria-hidden="true" class="e-font-icon-svg e-eicon-star" viewBox="0 0 1000 1000" xmlns="http://www.w3.org/2000/svg"><path d="M450 75L338 312 88 350C46 354 25 417 58 450L238 633 196 896C188 942 238 975 275 954L500 837 725 954C767 975 813 942 804 896L763 633 942 450C975 417 954 358 913 350L663 312 550 75C529 33 471 33 450 75Z"></path></svg>
+                      <svg aria-hidden="true" class="e-font-icon-svg e-eicon-star" viewBox="0 0 1000 1000" xmlns="http://www.w3.org/2000/svg"><path d="M450 75L338 312 88 350C46 354 25 417 58 450L238 633 196 896C188 942 238 975 275 954L500 837 725 954C767 975 813 942 804 896L763 633 942 450C975 417 954 358 913 350L663 312 550 75C529 33 471 33 450 75Z"></path></svg>
+                    </span>
+                    <span class="reviews-text">48 reviews</span>
+                  </div>
+                {% endcomment %}
+                {% comment %} <div id="stamped-main-widget" class="stamped-main-widget" data-widget-style="standard" data-product-id="{{ product.id }}" data-name="{{ product.title | escape }}" data-url="{{ shop.url }}{{ product.url }}" data-image-url="{{ product.featured_image | product_img_url: "large" |replace: '?', '%3F' | replace: '&','%26'}}" data-description="{{ product.description | escape }}" data-product-sku="{{product.handle}}" data-product-type="{{product.type}}" data-widget-language="{{shop.locale}}">{{ product.metafields.stamped.reviews }}</div> {% endcomment %}
+
+                {% comment %}
+                  <span
+                    class="stamped-product-reviews-badge"
+                    data-id="{{ product.id }}"
+                    data-product-sku="{{ product.handle }}"
+                    data-product-type="{{ product.type }}"
+                    data-product-title="{{ product.title }}"
+                    style="display:block;">
+                    {{ product.metafields.stamped.badge }}
+                  </span>
+                {% endcomment %}
+
+                {% render 'judgeme_widgets',
+                  widget_type: 'judgeme_preview_badge',
+                  jm_style: '',
+                  concierge_install: false,
+                  product: product
+                %}
+
+                <div class="ss-product-item-title">{{ product.title }}</div>
+                <div class="ss-product-item-price">
+                  {% if product.has_only_default_variant %}
+                    {{ product.price | money }}
+                  {% else %}
+                    From <span>{{ product.price | money }}</span>
+                  {% endif %}
+                </div>
+              </div>
+            </a>
+          {% endfor %}
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</ss-featured-products>
+{% comment %} end featured product code {% endcomment %}
+
+{% schema %}
+{
+  "name": "Featured Products",
+  "tag": "section",
+  "class": "ss_featured_products",
+  "settings": [
+    {
+      "type" : "text",
+      "id": "heading",
+      "label": "Heading"
+    },
+    {
+      "type" : "collection",
+      "id" : "collection",
+      "label": "Select Collection"
+    },
+    {
+          "type": "range",
+          "id" : "desktop_padding_top",
+          "min": 0,
+          "max": 500,
+          "step" : 5,
+          "default" : 40,
+          "label": "Padding Top(desktop)"
+      },
+      {
+          "type": "range",
+          "id" : "mobile_padding_top",
+          "min": 0,
+          "max": 500,
+          "step" : 5,
+          "default" : 40,
+          "label": "Padding Top(mobile)"
+      },
+      {
+          "type": "range",
+          "id" : "desktop_padding_bottom",
+          "min": 0,
+          "max": 500,
+          "step" : 5,
+          "default" : 30,
+          "label": "Padding Bottom(desktop)"
+      },
+      {
+          "type": "range",
+          "id" : "mobile_padding_bottom",
+          "min": 0,
+          "max": 500,
+          "step" : 5,
+          "default" : 30,
+          "label": "Padding Bottom(mobile)"
+      }
+  ],
+  "presets": [
+    {
+      "name": "Featured Products",
+      "settings": {
+      }
+    }
+  ]
+}
+{% endschema %}

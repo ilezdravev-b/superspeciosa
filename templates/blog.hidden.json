@@ -1,0 +1,13 @@
+{
+  "layout": "hidden",
+  "sections": {
+    "hidden": {
+      "type": "hidden",
+      "settings": {
+      }
+    }
+  },
+  "order": [
+    "hidden"
+  ]
+}

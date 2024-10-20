@@ -1,0 +1,90 @@
+.featured-quality-wrapper {
+    display: flex;
+    flex-direction: column;
+    padding: 30px;
+}
+.featured-quality-wrapper .featured-quality-text {
+    padding: 10px;
+    width: 100%;
+}
+.featured-quality-wrapper .featured-quality-text h2 {
+    color: #212c1c;
+    font-size: 35px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    word-spacing: 3px;
+    margin: 0;
+    margin-bottom: 20px;
+    font-family: "Dilemma", sans-serif;
+}
+.featured-quality-wrapper .featured-quality-text .section-content {
+    max-width: 50%;
+    margin-bottom: 40px;
+
+}
+.featured-quality-wrapper .featured-quality-text .section-content span {
+    color: #212c1c;
+    font-size: 18px;
+    line-height: 1.3em;
+}
+.featured-quality-wrapper .featured-quality-text .section-content a{
+    color: #f4f1de;
+    font-size: 18px;
+    line-height: 1.3em;
+}
+.featured-quality-wrapper .featured-quality-text .section-content a:hover {
+    color: #212c1c;
+}
+.featured-quality-wrapper .featured-quality-text .section-button {
+    width: max-content;
+    padding: 10px 0;
+}
+.featured-quality-wrapper .featured-quality-text .section-button a {
+    padding: 12px 24px;
+    background-color: #212c1c;
+    color: #fff;
+}
+.featured-quality-wrapper .featured-quality-text .section-button a span {
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-style: normal;
+    letter-spacing: 1.6px;
+    font-family: "Dilemma", sans-serif;
+}
+.featured-quality-wrapper .featured-quality-text .section-button a:hover {
+    background-color: #8ab83f;
+    color: #212c1c;
+}
+.featured-quality-wrapper .featured-quality-image {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.featured-quality-wrapper .featured-quality-image img {
+    max-width: 133px;
+    width: 100%;
+}
+
+@media(max-width: 768px) {
+    .featured-quality-text {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+    .featured-quality-wrapper .featured-quality-text .section-content {
+        max-width: 100%;
+        width: 100%;
+        text-align: center;
+    }
+    .featured-quality-wrapper .featured-quality-text h2 {
+        font-size: 32px;
+        text-align: center;
+    }
+    .featured-quality-wrapper .featured-quality-text .section-button a {
+        padding: 10px 24px;
+    }
+
+}

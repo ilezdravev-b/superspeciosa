@@ -1,0 +1,302 @@
+{
+  "sections": {
+    "main": {
+      "type": "page",
+      "disabled": true,
+      "custom_css": [
+        "h1 {display: none;}"
+      ],
+      "settings": {
+      }
+    },
+    "faq_accordion_h3x4x3": {
+      "type": "faq-accordion",
+      "blocks": {
+        "tab1_eC9pa8": {
+          "type": "tab1",
+          "settings": {
+            "heading": "How can I pay for my order?",
+            "content": "<p>We accept all Visa, Mastercard, Discover, and American Express credit and debit cards. Our checkout is secure and uses encryption for the privacy of your information. Ensure the billing address matches what the card has on file. You can still have your order shipped to a different address, just select the box under the billing address to fill out your shipping information<\/p>"
+          }
+        },
+        "tab1_KEqCnx": {
+          "type": "tab1",
+          "settings": {
+            "heading": "What are rewards points? How do I apply points to my order?",
+            "content": "<p>For everything related to rewards and how the program works, please refer to <a href=\"\/pages\/rewards\" title=\"Rewards\">this page<\/a>.<\/p>"
+          }
+        },
+        "tab2_LNb98B": {
+          "type": "tab2",
+          "settings": {
+            "heading": "How do I track my order?",
+            "content": "<p>After your order is shipped from our warehouse, you will receive an automated email containing a link with a UPS or USPS tracking link.If you can’t find the email or think you may have put in the wrong email address, please contact our customer service team <a href=\"\/pages\/contact-us\" title=\"Contact\">here<\/a>.<\/p>"
+          }
+        },
+        "tab1_imRqJV": {
+          "type": "tab1",
+          "settings": {
+            "heading": "What shipping services do you use? Can you overnight an order?",
+            "content": "<p>We offer USPS and UPS shipping. The quickest shipping option we have available is USPS Priority Express which is 1-2 shipping days. For more information about shipping. Check out this page <a href=\"https:\/\/9346b4-f7.myshopify.com\/pages\/shipping\" title=\"https:\/\/9346b4-f7.myshopify.com\/pages\/shipping\">https:\/\/superspeciosa.com\/shipping\/<\/a><\/p>"
+          }
+        },
+        "tab1_FfkyTJ": {
+          "type": "tab1",
+          "settings": {
+            "heading": "Do you offer any discounts for first-time customers?",
+            "content": "<p>Yes! You can get a 15% coupon code for your first order by clicking the “Get 15% Off Your First Order” link located on the top banner of the website. Alternatively, you can use this <a href=\"https:\/\/manage.kmail-lists.com\/subscriptions\/subscribe?a=RrYBDX&g=YrzAMw\" target=\"_blank\">link <\/a>to get your coupon code.<\/p>"
+          }
+        },
+        "tab1_g3EryU": {
+          "type": "tab1",
+          "settings": {
+            "heading": "Do you offer any discounts for military, Veteran, or persons with disabilities?",
+            "content": "<p>Yes! Please <a href=\"\/pages\/contact-us\" title=\"Contact\">send us an email here <\/a>for more details. As a heads up, we’ll require a photo ID and\/or other forms of proof to qualify for a reusable custom discount code.<\/p>"
+          }
+        },
+        "tab1_KHaCCP": {
+          "type": "tab1",
+          "settings": {
+            "heading": "Do you have a satisfaction guarantee?",
+            "content": "<p>Yes! We want you to have the best experience with our products, so we offer a 30-day guarantee. If, for any reason, you encounter issues with your order or you find yourself unsatisfied with our products, kindly <a href=\"\/pages\/contact-us\" title=\"Contact\">let us know <\/a>so we can work on a resolution. Your satisfaction is our priority!<\/p>"
+          }
+        },
+        "tab1_kqnp4P": {
+          "type": "tab1",
+          "settings": {
+            "heading": "Do you offer free samples?",
+            "content": "<p>If you’ve never ordered with us and you’d like to give us a try, we’re happy to offer free samples! Cick here for more details and including how to <a href=\"\/pages\/free-kratom-sample\" title=\"Free Kratom Sample\">sign up.<\/a><\/p>"
+          }
+        },
+        "tab2_4nRgC6": {
+          "type": "tab2",
+          "settings": {
+            "heading": "How long will it take for my order to arrive?",
+            "content": "<p>All orders placed before 2:00 pm EST will be shipped the same day. Orders placed after that will be shipped the following day. You'll receive a tracking number on your email once your order is shipped<\/p><p>We have different shipping options available, from USPS First Class (4-7 days), USPS Priority Mail (3-5 days) up to Priority Mail Express (1-2 days shipping) and UPS Ground (1-7 days).<\/p><p>For more information about shipping, check out our shipping page in this <a href=\"\/pages\/shipping\" title=\"Kratom Shipping\">link.<\/a><\/p>"
+          }
+        },
+        "tab2_ChHdqx": {
+          "type": "tab2",
+          "settings": {
+            "heading": "The tracking status for my package is not updating. What can I do?",
+            "content": "<p>Don’t worry! Sometimes, the shipping carrier might not update the tracking information immediately, but the package is still in transit. If you haven’t received it within 10 days of placing your order, please reach out to us, and we’ll be happy to assist you.<\/p>"
+          }
+        },
+        "tab2_rPWpTf": {
+          "type": "tab2",
+          "settings": {
+            "heading": "USPS says my package was delivered but I can't find it. What now?",
+            "content": "<p>If USPS shows your package as delivered but you can’t find it, first, check with your neighbors and people you live with as it might have been misdelivered. Sometimes, carriers will mark packages in advance, so please be patient and give it a day or two to turn up. If it doesn’t turn up, please reach out to us<\/p>"
+          }
+        },
+        "tab2_BMwWnA": {
+          "type": "tab2",
+          "settings": {
+            "heading": "What is your return policy?",
+            "content": "<p>We offer a 30-day satisfaction guarantee. If you’re not happy with any of our products, neither are we. If you wish to return your order, please reach out and let us know the reason. We’re happy to assist with a refund or exchange. We’ll provide you with a return shipping label via email for your convenience.<\/p>"
+          }
+        },
+        "tab3_VtaTff": {
+          "type": "tab3",
+          "settings": {
+            "heading": "What is kratom?",
+            "content": "<p>Mitragyna speciosa, commonly known as kratom, is a tropical tree related to the coffee plant that comes from deep within the rainforests of Southeast Asia. Locals have been using kratom’s alkaloid rich leaves for centuries for their therapeutic and energizing qualities. For more information, click <a href=\"https:\/\/9346b4-f7.myshopify.com\/pages\/new-to-kratom\" title=\"https:\/\/9346b4-f7.myshopify.com\/pages\/new-to-kratom\">here<\/a>.<\/p>"
+          }
+        },
+        "tab3_hEqFLm": {
+          "type": "tab3",
+          "settings": {
+            "heading": "What are the different strains of Kratom?",
+            "content": "<p>Our kratom strains are diverse and tailored to meet various needs. For an energizing boost, you might explore White Vein strains, while Red Vein strains are favored for relaxation. Green Vein strains strike a balance between the two. Discover more about our potent Maeng Da Kratom and other strains in our informative blogs:<a href=\"https:\/\/9346b4-f7.myshopify.com\/blogs\/blog\/beginners-guide-to-kratom-top-7-tips\" title=\"https:\/\/9346b4-f7.myshopify.com\/blogs\/blog\/beginners-guide-to-kratom-top-7-tips\">Streamlining Our Kratom Strains<\/a>,<a href=\"https:\/\/9346b4-f7.myshopify.com\/blogs\/blog\/green-red-white-oh-my-what-do-the-colors-of-maeng-da-kratom-mean\" title=\"https:\/\/9346b4-f7.myshopify.com\/blogs\/blog\/green-red-white-oh-my-what-do-the-colors-of-maeng-da-kratom-mean\">Green, Red, White: Kratom Strain Colors Explained<\/a>, and <a href=\"https:\/\/9346b4-f7.myshopify.com\/blogs\/blog\/maeng-da-kratom\" title=\"https:\/\/9346b4-f7.myshopify.com\/blogs\/blog\/maeng-da-kratom\">The Maeng Da Kratom Guide<\/a>.<\/p>"
+          }
+        },
+        "tab3_BgyQXt": {
+          "type": "tab3",
+          "settings": {
+            "heading": "Which kratom product is best for my needs?",
+            "content": "<p>The effects of kratom will vary from person to person. The main factors are serving size, tolerance, and the individual user. Each batch is also unique, as the amount of each alkaloid varies, affecting the user experience. This is the nature of all kratom products. We strive to ensure that the customer has as much information as possible, which is why we include the batch number and lab certificates with every product.<\/p><p>To find the a good match for your needs, whether it’s energy, relaxation, focus, or relief, consider exploring our product range. Your personal experience and preference play a significant role, so feel free to reach out to our team for more advice.<\/p><p>For our natural powder, capsules, teas and tablets, green strains are generally more energizing and uplifting, red strains are more calming and sedating, and white strains can be a combination of both effects more leaning towards motivation and focus as some customers describe. <\/p><p>The Maeng Da strains will test highest in mitragynine, the most active alkaloid in kratom. The Signature Reserve strain will be the highest testing green strain. More information about our strains <a href=\"\/pages\/kratom-strains\" title=\"Kratom Strains\">here<\/a>.<\/p>"
+          }
+        },
+        "tab3_tCheYk": {
+          "type": "tab3",
+          "settings": {
+            "heading": "Is your kratom lab tested?",
+            "content": "<p>Absolutely, all of our kratom undergoes stringent lab testing for safety and quality. We’re dedicated to providing you with the best, which includes thorough testing for bacteria, mold, contaminants, and heavy metals. Learn more about our commitment to safety <a href=\"\/pages\/kratom-quality\" title=\"Kratom-Quality\">here<\/a><\/p>"
+          }
+        },
+        "tab3_ANkYah": {
+          "type": "tab3",
+          "settings": {
+            "heading": "How much should I take? What’s the recommended serving size?",
+            "content": "<p>Finding the right serving size for kratom can vary from person to person. For detailed guidance on kratom servings, whether you’re using powder, capsules, or exploring frequency of use, please read through our comprehensive guides:<a href=\"https:\/\/9346b4-f7.myshopify.com\/blogs\/blog\/how-often-can-i-take-kratom-your-complete-guide-to-safe-usage\" title=\"https:\/\/9346b4-f7.myshopify.com\/blogs\/blog\/how-often-can-i-take-kratom-your-complete-guide-to-safe-usage\">Kratom Usage Guide<\/a>,<a href=\"https:\/\/9346b4-f7.myshopify.com\/blogs\/blog\/how-many-grams-of-kratom-are-in-a-teaspoon-and-tablespoon\" title=\"https:\/\/9346b4-f7.myshopify.com\/blogs\/blog\/how-many-grams-of-kratom-are-in-a-teaspoon-and-tablespoon\">Measuring Kratom<\/a>,<a href=\"https:\/\/9346b4-f7.myshopify.com\/blogs\/blog\/how-many-kratom-capsules-should-i-take\" title=\"https:\/\/9346b4-f7.myshopify.com\/blogs\/blog\/how-many-kratom-capsules-should-i-take\">Kratom Capsule Servings<\/a>, and <a href=\"https:\/\/9346b4-f7.myshopify.com\/blogs\/blog\/how-much-kratom-powder-should-i-take-everything-you-need-to-know\" title=\"https:\/\/9346b4-f7.myshopify.com\/blogs\/blog\/how-much-kratom-powder-should-i-take-everything-you-need-to-know\">Kratom Powder Servings<\/a>.<\/p>"
+          }
+        },
+        "tab3_DeEkEP": {
+          "type": "tab3",
+          "settings": {
+            "heading": "<span id=\"banner-redirect\">How should I take kratom powder?<\/span>",
+            "content": "<p>There are various enjoyable ways to take kratom powder, from mixing it with your favorite drinks to brewing it into tea. Find your preferred method and tips for the best kratom experience in our guide:<a href=\"https:\/\/9346b4-f7.myshopify.com\/blogs\/blog\/blog-how-to-take-kratom-powder\/\" title=\"https:\/\/9346b4-f7.myshopify.com\/blogs\/blog\/blog-how-to-take-kratom-powder\/\">How to Take Kratom Powder<\/a>.<\/p>"
+          }
+        },
+        "tab3_mMKRjG": {
+          "type": "tab3",
+          "settings": {
+            "heading": "What's the difference between kratom extract and powder?",
+            "content": "<p>Kratom extract is a potent, concentrated form of kratom, while kratom powder consists of ground leaves. For a comprehensive overview of these forms and their differences, check out: <a href=\"\/blogs\/blog\/kratom-extract-vs-kratom-powder-your-complete-guide\/\" title=\"\/blogs\/blog\/kratom-extract-vs-kratom-powder-your-complete-guide\/\">Kratom Extract vs. Powder Guide <\/a>and <a href=\"\/blogs\/blog\/kratom-extracts\" title=\"\/blogs\/blog\/kratom-extracts\">About Kratom Extracts<\/a>.<\/p>"
+          }
+        },
+        "tab5_pyejE3": {
+          "type": "tab5",
+          "settings": {
+            "heading": "How do I sign up to get deals?",
+            "content": "<p>To stay in the loop of our deals and sales, click the 15% off offer in the banner of the site, you’ll need to enter your email address and phone number to received texts. On top of that, you get 15% off just for signing up!<\/p>"
+          }
+        },
+        "tab5_kNmn4p": {
+          "type": "tab5",
+          "settings": {
+            "heading": "How can I become an affiliate?",
+            "content": "<p>For everything related to an affiliate program visit our <a href=\"\/pages\/affiliate-progam\" title=\"Affiliate Progam\">Affiliate Page<\/a>.<\/p>"
+          }
+        },
+        "tab5_XKzdjJ": {
+          "type": "tab5",
+          "settings": {
+            "heading": "Do you offer wholesale pricing?",
+            "content": "<p>We do! Please contact us <a href=\"\/pages\/kratom-wholesale\" title=\"\/pages\/kratom-wholesale\">here<\/a>.<\/p>"
+          }
+        },
+        "tab5_c4BrT8": {
+          "type": "tab5",
+          "settings": {
+            "heading": "Still have a question?",
+            "content": "<p><a href=\"\/pages\/contact\" title=\"Contact\">Contact us here<\/a><\/p>"
+          }
+        },
+        "tab4_DGQgzf": {
+          "type": "tab4",
+          "settings": {
+            "heading": "How does it work?",
+            "content": "<p>It’s simple! Pick your favorite Super Speciosa products, subscribe for auto-delivery, and enjoy an exclusive 20% discount on every shipment. Once you choose auto-delivery, select your preferred ship date and delivery frequency. Don’t worry—we’ll send you email reminders, and you can change or cancel your subscription anytime. That’s it! Just sit back, relax, and enjoy your order.<\/p>"
+          }
+        },
+        "tab4_4XBcxG": {
+          "type": "tab4",
+          "settings": {
+            "heading": "How do I sign up for a subscription?",
+            "content": "<p>You can easily sign up for subscription when selecting your product and complete it at checkout.<\/p>"
+          }
+        },
+        "tab4_BBM9Mr": {
+          "type": "tab4",
+          "settings": {
+            "heading": "Can I cancel my subscription at any time?",
+            "content": "<p>Absolutely! While we’d be sad to see you go, you can cancel your subscription 10 days after purchase date with just a few clicks. Simply log into your customer account, go to “Your Subscriptions,” select the specific product subscription you want to cancel, and click “Cancel Subscription.” If you need any assistance, feel free to reach out to us at <a href=\"mailto:ss@superspeciosa.com\" target=\"_blank\">ss@superspeciosa.com<\/a>. We’re always here to help!<\/p>"
+          }
+        },
+        "tab4_pktW7R": {
+          "type": "tab4",
+          "settings": {
+            "heading": "How do I edit my subscription?",
+            "content": "<p>Need to make changes? No problem! Whether you want to adjust your next shipment’s delivery date, update the frequency, or add more products, it’s all possible. After your first subscription is set up, just log into your Super Speciosa account, head to “Your Subscriptions,” and make the edits you need.<\/p>"
+          }
+        },
+        "tab4_kcmbYt": {
+          "type": "tab4",
+          "settings": {
+            "heading": "What are the perks of subscribing?",
+            "content": "<ul><li>20% off for life - Enjoy a lifelong discount on every order.<\/li><li>Flexible Shipping- Adjust or cancel your shipments anytime, no hassle.<\/li><li>Customizable Delivery Options - Choose delivery intervals that fit your needs—every 2, 4, 6, or 8 weeks.<\/li><li>Exclusive Discounts - Enjoy exclusive discounts as a subscription member.<\/li><li>Free products - Receive free products from us every month.<\/li><li>Always in stock - Keep a stash of your favorite products and never run low.<\/li><\/ul>"
+          }
+        },
+        "tab4_jrACXR": {
+          "type": "tab4",
+          "settings": {
+            "heading": "Are all products available for subscription?",
+            "content": "<p>Almost all! The only products not available for subscription are our limited-time special batches due to limited stock. You can subscribe to any other products available on our website.<\/p>"
+          }
+        },
+        "tab4_8YdQ86": {
+          "type": "tab4",
+          "settings": {
+            "heading": "Can I combine the offers, promos, points, and discounts with my subscription?",
+            "content": "<p>While subscription orders can’t be combined with other offers, discounts, or rewards points, you can still take advantage of our big sales when purchasing one-time products. So, you get the best of both worlds—consistent savings on your subscriptions and great deals on additional purchases!<\/p>"
+          }
+        }
+      },
+      "block_order": [
+        "tab1_eC9pa8",
+        "tab1_KEqCnx",
+        "tab2_LNb98B",
+        "tab1_imRqJV",
+        "tab1_FfkyTJ",
+        "tab1_g3EryU",
+        "tab1_KHaCCP",
+        "tab1_kqnp4P",
+        "tab2_4nRgC6",
+        "tab2_ChHdqx",
+        "tab2_rPWpTf",
+        "tab2_BMwWnA",
+        "tab3_VtaTff",
+        "tab3_hEqFLm",
+        "tab3_BgyQXt",
+        "tab3_tCheYk",
+        "tab3_ANkYah",
+        "tab3_DeEkEP",
+        "tab3_mMKRjG",
+        "tab5_pyejE3",
+        "tab5_kNmn4p",
+        "tab5_XKzdjJ",
+        "tab5_c4BrT8",
+        "tab4_DGQgzf",
+        "tab4_4XBcxG",
+        "tab4_BBM9Mr",
+        "tab4_pktW7R",
+        "tab4_kcmbYt",
+        "tab4_jrACXR",
+        "tab4_8YdQ86"
+      ],
+      "settings": {
+        "heading_main": "Frequently Asked Questions",
+        "tab1": "Before placing your order...",
+        "tab2": "After your order is placed...",
+        "tab3": "<span id=\"banner-redirect\">Kratom FAQs<\/span>",
+        "tab4": "Subscribe and Save",
+        "tab5": "Other Questions",
+        "tab6": "",
+        "tab7": "",
+        "tab8": "",
+        "tab9": "",
+        "tab10": "",
+        "padding_top": 20,
+        "padding_bottom": 20,
+        "bg_color": "rgba(0,0,0,0)",
+        "padding_top_mobile": 10,
+        "padding_bottom_mobile": 10,
+        "narrow_width": false,
+        "enable_full": false
+      }
+    },
+    "rich_text_section_yxfaH6": {
+      "type": "rich-text-section",
+      "settings": {
+        "subheading": "Information",
+        "heading": "Kratom",
+        "content": "<p>Click through to find our resource center for all things kratom. We have just started adding content, and will be continuing to add new information regularly.<\/p>",
+        "button": "Read More",
+        "btn_url": "shopify:\/\/pages\/kratom",
+        "padding_top": 20,
+        "padding_bottom": 20,
+        "bg_color": "",
+        "padding_top_mobile": 10,
+        "padding_bottom_mobile": 10,
+        "narrow_width": false,
+        "enable_full": false
+      }
+    }
+  },
+  "order": [
+    "main",
+    "faq_accordion_h3x4x3",
+    "rich_text_section_yxfaH6"
+  ]
+}

@@ -1,0 +1,43 @@
+{% render 'theme-load-assets', style: 'section-lab-banner.min.css' %}
+{% assign path_segments = request.path | split: '/' %}
+{% assign batch_number = path_segments.last %}
+<div class="lab-banner">
+    <div class="container">
+        <div class="lab-banner-inner">
+            {% if section.settings.subheading != blank %}
+                <h4 class="lab-banner__subheading">{{ section.settings.subheading }}</h4>
+            {% endif %}
+            {% if section.settings.heading != blank %}
+                <h1 class="lab-banner__heading">{{ section.settings.heading }} #{{batch_number }}</h1>
+            {% endif %}
+            {% if section.settings.description != blank %}
+                <div class="lab-banner__description">{{ section.settings.description }}</div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% schema %}
+{
+    "tag": "section",
+    "settings": [
+        {
+            "type": "text",
+            "id": "subheading",
+            "label": "Sub Title",
+            "default": "LAB TESTING"
+        },
+        {
+            "type": "text",
+            "id": "heading",
+            "label": "Title",
+            "default": "BATCH"
+        },
+        {
+            "type": "richtext",
+            "id": "description",
+            "label": "Description",
+            "default": "<p>Super Speciosa is leading the charge in transparency and traceability. View the certificates of analysis (CoA) for the third-party laboratory tests performed on this specific batch.</p>"
+        }
+    ]
+}
+{% endschema %}

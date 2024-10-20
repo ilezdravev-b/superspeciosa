@@ -1,0 +1,59 @@
+<!-- sections/list-collections.liquid -->
+
+{% comment %}
+    Initial Liquid Variables
+{% endcomment %}
+
+{% liquid
+	assign data = section.settings
+%}
+
+{% comment %}
+	Section Markup
+{% endcomment %}
+
+<h2 class="sr-only">
+	All Collections
+</h2>
+
+{%- paginate collections by data.collections_per_page -%}
+
+	<div class="list-collections__grid section">
+		{%- for collection in collections -%}
+
+			{% comment %}
+				Exclude Hidden Collections
+			{% endcomment %}
+
+			{%- unless collection.template_suffix == 'hidden' -%}
+				{% render "collection-thumbnail", collection: collection %}
+			{%- endunless -%}
+		{%- endfor -%}
+	</div>
+
+
+	{%- if paginate.pages > 1 -%}
+		{% render 'pagination', paginate: paginate, anchor: '' %}
+	{%- endif -%}
+
+{%- endpaginate -%}
+
+{% schema %}
+{
+    "name": "List Collections",
+	"tag": "section",
+	"class": "list-collections container",
+    "settings": [
+        {
+            "type": "range",
+            "id": "collections_per_page",
+            "min": 8,
+            "max": 50,
+            "step": 2,
+            "default": 24,
+            "label": "Collections per page"
+        }
+    ]
+}
+{% endschema %}
+

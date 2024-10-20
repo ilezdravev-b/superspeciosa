@@ -1,0 +1,375 @@
+<!-- sections/footer.liquid -->
+
+{% comment %}
+	Load Assets
+{% endcomment %}
+
+{% render 'theme-load-assets', style: 'section-footer.min.css', script: 'section-footer.min.js' %}
+
+{% comment %}
+	Initial Liquid Variables
+{% endcomment %}
+
+{% liquid 
+    assign data = section.settings
+	assign current_year = 'now' | date: "%Y"
+	assign copyright_message = data.copyright_message | replace: "[current_year]", current_year | default: false
+    assign newsletter_id = "newsletterForm" | append: section.id
+    assign list_id = data.list_id | default: settings.klaviyo_list_id
+%}
+
+
+
+{% comment %}
+	Notes: We're capturing the copyright here and showing it
+		   in different locations for desktop and mobile. Doing
+		   this instead of using the order property so that the
+		   DOM order matches the visual order for accessibility purposes!
+{% endcomment %}
+
+{% capture copyright %}
+	<small class="footer__copyright">{{ copyright_message }}</small>
+{% endcapture %}
+
+{% comment %}
+	Section Markup
+{% endcomment %}
+
+<footer class="footer" aria-label="Main">
+    
+    <div class="footer__container">
+
+        <div class="footer-body">
+            <div class="footer-fields-columns ss-container">
+                <div class="footer-field-column ss-align-center">
+
+                    {%- if section.settings.logo_image -%}
+                        <div class="footer-logo ss-align-center">
+                            <img src="{{ section.settings.logo_image |  image_url: width: 600 }}" width="600" height="600" alt="No Image">
+                        </div>
+                    {%- endif -%}
+                 
+                    <div class="footer-social-links ss-align-center ss-text-center">
+                        <div class="footer-social-links-title title">CONNECT WITH US</div>
+                        {%- render 'social-links' -%}
+                    </div>
+
+                </div>
+                {% for block in section.blocks %}
+                    {%- if block.type == "navigation" -%}
+                        {%- assign num = forloop.length | minus: 1 -%}
+                        {%- if forloop.index == num -%}
+                            <div class="footer-field-column two-column">
+                        {%- endif -%}
+                            <div class="footer-field-column">
+                                <h3 class="footer-col-title ss-text-uppercase title">{{ block.settings.title }}</h3>
+                                <ul class="footer-menu-lists">
+                                    {% for link in block.settings.menu.links %}
+                                        <li class="footer-menu-list-item"><a href="{{ link.url }}">{{ link.title }}</a></li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+
+                        {%- if forloop.index == forloop.length -%}  
+                                <div class="klaviyo-form-container">
+                                    <div class="klaviyo-form-{{ list_id }}"></div>
+
+                                    <div class="container newsletter__content">
+                                        <div class="os-newsletter__title title">
+                                            {{ section.settings.newsletter_text }}
+                                        </div>
+                                        <form id="{{ newsletter_id }}" class="newsletter__form" method="POST" action="//manage.kmail-lists.com/subscriptions/subscribe" target="_blank" novalidate="novalidate">
+                                            <input type="hidden" name="g" value="{{ list_id }}">
+                                            <input type="hidden" name="$source" value="DISCOUNTS">
+                                            <div class="input-group input-blob">
+                                                <label for="newsletter-input-{{ section.id }}">
+                                                    Email Address
+                                                </label>
+                                
+                                                <input class="newsletter__form-input"
+                                                    name="email" 
+                                                    type="email" 
+                                                    placeholder="{{ section.settings.newsletter_placeholder }}"
+                                                    {% if customer %}value="{{ customer.email }}"{% endif %}
+                                                    autocorrect="off" 
+                                                    autocapitalize="off" 
+                                                    autocomplete="off" 
+                                                    required
+                                                    id="newsletter-input-{{ section.id }}" />
+                                
+                                                <button type="submit" class="btn btn--primary newsletter__form-submit">
+                                                    {{ section.settings.newsletter_btn_text }}
+                                                </button>
+                                            </div>
+                                
+                                            <div class="success_message message message--success" role="status" style="display:none;"></div>
+                                            <div class="error_message message message--error" role="status" style="display:none;"></div>
+                                        </form>
+                                    </div>
+
+                                    {% comment %} {% form 'customer', class: 'klaviyo-form' %}
+                                        {% if form.errors %}
+                                            <div class="form-message form-message--error">
+                                                {{ form.errors | default_errors }}
+                                            </div>
+                                        {% endif %}
+                                        <input type="hidden" name="$type" value="$opt_in">
+                                        <input type="email" name="g2$email" placeholder="Enter email address..." required>
+                                        <button type="submit" class="btn">SEND</button>
+                                    {% endform %} {% endcomment %}
+                                </div>
+                            </div>
+                        {%- endif -%}
+
+                    {%- endif -%}
+                {% endfor %}
+                
+            </div>
+        </div>
+
+
+		{% comment %} {% if section.blocks.size > 0 %}
+			{% render 'footer-navigation', blocks: section.blocks %}
+		{% endif %} {% endcomment %}
+
+       
+
+        <div class="footer__bottom">
+
+            <div class="footer-bottom_wrapper ss-container">
+
+                {% comment %}
+                    Copyright: Desktop
+                {% endcomment %}
+
+                {% if copyright_message %}
+                    <div class="tablet-lg-up">
+                        {{ copyright }}
+                    </div>
+                {% endif %}
+
+
+                <ul class="footer-bottom-nav">
+                    <li class="footer-bottom-nav-item"><a href="/policies/terms-of-service" title="Terms and Conditions">Terms and Conditions</a></li>
+                    <li class="footer-bottom-nav-item"><a href="/pages/accessibility" title="Accessibility"> Accessibility</a></li>
+                    <li class="footer-bottom-nav-item"><a href="/policies/privacy-policy" title="Privacy Policy">Privacy Policy</a></li>
+                </ul>
+
+                {% comment %}
+                    Logo Icon
+                {% endcomment %}
+
+                {% comment %} {%- if data.logo_image != blank -%}
+                    <span class="footer__icon-logo">
+                        {% render "image-simple", image: data.logo_image, width: 100, height: 100 %}
+                    </span>
+                {%- endif -%} {% endcomment %}
+
+                {% comment %}
+                    Payment Icons
+                {% endcomment %}
+
+                {% comment %} {%- if data.footer_payment_show -%}
+                    <ul class="footer__payment-icons" aria-label="Accepted payment types">
+                        {%- assign payment_icons_list = data.footer_payment_icons | append: ", lasjd" | downcase | remove: " " | split: "," -%}
+                        {%- for type in payment_icons_list -%}
+                            {% capture payment_icon %}
+                                {%- case type -%}
+                                    {% when "visa" %}
+                                        {% render "icon-payment-visa" %}
+                                    {% when "dinersclub" %}
+                                        {% render "icon-payment-dinersclub" %}
+                                    {% when "jcb" %}
+                                        {% render "icon-payment-jcb" %}
+                                    {% when "amex" %}
+                                        {% render "icon-payment-amex" %}
+                                    {% when "discover" %}
+                                        {% render "icon-payment-discover" %}
+                                    {% when "mastercard" %}
+                                        {% render "icon-payment-mastercard" %}
+                                    {% when "shoppay" %}
+                                        {% render "icon-payment-shoppay" %}
+                                    {% when "applepay" %}
+                                        {% render "icon-payment-applepay" %}
+                                    {% when "googlepay" %}
+                                        {% render "icon-payment-googlepay" %}
+                                {%- endcase -%}
+                            {% endcapture %}
+                            
+                            {%- unless payment_icon contains "error" -%}
+                                <li class="footer__payment-icon">
+                                    {{ payment_icon }}
+                                    <span class="sr-only">
+                                        {{ type }}
+                                    </span>
+                                </li>
+                            {%- else -%}
+                                <script>console.log("error for payment icon {{ type }}");</script>
+                            {%- endunless -%}
+                        {%- endfor -%}
+                    </ul>
+                {%- endif -%} {% endcomment %}
+
+                {% comment %}
+                    Copyright: Mobile
+                {% endcomment %}
+
+                {% if copyright_message %}
+                    <div class="tablet-sm-down">
+                        {{ copyright }}
+                    </div>
+                {% endif %}
+            
+            </div>
+
+        </div>
+
+        {%- if section.settings.footer_description != blank -%}
+            <div class="footer-bottom-description ss-container">
+                {{ section.settings.footer_description }}
+            </div>    
+        {%- endif -%}
+
+    </div>
+
+</footer>
+
+
+
+<script>
+	{% comment %}
+		The klaviyo:loaded event is one that has been
+		manually added to assets/klaviyo_subscribe.js to 
+		make it easy to only initialize forms when the source
+		script is ready to go.
+	{% endcomment %}
+
+	document.addEventListener("klaviyo:loaded", () => {
+		KlaviyoSubscribe.attachToForms("#{{ newsletter_id }}", {
+			hide_form_on_success: false, 
+			success: function () {
+				setTimeout(function() { 
+					document.querySelector('#{{ newsletter_id }} .success_message').textContent = ""; 
+					document.querySelector('#{{ newsletter_id }} .success_message').style.display = "none";
+				}, 5000); 
+			}
+		});
+	})
+</script>
+
+
+
+{% schema %}
+{
+    "name": "Footer",
+    "max_blocks": 5,
+    "settings": [
+        {
+            "type": "header",
+            "content": "Footer Settings"
+        },
+        {
+            "type": "text",
+            "id": "copyright_message",
+            "label": "Copyright Message",
+            "default": "&copy; [current_year]. All rights reserved.",
+            "info": "Use [current_year] for current year"
+        },
+        { 
+            "type": "textarea", 
+            "id": "footer_payment_icons", 
+            "label": "List of payment icons", 
+            "info": "Comma-separated list of strings. Accepted values are: Visa, DinersClub, JCB, Amex, Discover, Mastercard, ShopPay, ApplePay, GooglePay", 
+            "default": "Visa, DinersClub, JCB, Amex, Discover, Mastercard, ShopPay, ApplePay, GooglePay"
+        }, 
+        {
+            "id": "logo_image",
+            "type": "image_picker",
+            "label": "Logo Icon Image", 
+            "info": "Suggested size: 100 x 100px"
+        },
+        {
+            "type": "richtext",
+            "id": "footer_description",
+            "label" : "Footer Description"
+        },
+        {
+            "type": "header",
+            "content": "Newsletter"
+        },
+        {
+            "type": "textarea",
+            "id": "newsletter_text",
+            "label": "Text",
+            "default": "SIGN UP & GET EXCLUSIVE KRATOM DEALS TO YOUR INBOX"
+        },
+        {
+            "type": "text",
+            "id": "newsletter_placeholder",
+            "label": "Placeholder",
+            "default": "Enter email address..."
+        },
+        {
+            "type": "text",
+            "id": "newsletter_btn_text",
+            "label": "Button Text",
+            "default": "SEND"
+        }
+    ],
+    "blocks": [
+        {
+            "name": "Navigation Column",
+            "type": "navigation",
+            "settings": [
+                {
+                    "label": "Column Title",
+                    "id": "title",
+                    "type": "text",
+                    "info": "If blank, will show the navigation title"
+                },
+                {
+                    "type": "link_list",
+                    "id": "menu",
+                    "label": "Menu"
+                }
+            ]
+        }, 
+        {
+            "name": "Sitewide Reviews",
+            "type": "sitewide_reviews",
+            "settings": [
+                { 
+					"label": "# of stars to show", 
+					"id": "number_of_stars", 
+					"type": "range", 
+					"min": 1, 
+					"max": 5, 
+					"default": 5
+                }, 
+                {
+                    "label": "Reviews text",
+                    "id": "title",
+                    "type": "text",
+                    "default": "4.75 rating 13,687 reviews"
+                },
+                {
+                    "type": "text",
+                    "id": "cta_text",
+                    "label": "CTA text", 
+                    "default": "View all reviews", 
+                    "info": "If blank, CTA will not show"
+                }, 
+                {
+                    "type": "url",
+                    "id": "cta_url",
+                    "label": "CTA URL", 
+                    "info": "If blank, CTA will not show"
+                }
+            ]
+        }
+    ], 
+    "enabled_on": {
+		"groups": ["footer"]
+	}
+}
+{% endschema %}

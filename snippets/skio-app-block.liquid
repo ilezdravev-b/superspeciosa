@@ -1,0 +1,80 @@
+{% comment %}
+  Usage:
+    {% when 'skio-plan-picker' %}
+          {% render 'skio-app-block', block: block, product: product %}
+{% endcomment %}
+
+{% assign skioSellingPlanGroups = product.selling_plan_groups | where: 'app_id', 'SKIO' %}
+{% assign skioRender = false %}
+{% if block.settings.product_handle != null or block.settings.product_handle == null and skioSellingPlanGroups.size > 0 and product.available %}
+  {% assign skioRender = true %}
+{% endif %}
+{% if skioRender %}
+  <style>
+    skio-plan-picker {
+      --skio-group-border-radius: .625rem;
+      --skio-group-border-width: 1px;
+      --skio-group-border-color: #000000;
+      --skio-group-border-selected-color: #000000;
+      --skio-group-background-color: rgba(0, 0, 0, 0);
+      --skio-group-background-selected-color: #FFFAEC;
+      --skio-group-text-color: #000000;
+      --skio-group-text-selected-color: #000000;
+      --skio-discount-color: rgba(0,0,0,0);
+      --skio-discount-text-color: #000000;
+      --skio-button-plan-selector-width: 100%;
+    }
+  </style>
+  
+  <skio-plan-picker style="max-width: 100vw; width: 100%;" key='{{ product.id }}'
+    options='{
+      &quot;form_id&quot;: &quot;product_form_{{ product.id }}&quot;,
+      &quot;external_price_selector&quot;: &quot;.product__price__prices .js-price&quot;,
+      &quot;button_add_to_cart_selector&quot;: &quot;.js-add-to-cart&quot;,
+      &quot;show_without_subscription&quot;: false,
+      &quot;show_compare_price&quot;: true,
+      &quot;legend_content&quot;: &quot;Select subscription plan&quot;,
+      &quot;show_legend&quot;: false,
+      &quot;layout&quot;: &quot;vertical&quot;,
+      &quot;dropdownPosition&quot;: &quot;inside&quot;,
+      &quot;start_onetime&quot;: false,
+      &quot;onetime_first&quot;: false,
+      &quot;group_border_radius&quot;: &quot;.625rem&quot;,
+      &quot;group_border_width&quot;: 1,
+      &quot;group_border_color&quot;: &quot;#000000&quot;,
+      &quot;group_border_selected_color&quot;: &quot;#000000&quot;,
+      &quot;group_background_color&quot;: &quot;rgba(0,0,0,0)&quot;,
+      &quot;selected_group_background_color&quot;: &quot;rgba(0,0,0,0)&quot;,
+      &quot;group_text_color&quot;: &quot;#000000&quot;,
+      &quot;group_selected_text_color&quot;: &quot;#000000&quot;,
+      &quot;show_radio_selector&quot;: true,
+      &quot;onetime_title&quot;: &quot;One time purchase&quot;,
+      &quot;subscription_title&quot;: &quot;Subscribe&quot;,
+      &quot;prepaid_title&quot;: &quot;Prepaid&quot;,
+      &quot;discount_format&quot;: &quot;percent&quot;,
+      &quot;discount_style&quot;: &quot;text&quot;,
+      &quot;discount_text&quot;: &quot;& Save [discount]&quot;,
+      &quot;discount_color&quot;: &quot;rgba(0,0,0,0)&quot;,
+      &quot;discount_text_color&quot;: &quot;#000000&quot;,
+      &quot;additional_subscription_content&quot;: null,
+      &quot;selector_type&quot;: &quot;dropdown&quot;,
+      &quot;button_plan_selector_width&quot;: 100,
+      &quot;default_subscription&quot;: &quot;&quot;,
+      &quot;future_price_adjustments_text&quot;: &quot;\u003csmall\u003eThen [discount] off after the [order_count_ordinal] order\u003c\/small\u003e&quot;,
+      &quot;element_name&quot;: &quot;skio-plan-picker&quot;,
+      &quot;product_handle&quot;: &quot;&quot;,
+      &quot;combine_groups&quot;: false,
+      &quot;combined_group_name&quot;: &quot;Subscription&quot;,
+      &quot;show_details&quot;: false,
+      &quot;freeShipping&quot;:&quot;{{section.settings.free_shipping}}&quot;,
+      &quot;exclusiveDiscount&quot;:&quot;{{section.settings.exclusive_discounts}}&quot;,
+      &quot;update&quot;:&quot;{{section.settings.update}}&quot;
+    }'
+    layout='vertical' productHandle='{{ product.handle }}' product='{{ product | json | escape }}'
+    selectedVariant='{{ product.selected_or_first_available_variant | json | escape }}'
+    >
+    <input type='hidden' name='selling_plan' form='product_form_{{product.id}}'>
+  </skio-plan-picker>
+
+  <script src='{{ 'skio-plan-picker-component.js' | asset_url }}' type='module'></script>
+{% endif %}

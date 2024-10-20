@@ -1,0 +1,66 @@
+<!-- snippets/menu-mobile-dropdown.liquid -->
+
+{% comment %}
+	Required:
+		first_level_index {Integer} Index of the current first-level link
+		first_level {Object} First-level link object
+{% endcomment %}
+
+<div class="menu-mobile__dropdown-level-one js-megamenu-children" id="mobileDropdown{{ first_level_index }}">
+	<ul class="menu-mobile__dropdown-level-one-wrapper">
+
+		{% comment %}
+			Back Button, Menu Title
+		{% endcomment %}
+
+		<li class="menu-mobile__item-level-two-back">
+			<div class="menu-mobile__item-level-two-back__header">
+				<button type="button" class="menu-mobile__item-level-two menu-mobile__btn-back js-megamenu-btn-back"
+					aria-expanded="false" aria-controls="mobileDropdown{{ first_level_index }}">
+					{{ 'general.navigation.back' | t }}
+				</button>
+
+				<span class="menu-mobile__item-level-two-title">
+					{{ first_level.title }}
+				</span>
+				{% comment %}
+					For flex alignment...
+				{% endcomment %}
+				<span></span>
+				
+			</div>
+
+			
+		</li>
+
+		{% for second_level in first_level.links %}
+			{% liquid
+				assign second_level_index = forloop.index
+			%}
+
+			<li class="js-megamenu-parent menu-mobile__item-level-two-wrapper {% if second_level.levels > 0 %}has-children{% endif %}">
+
+				<a class="menu-mobile__item-level-two" href="{{ second_level.url }}">
+					{{ second_level.title }}
+				</a>
+
+				{% if second_level.levels > 0 %}
+
+					<ul class="menu-mobile__dropdown-level-two">
+						{% comment %}
+							Third-Level Links
+						{% endcomment %}
+
+						{% for third_level in second_level.links %}
+							<li>
+								<a class="menu-mobile__item-level-three" href="{{ third_level.url }}">
+									{{ third_level.title }}
+								</a>
+							</li>
+						{% endfor %}
+					</ul>
+				{% endif %}
+			</li>
+		{% endfor %}
+	</ul>
+</div>

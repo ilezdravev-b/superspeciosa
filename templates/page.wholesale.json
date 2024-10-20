@@ -1,0 +1,178 @@
+{
+  "sections": {
+    "main": {
+      "type": "page",
+      "disabled": true,
+      "custom_css": [
+        "h1 {display: none;}"
+      ],
+      "settings": {
+      }
+    },
+    "rich_text_v2_78Kw8Q": {
+      "type": "rich-text-v2",
+      "settings": {
+        "page_heading": "Wholesale kratom",
+        "subheading": "",
+        "heading": "Buy kratom WHOLESALE WITH SUPER SPECIOSA",
+        "content": "<p>Are you a store or distributor? Whether you are currently reselling kratom products or just getting started, we can help serve your <strong>wholesale kratom<\/strong> needs with the highest quality kratom available on the market.<\/p><p>Our Super Speciosa branded GMP products are available at wholesale discounts. For pricing, please inquire by calling or using the contact form below. We also offer our kratom powders in bulk through our online store. For inquiries of more than 5 kilograms, please get in touch with us for pricing.<\/p>",
+        "button": "Place new wholesale order",
+        "btn_url": "https:\/\/wholesale.superspeciosa.com\/",
+        "button2": "Register for wholesale",
+        "btn_url2": "#wholesaleForm",
+        "button3": "Call 954-706-3340 for Pricing",
+        "btn_url3": "tel:954-706-3340",
+        "padding_top": 0,
+        "padding_bottom": 50,
+        "bg_color": "",
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 30,
+        "narrow_width": false,
+        "enable_full": false
+      }
+    },
+    "image_with_text_v2_68ayf8": {
+      "type": "image-with-text-v2",
+      "settings": {
+        "subheading": "What makes us different from other kratom suppliers?",
+        "heading": "The Super Speciosa difference",
+        "content": "<p>We here at Super Speciosa are dedicated to providing the highest-quality kratom available. As part of our commitment to providing <a href=\"https:\/\/superspeciosa.com\/kratom\/natural\/\">clean and unadulterated kratom<\/a> to those who need them most, we are looking to partner with like-minded businesses that want to offer their customers trusted products.<\/p><p>All of our kratom products are <a href=\"https:\/\/www.americankratom.org\/gmp-standards-program\" target=\"_blank\">GMP Qualified<\/a> by the American Kratom Association (AKA). Our industry-exceeding quality protocols also include the process of carefully pasteurizing our kratom using a gentle heat that is hot enough to kill bacteria, yet low enough to preserve the integrity of the alkaloids.<\/p><p>To take things even further, we provide a level of <a href=\"https:\/\/superspeciosa.com\/about\/transparency\/\">transparency and traceability<\/a> that is unmatched in the marketplace. We go as far as making batch-specific lab testing certificates of analysis (COA) available to consumers via QR codes on our product labels.<\/p><p>To stay ahead of the curve, we strive to cultivate an innovative product line with new products continually in development. Not to mention, we offer extremely competitive pricing, and our attention to customer service allows for a superior experience!<\/p>",
+        "image": "shopify:\/\/shop_images\/super-speciosa-kratom-leaf-produ.png",
+        "padding_top": 20,
+        "padding_bottom": 20,
+        "bg_color": "",
+        "padding_top_mobile": 10,
+        "padding_bottom_mobile": 10,
+        "narrow_width": false,
+        "enable_full": false
+      }
+    },
+    "video_section_kApVNL": {
+      "type": "video-section",
+      "settings": {
+        "heading": "The cleanest kratom products you can buy",
+        "video": "",
+        "padding_top": 20,
+        "padding_bottom": 20,
+        "bg_color": "",
+        "padding_top_mobile": 10,
+        "padding_bottom_mobile": 10,
+        "narrow_width": false,
+        "enable_full": false
+      }
+    },
+    "rich_text_with_heading_9mTWHQ": {
+      "type": "rich-text-with-heading",
+      "blocks": {
+        "block_LDcYKc": {
+          "type": "block",
+          "settings": {
+            "alignment": "left",
+            "heading_side": "Why buy kratom wholesale?",
+            "content": "<p>Wholesale kratom is just like other markets where businesses buy in volume to take advantage of price breaks. If you’re currently buying kratom to sell to your customers, you may be eligible for bulk purchase discounts that can save you a lot of money. Buy kratom at wholesale prices with us, and you could <strong>save up to 50%<\/strong>!<\/p><p>We offer white label kratom wholesale products as well as our own Super Speciosa branded products that you can offer to your customers.<\/p>"
+          }
+        },
+        "block_CQXMYa": {
+          "type": "block",
+          "settings": {
+            "alignment": "right",
+            "heading_side": "Let us do all theheavy lifting.",
+            "content": "<p>Storefronts generally do not have the level of storage, infrastructure, or resources necessary to maintain an inventory of quality kratom products. That’s where Super Speciosa can help. We diligently manage and maintain stock of several high-quality kratom varieties.<\/p><p>Place your wholesale kratom order with us and track it as it gets delivered right to your door all ready for sale to your customers. We ensure the quality of our kratom so that you can be confident in the product and focus on serving your customers.<\/p>"
+          }
+        },
+        "block_TzWKPz": {
+          "type": "block",
+          "settings": {
+            "alignment": "left",
+            "heading_side": "Need promotional marketing materials?",
+            "content": "<p>We won’t leave you hanging on the selling side, either. We can provide promotional materials to help you with the marketing of our kratom products. If you are selling kratom out of a storefront, we can provide materials like posters and static window clings. We can also provide brochures and catalogs for you to make available to your customers. Want something to wear? We can provide some <a href=\"https:\/\/superspeciosa.com\/shop\/gear\/\">good-looking t-shirts<\/a> too!<\/p>"
+          }
+        }
+      },
+      "block_order": [
+        "block_LDcYKc",
+        "block_CQXMYa",
+        "block_TzWKPz"
+      ],
+      "settings": {
+        "heading": "",
+        "padding_top": 0,
+        "padding_bottom": 50,
+        "bg_color": "",
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 30,
+        "narrow_width": false,
+        "enable_full": false
+      }
+    },
+    "multicolumn_content_cGyeB7": {
+      "type": "multicolumn-content",
+      "blocks": {
+        "block_MggHL3": {
+          "type": "block",
+          "settings": {
+            "heading_side": "1: Apply",
+            "content": "<p>If our application form below is open for new wholesale accounts, simply submit your information and a member of our team will contact you to get set up.<\/p>"
+          }
+        },
+        "block_7pGTHV": {
+          "type": "block",
+          "settings": {
+            "heading_side": "2: Order",
+            "content": "<p>Once you’re accepted into our wholesale program and your account is all set up, you will be able to place orders via our online wholesale system at any time.<\/p>"
+          }
+        },
+        "block_CJYYef": {
+          "type": "block",
+          "settings": {
+            "heading_side": "3: Sell",
+            "content": "<p>You may track your order all the way up to the point of delivery. What you receive from us will be ready for sale, so all you have to do is sell it to your customers!<\/p>"
+          }
+        }
+      },
+      "block_order": [
+        "block_MggHL3",
+        "block_7pGTHV",
+        "block_CJYYef"
+      ],
+      "settings": {
+        "heading": "Our wholesale kratom system is easy as 1-2-3",
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "bg_color": "",
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 50,
+        "narrow_width": false,
+        "enable_full": false
+      }
+    },
+    "wholesale_form_NemT9h": {
+      "type": "wholesale-form",
+      "settings": {
+        "heading": "",
+        "date": "August 2, 2022",
+        "content_heading": "We are open for applications!",
+        "content": "<p>Don’t waste any more time looking for the perfect source for your wholesale kratom needs. We’re right here!<\/p><p>Partner up with us today so you can get back to what’s most important – serving your customers a trusted product.<\/p><p>Please complete the form to be contacted by our sales team.<\/p>",
+        "form_heading": "Wholesale Registration",
+        "call_to_action": "Submit",
+        "success": "<p>Thanks for contacting us! We'll get back to you as soon as possible.<\/p>",
+        "padding_top": 20,
+        "padding_bottom": 20,
+        "bg_color": "",
+        "padding_top_mobile": 10,
+        "padding_bottom_mobile": 50,
+        "narrow_width": false,
+        "enable_full": false
+      }
+    }
+  },
+  "order": [
+    "main",
+    "rich_text_v2_78Kw8Q",
+    "image_with_text_v2_68ayf8",
+    "video_section_kApVNL",
+    "rich_text_with_heading_9mTWHQ",
+    "multicolumn_content_cGyeB7",
+    "wholesale_form_NemT9h"
+  ]
+}

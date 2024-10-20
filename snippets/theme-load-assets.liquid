@@ -1,0 +1,28 @@
+<!-- snippets/theme-load-assets.liquid -->
+
+{% comment %}
+	Optional:
+		style {String} The file name of the stylesheet to load.
+		script {String} The file name of the script to load.
+
+	Notes: If we're in the customizer, all stylesheets should
+	be loaded normally for the sake of accurate section previews.
+{% endcomment %}
+
+{% liquid 
+	assign style_attribute = 'data-src-asset'
+	assign style_media = 'print'
+
+	if request.design_mode
+		assign style_attribute = 'href'
+		assign style_media = 'all'
+	endif
+%}
+
+{% if style != blank %}
+	<link rel="stylesheet" {{ style_attribute }}="{{ style | asset_url }}" media="{{ style_media }}">
+{% endif %}
+
+{% if script != blank %}
+	<script data-src-asset="{{ script | asset_url }}"></script>
+{% endif %}

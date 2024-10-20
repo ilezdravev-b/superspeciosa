@@ -1,0 +1,107 @@
+
+{% style %}
+    .featured-collection-list--warpper {
+        padding-top: {{ section.settings.padding_top }}px;
+        padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+    @media(max-width: 768px) {
+        .featured-collection-list--warpper {
+            padding-top: {{ section.settings.m_padding_top }}px;
+            padding-bottom: {{ section.settings.m_padding_bottom }}px;
+        }
+    }
+{% endstyle %}
+
+{{ 'featured-collection-list.css' | asset_url | stylesheet_tag }}
+
+<div class="featured-collection-list--warpper container">
+    {% for block in section.blocks %}
+        <div class="featured-collection-column">
+            <div class="collection-widget-image">
+                <a href="{{ block.settings.collection.url }}">
+                    <img src="{{ block.settings.collection_cover_img | img_url: 'master' }}" alt="collection-list-image" class="lasyloading cover-image" width="{{ block.settings.collection_cover_img.width }}" height="{{ block.settings.collection_cover_img.height }}">
+                </a>
+            </div>
+            <div class="collection-widget-title">
+                <a href="{{ block.settings.collection.url }}">
+                    <p class="title">{{ block.settings.title }}</p>
+                </a>
+            </div>
+        </div>        
+    {% endfor %}
+</div>
+{% schema %}
+    {
+        "name": "Featured Collection List",
+        "settings": [
+            {
+              "type": "range",
+              "id": "padding_top",
+              "min": 0,
+              "max": 100,
+              "step": 10,
+              "unit": "px",
+              "label": "Padding top",
+              "default": 60
+            },
+            {
+              "type": "range",
+              "id": "padding_bottom",
+              "min": 0,
+              "max": 100,
+              "step": 10,
+              "unit": "px",
+              "label": "Padding bottom",
+              "default": 60
+            },
+            {
+              "type": "range",
+              "id": "m_padding_top",
+              "min": 0,
+              "max": 80,
+              "step": 10,
+              "unit": "px",
+              "label": "Mobile padding top",
+              "default": 40
+            },
+            {
+              "type": "range",
+              "id": "m_padding_bottom",
+              "min": 0,
+              "max": 80,
+              "step": 10,
+              "unit": "px",
+              "label": "Mobile padding bottom",
+              "default": 40
+            }
+        ],
+        "blocks": [
+          {
+            "name": "collection list",
+            "type": "list",
+            "settings": [
+               {
+                 "type": "collection",
+                 "id": "collection",
+                 "label": "Collection"
+               },
+               {
+                 "type": "image_picker",
+                 "id": "collection_cover_img",
+                 "label": "Cover image"
+               },
+               {
+                 "type": "text",
+                 "id": "title",
+                 "label": "Button text"
+               }
+            ]
+          }
+        ],
+        "presets": [
+            {
+                "name": "Featured Collection List"
+            }
+        ]
+    }
+{% endschema %}

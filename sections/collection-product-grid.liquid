@@ -1,0 +1,261 @@
+<!-- sections/collection-product-grid.liquid -->
+
+{% comment %}
+    Usage Notes:
+        The collection filters script is currently being lazy loaded
+        inside snippets/collection-filters.liquid. In case more of
+        this page needs to be replaced when using filters, that script
+        may need to be moved outside of the snippet, so it won't be
+        removed and replaced when filters are used.
+{% endcomment %}
+
+{% liquid 
+	assign data = section.settings
+%}
+
+{%- capture section_settings -%}
+	{
+		"collectionUrl": {{ collection.url | default: '/collections/store' | json }},
+		"currentTags": {% if active_tags != blank %}{{ active_tags | split: '+' | json }}{% else %}[]{% endif %},
+		"sortBy": {{ collection.sort_by | default: collection.default_sort_by | json }}
+	}
+{%- endcapture -%}
+
+<section class="collection-products js-collection-products {% if section.settings.filter_row_button %} collection-filter--top__button {% endif %}" 
+	id="collectionContainer" 
+	data-collection-url="{{ shop.url }}{{ collection.url }}/"
+	data-section-settings='{{ section_settings }}'>
+
+	{%- if data.enable_sorting or data.enable_filtering -%}
+
+		{% comment %}
+			Collection Filters and Desktop Sort
+
+			Notes: Appears as a sidebar on desktop, but
+				   functions as a modal on mobile.
+		{% endcomment %}
+
+		<div class="js-filters collection-products__filters {% if section.settings.filter_row_button == false %}collection-products__filters--button{% endif %}" id="collectionFilters" data-aria-label="Filters">
+			<div class="collection-products__filters__sticky-wrapper">
+				{% comment %}
+					Filters count (desktop only)
+				{% endcomment %}
+
+				{% comment %}
+					Filters
+				{% endcomment %}
+
+				<div class="collection-products__filters-wrapper">
+					<div class="collection-products__filters-content">
+						{%- if data.enable_filtering -%}
+							{% if section.settings.filter_row_button == false %}
+								{% render 'collection-filters-tags' %}
+							{% else %}
+								{% render 'collection-filters-tags-row-button' section: section %}
+							{% endif %}
+						{%- endif -%}
+					</div>
+				</div>
+
+				{% comment %}
+					Clear / Done buttons (mobile only)
+				{% endcomment %}
+
+				
+			</div>
+		</div>
+
+		{% comment %}
+			Mobile Filters and Sort
+
+			Notes: This is listed second, so as to allow our simple
+				   CSS sidebar setup work without issues. This is because
+				   it uses the :first-child and :last-child selectors for
+				   the sidebar layout.
+		{% endcomment %}
+		
+
+	{%- endif -%}
+
+	{% comment %}
+		Product Grid
+
+		Notes: This section will be replaced during filtering, based
+			   on the ID. Additionally, the paginate object is inside
+			   the replaced content, which is neccessary to keep pagination
+			   up to date.
+	{% endcomment %}
+
+	<section id="collectionProducts">
+		<div class="collection-products__nav">
+				{%- if data.enable_sorting -%}
+					{% comment %}
+						Mobile Sort and Sort Button
+					{% endcomment %}
+					{% assign sort_by = collection.sort_by | default: collection.default_sort_by %}
+
+					{% capture sort_label %}
+						{%- for option in collection.sort_options -%}
+							{%- if sort_by == option.value -%}{{ option.name }}{% break %}{%- endif -%}
+						{%- endfor -%}
+					{% endcapture %}
+
+					{% capture collection_sort_text_mobile %}
+						{{ sort_label }}
+					{% endcapture %}
+					{% capture modal_button_mobile %}
+						<button type="button" 
+							class="btn btn--toggle-collection-sort" 
+							data-behavior="modal" 
+							aria-controls="collectionSortMobile" 
+							aria-expanded="false"
+							aria-haspopup="dialog"
+							data-overlay="{{ overlay }}">
+							<span>{{ collection_sort_text_mobile }}</span>
+							{%  render 'icon-sort-allow' %}
+						</button>
+					{% endcapture %}
+
+					{% render "collection-sort", button: modal_button_mobile, id_suffix: "Mobile" %}
+				{%- endif -%}
+
+				
+			</div>
+
+		{% comment %}
+			Filter data used by the collection filters script
+		{% endcomment %}
+
+		{% render 'collection-filters-data' %}
+
+		{%- paginate collection.products by data.products_per_page -%}
+
+				{%- if collection.products.size > 0 -%}
+
+
+					<ul class="collection-products__grid" aria-label="Products">
+                        {% if section.settings.special-card-visiblity %}
+    						<li class="special-card-firstorder">
+    							<p>{{ section.settings.special-card-content }}</p>
+    							<h5>{{ section.settings.special-card-heading }}</h5>
+    							{% render 'icon-gmp-rotated' %}
+    						</li>
+    						<li class="special-card-option">
+    							<div class="third-party-icon-wrapper"> 
+    								{% render 'icon-third-party' %}
+    								<p>Third-party lab tested kratom</p>
+    							</div>
+    							<div>
+    								{% render 'icon-30day' %}
+    								<p>30-day moneyback guarantee </p>
+    							</div>
+    							<div>
+    								{% render 'icon-high-quality' %}
+    								<p>The highest quality Kratom</p>
+    							</div>
+    						</li>
+                        {% endif %}
+						{%- for product in collection.products -%}
+
+							{% comment %}
+								Exclude Hidden Products
+							{% endcomment %}
+
+							
+							{%- unless product.template_suffix == 'hidden' or product.tags contains "BOLD_HIDDEN_PRODUCT" or product.tags contains "OPTIONS_HIDDEN_PRODUCT" -%}
+								<li>
+									{% render 'product-thumbnail', product: product, collection: collection %}
+								</li>
+							{%- endunless -%}
+						{%- endfor -%}
+					</ul>
+
+				{%- else -%}
+
+					{% comment %}
+						No Products
+					{% endcomment %}
+
+					<div class="collection-products__empty">
+						{{ data.no_products_text }}
+					</div>
+				{%- endif -%}
+
+			{% comment %}
+				Pagination
+			{% endcomment %}
+
+			{%- if paginate.pages > 1 -%}
+				{% render 'pagination', paginate: paginate %}
+			{%- endif -%}
+		{%- endpaginate -%}
+	</section>
+
+</section>
+
+{% schema %}
+{
+    "name": "Collection Product Grid",
+    "settings": [
+        {
+            "type": "range",
+            "id": "products_per_page",
+            "min": 8,
+            "max": 100,
+            "step": 2,
+            "default": 24,
+            "label": "Products per page"
+        },
+        {
+            "type": "header",
+            "content": "Filters"
+        },
+        {
+            "type": "checkbox",
+            "id": "enable_filtering",
+            "default": true,
+            "label": "Show filters"
+        },
+        {
+            "type": "checkbox",
+            "id": "enable_sorting",
+            "default": true,
+            "label": "Show sort dropdown"
+        }, 
+        {
+            "type": "header",
+            "content": "No products"
+        },
+        { 
+            "type": "richtext", 
+            "id": "no_products_text", 
+            "label": "No products found message", 
+            "default": "<p>Sorry, no products could be found.</p>"
+        },
+		{
+			"type": "checkbox",
+			"id": "filter_row_button",
+			"label": "Collection filter top button",
+			"default": true
+		},
+		{
+			"type": "checkbox",
+			"id": "special-card-visiblity",
+			"label": "Special Card Visiblity",
+			"default": true
+		},
+		{
+			"type": "text",
+			"id": "special-card-heading",
+			"label": "Special Card Heading",
+			"default": "get 20% off your first order"
+		},
+		{
+			"type": "text",
+			"id": "special-card-content",
+			"label": "Special Card Content",
+			"default": "limited time offer"
+		},
+    ]
+}
+{% endschema %}

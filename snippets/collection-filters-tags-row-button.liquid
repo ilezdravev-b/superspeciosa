@@ -1,0 +1,237 @@
+<!-- snippets/collection-filters-tags.liquid -->
+
+{% comment %}
+    Most of this markup was copied from the live site (Prestige theme)
+    and modified to work with this newer Online Store 2.0 theme
+{% endcomment %}
+
+<style>
+   .swiper-container {
+  width: 100%;
+  max-width: 100vw;
+  max-height: 100vh;
+  min-height: 0;
+  min-width: 0;
+}
+#collection-filter-drawer {
+    display: flex;
+    flex-direction: row;
+    gap: 25px;
+    padding-bottom: 20px;
+}
+
+@media (max-width: 1580px) {
+    .collection-filter-drawer-item {
+        width: 50%;
+    }
+}
+
+
+@media (max-width: 768px) {
+    #collection-filter-drawer {
+        gap: 6px;
+        padding-bottom: 0;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .collection-filter-drawer-item {
+        width: 100%;
+    }
+</style>
+
+{%- if collection.all_products_count > 0 -%}
+    {%- comment -%}
+        In order to provide more predictable results (for instance not showing filters by tag even if the option is checked in settings,
+        but that there are no tags for the given collection to show), we are doing some more logic here. Basically, we try to check if there
+        are tags to show by stripping internal tags (those that start by "__")
+    {%- endcomment -%}
+    {%- assign has_visible_tags = false -%}
+
+    {%- for tag in collection.all_tags -%}
+        {%- assign tag_parts = tag | split: '_' -%}
+
+        {%- if tag_parts.size == 2 -%}
+            {%- assign has_visible_tags = true -%}
+        {%- endif -%}
+    {%- endfor -%}
+
+
+    {%- assign show_filters = false -%}
+    {%- assign quick_links = linklists[section.settings.filter_menu] -%}
+
+    {%- if quick_links != blank or has_visible_tags -%}
+        {%- assign show_filters = true -%}
+    {%- endif -%}
+
+    {%- comment -%}
+    --------------------------------------------------------------------------------------------------------------------
+    FILTERS AND SORT BY POPOVER
+    --------------------------------------------------------------------------------------------------------------------
+    {%- endcomment -%}
+
+    {%- if show_filters -%}
+        {%- comment -%}
+            Implementation note: the filters can be displayed in two different ways: in a sidebar menu, always visible, or in a drawer. 
+            Due to that, we are setting the general code here, and then we can output it twice if needed.
+        {%- endcomment -%}
+
+        {%- capture filters_content -%}
+
+            {%- if has_visible_tags -%}
+
+                {%- assign groups = '' -%}
+
+                {%- for tag in collection.all_tags -%}
+                    {%- assign tag_parts = tag | split: '_' -%}
+
+                    {%- if tag == 'daily_deal' or tag == 'kid_friendly' or tag == 'beginner_friendly' or tag == 'steal_of_the_day' or tag == 'assortment_of_the_day' or tag == 'best_seller' or tag == 'limited_time_only' -%}
+                        {%- continue -%}
+                    {%- endif -%}
+
+                    {%- if tag_parts.size != 2 -%}
+                        {%- continue -%}
+                    {%- endif -%}
+
+                    {%- assign groups = groups | append: tag_parts.first | append: ',' -%}
+                {%- endfor -%}
+
+                {%- assign color_label = 'color,colour,couleur,colore,farbe,색,色,färg,farve' | split: ',' -%}
+                {%- assign groups = groups | split: ',' | compact | uniq -%}
+
+                {%- for group in groups -%}
+                    {%- assign group_downcase = group | downcase -%}
+                    {%- assign group_tag_count = 0 -%}
+                    {%- assign group_tag_total = 0 -%}
+
+                    {%- if color_label contains group_downcase and section.settings.show_filter_color_swatch -%}
+                        {%- assign show_color_swatch = true -%}
+                    {%- else -%}
+                        {%- assign show_color_swatch = false -%}
+                    {%- endif -%}
+
+                    {%- assign filter_name = group | escape | capitalize  -%}
+                    
+                    {% if filter_name == 'Form' %}
+                        {%- for tag in collection.all_tags -%}
+                            {%- assign tag_parts = tag | split: '_' -%}
+
+                            {%- if tag_parts.size != 2 or tag_parts.first != group -%}
+                                {%- continue -%}
+                            {%- endif -%}
+
+                            {%- assign group_tag_total = group_tag_total | plus: 1 -%}
+                        {%- endfor -%}
+                    {% endif %}
+
+                    <div class="collection-filter-drawer-item">
+                            <h2 class="group_subtitle"><span>Select</span>&nbsp; {{- filter_name -}}:</h2>
+    
+                            <div class="collection-filter-group__content" id="collectionFilter{{ forloop.index }}" aria-labelledby="collectionFilterHeading{{ forloop.index }}">
+                                <ul class="collection-filter-group__list {% if show_color_swatch %}collection-filter-group__list--color{% endif %} js-collection-filter-group">
+                                    {% comment %}
+                                        Get group tag total
+                                    {% endcomment %}
+    
+                                    {%- for tag in collection.all_tags -%}
+                                        {%- assign tag_parts = tag | split: '_' -%}
+    
+                                        {%- if tag_parts.size != 2 or tag_parts.first != group -%}
+                                            {%- continue -%}
+                                        {%- endif -%}
+    
+                                        {%- assign group_tag_total = group_tag_total | plus: 1 -%}
+                                    {%- endfor -%}
+    
+                                    {% comment %}
+                                        Group tags
+                                    {% endcomment %}
+                                    {%- for tag in collection.all_tags -%}
+                                        {%- assign tag_parts = tag | split: '_' -%}
+    
+                                        {%- if tag_parts.size != 2 or tag_parts.first != group -%}
+                                            {%- continue -%}
+                                        {%- endif -%}
+    
+                                        {% comment %}
+                                            Increment group tag count
+                                        {% endcomment %}
+    
+                                        {%- assign group_tag_count = group_tag_count | plus: 1 -%}
+    
+                                        {%- if show_color_swatch -%}
+                                            <li class="collection-filter__item collection-filter__item--swatch js-collection-filter-item">
+                                                {%- assign color_swatch_name = tag_parts.last | handle | append: '.png' -%}
+                                                {%- assign color_swatch_image = images[color_swatch_name] -%}
+    
+                                                <button type="button" class="collection-filter__btn {% if current_tags contains tag %}is-active{% endif %}" data-tag="{{ tag | handle }}" data-action="toggle-tag" data-tooltip="{{ tag_parts.last | escape }}" style="background-color: {{ tag_parts.last | replace: ' ', '' | downcase }}; {% if color_swatch_image != blank %}background-image: url({{ color_swatch_image | img_url: '64x64' }}){% endif %}">
+                                                    <span class="sr-only">{{ tag_parts.last }}</span>
+                                                </button>
+                                            </li>
+                                        {%- else -%}
+                                            {% if collection.metafields.plp.category != blank %}
+                                                {% assign plp_category = collection.metafields.plp.category | handle %}
+                                                {% assign tag_handle = tag | handle %}
+                                                {% assign group_handle = group | handle %}
+                                                {% assign categry_first = plp_category | split: '_' | first %}
+                                                {% if categry_first == group_handle %}
+                                                    {% if plp_category == tag_handle %}
+
+                                                        <li class="{% if section.settings.mobile_slider %}swiper-slide {% endif %}collection-filter__item {% if current_tags contains tag %}is-active{% endif %} js-collection-filter-item">
+                                                            <div class="input-checkbox collection-filter__checkbox {% if section.settings.filter_row_button == true %} collection-filter__button {% endif %}">
+                                                                <input 
+                                                                    class="js-collection-filter"
+                                                                    type="checkbox" 
+                                                                    name="{{ group | handle }}"
+                                                                    id="checkbox{{ forloop.index }}" 
+                                                                    {% if current_tags contains tag %}checked{% endif %}
+                                                                    value="{{ tag | handle }}">
+                                                                <label for="checkbox{{ forloop.index }}" class="tag-{{- tag_parts.last | handleize -}}">{{- tag_parts.last -}}</label>
+                                                            </div>
+                                                        </li>
+    
+                                                    {% endif %}
+                                                {% else %}
+                                                    <li class="{% if section.settings.mobile_slider %}swiper-slide {% endif %}collection-filter__item {% if current_tags contains tag %}is-active{% endif %} js-collection-filter-item">
+                                                        <div class="input-checkbox collection-filter__checkbox {% if section.settings.filter_row_button == true %} collection-filter__button {% endif %}">
+                                                            <input 
+                                                                class="js-collection-filter"
+                                                                type="checkbox" 
+                                                                name="{{ group | handle }}"
+                                                                id="checkbox{{ forloop.index }}" 
+                                                                {% if current_tags contains tag %}checked{% endif %}
+                                                                value="{{ tag | handle }}">
+                                                            <label for="checkbox{{ forloop.index }}" class="tag-{{- tag_parts.last | handleize -}}">{{- tag_parts.last -}}</label>
+                                                        </div>
+                                                    </li>
+                                                {% endif %}
+                                            {% else %}
+                                                <li class="{% if section.settings.mobile_slider %}swiper-slide {% endif %}collection-filter__item {% if current_tags contains tag %}is-active{% endif %} js-collection-filter-item">
+                                                    <div class="input-checkbox collection-filter__checkbox {% if section.settings.filter_row_button == true %} collection-filter__button {% endif %}">
+                                                        <input 
+                                                            class="js-collection-filter"
+                                                            type="checkbox" 
+                                                            name="{{ group | handle }}"
+                                                            id="checkbox{{ forloop.index }}" 
+                                                            {% if current_tags contains tag %}checked{% endif %}
+                                                            value="{{ tag | handle }}">
+                                                        <label for="checkbox{{ forloop.index }}" class="tag-{{- tag_parts.last | handleize -}}">{{- tag_parts.last -}}</label>
+                                                    </div>
+                                                </li>
+                                            {% endif %}
+                                        {%- endif -%}  
+                                        
+                                    {%- endfor -%}
+                                </ul>
+                            </div>
+                    </div>
+                {%- endfor -%}
+
+            {%- endif -%}
+        {%- endcapture -%}
+
+        <div id="collection-filter-drawer">
+            {{ filters_content }}
+        </div>
+    {%- endif -%}
+{%- endif -%}

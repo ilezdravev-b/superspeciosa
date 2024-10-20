@@ -1,0 +1,31 @@
+<!-- snippets/article-comment.liquid -->
+
+{% comment %}
+  Required:
+      comment {Object} The article.comment object
+
+  Optional:
+      is_pending {Boolean} Whether the comment is in pending status or not
+{% endcomment %}
+
+<article class="article-comment{% if is_pending %} article-comment--is-pending{% endif %}" aria-label="Comment {{ index }} by {{ comment.author }}">
+
+    <header class="article-comment__header">
+        <div class="article-comment__user">
+
+            <div class="article-comment__avatar"></div>
+
+            <address class="article-comment__user-name">
+                <span class="sr-only">Comment Author: </span>
+                {{ comment.author }}
+            </address>
+        </div>
+
+        <time datetime="{{ comment.created_at | date: '%Y-%m-%d' }}">
+        <span class="sr-only"> Published on: </span>
+        {{ comment.created_at | date: '%b %d, %Y' }}
+        </time>
+    </header>
+
+  {{ comment.content }}
+</article>

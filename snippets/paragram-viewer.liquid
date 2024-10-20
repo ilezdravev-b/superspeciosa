@@ -1,0 +1,27 @@
+<div id="container">
+  <iframe id="viewerFrame" src="https://code.paragram.io/v/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59"></iframe>
+</div>
+
+<script src="https://code.paragram.io/1.1.4/ParagramViewerAPI.js" defer></script>
+<script>
+window.ParagramViewerUpdate = (group, selectedColor) => {
+  const paragramAPI = new ParagramViewerAPI('#viewerFrame');
+  let option_group_id = 'color_' + group;
+  let option_id = selectedColor.toLowerCase().replace(' ', '-');
+  paragramAPI.selectOption(option_group_id, option_id);
+}
+</script>
+
+<style>
+#container {
+  width: 100%;
+  max-width: 600px;
+  margin: auto;
+}
+
+#viewerFrame {
+  border: none;
+  width: 100%;
+  height: 600px;
+}
+</style>

@@ -1,0 +1,81 @@
+<!-- sections/example-page.liquid -->
+
+<article class="container-text">
+
+	<h1 class="style-guide__heading">RTE Page Content</h1>
+
+	<div class="rte">
+		<h1>Heading Level 1</h1>
+		<h2>Heading Level 2</h2>
+		<h3>Heading Level 3</h3>
+		<h4>Heading Level 4</h4>
+		<h5>Heading Level 5</h5>
+		<h6>Heading Level 6</h6>
+
+		<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. <strong>This is bolded/strong text. Suspendisse at ornare leo.</strong> <em>This is italicized text. Fusce magna erat, hendrerit eget dignissim non, lobortis id nunc.</em> <u>This is underlined text. Curabitur gravida urna in rutrum semper.</u> <a href="/" target="_blank" title="homepage" rel="noopener noreferrer">Here is an inline link within a paragraph</a>, at finibus ligula. Donec eget velit cursus, dignissim diam auctor, commodo dui. Nullam tristique mollis ex at interdum. Aenean eu aliquam lacus. Etiam sodales viverra magna, sed eleifend nisi dignissim sed. Sed ac sem nisi.<br /><br />Nunc lobortis purus at ullamcorper malesuada. Suspendisse potenti. Quisque eleifend turpis vel lectus ullamcorper, id dapibus tortor consectetur. Mauris porta tellus et sodales blandit. Nullam convallis efficitur erat. Nullam et felis id magna porta aliquet ut quis ipsum. Praesent sodales molestie dui quis consequat. Etiam orci eros, volutpat non porttitor et, cursus sed enim. Curabitur ut velit lorem. Donec quis ipsum nulla.</p>
+
+		<ul>
+			<li>Unordered list item 1</li>
+			<li>Unordered list item 2</li>
+			<li>Unordered list item 3</li>
+			<li>Unordered list item 4</li>
+			<li>Unordered list item 5</li>
+		</ul>
+		<ol>
+			<li>Ordered list item 1</li>
+			<li>Ordered list item 2</li>
+			<li>Ordered list item 3</li>
+			<li>Ordered list item 4</li>
+			<li>Ordered list item 5</li>
+		</ol>
+		<blockquote>
+			<p>This is a blockquote that should be styled accordingly. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+		</blockquote>
+
+		<table>
+			<thead>
+				<tr>
+					<th>Header</th>
+					<th>Header</th>
+					<th>Header</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>Cell</td>
+					<td>Cell</td>
+					<td>Cell</td>
+				</tr>
+				<tr>
+					<td>Cell</td>
+					<td>Cell</td>
+					<td>Cell</td>
+				</tr>
+				<tr>
+					<td>Cell</td>
+					<td>Cell</td>
+					<td>Cell</td>
+				</tr>
+				<tr>
+					<td>Cell</td>
+					<td>Cell</td>
+					<td>Cell</td>
+				</tr>
+			</tbody>
+		</table>
+
+		<p>Inline image (set to large size 600x600): </p>
+		<p><img src="https://cdn.shopify.com/s/files/1/0582/8224/6321/files/richtext-image-2_600x600.jpg?v=1634169531" width="600" height="600" loading="lazy" alt="Alt text for image" /></p>
+
+		<p>Inline video (RTE YouTube embed): </p>
+		<p><iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/4iqn3BQ__AU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></p>
+	</div>
+
+</article>
+
+{% schema %}
+	{
+		"name": "Example Page Content",
+		"tag": "section"
+	}
+{% endschema %}

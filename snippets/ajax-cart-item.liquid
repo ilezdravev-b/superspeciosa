@@ -1,0 +1,167 @@
+<!-- snippets/ajax-cart-item.liquid -->
+
+{% comment %}
+	Note: 
+		This snippet is used in ajax cart (also called the mini-cart), 
+		as well as the mobile cart page. 
+
+	Required:
+		item {Object} The line_item object
+		index {Integer} The 1-based index of the item
+{% endcomment %}
+
+{% liquid 
+	assign current_product = item.product
+	assign current_variant = item.variant
+
+	assign discounts = item.discount_allocations
+
+	if item.selling_plan_allocation 
+		assign selling_plan = item.selling_plan_allocation.selling_plan.name
+	endif
+
+	assign add_time = ''
+	assign is_parent = false
+	assign is_free_gift = false
+
+	for property in item.properties
+		if property.first == "_add-time"
+			assign add_time = property.last
+		endif
+
+		if property.first == "_hasCustomizableOptions"
+			assign is_parent = true
+		endif
+
+		if property.first == "_isFreeGift"
+			assign is_free_gift = true
+		endif 
+	endfor
+%}
+
+<li class="ajax-cart__item js-cart-item" 
+	data-cart-line="{{ index }}" 
+	data-key="{{ item.key }}"
+	data-custom-key="{{ item.properties.custom_key }}"
+	data-custom-option="{{ item.properties.is_custom_option }}"
+	{% if is_free_gift %}data-free-gift="true"{% endif %}
+	{% if is_parent %}data-item-is-parent="true"{% endif %}
+	{% if add_time != blank %}data-add-time="{{ add_time }}"{% endif %}
+	{% if item.properties.is_custom_option %}style="display:none;"{% endif %}>
+
+	{% comment %}
+		Item Image
+
+		Note: Image is hidden from screen readers and keyboards
+			  so that keyboards doesn't have to tab through the same
+			  link twice.
+	{% endcomment %}
+
+	{% if is_free_gift %}<div class="ajax-cart__item-image-wrapper">{% else %}<a href="{{ item.url }}" class="ajax-cart__item-image-wrapper" aria-hidden="true" tabindex="-1">{% endif %}
+		{% render 'image-simple', image: item.image, width: 144, height: 144, class: 'ajax-cart__item-image' %}
+
+		<span class="sr-only">
+			View {{ current_product.title }}
+		</span>
+	{% if is_free_gift %}</div>{% else %}</a>{% endif %}
+
+	{% comment %}
+		Item Details
+	{% endcomment %}
+
+	<div class="ajax-cart__item-content">
+		<div class="ajax-cart__item-details">
+
+			<div class="ajax-cart__item-details__row">
+				<div>
+					{% if is_free_gift %}<span class="ajax-cart__item-title">{% else %}<a href="{% if item.properties.main_handle %}{{ item.properties.main_handle }}{% else %}{{ item.url }}{% endif %}" class="ajax-cart__item-title">{% endif %}
+						{{ current_product.title }}
+					{% if is_free_gift %}</span>{% else %}</a>{% endif %}
+
+					{% comment %}
+						All Details
+					{% endcomment %}
+
+					{% if item.properties != blank or current_product.has_only_default_variant == false or selling_plan %}
+
+						<ul class="ajax-cart__item-text" aria-label="Item Details">
+
+							{% comment %}
+								Options
+							{% endcomment %}
+
+							{% unless current_product.has_only_default_variant %}
+								{% for option in item.options_with_values %}
+									<li>{{ option.name }}: {{ option.value }}</li>
+								{% endfor %}
+							{% endunless %}
+
+							{% comment %}
+								Properties
+
+								Notes: Only shows properties that have no
+									underscore prefix.
+							{% endcomment %}
+
+							{% if item.properties != blank %} 
+								{% render 'cart-item-properties', properties: item.properties %}
+							{% endif %}
+
+							{% comment %}
+								Subscriptions
+							{% endcomment %}
+
+							{% if selling_plan %} 
+								<li>{{ selling_plan }}</li>
+							{% endif %}
+
+						</ul>
+
+					{% endif %}
+
+					{% comment %}
+						Discounts
+					{% endcomment %}
+
+					{% if discounts.size > 0 %}
+						<ul class="ajax-cart__item-discounts" aria-label="Discounts">
+							{% for discount in discounts %} 
+								<li>
+									{{ discount.discount_application.title }} (Save {{ discount.amount | money }})
+								</li>
+							{% endfor %}
+						</ul>
+					{% endif %}
+				</div>
+
+				{% comment %}
+					Remove Button
+
+					Notes: Include screen-reader-only text to indicate
+						what item the user would be removing.
+				{% endcomment %}
+
+				<button class="ajax-cart__item-btn btn" data-behavior="remove-line">
+					<span class="sr-only">Remove {{ item.title }} from cart</span>
+					{% render 'icon-trash', class: 'icon' %}
+				</button>
+			</div>
+
+			<div class="ajax-cart__item-details__row">
+				{% comment %}
+					Item Quantity
+				{% endcomment %}
+
+				{% render 'product-qty', index: index, id: 'ajaxCartItem', value: item.quantity, min: 0, item: item %} 
+
+				{% comment %}
+					Item Price
+				{% endcomment %}
+
+				<p class="ajax-cart__item-price">
+					{% render 'cart-item-price', item: item, current_variant: current_variant %}
+				</p>
+			</div>
+		</div>
+	</div>
+</li>

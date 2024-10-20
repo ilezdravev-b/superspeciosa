@@ -1,0 +1,78 @@
+<!-- sections/predictive-search-results.liquid -->
+
+{% comment %}
+	Load Assets
+
+	Notes: In the case where the predicitive search results
+		   are inside of a sticky or fixed header, we won't use
+		   JS to load asset. (We'll simply load the CSS in a
+		   non-render-blocking way) Note that the predictive search
+		   script is loaded in snippets/search-bar-predictive.liquid.
+{% endcomment %}
+
+<link rel="stylesheet" href="{{ 'section-predictive-search-results.min.css' | asset_url }}" media="print" onload="this.media='all'">
+
+{% comment %}
+	Initial Liquid Variables
+
+	Notes: Predictive search results only.
+		   Note that the search form that populates this
+		   section with results is in snippets/search-bar-predictive.liquid
+{% endcomment %} 
+
+{% liquid 
+	assign results_count = predictive_search.resources.products.size
+%}
+
+<section class="predictive-search" id="PredictiveSearch">
+
+	<div class="js-predictive-search-results" id="predictiveSearchResults">
+
+		{%- if predictive_search.performed -%}
+
+			{% comment %}
+				Screen-reader only heading,
+				with role status, so that title will be
+				announced each time a search is performed.
+			{% endcomment %}
+
+			<h2 class="sr-only" id="SearchResultsHeader" role="status">
+				{{ results_count }} Products Found
+			</h2>
+		{% endif %}
+
+		{% comment %}
+			Results Markup
+		{% endcomment %}
+
+		<ul class="predictive-search__results" aria-label="Search Results">
+			{%- if predictive_search.performed -%}
+				{%- if results_count > 0 -%}
+					{%- for product in predictive_search.resources.products -%}
+
+						{% comment %}
+							Exclude Hidden Products
+						{% endcomment %}
+
+						{%- unless product.template_suffix == 'hidden' -%}
+							<li>
+								{% render "product-thumbnail-small", product: product %}
+							</li>
+						{%- endunless -%}
+						
+					{%- endfor -%}
+
+					<li>
+						<a class="btn btn--primary btn--wide" href="/search?type=product&q=*{{ predictive_search.terms }}*">View all Results</a>
+					</li>
+
+				{%- else -%}
+					<li>
+						No results were found.
+					</li>
+				{%- endif -%}
+			{%- endif -%}
+		</ul>
+
+	</div>
+</section>

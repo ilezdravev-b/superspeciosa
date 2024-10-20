@@ -1,0 +1,22 @@
+
+
+<!-- snippets/header-button-mobile-menu.liquid -->
+
+{% comment %}
+	Required:
+		nothing
+{% endcomment %}
+
+{% capture button_text %}
+	<span class="hamburger__box">
+		<span></span>
+		<span></span>
+		<span></span>
+		<span></span>
+	</span>
+	<span class="hamburger__label">
+		Menu
+	</span>
+{% endcapture %}
+
+{% render 'modal-button', class: 'hamburger btn', modalId: "mobileMenu", data: 'data-trap-button="true"', overlay: "underHeaderOverlay", text: button_text %}

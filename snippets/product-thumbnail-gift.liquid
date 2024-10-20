@@ -1,0 +1,62 @@
+<!-- snippets/product-thumbnail-gift.liquid -->
+
+{% comment %}
+    Required:
+		product			 {Object} The product object
+		offer_min_amount {Integer}
+		offer_max_amount {Integer}
+
+	Optional:
+		title 		{String} Product title. 
+		image		{Object} Image to show instead of default product image
+		badge 		{String} Text to show as product badge
+{% endcomment %}
+
+{%- liquid 
+	assign image = 		image | default: product.featured_image
+	assign title = 		title | default: product.title
+-%}
+
+<div class="product-thumb">
+
+	<div class="product-thumb__image-badge-wrapper">
+		{% render 'image-square', image: image %}
+
+		{% comment %}
+			Custom or Sale Badge
+		{% endcomment %}
+
+		{% render 'product-badge', product: product, badge: badge %}
+	</div>
+
+	<h3 class="product-thumb__title">
+		{{ title | default: 'Product Title' }}
+	</h3>
+
+	<div class="product-thumb__text">
+
+		{%- comment -%}
+			Price and compare price
+		{%- endcomment -%}
+
+		<span class="product-thumb__price--gift">
+			{% render 'product-price', product: product, show_range: true, add_js_classes: false %}
+		</span>
+	</div>
+
+    {%- comment -%}
+        Add to Cart button
+    {%- endcomment -%}
+
+    <button type="button"
+		class="product-thumb__atc--gift js-add-free-gift"
+		data-product-id="{{ product.id }}"
+        data-variant-id="{{ product.selected_or_first_available_variant.id }}"
+		data-tier-min="{{ offer_min_amount }}"
+		data-tier-max="{{ offer_max_amount }}"
+		data-cart-total-price="{{ cart.total_price }}" 
+		data-product-price="{{ product.selected_or_first_available_variant.price }}">
+        Add to Cart
+    </button>
+
+</div>

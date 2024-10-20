@@ -1,0 +1,32 @@
+<!-- snippets/logo.liquid -->
+
+{% comment %}
+    This is used on multiple layout files and template files, including: 
+        - snippets/header.liquid
+        - sections/gift-card.liquid
+
+    Dev note: When possible, unless dealing with a large and complex
+    logo image (i.e. larger than around 5kb), replace this setup with
+    an inline SVG to reduce HTTP requests and improve page load times.
+
+    No matter what, the logo file added should be a SVG file.
+{% endcomment %}
+
+{% liquid 
+    assign logo = settings.logo
+    assign logo_url = logo | image_url
+
+    if logo_url contains 'shopify.com'
+        assign logo_file_name = settings.logo_url | split: '/files/' | last | split: '?' | first
+        assign logo = images[logo_file_name]
+        assign logo_url = logo | image_url
+    endif
+
+    assign logo_width = 200
+    assign logo_height = logo_width | times: 100 | divided_by: 200 | times: logo.height | divided_by: 100
+%}
+
+<img src="{{ logo_url }}" 
+    alt="{{ shop.name }} logo"
+    width="{{ logo_width }}"
+    height="{{ logo_height }}" />

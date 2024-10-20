@@ -1,0 +1,76 @@
+<!-- snippets/vendor-klaviyo-back-in-stock.liquid -->
+
+{% comment %}
+	Required: 
+		nothing
+
+	Notes: While BIS is only official supported on
+	the PDP, it is possible to enable on collection pages.
+	That documentation can be found here: https://community.klaviyo.com/integrations-39/back-in-stock-button-popup-on-shopify-collection-pages-1130
+{% endcomment %}
+
+{% liquid 
+    assign list_id = settings.klaviyo_list_id
+    assign headline = settings.klaviyo_bis_modal_headline | default: "{product_name}"
+%}
+
+{% comment %}
+	Note that this is a specific script required
+	for the BIS integration, not to be confused with
+	the main Klaviyo onsite script.
+{% endcomment %}
+
+<script src="https://a.klaviyo.com/media/js/onsite/onsite.js" defer></script> 
+
+<script>
+	var klaviyo = klaviyo || []; 
+
+	document.addEventListener("DOMContentLoaded", () => {
+		klaviyo.init({
+			account: "{{ settings.klaviyo_api_key }}",
+            {% if settings.klaviyo_bis_list_opt_in and list_id != blank %}
+                list: "{{ list_id }}",
+            {% endif %}
+			platform: "shopify"
+		});
+		klaviyo.enable("backinstock",{ 
+			trigger: {
+				product_page_text: "{{ settings.klaviyo_bis_button_text }}",
+				product_page_class: "klaviyo-generated-button",
+				product_page_text_align: "center",
+				product_page_margin: "0px",
+				replace_anchor: false
+			},
+			modal: {
+				headline: {{ headline | json }},
+				body_content: "{{ settings.klaviyo_bis_modal_description }}",
+				email_field_label: "{{ settings.klaviyo_bis_modal_email_label }}",
+				button_label: "{{ settings.klaviyo_bis_modal_button_text }}",
+				subscription_success_label: "{{ settings.klaviyo_bis_modal_success }}",
+				footer_content: '',
+				additional_styles: ``,
+				drop_background_color: "#000",
+				background_color: "#fff",
+				text_color: "#222",
+				button_text_color: "#fff",
+				button_background_color: "{{ settings.theme_color_primary }}",
+				close_button_color: "#ccc",
+				error_background_color: "#fcd6d7",
+				error_text_color: "#C72E2F",
+				success_background_color: "{{ settings.theme_color_primary }}",
+				success_text_color: "#fff"
+			}
+		});
+	})
+</script>
+
+{% comment %}
+  Klaviyo's Back in Stock integration, out of the box, is... bad. So, 
+  product_page_class above is used to ALWAYS HIDE the Klaviyo-generated button
+{% endcomment %}
+
+<style type="text/css">
+  .klaviyo-generated-button { 
+    display: none !important; 
+  }
+</style>

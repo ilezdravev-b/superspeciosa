@@ -1,0 +1,78 @@
+<!-- snippets/social-links.liquid -->
+
+{% comment %}
+	Required:
+		nothing
+{% endcomment %}
+
+{% liquid 
+	assign instagram = settings.social_instagram
+	assign facebook = settings.social_facebook
+	assign pinterest = settings.social_pinterest
+	assign twitter = settings.social_twitter
+	assign youtube = settings.social_youtube
+	assign tiktok = settings.social_tiktok
+%}
+
+<ul class="social-links" aria-label="Social Links">
+    {% if instagram != blank %}
+        <li>
+            <a href="{{ instagram }}" class="social-links__link" title="Instagram" target="_blank" rel="noopener">
+            	{% render 'icon-instagram', class: 'icon' %}
+				<span class="sr-only">
+					Instagram (opens in new window)
+				</span>
+            </a>
+        </li>
+    {% endif %}
+    {% if facebook != blank %}
+        <li>
+            <a href="{{ facebook}}" class="social-links__link" title="Facebook" target="_blank" rel="noopener">
+            	{% render 'icon-facebook', class: 'icon' %}
+				<span class="sr-only">
+					Facebook (opens in new window)
+				</span>
+            </a>
+        </li>
+    {% endif %}
+    {% if pinterest != blank %}
+        <li>
+            <a href="{{ pinterest }}" class="social-links__link" title="Pinterest" target="_blank" rel="noopener">
+            	{% render 'icon-pinterest', class: 'icon' %}
+				<span class="sr-only">
+					Pinterest (opens in new window)
+				</span>
+            </a>
+        </li>
+    {% endif %}
+    {% if twitter != blank %}
+        <li>
+            <a href="{{ twitter }}" class="social-links__link" title="Twitter" target="_blank" rel="noopener">
+            	{% render 'icon-twitter', class: 'icon' %}
+				<span class="sr-only">
+					Twitter (opens in new window)
+				</span>
+            </a>
+        </li>
+    {% endif %}
+    {% if youtube != blank %}
+        <li>
+            <a href="{{ youtube }}" class="social-links__link" title="YouTube" target="_blank" rel="noopener">
+            	{% render 'icon-youtube', class: 'icon' %}
+				<span class="sr-only">
+					YouTube (opens in new window)
+				</span>
+            </a>
+        </li>
+    {% endif %}
+	 {% if tiktok != blank %}
+        <li>
+            <a href="{{ tiktok }}" class="social-links__link" title="TikTok" target="_blank" rel="noopener">
+            	{% render 'icon-tiktok', class: 'icon' %}
+				<span class="sr-only">
+					TikTok (opens in new window)
+				</span>
+            </a>
+        </li>
+    {% endif %}
+</ul>

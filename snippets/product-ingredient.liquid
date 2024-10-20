@@ -1,0 +1,171 @@
+<!-- sections/product-ingredient.liquid -->
+
+{% comment %}
+Required:
+nothing
+{% endcomment %}
+
+
+<div class="product-ingredient-pannel" {% if version=='v1' %} style="background-color: #F4F1DE" {% elsif version=='v2'
+	%} style="background-color: #8CB93F" {% elsif version=='v3' %} style="background-color: #222D1C" {% endif %}>
+	<div class="product-ingredient-header-container">
+		<div class="product-ingredient-header-text-container">
+			<h5 class="product-ingredient-subtitle" {% if version=='v1' %} style="color: #222D1C" {% else %}
+				style="color: #fff" {% endif %}>{{ subtitle }}</h5>
+			<h2 class="product-ingredient-title" {% if version=='v3' %} style="color: #fff " {% else %} style="color: #222D1C"
+				{% endif %}>{{ title }}</h2>
+		</div> 
+		<div class="product-ingredient-svg-container">
+			{% render 'icon-big-gmp' %}
+		</div>
+	</div>
+	<div class="product-ingredient-content">
+		<div class="product-ingredient-image-wrapper">
+			<canvas id="product-ingredient-canvas" width="500" height="700">
+        	</canvas>
+		</div>
+		<div class="product-ingredient-description">
+			
+			
+			<div class="product-ingredient-item-container">
+				<div class="product-ingredient-item">
+					{% render 'icon-leaf', version: version %}
+					<div {% if version=='v1' %} style="color: #222D1C" {% else %} style="color: #F4F1DE" {% endif %}>{{item1}}</div>
+				</div>
+				<div class="product-ingredient-item">
+					{% render 'icon-doubleleaf', version: version %}
+					<div {% if version=='v1' %} style="color: #222D1C" {% else %} style="color: #F4F1DE" {% endif %}>{{item2}}</div>
+				</div>
+				<div class="product-ingredient-item">
+					{% render 'icon-plasc', version: version %}
+					<div {% if version=='v1' %} style="color: #222D1C" {% else %} style="color: #F4F1DE" {% endif %}>{{item3}}</div>
+				</div>
+				<div class="product-ingredient-item">
+					{% render 'icon-lightning', version: version %}
+					<div {% if version=='v1' %} style="color: #222D1C" {% else %} style="color: #F4F1DE" {% endif %}>{{item4}}</div>
+				</div>
+				<div class="product-ingredient-item">
+					{% render 'icon-fda', version: version %}
+					<div {% if version=='v1' %} style="color: #222D1C" {% else %} style="color: #F4F1DE" {% endif %}>{{item5}}</div>
+				</div>
+				<div class="product-ingredient-item">
+					{% render 'icon-gmp', version: version %}
+					<div {% if version=='v1' %} style="color: #222D1C" {% else %} style="color: #F4F1DE" {% endif %}>{{item6}}</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+	
+	<div class="product-ingredient-desktop-header-container">
+		<div class="product-ingredient-desktop-header-text-container">
+			<h5 class="product-ingredient-desktop-subtitle" {% if version=='v1' %} style="color: #222D1C" {% else %}
+			style="color: #fff" {% endif %}>{{ subtitle }}</h5>
+			<h2 class="product-ingredient-desktop-title" {% if version=='v3' %} style="color: #F4F1DE" {% else %} style="color: #222D1C"
+				{% endif %}>{{ title }}</h2>
+		</div>
+	</div>
+	<div class="product-ingredient-desktop-content">
+		<div class="product-ingredient-desktop-description1">
+			<div class="product-ingredient-desktop-item">
+				{% render 'icon-leaf', version: version %}
+				<div {% if version=='v1' %} style="color: #222D1C" {% else %} style="color: #F4F1DE" {% endif %}>{{item1}}</div>
+			</div>
+			<div class="product-ingredient-desktop-item">
+				{% render 'icon-doubleleaf', version: version %}
+				<div {% if version=='v1' %} style="color: #222D1C" {% else %} style="color: #F4F1DE" {% endif %}>{{item2}}</div>
+			</div>
+			<div class="product-ingredient-desktop-item">
+				{% render 'icon-gmp', version: version %}
+				<div {% if version=='v1' %} style="color: #222D1C" {% else %} style="color: #F4F1DE" {% endif %}>{{item6}}</div>
+			</div>
+		</div>
+		
+		<div class="product-ingredient-desktop-image-wrapper">
+			<canvas id="product-ingredient-desktop-canvas" width="500" height="700">
+        	</canvas>
+		</div>
+		<div class="product-ingredient-desktop-description2">
+			<div class="product-ingredient-desktop-svg-container">
+				{% render 'icon-big-gmp' %}
+			</div>
+			
+			<div class="product-ingredient-desktop-item-container">
+				
+				<div class="product-ingredient-desktop-item">
+					{% render 'icon-plasc', version: version %}
+					<div {% if version=='v1' %} style="color: #222D1C" {% else %} style="color: #F4F1DE" {% endif %}>{{item3}}</div>
+				</div>
+				<div class="product-ingredient-desktop-item">
+					{% render 'icon-lightning', version: version %}
+					<div {% if version=='v1' %} style="color: #222D1C" {% else %} style="color: #F4F1DE" {% endif %}>{{item4}}</div>
+				</div>
+				<div class="product-ingredient-desktop-item">
+					{% render 'icon-fda', version: version %}
+					<div {% if version=='v1' %} style="color: #222D1C" {% else %} style="color: #F4F1DE" {% endif %}>{{item5}}</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+	ctx = document.getElementById("product-ingredient-canvas").getContext("2d");
+	//ctx.beginPath();
+	canvas_arrow(ctx, 150, 250, 517, 90);
+	canvas_circle(ctx, 150, 250, 4);
+	canvas_arrow(ctx, 75, 355, 517, 250);
+	canvas_circle(ctx, 75, 355, 4);
+	canvas_arrow(ctx, 80, 390, 517, 715)
+	canvas_circle(ctx, 80, 390, 4);
+
+	canvas_arrow(ctx, 330, 300, 517, 500);
+	canvas_circle(ctx, 330, 300, 4);
+	canvas_arrow(ctx, 250, 300, 517, 370);
+	canvas_circle(ctx, 250, 300, 4);
+	canvas_arrow(ctx, 300, 360, 517, 625)
+	canvas_circle(ctx, 300, 360, 4);
+	//ctx.stroke();
+
+
+	function canvas_arrow(ctx, fromx, fromy, tox, toy) {
+		ctx.strokeStyle = "#222D1C";
+		{% if version=='v3' %} ctx.strokeStyle = "#F7E9C7"; {% endif %}
+		ctx.beginPath();
+		ctx.moveTo(fromx, fromy);
+		ctx.lineTo(tox, toy);
+		ctx.stroke();
+		ctx.closePath();
+	}
+	
+	function canvas_circle(ctx, fromx, fromy, radius) {
+		ctx.fillStyle = "#222D1C";
+		{% if version=='v3' %} ctx.fillStyle = "#F7E9C7"; {% endif %}
+		ctx.beginPath();
+		ctx.arc(fromx,fromy,radius,0,Math.PI*2,true);
+		ctx.closePath();
+		ctx.fill();
+	}
+
+	ctxDesktop = document.getElementById("product-ingredient-desktop-canvas").getContext("2d");
+	//ctxDesktop.beginPath();
+	canvas_arrow(ctxDesktop, 150, 250, 0, 180);
+	canvas_circle(ctxDesktop, 150, 250, 4);
+	canvas_arrow(ctxDesktop, 75, 370, 0, 380);
+	canvas_circle(ctxDesktop, 75, 370, 4);
+	canvas_arrow(ctxDesktop, 80, 510, 0, 590)
+	canvas_circle(ctxDesktop, 80, 510, 4);
+
+	canvas_arrow(ctxDesktop, 330, 300, 517, 430);
+	canvas_circle(ctxDesktop, 330, 300, 4);
+	canvas_arrow(ctxDesktop, 250, 300, 517, 240);
+	canvas_circle(ctxDesktop, 250, 300, 4);
+	canvas_arrow(ctxDesktop, 300, 360, 517, 610)
+	canvas_circle(ctxDesktop, 300, 360, 4);
+	//ctx.stroke();
+
+
+
+</script>

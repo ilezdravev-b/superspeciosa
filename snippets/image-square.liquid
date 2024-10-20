@@ -1,0 +1,46 @@
+{%- liquid 
+	assign image = image.value | default: image
+	assign load = load | default: 'lazy'
+	assign focal_point = image.presentation.focal_point | default: 'center'
+
+	if load != 'eager'
+		assign prefix = 'data-'
+	else 
+		assign loadedClass = 'loaded'
+		assign native_load = "loading='eager'"
+	endif
+
+	unless data contains 'style='
+		assign style = 'style="object-position:' | append: focal_point | append: ';"'
+	endunless
+-%}
+
+{%- comment -%}
+    Image Markup
+{%- endcomment -%}
+
+{%- if image == blank -%}
+	{{ 'image' | placeholder_svg_tag: 'shopify-placeholder' }}
+{%- else -%}
+
+	<picture data-image-load="{{ load }}" class="media-image media-square {{ loadedClass }} {{ picture_class }}" {{ picture_data }}>
+
+		<source sizes="{{ initial_size | default: '1px' }}"
+		{{ prefix }}srcset="{{ image | image_url: width: 720, height: 720 }} 720w,
+		{{ image | image_url: width: 1080, height: 1080 }} 1080w">
+
+		<img width="{{ image.width }}" height="{{ image.height }}"
+			alt="{{ alt | strip_html | default: image.alt }}"
+			class="{{ class }} aspect-image"
+			{{ data }}
+			{{ native_load }}
+			{{ style }}
+			onclick="window.EventBus.emit('picture:preview', '{{ image | image_url }}')"
+			data-original-image="{{ image | image_url }}"
+			src="data:image/svg+xml;charset=utf8,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%3E%3C/svg%3E"
+			loading="lazy"
+			loading="eager"
+			style="display: block; width: 100%; height: auto;">
+
+	</picture>
+{%- endif -%}

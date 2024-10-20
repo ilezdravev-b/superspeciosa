@@ -1,0 +1,279 @@
+<div class="image-text-wrapper section-{{ section.id }}">
+  <div class="{% if section.settings.enable_full %}full-page-width{% else %}{% if section.settings.narrow_width %}page-narrow-width page-width{% else %}page-width{% endif %}{% endif %}">
+    <div class="rich-text-content">
+      {% if section.settings.heading != blank %}
+        <h2 class="heading">{{ section.settings.heading }}</h2>
+      {% endif %}
+      {% if section.settings.subheading != blank %}
+        <p class="subheading">{{ section.settings.subheading }}</p>
+      {% endif %}
+    </div>
+    <div class="img-text-flex">
+      {% if section.settings.content != blank %}
+      <div class="text-side">
+        {{ section.settings.content }}
+      </div>
+      {% endif %}
+      {% if section.settings.image != blank %}
+      <div class="media-side">
+        <img src="{{ section.settings.image | img_url: '' }}"/>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+<style>
+.section-{{ section.id }} {
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+    background-color: {{ section.settings.bg_color }};
+}
+@media (max-width: 749px) {
+  .section-{{ section.id }} {
+    padding-top: {{ section.settings.padding_top_mobile }}px;
+    padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
+  }
+}
+</style>
+
+{% schema %}
+  {
+    "name": "Image With Text V2",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Header"
+      },
+      {
+        "type": "text",
+        "id": "subheading",
+        "label": "Sub Heading"
+      },
+      {
+        "type": "text",
+        "id": "heading",
+        "label": "Heading"
+      },
+      {
+        "type": "header",
+        "content": "Image With Text"
+      },
+      {
+        "type": "richtext",
+        "id": "content",
+        "label": "Content"
+      },
+      {
+        "type": "image_picker",
+        "id": "image",
+        "label": "Choose Image"
+      },
+      {
+        "type": "header",
+        "content": "Layout"
+      },
+      {
+        "type": "range",
+        "id": "padding_top",
+        "label": "Top Spacing",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "default": 20,
+        "unit": "px"
+      },
+      {
+        "type": "range",
+        "id": "padding_bottom",
+        "label": "Bottom Spacing",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "default": 20,
+        "unit": "px"
+      },
+      {
+        "type": "color",
+        "id": "bg_color",
+        "label": "Background Color"
+      },
+      {
+        "type": "range",
+        "id": "padding_top_mobile",
+        "label": "Top Spacing Mobile",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "default": 10,
+        "unit": "px"
+      },
+      {
+        "type": "range",
+        "id": "padding_bottom_mobile",
+        "label": "Bottom Spacing Mobile",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "default": 10,
+        "unit": "px"
+      },
+      {
+        "type": "checkbox",
+        "id": "narrow_width",
+        "label": "Narrow Width",
+        "default": false
+      },
+      {
+        "type": "checkbox",
+        "id": "enable_full",
+        "default": false,
+        "label": "Enable Full Width"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Image With Text V2"
+      }
+    ]
+  }
+{% endschema %}
+
+<style>
+.image-text-wrapper .page-width {
+    max-width: 1140px;
+    margin: auto;
+    padding: 10px;
+}
+.image-text-wrapper .rich-text-content p.subheading {
+    margin: 0;
+    font-size: 18px;
+    text-transform: uppercase;
+    letter-spacing: 2.2px;
+    word-spacing: 3px;
+    font-family: 'Dilemma', sans-serif;
+    font-weight: 700;
+    color: #231f20;
+    margin: 0 0 20px;
+}
+.image-text-wrapper .rich-text-content .content p {
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 24px;
+    letter-spacing: -.3px;
+    color: #333;
+    margin: 0 0 15px;
+    text-align: left;
+}
+.image-text-wrapper .rich-text-content h2.heading {
+    font-size: 35px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    color: #231f20;
+    margin: 0 0 20px;
+    word-spacing: 3px;
+    line-height: 35px;
+    text-align: left;
+    font-family: 'Dilemma', sans-serif;
+}
+.image-text-wrapper .rich-text-content a.btn.button {
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    background-color: #8ab83f;
+    display: block;
+    border: 2px solid #8ab83f;
+    width: fit-content;
+    margin: 10px 0 0;
+    padding: 12px 24px;
+    font-family: 'Dilemma', sans-serif;
+    font-weight: 600;
+    border-radius: 0;
+    color: #212c1c;
+}
+.image-text-wrapper .rich-text-content a.button-prime:hover {
+    border-color: #212c1c !important;
+}
+.image-text-wrapper .rich-text-content a.btn.button:hover {
+    border-color: #f4f1de;
+    color: #212c1c;
+}
+.image-text-wrapper .rich-text-content a.btn.button.button-second {
+    color: #f4f1de;
+    background-color: #212c1c;
+    border-color: #212c1c;
+}
+.image-text-wrapper  .rich-text-content a.btn.button.button-second:hover {
+    border-color: #8ab83f;
+}
+.image-text-wrapper  .buttons-block {
+    display: flex;
+    justify-content: start;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+.main-page-heading {
+    padding: 30px;
+}
+.main-page-heading h1 {
+    font-size: 50px;
+    color: #231f20;
+    line-height: 55px;
+    font-family: 'Dilemma', sans-serif;
+    text-align: center;
+    margin: auto;
+    font-weight: 700;
+    padding: 10px;
+}
+.image-text-wrapper .img-text-flex {
+    display: flex;
+}
+.image-text-wrapper  .text-side {
+    font-size: 15px;
+    line-height: 24px;
+    padding: 10px;
+    color: #333;
+}
+.image-text-wrapper  .media-side {
+    width: 100%;
+    max-width: 350px;
+    padding: 10px;
+}
+.image-text-wrapper .media-side img {
+    display: block;
+    width: 100%;
+}
+.image-text-wrapper .text-side p {
+    margin: 0 0 15px;
+}
+.image-text-wrapper .text-side p a {
+    color: #8ab83f;
+}
+.image-text-wrapper .text-side p a:hover {
+    color: currentColor;
+}
+  
+  
+@media (max-width: 767px) {
+  .image-text-wrapper .rich-text-content h2.heading {
+    font-size: 35px;
+    text-align: center !important;
+    line-height: 35px;
+  }
+  .image-text-wrapper .rich-text-content p.subheading {
+    font-size: 18px;
+    line-height: 18px;
+    text-align: center;
+  }
+  .image-text-wrapper .img-text-flex {
+    flex-direction: column;
+  }
+  .image-text-wrapper  .page-width {
+    padding: 0 30px !important;
+  }
+  .image-text-wrapper .rich-text-content a.btn.button {
+    width: 100%;
+  }
+}
+</style>
+

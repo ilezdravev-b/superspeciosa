@@ -1,0 +1,76 @@
+{
+  "name": "Footer Group",
+  "type": "footer",
+  "sections": {
+    "free_gift_signup_AUqxEM": {
+      "type": "free-gift-signup",
+      "settings": {
+        "popup-button-text": "FREE KRATOM",
+        "title": "WANT TO TRY OUR KRATOM FOR FREE?",
+        "subheading-1": "Don’t even pay for shipping! Just sign up for email\/text, and we'll send you two of our most popular items.",
+        "subheading-2": "Offer not valid for existing customers.",
+        "logo": "shopify:\/\/shop_images\/superspeciosa.png",
+        "legal_info": "<p>By submitting you agree to receive automated promotional messages. This agreement is not a condition of any purchase. See Terms  and Privacy Policy. Frequency varies. Can opt out at any time.<\/p>"
+      }
+    },
+    "169686719271665eb4": {
+      "type": "apps",
+      "settings": {
+        "include_margins": false
+      }
+    },
+    "footer": {
+      "type": "footer",
+      "blocks": {
+        "f5d4a860-e823-428e-887c-31ff55013c9d": {
+          "type": "navigation",
+          "settings": {
+            "title": "About Super Speciosa",
+            "menu": "about-super-speciosa"
+          }
+        },
+        "8ba22611-207c-4fe2-bd71-694258df9cc8": {
+          "type": "navigation",
+          "settings": {
+            "title": "Customer Care",
+            "menu": "customer-care"
+          }
+        },
+        "cceab318-5247-4b79-97a1-f5917bacc14e": {
+          "type": "navigation",
+          "settings": {
+            "title": "Shop",
+            "menu": "shop"
+          }
+        },
+        "20b060d3-02c0-465c-87c0-fb68b05d6d3d": {
+          "type": "navigation",
+          "settings": {
+            "title": "Trending Now",
+            "menu": "trending-now"
+          }
+        }
+      },
+      "block_order": [
+        "f5d4a860-e823-428e-887c-31ff55013c9d",
+        "8ba22611-207c-4fe2-bd71-694258df9cc8",
+        "cceab318-5247-4b79-97a1-f5917bacc14e",
+        "20b060d3-02c0-465c-87c0-fb68b05d6d3d"
+      ],
+      "settings": {
+        "copyright_message": "&copy; Super Speciosa [current_year]. All rights reserved.",
+        "footer_payment_icons": "Visa, DinersClub, JCB, Amex, Discover, Mastercard, ShopPay, ApplePay, GooglePay",
+        "logo_image": "shopify:\/\/shop_images\/svgviewer-output.svg",
+        "footer_description": "<p>These statements and products presented on this website have not been evaluated by the Food and Drug Administration FDA. The products mentioned on this website are not intended to diagnose, prevent, treat or cure any diseases or health conditions. Therefore any information on this website is presented solely as the opinions of their respective authors who in which do not claim in any way shape or form to be medical professionals providing medical advice. SuperSpeciosa.com and its owners or employees cannot be held responsible for, and will not be liable for the inaccuracy or application of any information whatsoever herein provided. By purchasing our products you agree that you are aware and in compliance with your local county, state, or federal regulations. Must be 21 years or older to purchase Kratom. The US FDA has not approved kratom as a dietary supplement. We do not ship to the following states, cities and counties in the US where Kratom is banned: Alabama, Arkansas, Indiana, Rhode Island, Vermont, Wisconsin, Sarasota County, FL, Union County, MS, San Diego, CA, Jerseyville, IL, Oceanside, CA, and Ontario, OR. Furthermore, Kratom is also banned in the following countries where shipment cannot be executed: Australia, Burma, Denmark, Finland, Israel, Lithuania, Malaysia, Myanmar, Poland, Romania, South Korea, Sweden, Thailand, United Kingdom, Vietnam.<\/p><p>This product should be used only as directed on the label. It should not be used if you are pregnant or nursing. Consult with a physician before use if you have a serious medical condition or use prescription medications. A Doctor’s advice should be sought before using this and any supplemental dietary product. All trademarks and copyrights are property of their respective owners and are not affiliated with nor do they endorse this product. By using this site, you agree to follow the <a href=\"\/policies\/privacy-policy\" target=\"_blank\" title=\"Privacy Policy\">Privacy Policy<\/a> and all <a href=\"\/policies\/terms-of-service\" target=\"_blank\" title=\"Terms of Service\">Terms & Conditions<\/a> printed on this site. Void where prohibited by law.<\/p><p>† These statements have not been evaluated by the FDA. This product is not intended to diagnose, treat, cure or prevent any disease.<\/p><p>Testimonials on this website are not intended as claims that our products can be used to diagnose, treat, cure, mitigate or prevent any disease. <a href=\"\/pages\/disclaimer\" target=\"_blank\" title=\"Disclaimer\">Read full disclaimer.<\/a><\/p>",
+        "newsletter_text": "SIGN UP & GET EXCLUSIVE KRATOM DEALS TO YOUR INBOX",
+        "newsletter_placeholder": "Enter email address...",
+        "newsletter_btn_text": "SEND"
+      }
+    }
+  },
+  "order": [
+    "free_gift_signup_AUqxEM",
+    "169686719271665eb4",
+    "footer"
+  ]
+}

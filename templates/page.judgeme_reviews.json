@@ -1,0 +1,32 @@
+{
+  "sections": {
+    "main": {
+      "type": "page",
+      "custom_css": [
+        "h1 {display: none;}"
+      ],
+      "settings": {
+      }
+    },
+    "17242792452fd006c3": {
+      "type": "apps",
+      "blocks": {
+        "judge_me_reviews_all_reviews_page_XxdXRi": {
+          "type": "shopify:\/\/apps\/judge-me-reviews\/blocks\/all_reviews_page\/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+          "settings": {
+          }
+        }
+      },
+      "block_order": [
+        "judge_me_reviews_all_reviews_page_XxdXRi"
+      ],
+      "settings": {
+        "include_margins": true
+      }
+    }
+  },
+  "order": [
+    "main",
+    "17242792452fd006c3"
+  ]
+}

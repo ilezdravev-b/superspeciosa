@@ -1,0 +1,247 @@
+{% render 'theme-load-assets', style: 'section-featured-review.min.css', script: 'section-featured-review.min.js' %}
+{% style %}
+.section-padding--{{ section.id }} {
+    background-color: {{ section.settings.back_color }};
+    background-image: url({{ section.settings.background | image_url: width: 1440 }});
+    padding-top: {{ section.settings.top_padding }}px;
+    padding-bottom: {{ section.settings.bottom_padding }}px;
+}
+.section-padding--{{ section.id }} .heading, .section-padding--{{ section.id }} .review-count {
+    color: {{ section.settings.text_color }};
+}
+@media (max-width: 767px) {
+    .section-padding--{{ section.id }} {
+        padding-top: {{ section.settings.top_padding_mob }}px;
+        padding-bottom: {{ section.settings.bottom_padding_mob }}px;
+    }
+}
+{% for block in section.blocks %}
+    #featured-review-item--{{ block.id }} .featured-review-item-inner {
+        background-color: {{ block.settings.back_color }};
+    }
+
+    #featured-review-item--{{ block.id }} .featured-review-item__heading,
+    #featured-review-item--{{ block.id }} .featured-review-item__description,
+    #featured-review-item--{{ block.id }} .featured-review-item__verified-text {
+        color: {{ block.settings.text_color }};
+    }
+{% endfor %}
+{% endstyle %}
+<div class="section-padding--{{ section.id }} featured-review">
+    <div class="container">
+        {% if section.settings.heading != blank %}
+            <h2 class="heading">{{ section.settings.heading }}</h2>
+        {% endif %}
+        {% if section.settings.reivew_count != blank %}
+            <p class="review-count">
+                {% if section.settings.star != blank %}
+                    {{ section.settings.star | image_url: width: 100 | image_tag }}
+                {% endif %}
+                {{ section.settings.reivew_count }}
+            </p>
+        {% endif %}
+        {% if section.blocks.size > 0 %}
+            <div class="swiper-container featured-review-grid">
+                <div class="swiper-wrapper">
+                    {% for block in section.blocks %}
+                        <div class="featured-review-item swiper-slide" id="featured-review-item--{{ block.id }}">
+                            <div class="featured-review-item-inner">
+                                <div class="featured-review-item__header">
+                                    {% if block.settings.avatar != blank %}
+                                        <div class="featured-review-item__avatar">
+                                            {{ block.settings.avatar | image_url: width: 60 | image_tag }}
+                                        </div>
+                                    {% endif %}
+                                    {% if block.settings.name != blank or block.settings.location != blank %}
+                                        <p class="featured-review-item__heading">
+                                            {% if block.settings.name != blank %}
+                                                {{ block.settings.name }}<br>
+                                            {% endif %}
+                                            {% if block.settings.location %}
+                                                {{ block.settings.location }}
+                                            {% endif %}
+                                        </p>
+                                    {% endif %}
+                                </div>
+                                {% if block.settings.star != blank %}
+                                    <div class="featured-review-item__star">
+                                        {{ block.settings.star | image_url: width: 88 | image_tag }}
+                                    </div>
+                                {% endif %}
+                                {% if block.settings.description != blank %}
+                                    <div class="featured-review-item__description">{{ block.settings.description }}</div>
+                                {% endif %}
+                                {% if block.settings.verified %}
+                                    <div class="featured-review-item__verified">
+                                        <span class="featured-review-item__verified-icon">
+                                            <img src="https://cdn.shopify.com/s/files/1/0700/8953/9805/files/review-check.png?v=1723457087">
+                                        </span>
+                                        <span class="featured-review-item__verified-text">Verified Buyer</span>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="swiper-pagination"></div>
+                <div class="swiper-button-prev"><img src="https://cdn.shopify.com/s/files/1/0700/8953/9805/files/slider-arrow.png?v=1723457095"></div>
+                <div class="swiper-button-next"><img src="https://cdn.shopify.com/s/files/1/0700/8953/9805/files/slider-arrow.png?v=1723457095"></div>                
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+{% schema %}
+{
+    "name": "Featured Reviews",
+    "tag": "section",
+    "class": "shopify-section",
+    "settings": [
+        {
+            "type": "text",
+            "id": "heading",
+            "label": "Heading",
+            "default": "Happy Customers Share The Super Speciosa Magic"
+        },
+        {
+            "type": "image_picker",
+            "id": "star",
+            "label": "Star"
+        },
+        {
+            "type": "text",
+            "id": "reivew_count",
+            "label": "Review Count",
+            "default": "3,000+ REVIEWS"
+        },
+        {
+            "type": "image_picker",
+            "id": "background",
+            "label": "Background Image"
+        },
+        {
+            "type": "header",
+            "content": "Color"
+        },
+        {
+            "type": "color",
+            "id": "text_color",
+            "label": "Text Color",
+            "default": "#212C1C"
+        },
+        {
+            "type": "color",
+            "id": "back_color",
+            "label": "Background Color",
+            "default": "#F4F1DE"
+        },
+        {
+            "type": "header",
+            "content": "Section Padding"
+        },
+        {
+            "type": "range",
+            "id": "top_padding",
+            "min": 0,
+            "max": 100,
+            "default": 80,
+            "label": "Top Padding",
+            "unit": "px",
+            "step": 1
+        },
+        {
+            "type": "range",
+            "id": "bottom_padding",
+            "min": 0,
+            "max": 100,
+            "default": 80,
+            "label": "Bottom Padding",
+            "unit": "px",
+            "step": 1
+        },
+        {
+            "type": "range",
+            "id": "top_padding_mob",
+            "min": 0,
+            "max": 100,
+            "default": 64,
+            "label": "Top Padding Mobile",
+            "unit": "px",
+            "step": 1
+        },
+        {
+            "type": "range",
+            "id": "bottom_padding_mob",
+            "min": 0,
+            "max": 100,
+            "default": 64,
+            "label": "Bottom Padding Mobile",
+            "unit": "px",
+            "step": 1
+        }
+    ],
+    "blocks": [
+        {
+            "type": "review",
+            "name": "Review Card",
+            "settings": [
+                {
+                    "type": "image_picker",
+                    "id": "avatar",
+                    "label": "Avatar"
+                },
+                {
+                    "type": "text",
+                    "id": "name",
+                    "label": "Client Name",
+                    "default": "Millie Brown"
+                },
+                {
+                    "type": "text",
+                    "id": "location",
+                    "label": "Clinet Location",
+                    "default": "San Jose, California"
+                },
+                {
+                    "type": "image_picker",
+                    "id": "star",
+                    "label": "Star"
+                },
+                {
+                    "type": "richtext",
+                    "id": "description",
+                    "label": "Description",
+                    "default": "<p>Ordered their Red Maeng Da Kratom, and it arrived fast. Quality is superb, and it genuinely helped me relax and alleviate muscle tension.</p>"
+                },
+                {
+                    "type": "checkbox",
+                    "id": "verified",
+                    "default": true,
+                    "label": "Verified Buyer"
+                },
+                {
+                    "type": "header",
+                    "content": "Color"
+                },
+                {
+                    "type": "color",
+                    "id": "text_color",
+                    "label": "Text Color",
+                    "default": "#F4F1DE"
+                },
+                {
+                    "type": "color",
+                    "id": "back_color",
+                    "label": "Background Color",
+                    "default": "#212C1C"
+                }
+            ]
+        }
+    ],
+    "presets": [
+        {
+            "name": "Featured Reviews"
+        }
+    ]
+}
+{% endschema %}

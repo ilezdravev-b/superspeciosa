@@ -1,0 +1,108 @@
+{% comment %}
+	Load Assets
+{% endcomment %}
+{% render 'theme-load-assets', style: 'section-custom-blog.css' %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick-theme.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.js"></script>
+
+<div class="custom-blogs-section">
+    <div class="blog-items {{ section.id }} slider container">            
+        {% for block in section.blocks %}
+            <div class="blog-item">
+                <div class="txt-blog-item">
+                    <a href="{{ block.settings.article.url }}">
+                        <p class="custom-blog-title">{{ block.settings.article.title }}</p>
+                        <p class="custom-blog-date">{% render 'icon-calendar' %}{{ block.settings.article.published_at | date: "%B %d, %Y" }}</p>
+                    </a>
+                </div>
+                <div class="blog-item-image">
+                    <a href="{{ block.settings.article.url }}" class="custom-article-link">
+                        {% if block.settings.featured_image %}
+                            <img class="article-item-img" src="{{ block.settings.featured_image | image_url }}" loading="lazy">
+                        {% else %}
+                            {% if block.settings.article.image %}
+                                <img class="article-item-img" src="{{ block.settings.article.image | image_url }}" loading="lazy">
+                            {% endif %}
+                        {% endif %}
+                    </a>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+<style>
+    .custom-blogs-section {
+        margin-top: {{ section.settings.margin_top }}px;
+        margin-bottom: {{ section.settings.margin_bottom }}px;
+    }
+</style>
+
+<script type="text/javascript">
+
+    jQuery(document).ready(function ($) {
+        $(".{{ section.id }}").slick({
+            infinite: true,
+            slidesToShow: 3,
+            slidesToScroll: 1,
+            nextArrow: '<a href="javascript:;" class="custom-btn-slide custom-next-icon"><svg width="20" height="34" viewBox="0 0 20 34" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5.6564 1.6448C6.8268 2.7872 18.262 14.7908 18.262 14.7908C18.5584 15.0768 18.7941 15.4195 18.9551 15.7986C19.1161 16.1777 19.1991 16.5853 19.1991 16.9972C19.1991 17.4091 19.1161 17.8167 18.9551 18.1958C18.7941 18.5749 18.5584 18.9176 18.262 19.2036C18.262 19.2036 6.8268 31.2128 5.6564 32.3496C4.486 33.492 2.3804 33.5704 1.1344 32.3496C-0.114398 31.1344 -0.212398 29.4348 1.1344 27.9424L11.626 17L1.1344 6.0576C-0.212398 4.5652 -0.114398 2.8628 1.1344 1.6448C2.3804 0.424001 4.486 0.499601 5.6564 1.6448Z" fill="white"/></svg></a>',
+            prevArrow: '<a href="javascript:;" class="custom-btn-slide custom-prev-icon"><svg width="20" height="34" viewBox="0 0 20 34" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M14.3437 32.3552C13.1733 31.2128 1.73806 19.2092 1.73806 19.2092C1.44167 18.9232 1.20594 18.5805 1.04493 18.2014C0.883928 17.8223 0.800947 17.4147 0.800947 17.0028C0.800947 16.5909 0.883928 16.1833 1.04493 15.8042C1.20594 15.4251 1.44167 15.0824 1.73806 14.7964C1.73806 14.7964 13.1733 2.7872 14.3437 1.6504C15.5141 0.507999 17.6197 0.4296 18.8657 1.6504C20.1145 2.8656 20.2125 4.5652 18.8657 6.0576L8.37406 17L18.8657 27.9424C20.2125 29.4348 20.1145 31.1372 18.8657 32.3552C17.6197 33.576 15.5141 33.5004 14.3437 32.3552Z" fill="white"/></svg></a>',
+            responsive: [{
+                breakpoint: 767,
+                settings: {
+                    dots: false,
+                    arrows: true,
+                    infinite: false,
+                    slidesToShow: 1,
+                    slidesToScroll: 1
+                } 
+            }]
+        });
+    })
+    
+</script>
+
+{% schema %}
+    {
+      "name": "Blog Carousel",
+      "settings": [
+        {
+            "type": "text",
+            "label": "Margin Top (px)",
+            "id": "margin_top",
+            "default": "50"
+        },
+        {
+            "type": "text",
+            "label": "Margin Bottom (px)",
+            "id": "margin_bottom",
+            "default": "50"
+        }
+      ],
+      "blocks": [
+        {
+            "type": "article_item",
+            "name": "Article Item",
+            "settings": [
+                {
+                    "type": "article",
+                    "label": "Article",
+                    "id": "article"
+                },
+                {
+                    "type": "image_picker",
+                    "label": "Replace Featured Image",
+                    "id": "featured_image"
+                }
+            ]
+        }
+      ],
+      "presets": [
+        {
+          "name": "Blog Carousel"
+        }
+      ]
+    }
+{% endschema %}

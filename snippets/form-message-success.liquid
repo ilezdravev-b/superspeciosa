@@ -1,0 +1,11 @@
+<!-- snippets/form-message-success.liquid -->
+
+{% comment %}
+	Required:
+		message {String} The succcess mesage.
+{% endcomment %}
+
+<aside class="message message--success" aria-label="Success" tabindex="-1" autofocus>
+	{% render 'icon-checkmark', class: 'icon' %}
+	{{ message }}
+</aside>

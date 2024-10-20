@@ -1,0 +1,56 @@
+<!-- sections/hidden.liquid -->
+
+{% comment %}
+    This section simply redirects the user back to the
+    specified URL. Used mainly for hidden collections and/or the cart page.
+{% endcomment %}
+
+<script>
+	const showCart = {{ section.settings.show_cart }}
+
+    // Don't run any of this if we're in the customizer
+    if ( !Shopify.designMode ) {
+        window.location.href = "{{ section.settings.redirect_url }}"
+
+		// Handle showing cart if it's enabled
+		if ( showCart ) {
+			localStorage.setItem('showCart', true)
+		}
+    }
+</script>
+
+{% schema %}
+{
+    "name": "Hide Page",
+    "settings": [
+        {
+            "type": "header",
+            "content": "General Settings"
+        },
+        {
+            "type": "paragraph",
+            "content": "Any page that this section is added to will be set to redirect to the chosen URL. Note that this is most commonly used for hidden collections."
+        },
+        {
+            "type": "url",
+            "id": "redirect_url",
+            "label": "Redirect URL"
+        },
+		{
+			"type": "checkbox",
+			"id": "show_cart",
+			"label": "Show cart after redirect",
+			"default": false,
+			"info": "This setting is mainly meant to be used when hiding the cart page."
+		}
+    ],
+    "presets": [
+        {
+            "name": "Hide Page"
+        }
+    ], 
+    "disabled_on": {
+		"groups": ["footer"]
+	}
+}
+{% endschema %}

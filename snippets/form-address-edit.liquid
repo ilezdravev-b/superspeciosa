@@ -1,0 +1,72 @@
+<!-- snippets/form-address-edit.liquid -->
+
+{% comment %}
+	Required:
+		address {Object} - The address object
+{% endcomment %}
+
+{% form "customer_address", address, class: "account__form js-address" %}
+	<div class="input-group">
+		<label for="address_first_name_{{ address.id }}">First Name</label>
+		<input type="text" id="address_first_name_{{ address.id }}" name="address[first_name]" placeholder="{{ settings.placeholder_first_name }}" value="{{ form.first_name }}" required />
+	</div>
+
+	<div class="input-group">
+		<label for="address_last_name_{{ address.id }}">Last Name</label>
+		<input type="text" id="address_last_name_{{ address.id }}" name="address[last_name]" placeholder="{{ settings.placeholder_last_name }}" value="{{ form.last_name }}" required />
+	</div>
+
+	<div class="input-group">
+		<label for="address_company_{{ address.id }}">Company</label>
+		<input type="text" id="address_company_{{ address.id }}" name="address[company]" placeholder="{{ settings.placeholder_company }}" value="{{ form.company }}" />
+	</div>
+
+	<div class="input-group">
+		<label for="address_address1_{{ address.id }}">Address 1</label>
+		<input type="text" id="address_address1_{{ address.id }}" name="address[address1]" placeholder="{{ settings.placeholder_address_1 }}" value="{{ form.address1 }}" required />
+	</div>
+
+	<div class="input-group">
+		<label for="address_address2_{{ address.id }}">Address 2</label>
+		<input type="text" id="address_address2_{{ address.id }}" name="address[address2]" placeholder="{{ settings.placeholder_address_2 }}" value="{{ form.address2 }}" />
+	</div>
+
+	<div class="input-group">
+		<label for="address_city_{{ address.id }}">City</label>
+		<input type="text" id="address_city_{{ address.id }}" name="address[city]" placeholder="{{ settings.placeholder_city }}" value="{{ form.city }}" required />
+	</div>
+
+	<div class="input-group">
+		<label for="address_country_{{ address.id }}">Country</label>
+		<div class="input-select">
+			<select id="address_country_{{ address.id }}" class="js-address-country" name="address[country]" data-default="{{ form.country }}" data-default="{{ form.country }}" formId="{{ address.id }}" required>{{ country_option_tags }}</select>
+		</div>
+	</div>
+
+	<div class="input-group" id="address_province_container_{{ address.id }}">
+		<label for="address_province_{{ address.id }}">State / Province</label>
+		<div class="input-select">
+			<select id="address_province_{{ address.id }}" class="address_form" name="address[province]" data-default="{{ form.province }}"></select>
+		</div>
+	</div>
+
+	<div class="input-group">
+		<label for="address_zip_{{ address.id }}">Postal / Zip Code</label>
+		<input type="text" id="address_zip_{{ address.id }}" name="address[zip]" placeholder="{{ settings.placeholder_zip_code }}" value="{{ form.zip }}" required />
+	</div>
+
+	<div class="input-group">
+		<label for="address_phone_{{ address.id }}">Phone</label>
+		<input type="tel" id="address_phone_{{ address.id }}" name="address[phone]" placeholder="{{ settings.placeholder_phone }}" value="{{ form.phone }}" />
+	</div>
+
+	<div class="input-group input-checkbox">
+		<input type="checkbox" id="address_default_address_{{ address.id }}" name="address[default]" value="0">
+		<label for="address_default_address_{{ address.id }}">Set as default address</label>
+	</div>
+
+	<div class="account-address__actions">
+		<button type="submit" class="btn btn--primary">Save</button>
+		<button type="button" class="btn btn--hollow js-accordion-btn" aria-expanded="false" aria-controls="edit{{ address.id }}">Cancel</button>
+	</div>
+{% endform %}

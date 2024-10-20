@@ -1,0 +1,67 @@
+<!-- snippets/product-badge.liquid -->
+
+{% comment %}
+    Required:
+        product {Object} The product object
+
+	Optional:
+		badge {String} Custom badge text. Will override the sale badge if item is on sale.
+
+    Notes:
+        Using the b tag allows us to indicate that
+        the user's attention should be drawn to this text.
+		Additionally, we're prioritizing the custom badge
+		above sale badges.
+{% endcomment %}
+
+{% liquid 
+	if product.compare_at_price and product.compare_at_price > product.price
+		assign showSaleBadge = true
+	endif
+%}
+
+{%- if badge != blank -%}
+
+	{% comment %}
+		Custom Badge
+	{% endcomment %}
+
+	<b class="product-badge">
+		{{ badge }}
+	</b>
+
+{%- elsif showSaleBadge -%}
+
+	{% comment %}
+		Sale Badge
+	{% endcomment %}
+
+    <b class="product-badge">
+        {{ product.compare_at_price | minus: product.price | times: 100.0 | divided_by: product.compare_at_price | money_without_currency | times: 100 | remove: '.0'}}% OFF
+    </b>
+
+{%- endif -%}
+
+{% comment %}
+	Bottom badge
+{% endcomment %}
+
+{%- if product.tags contains 'daily_deal' -%}
+    <div class="product-badge--bottom"><span>Daily Deal</span></div>
+{%- elsif product.tags contains 'kid_friendly' -%}
+    <div class="product-badge--bottom"><span>Kid Friendly</span></div>
+{%- elsif product.tags contains 'beginner_friendly' -%}
+    <div class="product-badge--bottom"><span>Beginner Friendly</span></div>
+{%- elsif product.tags contains 'steal_of_the_day' -%}
+    <div class="product-badge--bottom"><span>Steal of the Day</span></div>
+{%- elsif product.tags contains 'assortment_of_the_day' -%}
+    <div class="product-badge--bottom"><span>Assortment of the Day</span></div>
+{%- elsif product.tags contains 'best_seller' -%}
+    <div class="product-badge--bottom"><span>Best Seller</span></div>
+{%- elsif product.tags contains 'limited_time_only' -%}
+    <div class="product-badge--bottom"><span>Limited Time Only</span></div>
+{%- elsif product.tags contains 'diy_or_built_for_you' -%}
+    <div class="product-badge--bottom"><span>DIY or Built For You</span></div>
+{%- elsif product.tags contains 'finished_ready_to_ship' -%}
+    <div class="product-badge--bottom"><span>Finished - Ready to Ship</span></div>
+{%- endif -%}

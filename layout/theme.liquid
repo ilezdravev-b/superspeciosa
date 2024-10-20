@@ -1,0 +1,227 @@
+<!doctype html>
+<html
+  class="no-js js-loading"
+  lang="{{ request.locale.iso_code }}"
+  style="--promo-bar-height: 44px; --header-height: 100px; --desktop-menu-height: 120px;"
+>
+  <head>
+    {% render 'replo-head' %}
+    {% render 'skio-head' %}
+
+    <script src="https://db.revoffers.com/db/superspeciosa.com.js" async></script>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    
+    {% if template contains 'collection' %}
+      <link rel="canonical" href="{{ shop.url }}{{ collection.url }}" />
+    {% elsif template contains 'blog' %}
+      <link rel="canonical" href="{{ shop.url }}{{ blog.url }}" />
+    {% else %}
+      <link rel="canonical" href="{{ canonical_url }}" />
+    {% endif %}
+
+    {% if current_tags %}
+      <meta name=“robots” content=“noindex, follow”>
+    {% elsif template contains 'collection' and collection.handle == 'vendors' %}
+      <meta name=“robots” content=“noindex, follow”>
+    {% elsif template contains 'collection' and collection.handle == 'types' %}
+      <meta name=“robots” content=“noindex, follow”>
+    {% elsif template contains 'collection' and collection.handle == 'all'%}
+      <meta name=“robots” content=“noindex, follow”>
+    {% elsif template contains 'collection' and collection.handle == 'new'%}
+      <meta name=“robots” content=“noindex, follow”>
+    {% else %}
+      <meta name="robots" content="index,follow">
+    {% endif %}
+    
+    <link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.5.0/css/swiper.css">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.5.0/js/swiper.min.js"></script>
+    <title>
+      {{ page_title }}
+      {%- if current_tags %} &ndash; tagged "{{ current_tags | join: ', ' }}"{% endif -%}
+      {%- if current_page != 1 %} &ndash; Page {{ current_page }}{% endif -%}
+      {%- unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless -%}
+    </title>
+
+    {%- assign meta_page_description = page_description | default: shop.description | default: shop.name -%}
+    <meta name="description" content="{{ meta_page_description | escape }}">
+
+    {% comment %}
+      Meta Tags for SEO
+    {% endcomment %}
+    {{ 'custom-script.js' | asset_url | script_tag }}
+    {% render 'theme-meta-tags' %}
+
+    {%- if settings.favicon != blank -%}
+      <link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 32, height: 32 }}">
+    {%- endif -%}
+
+    {% comment %}
+      Theme Font Stylesheet Links (Normally Google Fonts)
+      Remove if the site does not need :)
+    {% endcomment %}
+
+    {% render 'theme-font-links' %}
+
+    {% comment %}
+      Main JS and CSS
+    {% endcomment %}
+
+    {% render 'theme-main-assets' %}
+
+    {% comment %}
+      Template-specific assets
+
+      	Note: This snippet pre-loads template-specific assets
+      based on template name. Styles and scripts here should
+      only be for above-the-fold content.
+    {% endcomment %}
+
+    {% render 'theme-template-specific-assets' %}
+
+    <!-- begin content_for_header -->
+    {{ content_for_header }}
+    <!-- end content_for_header -->
+
+    {% comment %}
+      Site Schema (JSON-LD format)
+    {% endcomment %}
+
+    {% render 'theme-schema-header' %}
+    {% render 'bon-loyalty-custom' %}
+
+    <script src="{{ 'abra.js' | asset_url }}" defer="defer"></script>
+
+    {% comment %}
+      Clarity Code Start
+    {% endcomment %}
+
+    <script type="text/javascript">
+      (function(c,l,a,r,i,t,y){
+          c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+          t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+          y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+      })(window, document, "clarity", "script", "fvq8infxak");
+    </script>
+
+    {% comment %}
+      Clarity Code End
+    {% endcomment %}
+  </head>
+
+  <body class="template--{{ template.name }} template--{{ template.suffix }} page-{{ page.handle }}">
+    <!-- Google Tag Manager (noscript) -->
+    <noscript
+      ><iframe
+        src="https://www.googletagmanager.com/ns.html?id=GTM-"
+        height="0"
+        width="0"
+        style="display:none;visibility:hidden"
+      ></iframe
+    ></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+
+    {% comment %}
+      Universal Before-Main Content
+    {% endcomment %}
+
+    {% section 'promo-bar' %}
+    {% render 'skip-links' %}
+    {% render 'header' %}
+    {% section 'menu-mobile' %}
+
+    {% comment %}
+      Overlays
+    {% endcomment %}
+
+    {% render 'theme-overlays' %}
+
+    <main id="MainContent" role="main" tabindex="-1" data-template="{{ template.name }}">
+      {% comment %}
+        Screen Reader Announcements
+      {% endcomment %}
+
+      <div id="screenReaderStatus" role="status" class="sr-only"></div>
+
+      {{ content_for_layout }}
+    </main>
+
+    {% comment %}
+      Universal After-Main Content
+      Not shown on account pages?
+    {% endcomment %}
+
+    {%- assign hidden_footer_templates = 'login, register, account, addresses' | split: ', ' -%}
+
+    {% sections 'footer-group' %}
+
+    {% comment %}
+      Drawer Cart and Ajax Cart Assets
+
+      Notes: The script for the ajax cart is used universally,
+      		whether the drawer ajax cart is enabled or not (because
+      		it powers the cart page), which is why it's being loaded here
+      		when the drawer ajax cart is disabled.
+    {% endcomment %}
+
+    {%- if settings.ajax_cart_enable -%}
+      {% section 'ajax-cart' %}
+    {%- elsif template == 'cart' -%}
+      <script src="{{ 'section-ajax-cart.min.js' | asset_url }}" defer></script>
+    {%- endif -%}
+
+    {% comment %}
+      Data and text available on the window object
+    {% endcomment %}
+
+    {% render 'theme-window-data' %}
+
+    {% comment %}
+      Klaviyo
+    {% endcomment %}
+
+    {%- if settings.klaviyo_manual_onsite_script -%}
+      {% render 'vendor-klaviyo-web-tracking' %}
+    {%- endif -%}
+
+    {%- if settings.enable_klaviyo_atc_tracking -%}
+      {% render 'vendor-klaviyo-web-atc-tracking' %}
+    {%- endif -%}
+
+    {%- if settings.enable_klaviyo_bis and template.name == 'product' -%}
+      {% render 'vendor-klaviyo-back-in-stock' %}
+    {%- endif -%}
+
+    <script>
+      {% if template contains 'collections' %}
+      window.location.href = '/collections/store/';
+      {% endif %}
+      
+       {% if collection.handle == 'best-sellers-home-page' %}
+        window.location.href = '/collections/best-sellers';
+      {% elsif collection.handle == 'cbd-2' %}
+        window.location.href = '/collections/cbd';
+         {% endif %}
+      
+      {% if page.handle == 'new-to-kratom-2' %}
+        window.location.href = '/pages/new-to-kratom';
+         {% elsif page.handle == 'careers-karatom' %}  
+        window.location.href = '/pages/careers';
+        {% endif %}
+    </script>
+
+    {% comment %}
+      Helpscout
+    {% endcomment %}
+    <script type="text/javascript">
+      !function(e,t,n){function a(){var e=t.getElementsByTagName("script")[0],n=t.createElement("script");n.type="text/javascript",n.async=!0,n.src="https://beacon-v2.helpscout.net",e.parentNode.insertBefore(n,e)}if(e.Beacon=n=function(t,n,a){e.Beacon.readyQueue.push({method:t,options:n,data:a})},n.readyQueue=[],"complete"===t.readyState)return a();e.attachEvent?e.attachEvent("onload",a):e.addEventListener("load",a,!1)}(window,document,window.Beacon||function(){});
+    </script>
+    <script type="text/javascript">
+      window.Beacon('init', '3f0bec9d-0cb4-4e5a-9de4-9eff58980548')
+    </script>
+    {% include 'attrac_fix' %}
+  </body>
+</html>

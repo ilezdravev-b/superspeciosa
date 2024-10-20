@@ -1,0 +1,152 @@
+<!-- snippets/menu-desktop-dropdown.liquid -->
+
+{% comment %}
+	Required:
+		first_level_index {Integer} Index of the current first-level link
+		first_level {Object} First-level link object
+
+	Optional: 
+		reverse_flyout {Boolean} Whether to apply class to reverse the direction of the flyout
+{% endcomment %}
+
+<div class="menu-desktop__dropdown-level-one js-megamenu-children"
+	id="desktopDropdown{{ first_level_index }}">
+
+	<div class="menu-desktop__dropdown-level-one-left-content">
+		<div class="menu-desktop__dropdown-level-one-title ss-text-uppercase title">Elevate Your Well Being, Naturally</div>
+		<a href="/collections/store" class="go-to-shop-all ss-button">SHOP ALL KRATOM PRODUCTS</a>
+	</div>
+
+	{%- assign menu_title = first_level.title | downcase -%}
+	{%- assign mega_flag = false -%}
+	{%- assign item_count = 0 -%}
+	{%  assign col_num = 0 %}
+
+	{% for block in section.blocks %}
+		{%- if block.type == "menu_links" -%}
+			{%- assign parent_title = block.settings.parent_title | downcase -%}
+			{%- if parent_title == menu_title -%}
+				{%- assign mega_flag = true -%}
+				{% assign item_count = item_count | plus: 1 %}
+			{%- endif -%}
+		{%- endif -%}
+	{% endfor %}
+
+	{%- if item_count <= 6 -%}
+		{%- assign col_num = 3 -%}
+	{%- elsif item_count < 9 -%}
+		{%- assign col_num = 4 -%}
+	{%- else -%}
+		{%- assign col_num = 5 -%}
+	{%- endif -%}
+
+	<ul class="menu-desktop__dropdown-level-one-wrapper {% if mega_flag == true %}mega-menu col_{{ col_num }} {% endif %}">
+		{%- if mega_flag == true -%}
+			{% for second_level in first_level.links %}
+				{% liquid
+					assign second_level_index = forloop.index
+				%}
+
+				{% for block in section.blocks %}
+					{%- if block.type == "menu_links" -%}
+						{%- assign parent_title = block.settings.parent_title | downcase -%}
+						{%- assign current_title = block.settings.title | downcase -%}
+						{%  assign link_title = second_level.title |  downcase %}
+						{%- if parent_title == menu_title and current_title == link_title -%}
+							<li class="js-megamenu-parent menu-desktop__item-level-two-wrapper ss-mega-sub-menu-item">
+							
+								{% if second_level.levels == 0 %}
+								
+									{% comment %}
+										Second-Level Link Without Children
+									{% endcomment %}
+
+									<a class="menu-desktop__item-level-two" href="{{ block.settings.link }}">
+										<div class="ss-mega-sub-menu-item-images"><img src="{{ block.settings.image |  image_url: width: 500  }}" width="" height="" alt=""></div>
+										<div class="ss-mega-sub-menu-item-title">{{ second_level.title }}</div>
+									</a>
+								{% else %}
+
+									{% comment %}
+										Second-Level Link With Children
+									{% endcomment %}
+
+									<button type="button"
+										class="menu-desktop__item-level-two has-dropdown js-megamenu-btn"
+										aria-expanded="false" aria-haspopup="menu"
+										aria-controls="desktopDropdown{{ first_level_index }}{{ second_level_index }}">
+										{{ second_level.title }}
+									</button>
+
+									<ul class="menu-desktop__dropdown-level-two {% if reverse_flyout %}menu-desktop__dropdown-level-two--reverse{% endif %} js-megamenu-children"
+										id="desktopDropdown{{ first_level_index }}{{ second_level_index }}">
+
+										{% comment %}
+											Third-Level Links
+										{% endcomment %}
+
+										{% for third_level in second_level.links %}
+											<li class="menu-desktop__item-level-three-wrapper">
+												<a class="menu-desktop__item-level-three" href="{{ third_level.url }}">
+													{{ third_level.title }}
+												</a>
+											</li>
+										{% endfor %}
+									</ul>
+								{% endif %}
+							</li>
+						{%- endif -%}
+					{% endif %}
+				{% endfor %}
+			{% endfor %}
+		{%- else -%}
+			{% for second_level in first_level.links %}
+				{% liquid
+					assign second_level_index = forloop.index
+				%}
+
+				<li class="js-megamenu-parent menu-desktop__item-level-two-wrapper">
+				
+					{% if second_level.levels == 0 %}
+					
+						{% comment %}
+							Second-Level Link Without Children
+						{% endcomment %}
+
+						<a class="menu-desktop__item-level-two" href="{{ second_level.url }}">
+							{{ second_level.title }}
+						</a>
+					{% else %}
+
+						{% comment %}
+							Second-Level Link With Children
+						{% endcomment %}
+
+						<button type="button"
+							class="menu-desktop__item-level-two has-dropdown js-megamenu-btn"
+							aria-expanded="false" aria-haspopup="menu"
+							aria-controls="desktopDropdown{{ first_level_index }}{{ second_level_index }}">
+							{{ second_level.title }}
+						</button>
+
+						<ul class="menu-desktop__dropdown-level-two {% if reverse_flyout %}menu-desktop__dropdown-level-two--reverse{% endif %} js-megamenu-children"
+							id="desktopDropdown{{ first_level_index }}{{ second_level_index }}">
+
+							{% comment %}
+								Third-Level Links
+							{% endcomment %}
+
+							{% for third_level in second_level.links %}
+								<li class="menu-desktop__item-level-three-wrapper">
+									<a class="menu-desktop__item-level-three" href="{{ third_level.url }}">
+										{{ third_level.title }}
+									</a>
+								</li>
+							{% endfor %}
+						</ul>
+					{% endif %}
+				</li>
+			{% endfor %}
+		{%- endif -%}
+	</ul>
+</div>

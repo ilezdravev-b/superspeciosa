@@ -1,0 +1,65 @@
+<!-- snippets/collection-filter-price-range.liquid -->
+
+{% comment %}
+	Required:
+		filter {Object} The current filter
+		label_handle {String} The current filter's label in handle form
+{% endcomment %}
+
+{% liquid 
+	comment 
+		Logic for swapping decimals for commas
+		based on the formatting of the currency.
+	endcomment 
+
+	assign currencies_using_decimals = 'ANG,ARS,BRL,BYN,BYR,CLF,CLP,COP,CRC,CZK,DKK,EUR,HRK,HUF,IDR,ISK,MZN,NOK,PLN,RON,RUB,SEK,TRY,UYU,VES,VND' | split: ','
+	assign preferred_comma_type = ","
+
+	if currencies_using_decimals contains cart.currency.iso_code
+		assign preferred_comma_type = "."
+	endif
+
+	comment 
+		Basic Variables
+	endcomment 
+
+	assign currency_symbol = cart.currency.symbol
+	assign id_prefix = 'filter' | append: filter.param_name | camelcase
+	assign range_max = filter.range_max | money_without_currency | replace: ',', preferred_comma_type
+	assign min_value = filter.min_value.value | money_without_currency | replace: ',', preferred_comma_type | default: ''
+	assign max_value = filter.max_value.value | money_without_currency | replace: ',', preferred_comma_type | default: ''
+%}
+
+<div>
+	<span class="collection-filter__price-currency">{{ currency_symbol }}</span>
+
+	<label class="sr-only" for="{{ id_prefix }}Min">Minimum Price</label>
+
+	<input class="collection-filter__price-input js-filters-input"
+		name="{{ filter.min_value.param_name }}"
+		id="{{ id_prefix }}Min"
+		value="{{ min_value }}"
+		type="number"
+		placeholder="0"
+		min="0"
+		max="{{ range_max }}"
+	>
+</div>
+
+<div>-</div>
+
+<div>
+	<span class="collection-filter__price-currency">{{ currency_symbol }}</span>
+
+	<label class="sr-only" for="{{ id_prefix }}Max">Maximum Price</label>
+
+	<input class="collection-filter__price-input js-filters-input"
+		name="{{ filter.max_value.param_name }}"
+		id="{{ id_prefix }}Max"
+		value="{{ max_value }}"
+		type="number"
+		min="0"
+		max="{{ range_max }}"
+		placeholder="{{ range_max }}"
+	>
+</div>

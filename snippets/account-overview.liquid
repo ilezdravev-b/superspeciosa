@@ -1,0 +1,114 @@
+<!-- snippets/account-overview.liquid -->
+
+{%- liquid 
+    assign title = "Personal Info"
+    assign reset_password_cta = "Reset Password"
+    assign addresses_header = "Addresses"
+    assign addresses_default_header = "Default Address"
+    assign addresses_call_to_action = "Manage Addresses"
+    assign addresses_no_default = "No addresses saved."
+    assign orders_header = "Recent Orders"
+    assign orders_call_to_action = "View All Orders"
+    assign no_orders_text = "No orders yet."
+-%}
+
+{% comment %}
+	General Info
+{% endcomment %}
+
+<div class="account__section">
+	<h2 class="account__heading">
+		{{ title }}
+	</h2>
+
+	<div class="rte">
+		{{ customer.name }}<br />
+		{{ customer.email }}
+	</div>
+
+	<div class="account__section__actions">
+		<a href="{{ routes.account_login_url }}#recover" class="btn btn--primary">
+			{{ reset_password_cta }}
+		</a>
+	</div>
+</div>
+
+{% comment %}
+	Addresses
+{% endcomment %}
+
+<div class="account__section">
+	<h3 class="account__heading account__heading--secondary">
+		{{ addresses_header }}
+	</h3>
+
+	{%- if customer.default_address != empty and customer.addresses_count > 0 -%}
+		<div class="account-address">
+			<h4 class="account-address__title">
+				{{ addresses_default_header }}
+			</h4>
+
+			<address>
+				{{ customer.default_address | format_address }}
+			</address>
+		</div>
+
+	{%- else -%}
+		<div class="rte">
+			{{ addresses_no_default }}
+		</div>
+	{%- endif -%}
+
+	<div class="account__section__actions">
+		<a href="{{ routes.account_addresses_url }}" class="btn btn--primary">
+			{{ addresses_call_to_action }}
+		</a>
+	</div>
+</div>
+
+{% comment %}
+	Summary of Recent Orders
+{% endcomment %}
+
+<div class="account__section">
+	<h3 class="account__heading account__heading--secondary">
+		{{ orders_header }}
+	</h3>
+
+	{%- if customer.orders.size > 0 -%}
+		<table>
+			<thead>
+				<tr>
+					<th>{{ 'customer.orders.order_number' | t }}</th>
+					<th>{{ 'customer.orders.date' | t }}</th>
+					<th>{{ 'customer.orders.status' | t }}</th>
+				</tr>
+			</thead>
+
+			<tbody>
+				{%- for order in customer.orders limit: 2 -%}
+					<tr>
+						<td>
+							<a href="{{ order.customer_url }}">{{ order.name }}</a>
+						</td>
+						<td>{{ order.created_at | time_tag: "%m/%d/%Y" }}</td>
+						<td>{{ order.fulfillment_status | capitalize }}</td>
+					</tr>
+				{%- endfor -%}
+			</tbody>
+		</table>
+
+		<div class="account__section__actions">
+			<a href="{{ routes.account_url }}?view=orders" class="btn btn--primary">
+				{{ orders_call_to_action }}
+			</a>
+		</div>
+
+	{%- else -%}
+
+		<div class="rte">
+			{{ no_orders_text }}
+		</div>
+
+	{%- endif -%}
+</div>

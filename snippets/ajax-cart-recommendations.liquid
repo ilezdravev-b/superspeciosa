@@ -1,0 +1,47 @@
+<!-- snippets/ajax-cart-recommendations.liquid -->
+
+{% comment %}
+	Initial Liquid Variables
+{% endcomment %}
+
+{% liquid 
+    if settings.cart_recommendations_type == "collection" 
+        assign recommended_products = settings.cart_recommendations_collection.products
+    else 
+        assign recommended_products = settings.cart_recommendations_product_list
+    endif
+%}
+
+{% comment %}
+	Markup
+{% endcomment %}
+
+{%- if recommended_products.count > 0 -%}
+
+    <section class="ajax-cart__recommendations">
+
+        <div class="ajax-cart__recommendations__header">
+            {% comment %}
+                Title
+            {% endcomment %}
+
+            <h2 class="ajax-cart__recommendations__title">{{ settings.cart_recommendations_title }}</h2>
+        </div>
+
+        {% comment %}
+            Product Thumbnails
+        {% endcomment %}
+
+        <div class="ajax-cart__recommendations__slides-container">
+            <div class="ajax-cart__recommendations__slides">
+                {%- for recommendation in recommended_products -%}
+                    {% unless recommendation.tags contains "BOLD_HIDDEN_PRODUCT" or recommendation.tags contains "OPTIONS_HIDDEN_PRODUCT" %}
+                        {% render 'product-thumbnail', product: recommendation %}
+                    {% endunless %}
+                {%- endfor -%}
+            </div>
+        </div>
+
+    </section>
+
+{%- endif -%}

@@ -1,0 +1,154 @@
+<!-- snippets/product-options.liquid -->
+
+{% comment %}
+  Required:
+  	current_variant {Object} The variant object.
+{% endcomment %}
+
+<div class="product-options">
+  {%- for num in (1..product.options.size) -%}
+    {%- liquid
+      assign option_title = product.options[forloop.index0] | default: false
+      assign option_handle = option_title | handle
+      assign option_number = 'option' | append: num
+      assign is_color = true
+
+      if option_title contains 'Color'
+        assign is_color = false
+      endif
+    -%}
+    {% comment %} The is_color values are switched, replace true by false and viceversa {% endcomment %}
+
+    <fieldset class="product-options__option js-product-options" role="radiogroup">
+      <legend class="product-options__option-title">
+        Choose {{ option_title -}}
+        :
+        {% comment %}
+          {%- if is_color == true %}
+            <span class="js-product-option-value" aria-hidden="true">— {{ current_variant[option_number] }}</span>
+          {%- endif %}
+        {% endcomment %}
+      </legend>
+      <div class="variant-selector-container">
+        {% assign serving_weight = product.metafields.custom.serving | default: 1 %}
+        {% assign hide_savings = product.metafields.custom.hide_serving_savings_on_pdp.value | default: false %}
+        
+        
+        {%- for variant in product.variants -%}
+          {%- assign option = variant[option_number] -%}
+          {%- liquid
+            assign option_handle = option | handle
+            assign selected = false
+
+            if option == current_variant[option_number]
+              assign selected = true
+            endif
+
+            assign weight_for_calculation = variant.weight
+            if variant.metafields.custom.net_weight.value > 0
+              assign weight_for_calculation = variant.metafields.custom.net_weight.value
+            endif
+
+            if forloop.first
+              assign price = variant.price
+              assign count = weight_for_calculation | divided_by: serving_weight | ceil
+              assign saving_first_price = variant.price | divided_by: 1.0 | divided_by: count
+            endif
+          -%}
+
+          {% if is_color %}
+            {% comment %}
+              Color Swatch
+            {% endcomment %}
+
+            <label
+              class="input-swatch variant-selector {% unless variant.available %} out-of-stock {% endunless %} {% if product.tags contains "Custom-Variants" %}custom{% endif %}"
+              for="{{ option_handle }}-{{ product.id }}"
+              data-variant-id="{{ variant.id }}"
+              data-variant-sku="{{ variant.sku }}"
+              data-variant-batch-number="{{ variant.metafields.global.batch_number.value }}"
+            >
+              {%- if variant.available -%}
+                <input
+                  type="radio"
+                  name="{{ option_number }}"
+                  value="{{ option | escape }}"
+                  class="js-product-option"
+                  title="{{ option_title }}: {{ option }}"
+                  id="{{ option_handle }}-{{ product.id }}"
+                  {% if selected %}
+                    checked
+                  {% endif %}
+                >
+              {%- endif -%}
+              <span class="variant-title">{{ variant.title }}</span>
+              <div class="price--list">
+                <p class="variant-current-price">{{ variant.price | money }}</p>
+                {%- assign count = weight_for_calculation | divided_by: serving_weight | ceil -%}
+                {%- if hide_savings == false -%}
+                  <p class="price_per_serving">
+                    {{ variant.price | divided_by: 1.0 | divided_by: count | money }} per serving
+                  </p>
+                {% endif %}
+              </div>
+              {% unless variant.available and forloop.first %}
+                
+                  {%- if variant.available -%}
+                    {% if  hide_savings ==false %}
+                      <p class="badge">
+                      {% liquid
+                        assign count = weight_for_calculation | divided_by: serving_weight | ceil
+                        assign saving_price = variant.price | divided_by: 1.0 | divided_by: count | minus: saving_first_price
+                        assign percent = saving_price | times: 100.0 | divided_by: saving_first_price | money_without_currency | times: 100 | remove: '.0' | abs
+                        assign p_text = 'SAVE ' | append: percent | append: '%'
+                        echo p_text
+                      %}
+                      </p>
+                    {% endif %}
+                  {%- else -%}
+                    <p class="badge">OUT OF STOCK</p>
+                  {%- endif -%}
+                
+              {% endunless %}
+            </label>
+
+          {% else %}
+            {% comment %}
+              Pill Button
+            {% endcomment %}
+
+            <div class="input-pill swiper-slide">
+              <input
+                type="radio"
+                name="{{ option_number }}"
+                value="{{ option | escape }}"
+                class="js-product-option"
+                title="{{ option_title }}: {{ option }}"
+                id="{{ option_handle }}-{{ product.id }}"
+                {% if selected %}
+                  checked
+                {% endif %}
+              >
+
+              <label for="{{ option_handle }}-{{ product.id }}">
+                {{ option }}
+              </label>
+            </div>
+          {% endif %}
+        {%- endfor -%}
+      </div>
+    </fieldset>
+  {%- endfor -%}
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    for (const variantTitle of document.querySelectorAll('.variant-title')) {
+      const itemText = variantTitle.innerHTML;
+      const breakStart = itemText.indexOf('(');
+      if (breakStart > 0) {
+        variantTitle.innerHTML = itemText.slice(0, breakStart) + '<br/>' + itemText.slice(breakStart);
+      }
+    }
+  });
+</script>

@@ -1,0 +1,46 @@
+<!-- snippets/free-shipping-bar.liquid -->
+
+{% comment %}
+    Required: nothing 
+
+    All content is pulled from global theme settings
+{% endcomment %}
+
+{%- liquid 
+    assign threshold = settings.fs_amount
+    assign below_threshold_message = settings.fs_cart_has
+    assign met_threshold_message = settings.fs_cart_accepted
+-%}
+
+<div class="free-shipping-bar" 
+    data-threshold="{{ threshold }}">
+
+    {%- assign threshold = threshold | times: 100 -%}
+    {%- assign threshold_money = threshold | money_without_trailing_zeros %}
+    {%- assign message = met_threshold_message -%}
+    {%- assign bar_percentage = 100 -%}
+
+    {%- if cart.total_price < threshold -%}
+        {%- assign price_difference = threshold | minus: cart.total_price -%}
+        {% capture price_difference_money %}<b>{{ price_difference | money }}</b>{% endcapture %}
+        {%- assign bar_percentage = threshold | minus: price_difference | times: 100 | divided_by: threshold -%}
+
+        {%- if cart.total_price < 1 -%}
+            {%- assign message = "<b>Free shipping on orders over " | append: threshold_money | append: "</b>" -%}
+        {%- else -%}
+            {%- assign message = below_threshold_message | replace: "[amount]", price_difference_money -%}
+        {%- endif -%}
+    {%- endif -%}
+
+
+    <div class="free-shipping-bar__heading">{{ message }}</div>
+
+    <div class="free-shipping-bar__wrapper">
+        <div class="free-shipping-bar__bar">
+            <span class="free-shipping-bar__progress" style="width: {{ bar_percentage }}%;"></span>
+        </div>
+
+        <span class="scale-0">$0</span>
+        <span class="scale-100">{{ threshold_money }}</span>
+    </div>
+</div>

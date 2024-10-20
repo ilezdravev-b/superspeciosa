@@ -1,0 +1,68 @@
+{%- comment -%} 
+Value props to be shown on the checkout page below `Total`
+{%- endcomment -%}
+
+{%- assign wrapper_classes = wrapper_classes | default: '' -%}
+
+<div class="checkout-vp-wrapper {{ wrapper_classes }}">
+  <div class="checkout-vp-heading">
+abc  </div>
+  <div class="checkout-vp-body">
+    <div class="checkout-vp-list">
+      <div class="checkout-vp-item">
+        <div class="vp-item-image-wrapper">
+          <img src="{{ 'checkout_trophy.png' | asset_url }}" width="50" height="50" loading="lazy">
+        </div>
+        <div class="vp-item-text-wrapper">
+          <div class="vp-item-heading">
+            Quality
+          </div>
+          <div class="vp-item-text">
+[Quality blurb]          </div>
+        </div>
+      </div>
+
+      <div class="checkout-vp-item">
+        <div class="vp-item-image-wrapper">
+          <img src="{{ 'checkout_box.png' | asset_url }}" width="50" height="50" loading="lazy">
+        </div>
+        <div class="vp-item-text-wrapper">
+          <div class="vp-item-heading">
+            Perfectly Packaged
+          </div>
+          <div class="vp-item-text">
+            [USP]          
+          </div>
+        </div>
+      </div>
+      
+      <div class="checkout-vp-item">
+        <div class="vp-item-image-wrapper">
+          <img src="{{ 'checkout_medal.png' | asset_url }}" width="50" height="50" loading="lazy">
+        </div>
+        <div class="vp-item-text-wrapper">
+          <div class="vp-item-heading">
+            Easy & Fast Crafting Tutorials!
+          </div>
+          <div class="vp-item-text">
+            Our site and YouTube channel have tutorials that show you how to craft a variety of products ranging from bouquets to wreaths.
+          </div>
+        </div>
+      </div>
+
+      <div class="checkout-vp-item">
+        <div class="vp-item-image-wrapper">
+          <img src="{{ 'checkout_phone.png' | asset_url }}" width="50" height="50" loading="lazy">
+        </div>
+        <div class="vp-item-text-wrapper">
+          <div class="vp-item-heading">
+            Excellent Customer Service
+          </div>
+          <div class="vp-item-text">
+            Available by text, phone or chat! We're happy to help if you run into any problems or need help with anything.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

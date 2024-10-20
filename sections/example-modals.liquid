@@ -1,0 +1,92 @@
+<!-- sections/example-modals.liquid -->
+
+{% comment %}
+	Load Assets
+
+	Notes: The script is loaded globally, as it's used
+		   for a lot of core functionality. Hoever, the
+		   generic modal styles are defined in styles/components
+		   and should be only loaded as needed.
+
+		   Snippets exist for easy modal creation. In order to use,
+		   the modal content should be captured and passed to the modal
+		   snippet as seen below.
+{% endcomment %}
+
+{% render 'theme-load-assets', style: 'section-example-modal.min.css' %}
+
+<div class="container-text section">
+
+	<h2 class="style-guide__heading">Modals</h2>
+
+	{% comment %}
+		Nested Modal
+
+		Notes: This modal has its button nested inside the 
+		standard modal below.
+	{% endcomment %}
+
+	{% capture content_nested %}
+		<div class="modal__content rte">
+
+			<p>Click on the close button, click the overlay, or hit escape to close. Keyboard focus will be returned to the trigger button.</p>
+			<p>This modal's button is nested inside another modal. Lorem ipsum dolor sit amet, <a href="#">consectetur adipiscing elit</a>. Maecenas ac cursus leo. Donec a neque id mi ultrices tristique non in velit. Aenean dictum lectus id lobortis efficitur. Ut ut lacinia nibh, sed egestas lorem. Pellentesque scelerisque dictum dictum. Aenean efficitur id justo at ultrices. Sed consectetur ut arcu ut egestas.</p>
+
+		</div>
+	{% endcapture %}
+
+	{% comment %}
+		Standard Modal
+	{% endcomment %}
+
+	{% capture content_standard %}
+		<div class="modal__content rte">
+
+			<p>Click on the close button, click the overlay, or hit escape to close. Keyboard focus will be returned to the trigger button.</p>
+			<p>Lorem ipsum dolor sit amet, <a href="#">consectetur adipiscing elit</a>. Maecenas ac cursus leo. Donec a neque id mi ultrices tristique non in velit. Aenean dictum lectus id lobortis efficitur. Ut ut lacinia nibh, sed egestas lorem. Pellentesque scelerisque dictum dictum. Aenean efficitur id justo at ultrices. Sed consectetur ut arcu ut egestas.</p>
+
+			<p>Pellentesque ac tincidunt ligula, et vestibulum dui. In auctor, ante et porttitor pharetra, velit urna pulvinar arcu, vitae pulvinar augue mauris sit amet diam. Quisque feugiat eros metus, ac dapibus neque porttitor sit amet. Nullam a lacus id orci dictum fringilla a ac sem. Vivamus commodo non neque et eleifend. In tortor orci, mollis vitae diam et, blandit hendrerit leo. Integer tempor aliquet risus ut sodales.</p>
+
+			<p>Integer ut consequat nulla. Mauris sem tellus, interdum sed consequat eu, suscipit vitae felis. Proin vestibulum, neque ut euismod euismod, eros tortor accumsan tellus, at maximus odio massa a urna. Etiam eget ex ipsum. Fusce vulputate sapien et lorem malesuada, ut pellentesque mauris faucibus. Phasellus sodales tincidunt justo, sagittis commodo turpis bibendum in. Integer interdum nulla in felis sagittis molestie. Fusce risus odio, tristique vitae nulla vitae, dictum pulvinar nibh. Mauris volutpat laoreet libero sed tempor. Cras turpis sapien, elementum ac nibh ut, gravida tempus ligula. Morbi quis leo ligula. Nunc non scelerisque risus, non ultrices magna.</p>
+
+			<p>Mauris tellus nunc, rutrum et posuere ac, dictum sit amet lectus. Cras sed lacus egestas, congue justo at, bibendum massa. Praesent aliquet at orci sit amet facilisis. Duis et nibh turpis. Aliquam fermentum tellus id mauris volutpat scelerisque. Maecenas posuere, arcu sed laoreet tempus, urna elit imperdiet quam, eget aliquet quam mi quis mauris. Etiam porttitor mauris ac felis congue convallis. Integer ultricies maximus augue sit amet sollicitudin. Vivamus ut purus in nulla hendrerit porttitor. Duis suscipit augue sed urna maximus sagittis. In mattis maximus ornare. Nunc volutpat ullamcorper nisi nec efficitur.</p>
+
+			{% render 'modal-button', text: "Nested Modal", modalId: "nestedModal1", overlay: "aboveModalsOverlay" %} 
+
+		</div>
+	{% endcapture %}
+
+	{% render 'modal-button', text: "Standard Modal", modalId: "exampleModal1" %} <br><br>
+	{% render 'modal', id: 'exampleModal1', heading: "Standard Modal", content: content_standard %}
+	{% render 'modal', id: 'nestedModal1', heading: "Nested Modal", content: content_nested, class: "modal modal--standard modal--narrow modal--nested" %}
+
+	{% comment %}
+		Vimeo Modal
+	{% endcomment %}
+
+	{% capture content_vimeo %}
+		<p class="modal__content rte">This modal has a type of 'vimeo'. It has the Vimeo video ID passed to the modal snippet, and that iFrame is then lazyloaded. This is set up so the snippet will work easily when using the <a href="https://shopify.dev/themes/architecture/settings/input-settings#video_url">section video_url input type</a>, which gives accesss to "id" and "type" for the video. Those values can be directly used with the modal snippet.</p>
+	{% endcapture %}
+
+	{% render 'modal-button', text: "Vimeo Modal", modalId: "exampleModal2" %} <br><br>
+	{% render 'modal', id: 'exampleModal2', heading: "Vimeo Modal", type: 'vimeo', content: content_vimeo, video_id: '309872210' %}
+
+	{% comment %}
+		YouTube Modal
+	{% endcomment %}
+
+	{% capture content_youtube %}
+		<p class="modal__content rte">This modal has a type of 'youtube'. It has the YouTube video ID passed to the modal snippet, and that iFrame is then lazyloaded. This is set up so the snippet will work easily when using the <a href="https://shopify.dev/themes/architecture/settings/input-settings#video_url">section video_url input type</a>, which gives accesss to "id" and "type" for the video. Those values can be directly used with the modal snippet.</p>
+	{% endcapture %}
+
+	{% render 'modal-button', text: "YouTube Modal", modalId: "exampleModal3" %}
+	{% render 'modal', id: 'exampleModal3', heading: "YouTube Modal", type: 'youtube', content: content_youtube, video_id: 'slZd5cSAxOo' %}
+
+</div>
+
+{% schema %}
+	{
+		"name": "Example Modals",
+		"tag": "section"
+	}
+{% endschema %}

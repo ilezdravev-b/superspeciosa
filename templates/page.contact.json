@@ -1,0 +1,45 @@
+{
+  "sections": {
+    "main": {
+      "type": "page",
+      "disabled": true,
+      "custom_css": [
+        "h1 {display: none;}"
+      ],
+      "settings": {
+      }
+    },
+    "free_gift_signup_p9LPN3": {
+      "type": "free-gift-signup",
+      "disabled": true,
+      "settings": {
+        "popup-button-text": "FREE KRATOM",
+        "title": "WANT TO TRY OUR KRATOM FOR FREE?",
+        "subheading-1": "Don’t even pay for shipping! Just sign up for email\/text, and we'll send you two of our most popular items.",
+        "subheading-2": "Offer not valid for existing customers.",
+        "legal_info": "<p>By submitting you agree to receive automated promotional messages. This agreement is not a condition of any purchase. See Terms  and Privacy Policy. Frequency varies. Can opt out at any time.<\/p>"
+      }
+    },
+    "contact_form_with_text_NWtLBY": {
+      "type": "contact-form-with-text",
+      "settings": {
+        "heading": "",
+        "content": "<p>Need quick answers? Please browse through our <a href=\"https:\/\/superspeciosa.com\/faqs\/\">frequently asked questions.<\/a><\/p><p>Responding to customers is important to us! You should expect to hear back from us within 1 business day.<\/p><p><strong>For wholesale inquiries <\/strong><a href=\"https:\/\/superspeciosa.com\/kratom-wholesale\/#wssignup\" target=\"_blank\"><strong>please contact us here.<\/strong><\/a><\/p>",
+        "call_to_action": "Send",
+        "success": "<p>Thanks for contacting us! We'll get back to you as soon as possible.<\/p>",
+        "padding_top": 0,
+        "padding_bottom": 20,
+        "bg_color": "",
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 15,
+        "narrow_width": false,
+        "enable_full": false
+      }
+    }
+  },
+  "order": [
+    "main",
+    "free_gift_signup_p9LPN3",
+    "contact_form_with_text_NWtLBY"
+  ]
+}

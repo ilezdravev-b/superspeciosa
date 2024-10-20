@@ -1,0 +1,128 @@
+<!-- snippets/breadcrumbs.liquid -->
+
+{% comment %}
+    Optional: 
+        color {String} Requires a hex color to set the color of the breadcrumbs text.
+{% endcomment %}
+<nav class="breadcrumbs__wrapper" aria-label="Breadcrumbs"{% if color != blank %} style="color:{{ color }};"{% endif %}>
+	<ol class="breadcrumbs" aria-label="Breadcrumb Links">
+		<li>
+			<a href="{{ routes.root_url }}" class="breadcrumbs__item">
+				Home
+			</a>
+		</li>
+
+		{% if template.name == "collection" %}
+
+			<li>
+				<a class="breadcrumbs__item" href="{{ collection.url }}" aria-current="page">{{ collection.title }}</a>
+			</li>
+
+		{% elsif template.name == "product" %}
+			<script>
+				var collectionAllLink = "{{ routes.all_products_collection_url }}";
+				var collectionAllLabel = "{{ 'general.breadcrumbs.all_collections' | t }}";
+			</script>
+
+			<li>
+				{% if collection.url %}
+					<a class="breadcrumbs__item" href="{{ collection.url }}">{{ collection.title }}</a>
+				{% else %}
+					<a class="breadcrumbs__item" href="{{ routes.all_products_collection_url }}">{{ 'general.breadcrumbs.all_collections' | t }}</a> 
+				{% endif %}
+			</li>
+
+			<li>
+				{{	product.title	}}
+			</li>
+
+		{% elsif template == "article" %}
+
+			<li>
+				<a class="breadcrumbs__item" href="{{ blog.url }}">{{ blog.title }}</a>
+			</li>
+			
+			<li>
+				<a class="breadcrumbs__item" href="{{ article.url }}" aria-current="page">{{ article.title }}</a>
+			</li>
+
+		{% elsif template.name == "page" %}
+
+			<li>
+				<a class="breadcrumbs__item" href="{{ page.url }}" aria-current="page">
+					{{ page.title }}
+				</a>
+			</li>
+
+		{% elsif template.name == "search" and search.performed %}
+
+			<li>
+				<a class="breadcrumbs__item" href="{{ routes.search_url }}">{{ 'general.search.search' | t }}</a>
+			</li>
+			
+			<li>
+				"{{ search.terms }}"
+			</li>
+
+		{% elsif template.name == "search" %}
+
+			<li>
+				<a class="breadcrumbs__item" href="{{ routes.search_url }}" aria-current="page">{{ 'general.search.search' | t }}</a>
+			</li>
+
+		{% elsif template.name == "account" %}
+
+			<li>
+				<a class="breadcrumbs__item" href="{{ routes.account_login_url }}" aria-current="page">{{ 'customer.account.title' | t }}</a>
+			</li>
+
+		{% elsif template.name == "login" %}
+
+			<li>
+				<a class="breadcrumbs__item" href="/account/login" aria-current="page">{{ 'customer.log_in' | t }}</a>
+			</li>
+
+		{% elsif template.name == "reset_password" %}
+
+			<li>
+				<a class="breadcrumbs__item" href="{{ routes.account_recover_url }}" aria-current="page">{{ 'customer.reset_password.submit' | t }}</a>
+			</li>
+
+		{% elsif template.name == "activate_account" %}
+
+			<li>
+				<div class="breadcrumbs__item">{{ 'customer.activate_account.title' | t }}</div>
+			</li>
+
+		{% elsif template.name == "register" %}
+
+			<li>
+				<a class="breadcrumbs__item" href="{{ routes.account_register_url }}">{{ 'customer.login_page.create_account' | t }}</a>
+			</li>
+
+		{% elsif template.name == "order" or template.name == "addresses" %}
+
+			<li>
+				<a class="breadcrumbs__item" href="{{ routes.account_url }}" aria-current="page">{{ 'customer.account.title' | t }}</a>
+			</li>
+			
+			<li>
+				<a class="breadcrumbs__item" href="{{ request.origin }}" aria-current="page">{{ page_title }}</a>
+			</li>
+
+		{% elsif template.name == "cart" %}
+
+			<li>
+				<a class="breadcrumbs__item" href="{{ request.origin }}" aria-current="page">My Cart</a>
+			</li>
+
+		{% else %}
+
+			<li>
+				<a class="breadcrumbs__item" href="{{ request.origin }}" aria-current="page">{{ page_title }}</a>
+			</li>
+
+		{% endif %}
+
+	</ol>
+</nav>

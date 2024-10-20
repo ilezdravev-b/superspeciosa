@@ -1,0 +1,30 @@
+{
+  "sections": {
+    "banner": {
+      "type": "collection-header",
+      "settings": {
+        "seo_title": "{{ collection.title }}"
+      }
+    },
+    "product-grid": {
+      "type": "collection-product-grid",
+      "custom_css": [
+
+      ],
+      "settings": {
+        "products_per_page": 24,
+        "enable_filtering": true,
+        "enable_sorting": true,
+        "no_products_text": "<p>Sorry, no products could be found.<\/p>",
+        "filter_row_button": true,
+        "special-card-visiblity": true,
+        "special-card-heading": "get 20% off <br>Subscription",
+        "special-card-content": "New"
+      }
+    }
+  },
+  "order": [
+    "banner",
+    "product-grid"
+  ]
+}

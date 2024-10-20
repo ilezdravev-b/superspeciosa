@@ -1,0 +1,47 @@
+{% comment %}
+	Load Assets
+{% endcomment %}
+
+{% render 'theme-load-assets', style: 'snippet-custom-options-manager.min.css', script: 'snippet-custom-options-manager.min.js' %}
+{% assign developmentProducts = collections['swf-development'].products %}
+
+<div>
+  <h1>Custom Options Manager</h1>
+  <span id="shop_options">{{ shop.metafields.custom.options_config.value | json }}</span>
+  {% comment %} <button>Create optionset</button> {% endcomment %}
+  <div class="buttons-container">
+    <button id="saveData">Save settings</button>
+    <button id="exportFullCSV">Export bulk edit csv</button>
+    <button id=addOptionset>Create option set</button>
+  </div>
+  
+  <div class="optionsets">
+    {% for optionset in shop.metafields.custom.options_config.value %}
+      <div class="optionset-container">
+        <div class="header">
+          <h2>Option set name</h2>
+          <input type="text" id="option_set_name" value="{{ optionset[1].title }}"/>
+          <h2>Linked products <span class="search-product-icon">🔍</span></h2>
+          <input type="text" id="linked_products" value="{{ optionset[1].linked_products }}" />
+          <div class="product-selector hidden">
+            <h2>Choose product to add</h2>
+            <select class="search-product-id-selector">
+              {% for product in developmentProducts %}
+                <option value="{{ product.id }}">{{ product.title }}</option>
+              {% endfor %}
+            </select>
+          </div>
+        </div>
+        <h2 class="handle-display-options">Options ˅</h2>
+        <ul class="options-list hidden">
+          {% for option in optionset[1].options %}
+            <li>
+              {% assign products = optionset[1].linked_products | split: ',' %}
+              {% render 'option-container-manager', option: option, linked_products: products %}
+            </li>
+          {% endfor %}
+        </ul§>
+      </div>
+    {% endfor %}
+  </div>
+</div>

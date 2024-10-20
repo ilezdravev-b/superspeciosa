@@ -1,0 +1,51 @@
+<!-- snippets/account-order-addresses.liquid -->
+
+{% comment %}
+	Required:
+		order {Object} The order object
+{% endcomment %}
+
+{% liquid 
+	assign credit_card_company = order.transactions[0].payment_details.credit_card_company
+	assign credit_card_number = order.transactions[0].payment_details.credit_card_number
+%}
+
+{% comment %}
+	Billing
+{% endcomment %}
+
+<div class="account-address">
+	<h3 class="account-address__title">{{ 'customer.order.billing_address' | t }}</h3>
+
+	<address>
+		{{ order.billing_address | format_address }}
+	</address>
+
+	{%- if credit_card_company != blank and credit_card_number != blank -%}
+		<p>
+			{{ credit_card_company }} {{ 'customer.order.credit_card_ending' | t }} {{ credit_card_number | slice: -4, 4 }}
+		</p>
+	{%- endif -%}
+
+	<p>
+		<strong>{{ 'customer.order.payment_status' | t }}:</strong>
+		{{ order.financial_status_label }}
+	</p>
+</div>
+
+{% comment %}
+	Shipping
+{% endcomment %}
+
+<div class="account-address">
+	<h3 class="account-address__title">{{ 'customer.order.shipping_address' | t }}</h3>
+
+	<address>
+		{{ order.shipping_address | format_address }}
+	</address>
+
+	<p>
+		<strong>{{ 'customer.order.fulfillment_status' | t }}:</strong>
+		{{ order.fulfillment_status_label }}
+	</p>
+</div>

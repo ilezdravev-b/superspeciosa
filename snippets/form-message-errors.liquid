@@ -1,0 +1,12 @@
+<!-- snippets/form-message-errors.liquid -->
+
+{% comment %}
+	Required:
+		errors {Object} - The form.errors object
+{% endcomment %}
+
+<aside class="message message--error" aria-label="Error" tabindex="-1" autofocus>
+	{% render 'icon-warning-filled', class: 'icon' %}
+
+	{{ errors | default_errors }} 
+</aside>

@@ -1,0 +1,359 @@
+<!-- sections/cart-content.liquid -->
+
+{% comment %}
+	Notes: The div with the ID of "cartContentItems" will have
+		   its content refreshed whenever the cart is updated.
+		   The ID is set in _src/scripts/modules/shopify-cart.js,
+		   and can be updated or moved as needed.
+{% endcomment %}
+
+{% liquid 
+	assign data = section.settings
+	assign empty_link = data.empty_button_link | default: '/'
+%}
+
+{% comment %}
+    If we have a free gift in the cart, 
+    use _promoCode line item property 
+    to apply promo code at checkout
+{% endcomment %}
+
+{%- liquid
+    assign free_gift_price = 0
+    assign checkout_url = '/checkout'
+    assign cart_has_free_gift = false
+    for item in cart.items
+        if item.properties._isFreeGift == 'true'
+            assign checkout_url = '/checkout?discount=' | append: item.properties._promoCode
+            assign cart_has_free_gift = true
+            assign free_gift_price = item.price
+            break
+        endif
+    endfor
+
+    assign cart_total_price = cart.total_price | minus: free_gift_price
+    
+    assign comparedPrice = 0
+    for item in cart.items
+        assign itemPrice = item.product.selected_or_first_available_variant.compare_at_price | times: item.quantity
+        assign comparedPrice = comparedPrice | plus: itemPrice
+    endfor
+    
+-%}
+
+<section class="cart-content container section" id="cartContent">
+
+    {% render "breadcrumbs" %}
+
+	{% if cart.item_count > 0 %}
+
+        {% comment %}
+            Cart Full State
+        {% endcomment %}
+
+        <form action="{{ checkout_url }}" method="post" novalidate
+            class="js-cart-items cart-content__container">
+
+            <div class="cart-content__main">
+                <h1 class="cart-content__title">
+                    My Cart
+                </h1>
+
+                <div role="status" class="sr-only">
+                    {{ cart.item_count }} {{ cart.item_count | pluralize: 'item', 'items' }}
+                </div>
+
+                {% comment %}
+                    Free Shipping Bar - MOBILE
+                {% endcomment %}
+
+                <div class="cart-content__free-shipping-bar tablet-sm-down">
+                    {%- if data.show_free_shipping_bar and settings.enable_free_shipping -%}
+                        {% render "free-shipping-bar" %}
+                    {%- endif -%}
+                </div>
+
+                <div id="cartContentItems">
+
+                    {% comment %}
+                        Cart Items - MOBILE
+                    {% endcomment %}
+
+                    <div class="tablet-sm-down">
+                        <div class="cart-content__items">
+                            {%- for item in cart.items -%}
+                                {%- liquid 
+                                    assign show_product = true
+                                    if item.properties._add-time and item.properties._add-time != blank
+                                        unless item.properties._hasCustomizableOptions == 'true'
+                                            assign show_product = false
+                                        endunless
+                                    endif 
+                                -%}
+
+                                {%- if show_product -%}
+                                    {% render "ajax-cart-item", item: item, index: forloop.index %}
+                                {%- else -%}
+								    {% render 'cart-item-placeholder', item: item, index: forloop.index %}
+                                {%- endif -%}
+                            {%- endfor -%}
+                        </div>
+                    </div>
+
+
+                    {% comment %}
+                        Cart Items - DESKTOP
+                    {% endcomment %}
+
+                    <div class="tablet-lg-up">
+                        <table class="cart-content__table">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        Product
+                                    </th>
+
+                                    <th>
+                                        Quantity
+                                    </th>
+
+                                    <th>
+                                        Total
+                                    </th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                {%- for item in cart.items -%}
+                                    {%- liquid 
+                                        assign show_product = true
+                                        if item.properties._add-time and item.properties._add-time != blank
+                                            unless item.properties._hasCustomizableOptions == 'true'
+                                                assign show_product = false
+                                            endunless
+                                        endif 
+                                    -%}
+
+                                    {%- if show_product -%}
+                                        {% render "cart-item", item: item, index: forloop.index %}
+                                    {%- else -%}
+								        {% render 'cart-item-placeholder', item: item, index: forloop.index %}
+                                    {%- endif -%}
+                                {%- endfor -%}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            {% comment %}
+                Cart Subtotal + Note + Checkout
+            {% endcomment %}
+
+            <div class="cart-content__checkout">
+
+                {% comment %}
+                    Free Shipping Bar - DESKTOP
+                {% endcomment %}
+
+                <div class="cart-content__free-shipping-bar tablet-lg-up">
+                    {%- if data.show_free_shipping_bar and settings.enable_free_shipping -%}
+                        {% render "free-shipping-bar" %}
+                    {%- endif -%}
+                </div>
+
+                {%- if data.enable_cart_note -%}
+                    <div class="input-group">
+                        <label for="cartNote">{{ data.cart_note_label }}</label>
+                        <textarea id="cartNote" name="note">{{ cart.note }}</textarea>
+                    </div>
+                {%- endif -%}
+
+                <div class="cart-content__summary">
+                    <h3 class="cart-content__summary__title">
+                        Total
+                    </h3>
+
+                    <div class="cart-content__summary__row">
+                        <span class="cart-content__summary__label">Subtotal</span>
+                        <span class="cart-content__summary__value cart-total-value red-text">{{ comparedPrice | money }}</span>
+                    </div>
+                    
+                    {%- assign shipping_cost = "Calculated at checkout" -%}
+                    {%- if settings.enable_free_shipping -%}
+                        {%- assign free_shipping_threshold = settings.fs_amount | abs | times: 100 -%}
+                        {%- if cart_total_price >= free_shipping_threshold -%}
+                            {%- assign shipping_cost = 0 | money -%}
+                        {%- endif -%}
+                    {%- endif -%}
+
+                    <div class="cart-content__summary__row">
+                        <span class="cart-content__summary__label">Delivery</span>
+                        <span class="cart-content__summary__value">{{ shipping_cost }}</span>
+                    </div>
+
+                    {% assign totalSavingValue = comparedPrice | minus: cart_total_price %}
+                    <div class="cart-content__summary__row">
+                        <span class="cart-content__summary__label red-text">You saved</span>
+                        <span class="cart-content__summary__value red-text">{{ totalSavingValue | money }}</span>
+                    </div>
+
+                    <div class="cart-content__summary__row">
+                        <span class="cart-content__summary__label">Grand Total</span>
+                        <span class="cart-content__summary__value cart-total-value">{{ cart_total_price | money }}</span>
+                    </div>
+                </div>
+
+                {% comment %}
+                    Capturing button text 
+                    for checkout button
+                {% endcomment %}
+
+                 
+                    {%- assign separator = "<span class='price-separator'>&bull;</span>" -%}
+                    {% comment %}{%- assign cart_total_price_money = cart_total_price | money -%}{% endcomment %}
+                    {% capture cart_total_price_money %}<span style="display:none !important;"></span><span class="cart-total-value final-cart-total">{{ cart_total_price | money }}</span>{% endcapture %}
+	                {%- assign checkout_button_text = data.checkout_button_text | append: separator | append: cart_total_price_money -%}
+
+                <button type="submit" 
+                    name="checkout" 
+                    class="btn btn--primary cart-content__checkout__btn">
+                    {{ checkout_button_text }}
+                </button>
+
+                {%- if data.checkout_description != blank -%}
+                    <div class="rte">
+                        {{ data.checkout_description }}
+                    </div>
+                {%- endif -%}
+            </div>
+        
+        </form>
+
+	{% else %}
+
+		{% comment %}
+			Cart Empty State
+		{% endcomment %}
+
+		<div class="cart-content__empty">
+
+            {% render "icon-cart-empty-large" %}
+
+			<h1 class="cart-content__title cart-content__title--empty">
+				{{ data.empty_title }}
+			</h1>
+
+			{%- if data.empty_description != blank -%}
+				<p class="rte">
+					{{ data.empty_description }}
+				</p>
+			{%- endif -%}
+
+			{%- if data.empty_button_enable -%}
+				<a class="btn btn--primary" 
+					href="{{ empty_link }}">
+					{{ data.empty_button_text }}
+				</a>
+			{%- endif -%}
+
+		</div>
+
+	{% endif %}
+</section>
+
+{% schema %}
+{
+    "name": "Cart Content",
+    "settings": [
+        {
+            "type": "header",
+            "content": "Checkout"
+        },
+        {
+            "type": "text",
+            "id": "checkout_button_text",
+            "label":  "Button Text",
+            "default": "Checkout"
+        },
+        {
+            "type": "richtext",
+            "id": "checkout_description",
+            "label": "Checkout description", 
+            "info": "Optional text below checkout button",
+			"default": "<p>Optional checkout description here.</p>"
+        },
+        {
+            "type": "checkbox",
+            "id": "enable_cart_note", 
+            "label": "Enable cart note?", 
+            "default": true, 
+            "info": "If checked, note field will show on Cart page"
+        }, 
+        { 
+            "type": "text", 
+            "id": "cart_note_label", 
+            "label": "Cart note label", 
+            "default": "Leave a note about your order:"
+        }, 
+        {
+            "type": "header",
+            "content": "Empty Cart Content"
+        },
+        {
+            "type": "text",
+            "id": "empty_title",
+            "label": "Empty cart title",
+            "default": "Your Cart is Empty"
+        },
+        {
+            "type": "textarea",
+            "id": "empty_description",
+            "label": "Description", 
+            "info": "Optional empty cart description",
+			"default": "Optional empty cart description"
+        },
+        {
+            "type": "checkbox",
+            "id": "empty_button_enable",
+            "label": "Enable CTA Button", 
+            "default": true
+        },
+        {
+            "type": "url",
+            "id": "empty_button_link",
+            "label": "Button Link",
+            "info": "If blank, button will link to homepage"
+        },
+        {
+            "type": "text",
+            "id": "empty_button_text",
+            "label": "Button Text",
+            "default": "Return to homepage"
+        }, 
+        {
+            "type": "header",
+            "content": "Free Shipping Bar"
+        },
+		{ 
+			"type": "checkbox", 
+			"id": "show_free_shipping_bar", 
+			"label": "Show free shipping bar?", 
+			"default": true, 
+			"info": "If checked, free shipping bar will show in cart drawer. Free shipping bar content can be found in Theme Settings > [promo] Free Shipping"
+		}, 
+		{ 
+			"type": "checkbox", 
+			"id": "show_free_gift_tiers", 
+			"label": "Show free gift tiers?", 
+			"default": true, 
+			"info": "If checked, free gift tiers will show in cart drawer. Free gifts content can be found in Theme Settings > [promo] Free Gift"
+		}, 
+		{ 
+			"type": "html", 
+			"id": "free_gift_tiers_image", 
+			"label": "Decorative SVG for free gifts"
+		}
+    ]
+}
+{% endschema %}

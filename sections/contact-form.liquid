@@ -1,0 +1,49 @@
+<!-- sections/contact-form.liquid -->
+
+{% comment %}
+	Load Assets
+{% endcomment %}
+
+{% render 'theme-load-assets', style: 'section-contact-form.min.css' %}
+
+{% comment %}
+	Initial Liquid Variables
+{% endcomment %}
+
+{%- liquid 
+	assign data = section.settings
+-%}
+
+{% comment %}
+	Section Markup
+{% endcomment %}
+
+<section class="container-text section">
+
+	<h1 class="page__title">{{ page.title }}</h1>
+
+	<div class="contact-form">
+		{% render 'form-contact', success: data.success, call_to_action: data.call_to_action %}
+	</div>
+
+</section>
+
+{% schema %}
+{
+    "name": "Contact Form",
+    "settings": [
+        {
+            "type": "text",
+            "id": "call_to_action",
+            "label": "Call to action",
+            "default": "Send message"
+        },
+        {
+            "type": "richtext",
+            "id": "success",
+            "label": "Success",
+            "default": "<p>Thanks for contacting us! We'll get back to you as soon as possible.</p>"
+        }
+    ]
+}
+{% endschema %}

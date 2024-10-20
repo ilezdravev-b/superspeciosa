@@ -1,0 +1,93 @@
+<!-- snippets/form-customer-register.liquid -->
+
+{% comment %}
+	Optional:
+		submit_text {String} Text for the "Submit" button 
+{% endcomment %}
+
+{% liquid 
+	assign submit_text = submit_text | default: "Sign Up"
+%}
+
+{% form "create_customer", class: "account__form" %}
+
+	<input type="hidden" name="return_to" value="/account" />
+
+	{% liquid 
+		assign errors = form.errors
+	%}
+
+	{% comment %}
+		Error Message
+	{% endcomment %}
+
+	{% if form.errors %} 
+		{% render 'form-message-errors', errors: errors %}
+	{% endif %}
+
+	{% comment %}
+		Form
+	{% endcomment %}
+
+	<div class="account-login--register--desktop-name">
+		<div class="input-group">
+			<label for="register-first-name">First Name <span class="asterisk--required">*</span></label>
+			<input type="text" 
+				id="register-first-name" 
+				class="input" 
+				name="customer[first_name]" 
+				placeholder="First name" 
+				value="" 
+				autocapitalize="words" 
+				autofocus />
+		</div>
+
+		<div class="input-group">
+			<label for="register-last-name">Last Name <span class="asterisk--required">*</span></label>
+			<input type="text" 
+				id="register-last-name" 
+				class="input" 
+				name="customer[last_name]" 
+				placeholder="Last name" 
+				value="" 
+				autocapitalize="words" />
+		</div>
+	</div>
+
+	<div class="input-group{% if errors contains 'email' %} input-group--error{% endif %}">
+		<label for="register-email">Email Address <span class="asterisk--required">*</span></label>
+		<input type="email" 
+			id="register-email" 
+			class="input" 
+			name="customer[email]" 
+			placeholder="Email Address" 
+			value="" 
+			autocorrect="off" 
+			autocapitalize="off" 
+			autofocus 
+			required 
+			{% if errors contains 'email' %} aria-invalid="true"{% endif %} />
+	</div>
+
+	<div class="input-group input-password{% if errors contains 'password' %} input-group--error{% endif %}">
+		<label for="register-password">Password <span class="asterisk--required">*</span></label>
+
+		<div class="password-wrapper">
+			<input type="password" 
+				id="register-password" 
+				class="input" 
+				name="customer[password]" 
+				placeholder="Password" 
+				value="" 
+				required
+				{% if errors contains 'password' %} aria-invalid="true"{% endif %} />
+			<button type="button" class="btn input-password__reveal js-password-reveal">
+				<span class="sr-only">Toggle Password Visibility</span>
+			</button>
+		</div>
+	</div>
+
+	<button type="submit" class="btn btn--primary">
+		{{ submit_text }}
+	</button>
+{% endform %}

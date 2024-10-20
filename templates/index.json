@@ -1,0 +1,427 @@
+{
+  "sections": {
+    "ss_home_hero_wYwqAk": {
+      "type": "ss-home-hero",
+      "blocks": {
+        "button_c7eWWE": {
+          "type": "button",
+          "settings": {
+            "button_text": "SHOP NOW",
+            "button_link": "shopify:\/\/collections\/best-sellers"
+          }
+        }
+      },
+      "block_order": [
+        "button_c7eWWE"
+      ],
+      "settings": {
+        "title": "Buy premium kratom for elevating body & mind",
+        "subtitle": "<p>we stand by our kratom: enjoy our ’30 days of trust’ guarantee<\/p>",
+        "hero_image_desktop": "shopify:\/\/shop_images\/superspeciosa-fall-round2-71_2_a66837eb-a0aa-4a50-9741-3655370abdbe.jpg",
+        "hero_image_mobile": "shopify:\/\/shop_images\/superspeciosa-fall-round2-73_2.jpg",
+        "title_color": "#f4f1df",
+        "text_color": "#f4f1de",
+        "overlay_activate": true,
+        "overlay_type": "dark",
+        "block_alignment_x": "desktop-block-left",
+        "block_alignment_y": "desktop-block-bottom",
+        "text_alignment": "desktop-text-left",
+        "mobile_block_alignment_x": "mobile-block-left",
+        "mobile_block_alignment_y": "mobile-block-middle",
+        "mobile_text_alignment": "mobile-text-left",
+        "desktop_min_height": 500,
+        "mobile_min_height": 415,
+        "desktop_title_size": 40,
+        "mobile_title_size": 36,
+        "desktop_text_size": 18,
+        "mobile_text_size": 13
+      }
+    },
+    "header_with_text_YXieP4": {
+      "type": "header-with-text",
+      "settings": {
+        "desktop_min_height": 99,
+        "mobile_min_height": 100,
+        "max-width": 0,
+        "background-color": "#f4f1df",
+        "header-text": "Why buy KRATOM from Super? We do things right.",
+        "div-text": "Since 2016 we have been perfecting certifiably reliable ways to bring your kratom as it was intended - unaltered, untouched, uncompromised."
+      }
+    },
+    "ss_featured_products_M8fQMX": {
+      "type": "ss_featured_products",
+      "settings": {
+        "heading": "Buy Kratom Best Sellers",
+        "collection": "best-sellers-home-page",
+        "desktop_padding_top": 40,
+        "mobile_padding_top": 40,
+        "desktop_padding_bottom": 30,
+        "mobile_padding_bottom": 10
+      }
+    },
+    "ss_featured_products_pGPkqi": {
+      "type": "ss_featured_products",
+      "settings": {
+        "heading": "Shop New Kratom Products",
+        "collection": "new-products",
+        "desktop_padding_top": 40,
+        "mobile_padding_top": 10,
+        "desktop_padding_bottom": 30,
+        "mobile_padding_bottom": 30
+      }
+    },
+    "featured_collection_list_KiaqJa": {
+      "type": "featured-collection-list",
+      "blocks": {
+        "list_Y3EDAB": {
+          "type": "list",
+          "settings": {
+            "collection": "energy",
+            "collection_cover_img": "shopify:\/\/shop_images\/super-speciosa-20230209-2-1-1024x1024.webp",
+            "title": "buy kratom for energy"
+          }
+        },
+        "list_VG3m66": {
+          "type": "list",
+          "settings": {
+            "collection": "body-and-mind",
+            "collection_cover_img": "shopify:\/\/shop_images\/super-speciosa-styled-models-2-2-1024x1024.webp",
+            "title": "buy kratom for body & mind"
+          }
+        },
+        "list_fhFd4Q": {
+          "type": "list",
+          "settings": {
+            "collection": "relaxation",
+            "collection_cover_img": "shopify:\/\/shop_images\/super-speciosa-styled-models-22-2-1024x1024.webp",
+            "title": "buy kratom for relaxation"
+          }
+        }
+      },
+      "block_order": [
+        "list_Y3EDAB",
+        "list_VG3m66",
+        "list_fhFd4Q"
+      ],
+      "settings": {
+        "padding_top": 60,
+        "padding_bottom": 60,
+        "m_padding_top": 40,
+        "m_padding_bottom": 40
+      }
+    },
+    "featured_collection_about_8DrmVt": {
+      "type": "featured-collection-about",
+      "settings": {
+        "header_title_color": "#d8a929",
+        "content_color": "#f4f1de",
+        "bg_color": "#212c1c",
+        "sec_title_color": "#f4f1de",
+        "title": "AKA GMP QUalified kratom",
+        "content": "Our kratom meets American Kratom Association’s standards for Good Manufacturing Practices.",
+        "link": "https:\/\/www.americankratom.org\/gmp-standards-program",
+        "link_text": "Learn more about AKA GMP",
+        "image": "shopify:\/\/shop_images\/GMP.png",
+        "body_bg_img": "shopify:\/\/shop_images\/leaf.png",
+        "body_title": "kratom standards",
+        "body_text": "As kratom gains in popularity, more vendors are providing kratom products of varying quality. Find out about good manufacturing practices and the importance of quality standards.",
+        "btn_title": "our quality control",
+        "btn_link": "https:\/\/superspeciosa.com\/about\/",
+        "bg_image": "shopify:\/\/shop_images\/super-speciosa-high-standards.webp",
+        "padding_top": 60,
+        "padding_bottom": 60,
+        "m_padding_top": 40,
+        "m_padding_bottom": 40
+      }
+    },
+    "featured_category_t3gNjJ": {
+      "type": "featured-category",
+      "blocks": {
+        "collection_7wC9CA": {
+          "type": "collection",
+          "settings": {
+            "collection": "kratom-gummies",
+            "btn_bg_clr": "#212c1c",
+            "btn_text_clr": "#ffffff"
+          }
+        },
+        "collection_9wXVqw": {
+          "type": "collection",
+          "settings": {
+            "collection": "kratom-capsules",
+            "btn_bg_clr": "#212c1c",
+            "btn_text_clr": "#ffffff"
+          }
+        },
+        "collection_99fH3A": {
+          "type": "collection",
+          "settings": {
+            "collection": "kratom-powder",
+            "btn_bg_clr": "#212c1c",
+            "btn_text_clr": "#ffffff"
+          }
+        },
+        "collection_ENPQMk": {
+          "type": "collection",
+          "settings": {
+            "collection": "kratom-tablets",
+            "btn_bg_clr": "#212c1c",
+            "btn_text_clr": "#ffffff"
+          }
+        },
+        "collection_7QeBdi": {
+          "type": "collection",
+          "settings": {
+            "collection": "kratom-tea-bags",
+            "btn_bg_clr": "#212c1c",
+            "btn_text_clr": "#ffffff"
+          }
+        },
+        "collection_pj4WW7": {
+          "type": "collection",
+          "settings": {
+            "collection": "kratom-extracts",
+            "btn_bg_clr": "#212c1c",
+            "btn_text_clr": "#ffffff"
+          }
+        }
+      },
+      "block_order": [
+        "collection_7wC9CA",
+        "collection_9wXVqw",
+        "collection_99fH3A",
+        "collection_ENPQMk",
+        "collection_7QeBdi",
+        "collection_pj4WW7"
+      ],
+      "settings": {
+        "title": "SHOP KRATOM BY CATEGORY",
+        "text": "Our kratom leaf products come in different forms. Pick what suits you best.",
+        "bg_clr": "#f4f1de",
+        "text_clr": "#231f20",
+        "desktop_padding_top": 40,
+        "mobile_padding_top": 40,
+        "desktop_padding_bottom": 30,
+        "mobile_padding_bottom": 30
+      }
+    },
+    "featured_quaility_ERz6Df": {
+      "type": "featured-quaility",
+      "settings": {
+        "title": "Trusted quality kratom",
+        "content_fomer": "We subject our products to the strictest quality control standards in the industry. Every batch is thoroughly inspected and",
+        "content_later": "for impurities and contaminants.",
+        "text_link": "lab-tested",
+        "link": "https:\/\/superspeciosa.com\/kratom\/",
+        "btn_title": "View More Kratom Facts",
+        "btn_link": "shopify:\/\/pages\/kratom-quality",
+        "image": "shopify:\/\/shop_images\/kratom-with-a-conscience.png",
+        "bg_img": "shopify:\/\/shop_images\/whitethai-super-speciosa.webp",
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "m_padding_top": 0,
+        "m_padding_bottom": 0
+      }
+    },
+    "featured_review_xBFfRH": {
+      "type": "featured-review",
+      "blocks": {
+        "review_XhYJYL": {
+          "type": "review",
+          "settings": {
+            "avatar": "shopify:\/\/shop_images\/image00009_1.jpg",
+            "name": "Melissa R.",
+            "location": "Orlando, FL",
+            "star": "shopify:\/\/shop_images\/star.png",
+            "description": "<p>Have been ordering from here for a while now. The quality is always good the shipping is fast the customer service is great and I love the rewards program as I am a frequent buyer. I would highly recommend this site for all your Kratom needs. They never disappoint.<\/p>",
+            "verified": true,
+            "text_color": "#f4f1de",
+            "back_color": "#212c1c"
+          }
+        },
+        "review_LBwPit": {
+          "type": "review",
+          "settings": {
+            "avatar": "shopify:\/\/shop_images\/348844438_1980496665628345_4279454750883683422_n_3.jpg",
+            "name": "Michelle M.",
+            "location": "Seattle, WA",
+            "star": "shopify:\/\/shop_images\/star.png",
+            "description": "<p>I am amazed with this company!! I have never ever dealt with a company that has such a quick response time. I ordered a few hours later it shipped two days later it arrived. The product is amazing the staff has been wonderful when I’ve had to make contact with them. This is the only company I will purchase from. Excellent work Guys!!!<\/p>",
+            "verified": true,
+            "text_color": "#f4f1de",
+            "back_color": "#212c1c"
+          }
+        },
+        "review_6Fn8Jc": {
+          "type": "review",
+          "settings": {
+            "avatar": "shopify:\/\/shop_images\/348948961_3504166649912758_1206599020629191997_n_2.jpg",
+            "name": "Randy O.",
+            "location": "San Jose, CA",
+            "star": "shopify:\/\/shop_images\/star.png",
+            "description": "<p>Your product is very good but your customers service is outstanding. You were recently out of my normal stuff I get so You sent me something different I was a little scared at first to try it but you guys explain very well the difference in the products and I learned a lot again thank you<\/p>",
+            "verified": true,
+            "text_color": "#f4f1de",
+            "back_color": "#212c1c"
+          }
+        }
+      },
+      "block_order": [
+        "review_XhYJYL",
+        "review_LBwPit",
+        "review_6Fn8Jc"
+      ],
+      "settings": {
+        "heading": "Happy Customers Share The Super Speciosa Magic",
+        "star": "shopify:\/\/shop_images\/star.png",
+        "reivew_count": "5,000+ REVIEWS",
+        "text_color": "#212c1c",
+        "back_color": "#f4f1de",
+        "top_padding": 80,
+        "bottom_padding": 80,
+        "top_padding_mob": 64,
+        "bottom_padding_mob": 64
+      }
+    },
+    "header_with_text_YMkrdh": {
+      "type": "header-with-text",
+      "settings": {
+        "desktop_min_height": 200,
+        "mobile_min_height": 250,
+        "max-width": 0,
+        "background-color": "#f4f1df",
+        "header-text": "THE COMPLETE GUIDE TO BUY KRATOM ONLINE",
+        "div-text": "Welcome to our comprehensive kratom resource hub, designed to make your journey to buy kratom seamless and informed. Whether you’re a seasoned enthusiast or new to the world of kratom, our expertly curated kratom guides and blogs provide essential insights on buying kratom online, choosing the right kratom strain, and top-quality kratom for sale. We’ve done the research so you can make confident choices and explore the diverse strains available.  Start exploring and find the perfect kratom product that suits your needs."
+      }
+    },
+    "custom_blog_MKU3rw": {
+      "type": "custom-blog",
+      "blocks": {
+        "article_item_QtRkgy": {
+          "type": "article_item",
+          "settings": {
+            "article": "news\/fda-study"
+          }
+        },
+        "article_item_hqEYaa": {
+          "type": "article_item",
+          "settings": {
+            "article": "blog\/new-product-announcement-dua-enhanced-kratom-powder"
+          }
+        },
+        "article_item_pgnak3": {
+          "type": "article_item",
+          "settings": {
+            "article": "blog\/how-long-does-kratom-take-to-kick-in"
+          }
+        },
+        "article_item_i7DcHH": {
+          "type": "article_item",
+          "settings": {
+            "article": "blog\/red-vs-green-kratom"
+          }
+        },
+        "article_item_Epkc3M": {
+          "type": "article_item",
+          "settings": {
+            "article": "blog\/what-is-mitragynine"
+          }
+        },
+        "article_item_6wAfCP": {
+          "type": "article_item",
+          "settings": {
+            "article": "blog\/kratom-extract-vs-kratom-powder-your-complete-guide"
+          }
+        }
+      },
+      "block_order": [
+        "article_item_QtRkgy",
+        "article_item_hqEYaa",
+        "article_item_pgnak3",
+        "article_item_i7DcHH",
+        "article_item_Epkc3M",
+        "article_item_6wAfCP"
+      ],
+      "settings": {
+        "margin_top": "50",
+        "margin_bottom": "50"
+      }
+    },
+    "custom_blog_6f8h3C": {
+      "type": "custom-blog",
+      "blocks": {
+        "article_item_MRdp6x": {
+          "type": "article_item",
+          "settings": {
+            "article": "blog\/kratom-vs-cbd"
+          }
+        },
+        "article_item_rF9pVi": {
+          "type": "article_item",
+          "settings": {
+            "article": "blog\/whats-the-difference-between-green-kratom-vs-white-kratom"
+          }
+        },
+        "article_item_RCcrEM": {
+          "type": "article_item",
+          "settings": {
+            "article": "blog\/how-to-prepare-kratom-powder"
+          }
+        },
+        "article_item_YdVi8P": {
+          "type": "article_item",
+          "settings": {
+            "article": "blog\/how-many-kratom-capsules-should-i-take"
+          }
+        },
+        "article_item_3QhwNg": {
+          "type": "article_item",
+          "settings": {
+            "article": "blog\/how-often-can-i-take-kratom-your-complete-guide-to-safe-usage"
+          }
+        }
+      },
+      "block_order": [
+        "article_item_MRdp6x",
+        "article_item_rF9pVi",
+        "article_item_RCcrEM",
+        "article_item_YdVi8P",
+        "article_item_3QhwNg"
+      ],
+      "settings": {
+        "margin_top": "50",
+        "margin_bottom": "50"
+      }
+    },
+    "ss_text_with_animation_overlay_wnHfLi": {
+      "type": "ss-text-with-animation-overlay",
+      "settings": {
+        "heading": "Delivering Kratom the way nature intended-unaltered, untouched, uncompromised.",
+        "content": "<p>You deserve the highest quality kratom products and exceptional customer service. We strive to give you that at every step. <\/p>",
+        "button_text": "Buy Kratom Online",
+        "button_link": "https:\/\/superspeciosa.com\/best-sellers\/",
+        "image": "shopify:\/\/shop_images\/flower.webp",
+        "background_image": "shopify:\/\/shop_images\/superspeciosa-large.png",
+        "desktop_padding_top": 40,
+        "mobile_padding_top": 40,
+        "desktop_padding_bottom": 0,
+        "mobile_padding_bottom": 0
+      }
+    }
+  },
+  "order": [
+    "ss_home_hero_wYwqAk",
+    "header_with_text_YXieP4",
+    "ss_featured_products_M8fQMX",
+    "ss_featured_products_pGPkqi",
+    "featured_collection_list_KiaqJa",
+    "featured_collection_about_8DrmVt",
+    "featured_category_t3gNjJ",
+    "featured_quaility_ERz6Df",
+    "featured_review_xBFfRH",
+    "header_with_text_YMkrdh",
+    "custom_blog_MKU3rw",
+    "custom_blog_6f8h3C",
+    "ss_text_with_animation_overlay_wnHfLi"
+  ]
+}

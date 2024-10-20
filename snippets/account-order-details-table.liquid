@@ -1,0 +1,92 @@
+<!-- snippets/account-order-details-table.liquid -->
+
+{% comment %}
+	Required:
+		order {Object} The order object
+{% endcomment %}
+
+<table>
+	<thead>
+		<tr>
+			<th>{{ 'customer.order.product' | t }}</th>
+			<th>{{ 'customer.order.price' | t }}</th>
+			<th>{{ 'customer.order.quantity' | t }}</th>
+			<th class="t-right">{{ 'customer.order.total' | t }}</th>
+		</tr>
+	</thead>
+
+	{% comment %}
+		Items
+	{% endcomment %}
+
+	<tbody>
+		{%- for line_item in order.line_items -%}
+
+			{% comment %}
+				Get Formatted Fulfillment Date
+			{% endcomment %}
+
+			{% liquid 
+				assign fulfilled_date = line_item.fulfillment.created_at
+
+				if fulfilled_date != blank 
+					assign fulfillment_date_formatted = fulfilled_date | time_tag: "%m/%d/%Y"
+				endif 
+			%}
+
+			<tr>
+				<td>
+					<strong>{{ line_item.title }}</strong>
+
+					{% if fulfilled_date != blank %}
+						<br />{{ 'customer.order.fulfilled_at_html' | t: date: fulfillment_date_formatted }}
+					{% endif %}
+				</td>
+
+				<td>{{ line_item.original_price | money_without_trailing_zeros }}</td>
+
+				<td>{{ line_item.quantity }}</td>
+
+				<td class="t-right">{{ line_item.original_line_price | money_without_trailing_zeros }}</td>
+			</tr>
+		{%- endfor -%}
+	</tbody>
+
+	{% comment %}
+		Payment Details
+	{% endcomment %}
+
+	<tfoot>
+		<tr>
+			<td></td>
+			<td colspan="2">{{ 'customer.order.subtotal' | t }}</td>
+			<td class="t-right">{{ order.subtotal_price | money }}</td>
+		</tr>
+
+		{%- if order.total_discounts > 0 -%}
+			<tr>
+				<td></td>
+				<td colspan="2">{{ 'customer.order.discount' | t }} {% if order.discount_applications != empty and order.discount_applications[0].title.size > 0 %} ({{ order.discount_applications[0].title }}){% endif %}</td>
+				<td class="t-right">-{{ order.total_discounts | money }}</td>
+			</tr>
+		{%- endif -%}
+
+		<tr>
+			<td></td>
+			<td colspan="2">{{ 'customer.order.shipping' | t }} {% if order.shipping_methods != empty %} ({{ order.shipping_methods[0].title }}){% endif %}</td>
+			<td class="t-right">{{ order.shipping_price | money }}</td>
+		</tr>
+
+		<tr>
+			<td></td>
+			<td colspan="2">{{ 'customer.order.tax' | t }}</td>
+			<td class="t-right">{{ order.tax_price | money }}</td>
+		</tr>
+
+		<tr>
+			<td></td>
+			<td colspan="2"><strong>{{ 'customer.order.total' | t }}</strong></td>
+			<td class="t-right"><strong>{{ order.total_price | money }}</strong></td>
+		</tr>
+	</tfoot>
+</table>

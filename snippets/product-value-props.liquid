@@ -1,0 +1,29 @@
+<!-- snippets/product-value-props.liquid -->
+
+<ul class="product-value-props__list" aria-label="Why Super Speciosa?">
+
+    {% comment %}
+        Individual Value Prop
+    {% endcomment %}
+
+    {%- for block in section.blocks -%}
+
+        {% liquid 
+            assign block_data = block.settings
+        %}
+
+        <li class="product-value-props__item">
+            <div class="product-value-props__icon">
+                {% render 'image-simple', image: block_data.image, width: block_data.image.width, height: block_data.image.height %}
+            </div>
+
+            <div class="product-value-props__text">
+                <h3 class="product-value-props__title">
+                    {{ block_data.title }}
+                </h3>
+            </div>
+        </li>
+
+    {%- endfor -%}
+
+</ul>

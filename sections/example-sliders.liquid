@@ -1,0 +1,486 @@
+<!-- sections/example-sliders.liquid -->
+
+{% comment %}
+	Notes: 
+		- Find extensive documentation for the FM Slider in the starter theme wiki here: https://github.com/silverponies/2.0-starter-theme/wiki/sp-slider
+		- This section includes settings as an example of how section settings can be incorporated into any liquid slider.
+		- The slider relies on selectors, so that slider markup can be as flexible as possible.
+		- Selectors can be defaults, (defaults listed in documentation wiki), or custom to an individual slider's settings.
+		- Sliders can be initialized either with settings added to the data-sp-slider attribute, or by creating a new slider instance inside a JS file.
+{% endcomment %}
+
+{% liquid 
+	assign data = section.settings
+%}
+
+{% comment %}
+	Load Assets
+{% endcomment %}
+
+{% render 'theme-load-assets', style: 'section-example-sliders.min.css', script: 'section-example-sliders.min.js' %}
+
+{% comment %}
+	Section Markup
+{% endcomment %}
+
+<div class="container-text section">
+
+	<h2 class="style-guide__heading">Sliders</h2>
+
+	<div class="rte">
+	<p>
+		Note that slider documentation lives in the <a href="https://github.com/silverponies/2.0-starter-theme/wiki/sp-slider" target="_blank">starter theme wiki</a>, and includes extensive documentation on how to use the slider, its accessibility features, and its file structure.
+	</p>
+	<p>
+		Sliders can be initialized through the markup, by using a data attribute, or they can be initialized in a JS file. The data attribute method is best suited for sliders whose settings need to be controlled via section settings.
+	</p>
+	</div>
+
+	{% comment %}
+		Data Attribute Initialization
+	{% endcomment %}
+
+	<div class="section">
+
+		<h3 class="style-guide__subheading">
+			Data Attribute Initialization
+		</h3>
+
+		{% capture slider_settings %}
+			{
+				"ariaLabel": {{ data.aria_label | json }},
+				"destroy": {{ data.destroy_desktop | json }},
+				"slidesToShow": {{ data.slides_to_show_desktop | json }},
+				"slidesToScroll": {{ data.slides_to_scroll_desktop | json }},
+				"infinite": {{ data.infinite_desktop | json }},
+				"fade": {{ data.fade_desktop | json }},
+				"autoplay": {{ data.autoplay_desktop | json }},
+				"autoplaySeconds": {{ data.autoplay_seconds_desktop | json }},
+				"carousel": {{ data.carousel_desktop | json }},
+				"carouselOffset": {{ data.carousel_offset_desktop | json }},
+				"offsetLeft": {{ data.offset_left_desktop | json }},
+				"offsetRight": {{ data.offset_right_desktop | json }},
+				"dots": {{ data.dots_desktop | json }},
+				"dotsVertical": {{ data.dots_vertical_desktop | json }},
+				"dotThumbnails": {{ data.dots_thumbnails_desktop | json }},
+				"dotThumbWidth": {{ data.dots_thumbnails_width | json }},
+				"dotThumbHeight": {{ data.dots_thumbnails_height | json }},
+
+				"responsive": [
+					{
+						"breakpoint": {{ data.mobile_breakpoint | json }},
+						"settings": {
+							"destroy": {{ data.destroy_mobile | json }},
+							"slidesToShow": {{ data.slides_to_show_mobile | json }},
+							"slidesToScroll": {{ data.slides_to_scroll_mobile | json }},
+							"infinite": {{ data.infinite_mobile | json }},
+							"dots": {{ data.dots_mobile | json }},
+							"dotsVertical": {{ data.dots_vertical_mobile | json }},
+							"dotThumbnails": {{ data.dots_thumbnails_mobile | json }},
+							"fade": {{ data.fade_mobile | json }},
+							"autoplay": {{ data.autoplay_mobile | json }},
+							"autoplaySeconds": {{ data.autoplay_seconds_mobile | json }},
+							"carousel": {{ data.carousel_mobile | json }},
+							"carouselOffset": {{ data.carousel_offset_mobile | json }},
+							"offsetLeft": {{ data.offset_left_mobile | json }},
+							"offsetRight": {{ data.offset_right_mobile | json }}
+						}
+					}
+				]
+			}
+		{% endcapture %}
+
+		<div class="example-slider" data-sp-slider="{{ slider_settings | escape }}">
+
+			{% comment %}
+				Slides with required selector
+			{% endcomment %}
+
+			<div class="js-sp-slider-slides">
+				{%- for i in (i..5) -%}
+
+					<div class="js-sp-slider-slide example-slider__slide">
+						<div class="example-slider__slide-title">
+							Slide {{ forloop.index }} of 6
+						</div>
+
+						<img src="https://via.placeholder.com/200x150/000000/ffffff.png?text=IMAGE {{ forloop.index }}" class="example-slider__slide-img" alt="">
+					</div>
+
+				{%- endfor -%}
+			</div>
+
+			{% comment %}
+				Controls with required selectors
+			{% endcomment %}
+
+			<fieldset class="example-slider__controls">
+				<legend class="sr-only">Slider Controls</legend>
+
+				<button type="button" class="js-sp-slider-prev example-slider__button">
+					<span class="sr-only">Previous Slide</span>
+					{% render 'icon-arrow-left', class: 'icon' %}
+				</button>
+
+				<div class="js-sp-slider-dots example-slider__dots"></div>
+
+				<button type="button" class="js-sp-slider-next example-slider__button">
+					<span class="sr-only">Next Slide</span>
+					{% render 'icon-arrow-right', class: 'icon' %}
+				</button>
+
+				<button type="button" class="js-sp-slider-autoplay-btn example-slider__autoplay-btn">
+					<span class="js-sp-slider-autoplay-btn-text sr-only">
+						Pause
+					</span>
+
+					{% render 'icon-pause', class: 'icon example-slider__autoplay-icon--pause' %}
+					{% render 'icon-play', class: 'icon example-slider__autoplay-icon--play' %}
+				</button>
+			</fieldset>
+
+		</div>
+
+	</div>
+
+	{% comment %}
+		JS Initialization
+	{% endcomment %}
+
+	<div class="section">
+
+		<h3 class="style-guide__subheading">
+			Javascript Initialization
+		</h3>
+
+		<div class="example-slider js-example-slider">
+
+			{% comment %}
+				Slides with required selector
+			{% endcomment %}
+
+			<div class="js-sp-slider-slides">
+				{%- for i in (i..5) -%}
+
+					<div class="js-sp-slider-slide example-slider__slide">
+						<div class="example-slider__slide-title">
+							Slide {{ forloop.index }} of 6
+						</div>
+
+						<img src="https://via.placeholder.com/200x150/000000/ffffff.png?text=IMAGE {{ forloop.index }}" class="example-slider__slide-img" alt="">
+					</div>
+
+				{%- endfor -%}
+			</div>
+
+			{% comment %}
+				Controls with required selectors
+			{% endcomment %}
+
+			<fieldset class="example-slider__controls">
+				<legend class="sr-only">Slider Controls</legend>
+
+				<button type="button" class="js-sp-slider-prev example-slider__button">
+					<span class="sr-only">Previous Slide</span>
+					{% render 'icon-arrow-left', class: 'icon' %}
+				</button>
+
+				<div class="js-sp-slider-dots example-slider__dots"></div>
+
+				<button type="button" class="js-sp-slider-next example-slider__button">
+					<span class="sr-only">Next Slide</span>
+					{% render 'icon-arrow-right', class: 'icon' %}
+				</button>
+
+				<button type="button" class="js-sp-slider-autoplay-btn example-slider__autoplay-btn">
+					<span class="js-sp-slider-autoplay-btn-text sr-only">
+						Pause
+					</span>
+
+					{% render 'icon-pause', class: 'icon example-slider__autoplay-icon--pause' %}
+					{% render 'icon-play', class: 'icon example-slider__autoplay-icon--play' %}
+				</button>
+			</fieldset>
+
+		</div>
+
+	</div>
+
+</div>
+
+{% schema %}
+{
+    "name": "Example Sliders",
+    "settings": [
+        {
+            "type": "header",
+            "content": "Data Attribute Initialization"
+        },
+		{
+			"type": "paragraph",
+			"content": "These settings just control the example slider that is intialized via data attribute. Note that every possible setting has been added here for both mobile and desktop, for the sake of testing and clear examples!"
+		},
+		{
+            "type": "header",
+            "content": "Universal Settings"
+        },
+		{
+			"type": "text",
+			"id": "aria_label",
+			"label": "Aria Label",
+			"info": "When the slider is initialized, this aria-label will be added to the slider container. Note that the word 'slider' or 'slideshow' should never be added here, as that is already indicated by the slider's role.",
+			"default": "Data Attribution Initialization"
+		},
+		{
+			"type": "number",
+			"id": "mobile_breakpoint",
+			"label": "Mobile Breakpoint",
+			"info": "At this pixel value, using a max-width CSS media query, the mobile settings will be used.",
+			"default": 768
+		},
+		{
+			"type": "number",
+			"id": "dots_thumbnails_width",
+			"label": "Dot Thumbnail Width",
+			"info": "This sets the width of the image that will be used for the thumbnail, if thumbnails are enabled and if the image is coming from the Shopify CDN.",
+			"default": 200
+		},
+		{
+			"type": "number",
+			"id": "dots_thumbnails_height",
+			"label": "Dot Thumbnail Height",
+			"default": 200
+		},
+		{
+            "type": "header",
+            "content": "Desktop-Specific Settings"
+        },
+		{
+			"type": "checkbox",
+			"id": "destroy_desktop",
+			"label": "Destroy Slider",
+			"default": false,
+			"info": "If destroyed, all controls will be hidden, all slider-specific styling classes will be removed, and all inline styling will be removed as well."
+		},
+		{
+			"type": "checkbox",
+			"id": "infinite_desktop",
+			"label": "Enable Infinite",
+			"info": "Infinite will never be enabled on touch devices (regardless of responsive settings), since the infinite feature does not use native scrolling.",
+			"default": false
+		},
+		{
+			"type": "range",
+			"id": "slides_to_show_desktop",
+			"label": "Slides to Show",
+			"min": 1,
+			"max": 5,
+			"default": 2,
+			"info": "How many slides to show at one time."
+		},
+		{
+			"type": "range",
+			"id": "slides_to_scroll_desktop",
+			"label": "Slides to Scroll",
+			"min": 1,
+			"max": 3,
+			"default": 1,
+			"info": "How many slides to scroll at one time."
+		},
+		{
+			"type": "checkbox",
+			"id": "dots_desktop",
+			"label": "Enable Dots",
+			"default": true
+		},
+		{
+			"type": "checkbox",
+			"id": "dots_vertical_desktop",
+			"label": "Enable Vertical Dots",
+			"default": true,
+			"info": "Uncheck to show dots horizontally."
+		},
+		{
+			"type": "checkbox",
+			"id": "dots_thumbnails_desktop",
+			"label": "Show thumbnail images for dots",
+			"info": "Requires that each slide has an image. Works with standard images as well as any theme image snippet.",
+			"default": true
+		},
+		{
+			"type": "checkbox",
+			"id": "fade_desktop",
+			"label": "Enable Fade",
+			"default": false,
+			"info": "Fade will not be enabled if on a touch device, or if carousel mode is enabled."
+		},
+		{
+			"type": "checkbox",
+			"id": "autoplay_desktop",
+			"label": "Enable Autoplay",
+			"default": true
+		},
+		{
+			"type": "range",
+			"id": "autoplay_seconds_desktop",
+			"label": "Autoplay Seconds",
+			"min": 1,
+			"max": 10,
+			"default": 3,
+			"info": "How many seconds to wait before automatically scrolling to the next slide."
+		},
+		{
+			"type": "checkbox",
+			"id": "carousel_desktop",
+			"label": "Enable Carousel",
+			"default": false,
+			"info": "If enabled, parts of the next and previous slides will be visible on either side of the active slide(s)."
+		},
+		{
+			"type": "range",
+			"id": "carousel_offset_desktop",
+			"label": "Carousel Offset",
+			"info": "The percentage width of the next and previous slides to make visible.",
+			"min": 0,
+			"max": 100,
+			"default": 10,
+			"unit": "%"
+		},
+		{
+			"type": "range",
+			"id": "offset_left_desktop",
+			"label": "Offset Left",
+			"info": "Adds spacing at the start (left) of the slider. Set to 0 to show no offset",
+			"min": 0,
+			"max": 100,
+			"default": 0,
+			"unit": "%"
+		},
+		{
+			"type": "range",
+			"id": "offset_right_desktop",
+			"label": "Offset Right",
+			"info": "Adds spacing at the end (right) of the slider. Set to 0 to show no offset",
+			"min": 0,
+			"max": 100,
+			"default": 0,
+			"unit": "%"
+		},
+		{
+            "type": "header",
+            "content": "Mobile-Specific Settings"
+        },
+		{
+			"type": "checkbox",
+			"id": "destroy_mobile",
+			"label": "Destroy Slider",
+			"default": false,
+			"info": "If destroyed, all controls will be hidden, all slider-specific styling classes will be removed, and all inline styling will be removed as well."
+		},
+		{
+			"type": "checkbox",
+			"id": "infinite_mobile",
+			"label": "Enable Infinite",
+			"info": "Infinite will never be enabled on touch devices (regardless of responsive settings), since the infinite feature does not use native scrolling.",
+			"default": false
+		},
+		{
+			"type": "range",
+			"id": "slides_to_show_mobile",
+			"label": "Slides to Show",
+			"min": 1,
+			"max": 3,
+			"default": 1,
+			"info": "How many slides to show at one time."
+		},
+		{
+			"type": "range",
+			"id": "slides_to_scroll_mobile",
+			"label": "Slides to Scroll",
+			"min": 1,
+			"max": 3,
+			"default": 1,
+			"info": "How many slides to scroll at one time."
+		},
+		{
+			"type": "checkbox",
+			"id": "dots_mobile",
+			"label": "Enable Dots",
+			"default": true
+		},
+		{
+			"type": "checkbox",
+			"id": "dots_vertical_mobile",
+			"label": "Enable Vertical Dots",
+			"default": false,
+			"info": "Uncheck to show dots horizontally."
+		},
+		{
+			"type": "checkbox",
+			"id": "dots_thumbnails_mobile",
+			"label": "Show thumbnail images for dots",
+			"info": "Requires that each slide has an image. Works with standard images as well as any theme image snippet.",
+			"default": true
+		},
+		{
+			"type": "checkbox",
+			"id": "fade_mobile",
+			"label": "Enable Fade",
+			"default": false,
+			"info": "Fade will not be enabled if on a touch device, or if carousel mode is enabled."
+		},
+		{
+			"type": "checkbox",
+			"id": "autoplay_mobile",
+			"label": "Enable Autoplay",
+			"default": false
+		},
+		{
+			"type": "range",
+			"id": "autoplay_seconds_mobile",
+			"label": "Autoplay Seconds",
+			"min": 1,
+			"max": 10,
+			"default": 3,
+			"info": "How many seconds to wait before automatically scrolling to the next slide."
+		},
+		{
+			"type": "checkbox",
+			"id": "carousel_mobile",
+			"label": "Enable Carousel",
+			"default": true,
+			"info": "If enabled, parts of the next and previous slides will be visible on either side of the active slide(s)."
+		},
+		{
+			"type": "range",
+			"id": "carousel_offset_mobile",
+			"label": "Carousel Offset",
+			"info": "The percentage width of the next and previous slides to make visible.",
+			"min": 0,
+			"max": 100,
+			"default": 10,
+			"unit": "%"
+		},
+		{
+			"type": "range",
+			"id": "offset_left_mobile",
+			"label": "Offset Left",
+			"info": "Adds spacing at the start (left) of the slider. Set to 0 to show no offset",
+			"min": 0,
+			"max": 100,
+			"default": 0,
+			"unit": "%"
+		},
+		{
+			"type": "range",
+			"id": "offset_right_mobile",
+			"label": "Offset Right",
+			"info": "Adds spacing at the end (right) of the slider. Set to 0 to show no offset",
+			"min": 0,
+			"max": 100,
+			"default": 0,
+			"unit": "%"
+		}
+    ]
+}
+{% endschema %}

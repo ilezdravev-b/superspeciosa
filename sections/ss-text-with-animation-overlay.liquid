@@ -1,0 +1,178 @@
+{%- liquid
+  assign  desktop_padding_top = section.settings.desktop_padding_top
+  assign  desktop_padding_bottom = section.settings.desktop_padding_bottom
+  assign  mobile_padding_top = section.settings.mobile_padding_top
+  assign  mobile_padding_bottom = section.settings.mobile_padding_bottom
+-%}
+
+
+{{ 'section-ss-text-with-animation-overlay.min.css' |  asset_url |  stylesheet_tag }}
+
+<style>
+
+    .ss-button {
+        width: fit-content;
+    }
+
+    #shopify-section-{{ section.id }} .ss-text-with-animation-overlay-container {
+        display: flex;
+        padding-top: {{ desktop_padding_top }}px;
+        padding-bottom: {{ desktop_padding_bottom }}px;
+    }
+
+    @media (max-width : 768px) {
+        #shopify-section-{{ section.id }} .ss-text-with-animation-overlay-container {
+            padding-top: {{ mobile_padding_top }}px;
+            padding-bottom: {{ mobile_padding_bottom }}px;
+        }
+    }
+    {%- if section.settings.background_image != blank -%}
+        #text-animation-image-{{section.id}} .ss-text-with-ani-overlay-wrapper {
+            background-image: url({{section.settings.background_image |  img_url: 'master'}});
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+    {%- endif -%}
+
+    {%- if section.settings.background_image != blank -%}
+        #text-animation-image-{{section.id}} .ss-text-with-ani-overlay-wrapper {
+            background-image: url({{section.settings.background_image |  img_url: 'master'}});
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+    {%- endif -%}
+</style>
+
+<section class="ss-text-with-animation-overlay-container" id="text-animation-image-{{section.id}}">
+
+    <div class="ss-text-with-ani-overlay-wrapper container">
+        <div class="ss-text-content">
+            {%- if section.settings.heading != blank -%}
+                <div class="heading">{{ section.settings.heading }}</div>
+            {%- endif -%}
+            {%- if section.settings.content != blank -%}
+                <div class="ss-content">{{ section.settings.content }}</div>
+            {%- endif -%}
+            {%- if section.settings.button_text != blank -%}
+                <a href="{{ section.settings.button_link }}" class="ss-button ss-buy-online btn btn--primary">{{ section.settings.button_text }}</a>
+            {%- endif -%}
+        </div>
+        {%- if section.settings.image != blank -%}
+            <div class="ss-ani-overlay">
+                {{ section.settings.image | image_url: width: 1240 | image_tag }}
+            </div>
+        {%- endif -%}
+    </div>
+</section>
+
+
+<script>
+
+    var last_pos = 0;
+    document.addEventListener("DOMContentLoaded", function() {
+        window.addEventListener("scroll", function(event) {
+            var direction = "down";
+            if(document.documentElement.scrollTop < last_pos) {
+                direction = "up";
+            }
+
+            var offset_top = document.querySelector(".ss-text-with-animation-overlay-container").getBoundingClientRect().top;   
+            if(offset_top < 600 && offset_top > 0 && direction == "down") {
+                document.querySelector(".ss-ani-overlay").style.top = "500px";
+                let top = (parseInt(document.querySelector(".ss-ani-overlay").style.top) - (600 - offset_top));
+                if(top < 0) {
+                    top = 0;
+                }
+                document.querySelector(".ss-ani-overlay").style.top = top +"px";
+            }else if(offset_top > 0 && direction == "up") {
+                document.querySelector(".ss-ani-overlay").style.top = (parseInt(document.querySelector(".ss-ani-overlay").style.top)  + offset_top) +"px";
+            }
+            last_pos = document.documentElement.scrollTop;
+        })
+    });
+</script>
+
+{% schema %}
+  {
+    "name": "Text Animation Image",
+    "tag": "section",
+    "class": "ss-text-with-ani-overlay",
+    "settings": [
+      {
+        "type": "text",
+        "id" : "heading",
+        "label": "Heading"
+      },
+      {
+        "type": "richtext",
+        "id" : "content",
+        "label": "Content"
+      },
+      {
+        "type": "text",
+        "id" : "button_text",
+        "label": "Button Text"
+      },
+      {
+        "type" : "url",
+        "id" : "button_link",
+        "label": "Button Link"
+      },
+      {
+        "type": "image_picker",
+        "id" : "image",
+        "label": "Image"
+      },
+      {
+        "type": "image_picker",
+        "id": "background_image",
+        "label": "Background Image"
+      },
+      {
+            "type": "range",
+            "id" : "desktop_padding_top",
+            "min": 0,
+            "max": 500,
+            "step" : 5,
+            "default" : 40,
+            "label": "Padding Top(desktop)"
+        },
+        {
+            "type": "range",
+            "id" : "mobile_padding_top",
+            "min": 0,
+            "max": 500,
+            "step" : 5,
+            "default" : 40,
+            "label": "Padding Top(mobile)"
+        },
+        {
+            "type": "range",
+            "id" : "desktop_padding_bottom",
+            "min": 0,
+            "max": 500,
+            "step" : 5,
+            "default" : 0,
+            "label": "Padding Bottom(desktop)"
+        },
+        {
+            "type": "range",
+            "id" : "mobile_padding_bottom",
+            "min": 0,
+            "max": 500,
+            "step" : 5,
+            "default" : 0,
+            "label": "Padding Bottom(mobile)"
+        }
+    ],
+    "presets": [
+      {
+        "name": "Text Animation Image",
+        "settings": {
+        }
+      }
+    ]
+  }
+{% endschema %}

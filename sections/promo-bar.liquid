@@ -1,0 +1,111 @@
+<!-- sections/promo-bar.liquid -->
+
+{% comment %}
+	Note: Since _src/scripts/header.js is observing the promo bar
+		  and updating two CSS variables when it goes in and out of
+		  view, the container with the promo bar ID should always
+		  exist, even if the visual promo bar doesn't appear.
+{% endcomment %}
+
+<div id="promoBar">
+
+	{% capture flower_icon %}{% render "icon-swf" %}{% endcapture %}
+	{%- if section.blocks.size > 0 -%}
+		<aside class="promo-bar" aria-label="Announcement">
+			<div class="promo-bar__content container">
+				{% comment %} <span class="tablet-lg-up">{{ flower_icon }}</span> {% endcomment %}
+				{% for block in section.blocks %}
+					{%- if block.settings.promo_text != blank -%}
+						{% if block.settings.start_date != blank and block.settings.end_date != blank %}
+							{% liquid
+								assign start_date = block.settings.start_date | split: '/'
+								assign start_date = start_date[1] | append: '/' | append: start_date[0] | append: '/' | append: start_date[2]
+								assign start_date = start_date | date: '%s'
+
+								assign end_date = block.settings.end_date | split: '/'
+								assign end_date = end_date[1] | append: '/' | append: end_date[0] | append: '/' | append: end_date[2]
+								assign end_date = end_date | date: '%s'
+
+								assign today = 'now' | date: '%s'
+							%}
+							{% if start_date <= today and today <= end_date %}
+								<div class="copy">{{ block.settings.promo_text }}</div>
+							{% endif %}
+						{% else %}
+							<div class="copy">{{ block.settings.promo_text }}</div>
+						{% endif %}
+					{%- endif -%}
+				{% endfor %}
+				{% comment %} <span class="tablet-lg-up">{{ flower_icon }}</span> {% endcomment %}
+			</div>
+		</aside>
+	{%- else -%}
+		<aside class="promo-bar" aria-label="Announcement">
+			<div class="promo-bar__content container">
+				{% comment %} <span class="tablet-lg-up">{{ flower_icon }}</span> {% endcomment %}
+					
+				<div class="copy">{{ section.settings.copy }}</div>
+				<div class="copy">{{ section.settings.copy_second }}</div>
+
+				{% comment %} <span class="tablet-lg-up">{{ flower_icon }}</span> {% endcomment %}
+			</div>
+		</aside>
+	{%- endif -%}
+		
+</div>
+
+<style>
+	.sticky-promobar {
+		position: sticky;
+		top: 0;
+		z-index: 99;
+		width: 100%;
+	}
+</style>
+
+{% schema %}
+{
+    "name": "Promo Bar",
+	"class": "sticky-promobar",
+    "settings": [
+        {
+            "type": "richtext",
+            "id": "copy",
+            "label": "Copy",
+            "default": "<p>Free shipping on U.S. orders over $50.</p>"
+        },
+				{
+            "type": "richtext",
+            "id": "copy_second",
+            "label": "Secondary Copy",
+            "default": "<p>SAVE UP TO 70%! ENDS SOON! <a href='/collections/sale-a'>SHOP NOW</a></p>"
+        }
+    ],
+	"blocks": [
+		{
+			"type": "promo_text_list",
+			"name" : "Promo Text List",
+			"settings": [
+				{
+					"type": "html",
+					"id" : "promo_text",
+					"label" : "Promo Text"
+				},
+				{
+					"type": "text",
+					"id" : "start_date",
+					"label" : "Start Date (Optional)",
+					"placeholder": "For example, 02/10/2024"
+				},
+				{
+					"type": "text",
+					"id" : "end_date",
+					"label" : "End Date (Optional)",
+					"placeholder": "For example, 10/15/2024"
+				}
+
+			]	
+		}
+	]
+}
+{% endschema %}

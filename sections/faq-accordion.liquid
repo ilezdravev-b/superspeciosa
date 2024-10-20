@@ -1,0 +1,716 @@
+<div class="faq-accordions section-{{ section.id }}">
+  <div class="{% if section.settings.enable_full %}full-page-width{% else %}{% if section.settings.narrow_width %}page-narrow-width page-width{% else %}page-width{% endif %}{% endif %}">
+    {% if section.settings.heading_main != blank %}
+    <div class="heading-main-page">
+      <h1>{{ section.settings.heading_main }}</h1>
+    </div>
+    {% endif %}
+    
+    <div class="accordions-main">
+      <!-- Tab 1 -->
+      {% if section.settings.tab1 != blank %}
+        {% if section.settings.tab1 != blank %}
+        <div class="tab-head active" data-id="#tab1">
+          <span>{{ section.settings.tab1 }}</span>
+        </div>
+        {% endif %}
+        <div id="tab1" class="tab-wrapper">
+        {% for block in section.blocks %}
+          {% if block.type == 'tab1' %}
+            {% if block.settings.heading != blank %}
+            <div class="accordion">
+              <button class="accordion__button">
+                <span>{{ block.settings.heading }}</span>
+                <span class="accordion-icon">
+                  <svg class="e-font-icon-svg e-fas-caret-right" viewBox="0 0 192 512" xmlns="http://www.w3.org/2000/svg"><path d="M0 384.662V127.338c0-17.818 21.543-26.741 34.142-14.142l128.662 128.662c7.81 7.81 7.81 20.474 0 28.284L34.142 398.804C21.543 411.404 0 402.48 0 384.662z"></path></svg>
+                </span>
+              </button>
+              {% if block.settings.content != blank %}
+                <div class="accordion--content">{{ block.settings.content }}</div>
+              {% endif %}
+            </div>
+            {% endif %}
+          {% endif %}
+        {% endfor %}
+        </div>
+      {% endif %}
+
+      <!-- Tab 2 -->
+      {% if section.settings.tab2 != blank %}
+        {% if section.settings.tab2 != blank %}
+        <div class="tab-head" data-id="#tab2">
+          <span>{{ section.settings.tab2 }}</span>
+        </div>
+        {% endif %}
+        <div id="tab2" class="tab-wrapper">
+        {% for block in section.blocks %}
+          {% if block.type == 'tab2' %}
+            {% if block.settings.heading != blank %}
+            <div class="accordion">
+              <button class="accordion__button">
+                <span>{{ block.settings.heading }}</span>
+                <span class="accordion-icon">
+                  <svg class="e-font-icon-svg e-fas-caret-right" viewBox="0 0 192 512" xmlns="http://www.w3.org/2000/svg"><path d="M0 384.662V127.338c0-17.818 21.543-26.741 34.142-14.142l128.662 128.662c7.81 7.81 7.81 20.474 0 28.284L34.142 398.804C21.543 411.404 0 402.48 0 384.662z"></path></svg>
+                </span>
+              </button>
+              {% if block.settings.content != blank %}
+                <div class="accordion--content">{{ block.settings.content }}</div>
+              {% endif %}
+            </div>
+            {% endif %}
+          {% endif %}
+        {% endfor %}
+        </div>
+      {% endif %}
+
+      <!-- Tab 3 -->
+      {% if section.settings.tab3 != blank %}
+        {% if section.settings.tab3 != blank %}
+        <div class="tab-head" data-id="#tab3">
+          <span>{{ section.settings.tab3 }}</span>
+        </div>
+        {% endif %}
+        <div id="tab3" class="tab-wrapper">
+        {% for block in section.blocks %}
+          {% if block.type == 'tab3' %}
+            {% if block.settings.heading != blank %}
+            <div class="accordion">
+              <button class="accordion__button">
+                <span>{{ block.settings.heading }}</span>
+                <span class="accordion-icon">
+                  <svg class="e-font-icon-svg e-fas-caret-right" viewBox="0 0 192 512" xmlns="http://www.w3.org/2000/svg"><path d="M0 384.662V127.338c0-17.818 21.543-26.741 34.142-14.142l128.662 128.662c7.81 7.81 7.81 20.474 0 28.284L34.142 398.804C21.543 411.404 0 402.48 0 384.662z"></path></svg>
+                </span>
+              </button>
+              {% if block.settings.content != blank %}
+                <div class="accordion--content">{{ block.settings.content }}</div>
+              {% endif %}
+            </div>
+            {% endif %}
+          {% endif %}
+        {% endfor %}
+        </div>
+      {% endif %}
+
+      <!-- Tab 4 -->
+      {% if section.settings.tab4 != blank %}
+        {% if section.settings.tab4 != blank %}
+        <div class="tab-head" data-id="#tab4">
+          <span>{{ section.settings.tab4 }}</span>
+        </div>
+        {% endif %}
+        <div id="tab4" class="tab-wrapper">
+        {% for block in section.blocks %}
+          {% if block.type == 'tab4' %}
+            {% if block.settings.heading != blank %}
+            <div class="accordion">
+              <button class="accordion__button">
+                <span>{{ block.settings.heading }}</span>
+                <span class="accordion-icon">
+                  <svg class="e-font-icon-svg e-fas-caret-right" viewBox="0 0 192 512" xmlns="http://www.w3.org/2000/svg"><path d="M0 384.662V127.338c0-17.818 21.543-26.741 34.142-14.142l128.662 128.662c7.81 7.81 7.81 20.474 0 28.284L34.142 398.804C21.543 411.404 0 402.48 0 384.662z"></path></svg>
+                </span>
+              </button>
+              {% if block.settings.content != blank %}
+                <div class="accordion--content">{{ block.settings.content }}</div>
+              {% endif %}
+            </div>
+            {% endif %}
+          {% endif %}
+        {% endfor %}
+        </div>
+      {% endif %}
+
+      <!-- Tab 5 -->
+      {% if section.settings.tab5 != blank %}
+        {% if section.settings.tab5 != blank %}
+        <div class="tab-head" data-id="#tab5">
+          <span>{{ section.settings.tab5 }}</span>
+        </div>
+        {% endif %}
+        <div id="tab5" class="tab-wrapper">
+        {% for block in section.blocks %}
+          {% if block.type == 'tab5' %}
+            {% if block.settings.heading != blank %}
+            <div class="accordion">
+              <button class="accordion__button">
+                <span>{{ block.settings.heading }}</span>
+                <span class="accordion-icon">
+                  <svg class="e-font-icon-svg e-fas-caret-right" viewBox="0 0 192 512" xmlns="http://www.w3.org/2000/svg"><path d="M0 384.662V127.338c0-17.818 21.543-26.741 34.142-14.142l128.662 128.662c7.81 7.81 7.81 20.474 0 28.284L34.142 398.804C21.543 411.404 0 402.48 0 384.662z"></path></svg>
+                </span>
+              </button>
+              {% if block.settings.content != blank %}
+                <div class="accordion--content">{{ block.settings.content }}</div>
+              {% endif %}
+            </div>
+            {% endif %}
+          {% endif %}
+        {% endfor %}
+        </div>
+      {% endif %}
+
+      <!-- Tab 6 -->
+      {% if section.settings.tab6 != blank %}
+        {% if section.settings.tab6 != blank %}
+        <div class="tab-head" data-id="#tab6">
+          <span>{{ section.settings.tab6 }}</span>
+        </div>
+        {% endif %}
+        <div id="tab6" class="tab-wrapper">
+        {% for block in section.blocks %}
+          {% if block.type == 'tab6' %}
+            {% if block.settings.heading != blank %}
+            <div class="accordion">
+              <button class="accordion__button">
+                <span>{{ block.settings.heading }}</span>
+                <span class="accordion-icon">
+                  <svg class="e-font-icon-svg e-fas-caret-right" viewBox="0 0 192 512" xmlns="http://www.w3.org/2000/svg"><path d="M0 384.662V127.338c0-17.818 21.543-26.741 34.142-14.142l128.662 128.662c7.81 7.81 7.81 20.474 0 28.284L34.142 398.804C21.543 411.404 0 402.48 0 384.662z"></path></svg>
+                </span>
+              </button>
+              {% if block.settings.content != blank %}
+                <div class="accordion--content">{{ block.settings.content }}</div>
+              {% endif %}
+            </div>
+            {% endif %}
+          {% endif %}
+        {% endfor %}
+        </div>
+      {% endif %}
+
+      <!-- Tab 7 -->
+      {% if section.settings.tab7 != blank %}
+        {% if section.settings.tab7 != blank %}
+        <div class="tab-head" data-id="#tab7">
+          <span>{{ section.settings.tab7 }}</span>
+        </div>
+        {% endif %}
+        <div id="tab7" class="tab-wrapper">
+        {% for block in section.blocks %}
+          {% if block.type == 'tab7' %}
+            {% if block.settings.heading != blank %}
+            <div class="accordion">
+              <button class="accordion__button">
+                <span>{{ block.settings.heading }}</span>
+                <span class="accordion-icon">
+                  <svg class="e-font-icon-svg e-fas-caret-right" viewBox="0 0 192 512" xmlns="http://www.w3.org/2000/svg"><path d="M0 384.662V127.338c0-17.818 21.543-26.741 34.142-14.142l128.662 128.662c7.81 7.81 7.81 20.474 0 28.284L34.142 398.804C21.543 411.404 0 402.48 0 384.662z"></path></svg>
+                </span>
+              </button>
+              {% if block.settings.content != blank %}
+                <div class="accordion--content">{{ block.settings.content }}</div>
+              {% endif %}
+            </div>
+            {% endif %}
+          {% endif %}
+        {% endfor %}
+        </div>
+      {% endif %}
+
+      <!-- Tab 8 -->
+      {% if section.settings.tab8 != blank %}
+        {% if section.settings.tab8 != blank %}
+        <div class="tab-head" data-id="#tab8">
+          <span>{{ section.settings.tab8 }}</span>
+        </div>
+        {% endif %}
+        <div id="tab8" class="tab-wrapper">
+        {% for block in section.blocks %}
+          {% if block.type == 'tab8' %}
+            {% if block.settings.heading != blank %}
+            <div class="accordion">
+              <button class="accordion__button">
+                <span>{{ block.settings.heading }}</span>
+                <span class="accordion-icon">
+                  <svg class="e-font-icon-svg e-fas-caret-right" viewBox="0 0 192 512" xmlns="http://www.w3.org/2000/svg"><path d="M0 384.662V127.338c0-17.818 21.543-26.741 34.142-14.142l128.662 128.662c7.81 7.81 7.81 20.474 0 28.284L34.142 398.804C21.543 411.404 0 402.48 0 384.662z"></path></svg>
+                </span>
+              </button>
+              {% if block.settings.content != blank %}
+                <div class="accordion--content">{{ block.settings.content }}</div>
+              {% endif %}
+            </div>
+            {% endif %}
+          {% endif %}
+        {% endfor %}
+        </div>
+      {% endif %}
+
+      <!-- Tab 9 -->
+      {% if section.settings.tab9 != blank %}
+        {% if section.settings.tab9 != blank %}
+        <div class="tab-head" data-id="#tab9">
+          <span>{{ section.settings.tab9 }}</span>
+        </div>
+        {% endif %}
+        <div id="tab9" class="tab-wrapper">
+        {% for block in section.blocks %}
+          {% if block.type == 'tab9' %}
+            {% if block.settings.heading != blank %}
+            <div class="accordion">
+              <button class="accordion__button">
+                <span>{{ block.settings.heading }}</span>
+                <span class="accordion-icon">
+                  <svg class="e-font-icon-svg e-fas-caret-right" viewBox="0 0 192 512" xmlns="http://www.w3.org/2000/svg"><path d="M0 384.662V127.338c0-17.818 21.543-26.741 34.142-14.142l128.662 128.662c7.81 7.81 7.81 20.474 0 28.284L34.142 398.804C21.543 411.404 0 402.48 0 384.662z"></path></svg>
+                </span>
+              </button>
+              {% if block.settings.content != blank %}
+                <div class="accordion--content">{{ block.settings.content }}</div>
+              {% endif %}
+            </div>
+            {% endif %}
+          {% endif %}
+        {% endfor %}
+        </div>
+      {% endif %}
+
+      <!-- Tab 10 -->
+      {% if section.settings.tab10 != blank %}
+        {% if section.settings.tab10 != blank %}
+        <div class="tab-head" data-id="#tab10">
+          <span>{{ section.settings.tab10 }}</span>
+        </div>
+        {% endif %}
+        <div id="tab10" class="tab-wrapper">
+        {% for block in section.blocks %}
+          {% if block.type == 'tab10' %}
+            {% if block.settings.heading != blank %}
+            <div class="accordion">
+              <button class="accordion__button">
+                <span>{{ block.settings.heading }}</span>
+                <span class="accordion-icon">
+                  <svg class="e-font-icon-svg e-fas-caret-right" viewBox="0 0 192 512" xmlns="http://www.w3.org/2000/svg"><path d="M0 384.662V127.338c0-17.818 21.543-26.741 34.142-14.142l128.662 128.662c7.81 7.81 7.81 20.474 0 28.284L34.142 398.804C21.543 411.404 0 402.48 0 384.662z"></path></svg>
+                </span>
+              </button>
+              {% if block.settings.content != blank %}
+                <div class="accordion--content">{{ block.settings.content }}</div>
+              {% endif %}
+            </div>
+            {% endif %}
+          {% endif %}
+        {% endfor %}
+        </div>
+      {% endif %}
+      
+    </div>
+  </div>
+</div>
+
+<style>
+.section-{{ section.id }} {
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+    background-color: {{ section.settings.bg_color }};
+    z-index: 9;
+    position: relative;
+}
+@media (max-width: 749px) {
+  .section-{{ section.id }} {
+    padding-top: {{ section.settings.padding_top_mobile }}px;
+    padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
+  }
+}
+</style>
+
+{% schema %}
+  {
+    "name": "Faq Accordions",
+    "settings": [
+      {
+        "type": "text",
+        "id": "heading_main",
+        "label": "Main Page Heading"
+      },
+      {
+        "type": "header",
+        "content": "Tab Headings"
+      },
+      {
+        "type": "text",
+        "id": "tab1",
+        "label": "Tab Heading"
+      },
+      {
+        "type": "text",
+        "id": "tab2",
+        "label": "Tab Heading"
+      },
+      {
+        "type": "text",
+        "id": "tab3",
+        "label": "Tab Heading"
+      },
+      {
+        "type": "text",
+        "id": "tab4",
+        "label": "Tab Heading"
+      },
+      {
+        "type": "text",
+        "id": "tab5",
+        "label": "Tab Heading"
+      },
+      {
+        "type": "text",
+        "id": "tab6",
+        "label": "Tab Heading"
+      },
+      {
+        "type": "text",
+        "id": "tab7",
+        "label": "Tab Heading"
+      },
+      {
+        "type": "text",
+        "id": "tab8",
+        "label": "Tab Heading"
+      },
+      {
+        "type": "text",
+        "id": "tab9",
+        "label": "Tab Heading"
+      },
+      {
+        "type": "text",
+        "id": "tab10",
+        "label": "Tab Heading"
+      },
+      {
+        "type": "header",
+        "content": "Layout"
+      },
+      {
+        "type": "range",
+        "id": "padding_top",
+        "label": "Top Spacing",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "default": 20,
+        "unit": "px"
+      },
+      {
+        "type": "range",
+        "id": "padding_bottom",
+        "label": "Bottom Spacing",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "default": 20,
+        "unit": "px"
+      },
+      {
+        "type": "color",
+        "id": "bg_color",
+        "label": "Background Color",
+        "default": "#ffffff"
+      },
+      {
+        "type": "range",
+        "id": "padding_top_mobile",
+        "label": "Top Spacing Mobile",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "default": 10,
+        "unit": "px"
+      },
+      {
+        "type": "range",
+        "id": "padding_bottom_mobile",
+        "label": "Bottom Spacing Mobile",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "default": 10,
+        "unit": "px"
+      },
+      {
+        "type": "checkbox",
+        "id": "narrow_width",
+        "label": "Narrow Width",
+        "default": false
+      },
+      {
+        "type": "checkbox",
+        "id": "enable_full",
+        "default": false,
+        "label": "Enable Full Width"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "tab1",
+        "name": "Tab 1",
+        "settings": [
+          {
+            "type": "text",
+            "id": "heading",
+            "label": "Heading"
+          },
+          {
+            "type": "richtext",
+            "id": "content",
+            "label": "Content"
+          }
+        ]
+      },
+      {
+        "type": "tab2",
+        "name": "Tab 2",
+        "settings": [
+          {
+            "type": "text",
+            "id": "heading",
+            "label": "Heading"
+          },
+          {
+            "type": "richtext",
+            "id": "content",
+            "label": "Content"
+          }
+        ]
+      },
+      {
+        "type": "tab3",
+        "name": "Tab 3",
+        "settings": [
+          {
+            "type": "text",
+            "id": "heading",
+            "label": "Heading"
+          },
+          {
+            "type": "richtext",
+            "id": "content",
+            "label": "Content"
+          }
+        ]
+      },
+      {
+        "type": "tab4",
+        "name": "Tab 4",
+        "settings": [
+          {
+            "type": "text",
+            "id": "heading",
+            "label": "Heading"
+          },
+          {
+            "type": "richtext",
+            "id": "content",
+            "label": "Content"
+          }
+        ]
+      },
+      {
+        "type": "tab5",
+        "name": "Tab 5",
+        "settings": [
+          {
+            "type": "text",
+            "id": "heading",
+            "label": "Heading"
+          },
+          {
+            "type": "richtext",
+            "id": "content",
+            "label": "Content"
+          }
+        ]
+      },
+      {
+        "type": "tab6",
+        "name": "Tab 6",
+        "settings": [
+          {
+            "type": "text",
+            "id": "heading",
+            "label": "Heading"
+          },
+          {
+            "type": "richtext",
+            "id": "content",
+            "label": "Content"
+          }
+        ]
+      },
+      {
+        "type": "tab7",
+        "name": "Tab 7",
+        "settings": [
+          {
+            "type": "text",
+            "id": "heading",
+            "label": "Heading"
+          },
+          {
+            "type": "richtext",
+            "id": "content",
+            "label": "Content"
+          }
+        ]
+      },
+      {
+        "type": "tab8",
+        "name": "Tab 8",
+        "settings": [
+          {
+            "type": "text",
+            "id": "heading",
+            "label": "Heading"
+          },
+          {
+            "type": "richtext",
+            "id": "content",
+            "label": "Content"
+          }
+        ]
+      },
+      {
+        "type": "tab9",
+        "name": "Tab 9",
+        "settings": [
+          {
+            "type": "text",
+            "id": "heading",
+            "label": "Heading"
+          },
+          {
+            "type": "richtext",
+            "id": "content",
+            "label": "Content"
+          }
+        ]
+      },
+      {
+        "type": "tab10",
+        "name": "Tab 10",
+        "settings": [
+          {
+            "type": "text",
+            "id": "heading",
+            "label": "Heading"
+          },
+          {
+            "type": "richtext",
+            "id": "content",
+            "label": "Content"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Faq Accordions"
+      }
+    ]
+  }
+{% endschema %}
+
+<style>
+.faq-accordions .page-width {
+    max-width: 1140px;
+    margin: auto;
+}
+.heading-main-page h1 {
+    color: #231f20;
+    font-size: 51px;
+    font-family: 'Dilemma', sans-serif;
+    margin: 0;
+    font-weight: 700;
+    text-transform: uppercase;
+    line-height: 1.1em;
+    letter-spacing: 1.3px;
+    text-align: center;
+    padding: 20px;
+}
+.accordions-main {
+    padding: 20px;
+}
+.accordions-main .tab-head {
+    font-size: 26px;
+    font-weight: 600;
+    text-transform: none;
+    font-family: 'Dilemma', sans-serif;
+    line-height: 1.4em;
+    letter-spacing: -.1px;
+    color: #231f20;
+    margin-bottom: 20px;
+}
+.page-narrow-width.page-width {
+    max-width: 1000px !important;
+}
+button.accordion__button {
+    padding: 20px 0 10px 0;
+    background: transparent;
+    border: 0;
+    display: flex;
+    gap: 15px;
+    width: 100%;
+    justify-content: space-between;
+    color: #212c1c;
+    cursor: pointer;
+    align-items: center;
+    text-align: left;
+    font-size: 16px;
+    font-weight: 800;
+    letter-spacing: 2.2px;
+    font-family: 'Dilemma', sans-serif;
+}
+button.accordion__button span.accordion-icon svg path {
+    stroke: #212c1c;
+}
+button.accordion__button span.accordion-icon svg {
+    transition: all .5s;
+}
+.accordion.active span.accordion-icon svg path {
+    fill: #8ab83f;
+}
+.accordion.active span.accordion-icon svg {
+    transform: rotate(90deg);
+    transition: all .5s;
+}
+button.accordion__button span.accordion-icon svg {
+    display: block;
+    width: 15px;
+    height: 15px;
+}
+button.accordion__button span.accordion-icon {
+    display: block;
+    max-width: 25px;
+}
+.accordion--content p {
+    margin: 0 0 15px;
+    font-size: 15px;
+    color: #000;
+    font-weight: 500;
+    line-height: 24px;
+    letter-spacing: -.3px;
+}
+.accordion.active button.accordion__button {
+    color: #8ab83f;
+}
+.accordion--content {
+    display: none;
+    padding: 20px;
+}
+.accordion {
+    border-bottom: 1px solid #212c1c;
+}
+.accordions-main .tab-wrapper {
+    margin-bottom: 50px;
+}
+.accordion--content p a {
+    color: #8ab83f;
+}
+@media (max-width: 989px) {
+  .tabs-row {
+    justify-content: start;
+    padding-inline: 0;
+  }
+}
+@media (max-width: 749px) {
+  button.accordion__button {
+    font-size: 14px;
+  }
+  .tab-head {
+    padding: 0;
+  }
+}
+</style>

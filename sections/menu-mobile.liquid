@@ -1,0 +1,206 @@
+<!-- sections/menu-mobile.liquid -->
+
+{% comment %}
+	Hide mobile menu until stylesheet loads
+{% endcomment %}
+
+<style>
+	.menu-mobile {
+		display:none;
+	}
+</style> 
+
+{% comment %}
+	Load Assets
+
+	Notes: We could load this in the main stylesheet,
+		   but since the mobile menu is not seen until
+		   the button is clicked, it makes sense to lazyload
+		   this for the sake of a smaller overall main stylesheet.
+{% endcomment %}
+
+<link rel="stylesheet" href="{{ 'section-menu-mobile.min.css' | asset_url }}" media="print" onload="this.media='all'">
+
+{% comment %}
+	Initial Liquid Variables
+{% endcomment %}
+
+{%- liquid
+	assign data = section.settings
+	assign mobile_menu = data.mobile_menu
+	assign show_utility_menu = data.show_utility_menu
+	assign utility_menu = data.utility_menu
+-%}
+
+
+<section class="menu-mobile full-accordion-mobile-menu" id="mobileMenu" data-aria-label="Main Menu">
+	<mega-menu class="menu-mobile__wrapper">
+		{% comment %}
+			Navigation
+		{% endcomment %}
+
+		<nav aria-label="Mobile Menu">
+			<ul class="menu-mobile__menu" aria-label="Navigation">
+				{% comment %}
+					Mobile Menu
+				{% endcomment %}
+
+				{%- if mobile_menu != blank -%}
+					{%- for first_level in mobile_menu.links -%}
+						{% liquid
+							assign first_level_index = forloop.index
+						%}
+
+						<li class="js-megamenu-parent">
+							{% if first_level.levels == 0 %}
+								{% comment %}
+									First-Level Link Without Children
+								{% endcomment %}
+
+								<a class="menu-mobile__item-level-one" href="{{ first_level.url }}">
+									{{ first_level.title }}
+								</a>
+
+							{% else %}
+								{% comment %}
+									First-Level Link With Children
+								{% endcomment %}
+
+								<button type="button" class="menu-mobile__item-level-one has-dropdown js-megamenu-btn"
+									aria-expanded="false" aria-haspopup="menu" aria-controls="mobileDropdown{{ first_level_index }}">
+									{{ first_level.title }}
+									<svg class="e-font-icon-svg e-fas-caret-down" viewBox="0 0 320 512" xmlns="http://www.w3.org/2000/svg">
+										<path d="M31.3 192h257.3c17.8 0 26.7 21.5 14.1 34.1L174.1 354.8c-7.8 7.8-20.5 7.8-28.3 0L17.2 226.1C4.6 213.5 13.5 192 31.3 192z"></path>
+									</svg>
+								</button>
+								{% render 'menu-mobile-dropdown', first_level: first_level, first_level_index: first_level_index %}
+							{% endif %}
+						</li>
+					{%- endfor -%}
+				{%- endif -%}
+
+				{% comment %}
+					Optional Account Links
+				{% endcomment %}
+
+				<div class="mobile--secondary-menu">
+					{%- if show_utility_menu and utility_menu != blank -%}
+						{%- for first_level in utility_menu.links -%}
+							{% liquid
+								assign first_level_index = forloop.index | plus: mobile_menu.links.size
+							%}
+	
+							<div class="js-megamenu-parent">
+								{% if first_level.levels == 0 %}
+									{% comment %}
+										First-Level Link Without Children
+									{% endcomment %}
+	
+									<a class="menu-mobile__item-level-one menu-mobile__item-level-one--utility" href="{{ first_level.url }}">
+										{{ first_level.title }}
+									</a>
+	
+								{% else %}
+									{% comment %}
+										First-Level Link With Children
+									{% endcomment %}
+	
+									<button type="button" class="menu-mobile__item-level-one has-dropdown js-megamenu-btn"
+										aria-expanded="false" aria-haspopup="menu" aria-controls="mobileDropdown{{ first_level_index }}">
+										{{ first_level.title }}
+										<svg class="e-font-icon-svg e-fas-caret-down" viewBox="0 0 320 512" xmlns="http://www.w3.org/2000/svg">
+											<path d="M31.3 192h257.3c17.8 0 26.7 21.5 14.1 34.1L174.1 354.8c-7.8 7.8-20.5 7.8-28.3 0L17.2 226.1C4.6 213.5 13.5 192 31.3 192z"></path>
+										</svg>
+									</button>
+	
+									{% render 'menu-mobile-dropdown', first_level: first_level, first_level_index: first_level_index %}
+								{% endif %}
+							</div>
+						{%- endfor -%}
+					{%- endif -%}
+				</div>
+
+				{%- if data.button_link != blank -%}
+					<a class="mobile-menu-shop-all-button" href="{{data.button_link}}">{{data.button_text}}</a>
+				{%- else -%}
+					<span class="mobile-menu-shop-all-button">{{data.button_text}}</span>
+				{%- endif -%}
+				{%- if data.subscribe_link != blank -%}
+					<a href="{{data.subscribe_link}}" class="mobile-menu-subscribe">{{data.subscribe_text}}</a>
+				{%- else -%}
+					<span class="mobile-menu-subscribe">{{data.subscribe_text}}</span>
+				{%- endif -%}
+			</ul>
+		</nav>
+	</mega-menu>
+</section>
+
+
+<script>
+
+	document.addEventListener("DOMContentLoaded", function() {
+		var menu_items = document.querySelectorAll(".menu-mobile__item-level-one.has-dropdown");
+
+		menu_items.forEach(item => {
+			item.addEventListener("click", function() {
+				for(var i = 0 ; i < menu_items.length; i ++) {
+					menu_items[i].nextElementSibling.style.maxHeight = "0px";
+				}
+				var cu_item = this;
+				setTimeout(function() {
+					if(cu_item.nextElementSibling.classList.contains("is-active")  == true) {
+						cu_item.nextElementSibling.style.maxHeight = "1000px";
+					}
+				}, 100)
+			})
+		})
+	})
+
+</script>
+
+
+{% schema %}
+{
+	"name": "Mobile Menu",
+	"settings": [
+		{
+			"type": "link_list",
+			"id": "mobile_menu",
+			"label": "Mobile Menu",
+			"default": "main-menu"
+		},
+		{
+			"type": "checkbox",
+			"id": "show_utility_menu",
+			"label": "Show mobile utility menu",
+			"info": "If checked, linklist for utility menu specified below will show below mobile menu and optional account link",
+			"default": true
+		}, 
+		{
+			"type": "link_list",
+			"id": "utility_menu",
+			"label": "Mobile Utility Menu"
+		},
+		{
+			"type": "text",
+			"id": "button_text",
+			"label": "Button Text"
+		},
+		{
+			"type": "url",
+			"id": "button_link",
+			"label": "Button Link"
+		},
+		{
+			"type": "text",
+			"id": "subscribe_text",
+			"label": "Subscribe Text"
+		},
+		{
+			"type": "url",
+			"id": "subscribe_link",
+			"label": "Subscribe Link"
+		}
+	]
+}
+{% endschema %}

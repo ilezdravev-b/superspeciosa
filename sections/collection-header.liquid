@@ -1,0 +1,62 @@
+<!-- sections/collection-header.liquid -->
+
+{% comment %}
+	Initial Liquid Variables
+{% endcomment %}
+{{ "collection_banner.css" |  asset_url |  stylesheet_tag }}
+
+{% liquid 
+	assign data = section.settings
+%}
+
+{% style %}
+    .collection_image {
+        aspect-ratio : {{ data.image_aspect_ratio }};
+    }    
+    
+    @media (max-width: 768px) {
+        .collection_image {
+            aspect-ratio : {{ data.image_aspect_ratio_mobile }};
+        }
+    }
+
+    .text-hidden {
+        display: none;
+    }
+{% endstyle %}
+
+<section class="collection-header">
+    <div class="container">
+        {% if data.seo_title != null and data.seo_title != '' %}
+            <h1 class="collection-title">{{ data.seo_title }}</h1>
+        {% else %}
+            <h1 class="collection-title">{{ collection.title }}</h1>
+        {% endif %}
+		<div class="collection-description">
+            <div class="collection-rte less-description-desk">
+                {{ collection.description | strip_html | truncatewords: 35 }}
+                <a class="rte-toggle-button" href="#">Read more</a>
+            </div>
+            <div class="collection-rte less-description-mobile">
+                {{ collection.description | strip_html | truncatewords: 12 }}
+                <a class="rte-toggle-button" href="#">Read more</a>
+            </div>
+            <div class="collection-rte all-description">
+                {{ collection.description }}
+            </div>
+        </div>
+    </div>
+</section>
+
+{% schema %}
+{
+    "name": "Collection Header",
+    "settings": [
+        {
+          "type": "text",
+          "id": "seo_title",
+          "label": "SEO Title"
+        }
+    ]
+}
+{% endschema %}

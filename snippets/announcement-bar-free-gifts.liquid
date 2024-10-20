@@ -1,0 +1,79 @@
+<!-- snippets/announcement-bar-free-gifts.liquid -->
+
+{% comment %}
+    Free gift tiers
+{% endcomment %}
+
+{% comment %}
+    handle displaying the first promo tier of free gifts
+{% endcomment %}
+{%- if settings.enable_free_gift -%}
+    {% assign message = '' %}
+    {% assign fg_amount = settings.fg_amount | times: 100 %}
+    {% if cart.total_price >= fg_amount %}
+        {% assign message = settings.fg_cart_accepted %}
+    {% elsif cart.total_price > 0 and cart.total_price < fg_amount %}
+        {% assign newAmount = fg_amount | minus: cart.total_price %}
+        {% assign newAmountWithCurrency = newAmount | money | replace: '.00', '' | prepend: '<span id="amount-value">' | append: '</span>' %}
+        {% assign message = settings.fg_cart_has | replace: '[amount]', newAmountWithCurrency %}
+    {% else %}
+        {% assign newAmount = fg_amount %}
+        {% assign newAmountWithCurrency = newAmount | money | replace: '.00', '' | prepend: '<span id="amount-value">' | append: '</span>' %}
+        {% assign message = settings.fg_cart_empty | replace: '[amount]', newAmountWithCurrency %}
+    {% endif %}
+
+    <div class="announcement-bar--free-gift {% if cart.total_price > fg_amount %}hide{% endif %}" data-amount="{{ newAmount }}"{% if style %} style="{{ style }}"{% endif %}>
+        {% render "icon-free-gift" %}
+        <div class="message-free-gift-merged">{{ message }}</div>
+    </div>
+{%- endif -%}
+
+{% comment %}
+    handle displaying the second promo tier of free gifts
+{% endcomment %}
+{%- if settings.enable_second_free_gift -%}
+    {% assign message_2 = '' %}
+    {% assign cart_price = cart.total_price %}
+    {% assign fg_amount_2 = settings.fg_amount_2 | times: 100 %}
+    {% if cart_price >= fg_amount_2 %}
+        {% assign message_2 = settings.fg_cart_accepted_2 %}
+    {% elsif cart_price > 0 and cart_price < fg_amount_2 %}
+        {% assign newAmount_2 = fg_amount_2 | minus: cart_price %}
+        {% assign newAmountWithCurrency_2 = newAmount_2 | money | replace: '.00', '' | prepend: '<span id="amount-value-2">' | append: '</span>' %}
+        {% assign message_2 = settings.fg_cart_has_2 | replace: '[amount_2]', newAmountWithCurrency_2 %}
+    {% else %}
+        {% assign newAmount_2 = fg_amount_2 %}
+        {% assign newAmountWithCurrency_2 = newAmount_2 | money | replace: '.00', '' | prepend: '<span id="amount-value-2">' | append: '</span>' %}
+        {% assign message_2 = settings.fg_cart_empty_2 | replace: '[amount_2]', newAmountWithCurrency_2 %}
+    {% endif %}
+
+    <div class="announcement-bar--free-gift {% if cart.total_price > fg_amount_2 or cart.total_price < fg_amount %}hide{% endif %}" data-amount="{{ newAmount_2 }}"{% if style %} style="{{ style }}"{% endif %}>
+        {% render "icon-free-gift" %}
+        <div class="message-free-gift-merged">{{ message_2 }}</div>
+    </div>
+{%- endif -%}
+
+{% comment %}
+    handle displaying the third promo tier of free gifts
+{% endcomment %}
+{%- if settings.enable_third_free_gift -%}
+    {% assign message_3 = '' %}
+    {% assign cart_price = cart.total_price %}
+    {% assign fg_amount_3 = settings.fg_amount_3 | times: 100 %}
+    {% if cart_price >= fg_amount_3 %}
+        {% assign message_3 = settings.fg_cart_accepted_3 %}
+    {% elsif cart_price > 0 and cart_price < fg_amount_3 %}
+        {% assign newAmount_3 = fg_amount_3 | minus: cart_price %}
+        {% assign newAmountWithCurrency_3 = newAmount_3 | money | replace: '.00', '' | prepend: '<span id="amount-value-3">' | append: '</span>' %}
+        {% assign message_3 = settings.fg_cart_has_3 | replace: '[amount_3]', newAmountWithCurrency_3 %}
+    {% else %}
+        {% assign newAmount_3 = fg_amount_3 %}
+        {% assign newAmountWithCurrency_3 = newAmount_3 | money | replace: '.00', '' | prepend: '<span id="amount-value-3">' | append: '</span>' %}
+        {% assign message_3 = settings.fg_cart_empty_3 | replace: '[amount_3]', newAmountWithCurrency_3 %}
+    {% endif %}
+
+    <div class="announcement-bar--free-gift {% if cart.total_price < fg_amount or cart.total_price < fg_amount_2 %}hide{% endif %}" data-amount="{{ newAmount_3 }}"{% if style %} style="{{ style }}"{% endif %}>
+        {% render "icon-free-gift" %}
+        <div class="message-free-gift-merged">{{ message_3 }}</div>
+    </div>
+{%- endif -%}

@@ -1,0 +1,38 @@
+<!-- snippets/product-form-atc.liquid -->
+
+{% comment %}
+	Required:
+		current_product {Object} The product object
+		current_variant {Object} The variant object
+
+	Notes:
+		This snippet exists as a way to simplify the ATC
+		button, especially when Klaviyo BIS is enabled. Note
+		that BIS can only be enabled on the PDP.
+{% endcomment %}
+
+{% liquid 
+	assign separator = "<span class='price-separator'>&bull;</span>"
+	assign current_price = current_variant.price | money 
+	assign klaviyo_bis_enable = settings.enable_klaviyo_bis
+	assign button_text = 'products.product.add_to_cart' | t | append: separator | append: current_price
+	assign variant_available = current_variant.available
+
+	if klaviyo_bis_enable and template.name == 'product' and variant_available == false
+		assign button_text = settings.klaviyo_bis_button_text
+		assign button_class = 'klaviyo-bis-trigger'
+	elsif variant_available == false 
+		assign button_text = 'products.product.sold_out' | t
+		assign button_attribute = "disabled"
+	endif  
+%}
+
+{% if product.metafields.custom.product_options.value.custom_options %}
+	<span id="customAddToCartButton" class="js-add-to-cart btn btn--primary product-form__atc-btn">
+		<span id="buttonPriceText">Add to cart • {{ product.price | money }}</span>
+	</span>
+{% else %}
+	<button type="submit" class="js-add-to-cart btn btn--primary {{ button_class }}" {{ button_attribute }} {% if klaviyo_bis_enable %} data-klaviyo-bis-button-text="{{ settings.klaviyo_bis_button_text }}"{% endif %}>
+		{{ button_text }}
+	</button>
+{% endif %}

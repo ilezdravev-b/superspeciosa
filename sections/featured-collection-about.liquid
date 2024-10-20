@@ -1,0 +1,189 @@
+
+{% style %}
+    .bg-{{ section.id }} {
+      background-color: {{ section.settings.bg_color }};
+    }
+    .title-color-{{ section.id }} {
+      color: {{ section.settings.header_title_color }};
+    }
+    .sec-title-{{ section.id }} {
+      color: {{ section.settings.sec_title_color }};
+    }
+    .content-color-{{ section.id }} {
+      color: {{ section.settings.content_color }};
+    }
+    @media(max-width: 768px) {
+        .featured-about-wrapper {
+            padding-top: {{ section.settings.m_padding_top }}px;
+            padding-bottom: {{ section.settings.m_padding_bottom }}px;
+        }
+    }
+{% endstyle %}
+
+{{ 'featured-about.css' | asset_url | stylesheet_tag }}
+<div class="featured-about-wrapper featured-about-bg--fixed" style="background-image: url({{ section.settings.bg_image.src |  image_url: width: 2400 }})">
+    <div class="featured-about-header-wrapper bg-{{ section.id }}">
+        <div class="featured-about-header container">
+            <div class="header-text-section">
+                <h2 class="header-with-text__title title-color-{{ section.id }}">{{ section.settings.title }}</h2>
+                <p class="header-with-text__content content-color-{{ section.id }}">{{ section.settings.content }}<a class="header-title title-color-{{ section.id }}" href="{{ section.settings.link }}">{{ section.settings.link_text }}</a>.</p>
+            </div>
+            <div class="header-image-section">
+                <img class="featured-about-mark" src="{{ section.settings.image | img_url: 'medium' }}" alt="brand image" width="{{ section.settings.image.width }}" height="{{ section.settings.image.height }}">
+            </div>
+        </div>
+    </div>
+    <div class="featured-about-body container">
+        <div class="body-text-section bg-{{ section.id }} body-text-bg--right" style="background-image: url({{ section.settings.body_bg_img |  image_url: width: auto }})">
+            <div class="header-with-text__title sec-title-{{ section.id }}"><span>{{ section.settings.body_title }}</span></div>
+            <div class="header-with-text__content-wrapper"><p class="header-with-text__content content-color-{{ section.id }}">{{ section.settings.body_text }}</p></div>
+            <div class="about-body--btn">
+                <div class="about-body--btn__bg">
+                    <a class="btn_text" href="{{ section.settings.btn_link }}">
+                        <p class="btn">{{ section.settings.btn_title }}</p>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% schema %}
+    {
+        "name": "Featured About Section",
+        "settings": [
+            {
+              "type": "color",
+              "id": "header_title_color",
+              "label": "Header title color",
+              "default": "#d8a929"
+            },
+            {
+              "type": "color",
+              "id": "content_color",
+              "label": "Content color",
+              "default": "#f4f1de"
+            },
+            {
+              "type": "color",
+              "id": "bg_color",
+              "label": "Background color",
+              "default": "#212c1c"
+            },
+            {
+              "type": "color",
+              "id": "sec_title_color",
+              "label": "Second title color",
+              "default": "#f4f1de"
+            },
+            {
+              "type": "header",
+              "content": "title"
+            },
+            {
+              "type": "text",
+              "id": "title",
+              "label": "Title"
+            },
+            {
+              "type": "text",
+              "id": "content",
+              "label": "Content"
+            },
+            {
+              "type": "url",
+              "id": "link",
+              "label": "Link"
+            },
+            {
+              "type": "text",
+              "id": "link_text",
+              "label": "Text for link"
+            },
+            {
+              "type": "image_picker",
+              "id": "image",
+              "label": "Brand image"
+            },
+            {
+              "type": "header",
+              "content": "Body"
+            },
+            {
+                "type": "image_picker",
+                "id": "body_bg_img",
+                "label": "Body Background image"
+            },
+            {
+              "type": "text",
+              "id": "body_title",
+              "label": "Title"
+            },
+            {
+              "type": "text",
+              "id": "body_text",
+              "label": "Text"
+            },
+            {
+              "type": "text",
+              "id": "btn_title",
+              "label": "Button title"
+            },
+            {
+              "type": "url",
+              "id": "btn_link",
+              "label": "Button Link"
+            },
+            {
+              "type": "image_picker",
+              "id": "bg_image",
+              "label": "Background image"
+            },
+            {
+              "type": "range",
+              "id": "padding_top",
+              "min": 0,
+              "max": 100,
+              "step": 10,
+              "unit": "px",
+              "label": "Padding top",
+              "default": 60
+            },
+            {
+              "type": "range",
+              "id": "padding_bottom",
+              "min": 0,
+              "max": 100,
+              "step": 10,
+              "unit": "px",
+              "label": "Padding bottom",
+              "default": 60
+            },
+            {
+              "type": "range",
+              "id": "m_padding_top",
+              "min": 0,
+              "max": 80,
+              "step": 10,
+              "unit": "px",
+              "label": "Mobile padding top",
+              "default": 40
+            },
+            {
+              "type": "range",
+              "id": "m_padding_bottom",
+              "min": 0,
+              "max": 80,
+              "step": 10,
+              "unit": "px",
+              "label": "Mobile padding bottom",
+              "default": 40
+            }
+            
+        ],
+        "presets": [
+            {
+                "name": "Featured About Section"
+            }
+        ]
+    }
+{% endschema %}

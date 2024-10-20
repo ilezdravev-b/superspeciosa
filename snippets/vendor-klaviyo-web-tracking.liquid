@@ -1,0 +1,57 @@
+<!-- snippets/vendor-klaviyo-web-tracking.liquid -->
+
+{% comment %}
+	Required:
+		nothing
+
+	Notes: Provides viewed tracking for Klaviyo using
+	the Klaviyo object. Note that as is currently
+	the case, this should only be enabled if Klaviyo
+	lazyloading is enabled and Klaviyo scripts are not
+	turned on via app embeds. 
+{% endcomment %}
+
+<script>
+	/**
+	* Loads the Klaviyo object
+	*/
+
+	!function(){if(!window.klaviyo){window._klOnsite=window._klOnsite||[];try{window.klaviyo=new Proxy({},{get:function(n,i){return"push"===i?function(){var n;(n=window._klOnsite).push.apply(n,arguments)}:function(){for(var n=arguments.length,o=new Array(n),w=0;w<n;w++)o[w]=arguments[w];var t="function"==typeof o[o.length-1]?o.pop():void 0,e=new Promise((function(n){window._klOnsite.push([i].concat(o,[function(i){t&&t(i),n(i)}]))}));return e}}})}catch(n){window.klaviyo=window.klaviyo||[],window.klaviyo.push=function(){var n;(n=window._klOnsite).push.apply(n,arguments)}}}}();
+
+	/**
+	* Klaviyo viewed product tracking
+	*/
+
+	{%- if template.name == 'product' -%}
+
+		var item = {
+			Name: {{ product.title|json }},
+			ProductID: {{ product.id|json }},
+			Categories: {{ product.collections|map:'title'|json }},
+			ImageURL: "https:{{ product.featured_image.src|img_url:'grande' }}",
+			URL: "{{ shop.secure_url }}{{ product.url }}",
+			Brand: {{ product.vendor|json }},
+			Price: {{ product.price|money|json }},
+			CompareAtPrice: {{ product.compare_at_price_max|money|json }}
+		}
+
+		var viewedItem = {
+			Title: item.Name,
+			ItemId: item.ProductID,
+			Categories: item.Categories,
+			ImageUrl: item.ImageURL,
+			Url: item.URL,
+			Metadata: {
+				Brand: item.Brand,
+				Price: item.Price,
+				CompareAtPrice: item.CompareAtPrice
+			}
+		}
+
+		document.addEventListener('DOMContentLoaded', () => {
+			klaviyo.push(['track', 'Viewed Product', item])
+			klaviyo.push(['trackViewedItem', viewedItem])
+		})
+
+	{%- endif -%}
+</script>

@@ -1,0 +1,96 @@
+<!-- snippets/cart-item-price.liquid -->
+
+{% comment %}
+	Required:
+		item {Object} The line_item object
+		current_variant {Object} The line_item object's variant
+
+	Notes: If item is discounted, the original and discounted
+		   prices will show. Otherwise, the compare-at price
+		   will show if it exists.
+
+		   Screen-ready only text is included to make it clear
+		   what each price represents.
+{% endcomment %}
+
+{% liquid 
+	assign current_price = item.line_price
+	assign original_price = current_variant.compare_at_price | default: item.original_price
+	assign variant_orig_price = item.variant.compare_at_price | default: item.variant.price
+
+	if variant_orig_price > original_price
+		assign original_price = variant_orig_price
+	endif
+
+	assign original_price_total = original_price | times: item.quantity
+	assign final_price_text = 'products.product.price.current_price' | t
+
+	if original_price and original_price_total > item.line_price
+		assign show_original_price = true
+		assign final_price_text = 'products.product.price.sale_price' | t
+	endif
+
+	if item.selling_plan_allocation
+		assign checkout_charge = item.selling_plan_allocation.selling_plan.checkout_charge
+
+		if checkout_charge.value_type == 'percentage'
+			assign current_price = item.original_price | times: checkout_charge.value | divided_by: 100
+		else 
+			assign current_price = checkout_charge.value
+		endif 
+	endif
+	
+	assign new_item_price = item.price | times: item.quantity
+	assign current_price = new_item_price
+	
+	assign props_price = 0
+	if item.properties.custom_key
+		for prop_item in cart.items
+			if prop_item.properties.custom_key == item.properties.custom_key
+				assign props_price = props_price | plus: prop_item.price
+			endif
+		endfor
+		assign current_price = props_price | times: item.quantity
+	endif
+
+	if item.properties._isFreeGift == 'true'
+		assign show_original_price = true
+		assign current_price = 0
+		assign final_price_text = "Discounted price"
+	endif
+		
+%}
+
+{% comment %}
+	Item is discounted, has a compare-at price,
+	or is a discounted subscription. The compare-at price
+	is prioritized over the pre-discount price, as if
+	both exist, the compare-at price will be larger.
+{% endcomment %}
+
+{% if show_original_price %}
+
+	{% comment %}
+		Pre-Discount, Compare-At Price, or Pre-Subscription Price
+	{% endcomment %}
+
+	<s>
+		<span class="sr-only">
+			{{ 'products.product.price.original_price' | t }}:
+		</span>
+		{{ original_price_total | money }}
+	</s>
+	
+{% endif %}
+
+{% comment %}
+	Final Price After Discounts
+{% endcomment %}
+
+<span class="sr-only">
+	{{ final_price_text }}
+</span>
+<span class="cart-item-final-price {{validate}}" data-value="{{ current_price | money }}" data-custom-key="{{ item.properties.custom_key }}" data-custom-option="{{ item.properties.is_custom_option }}">
+	{{ current_price | money }}
+</span>
+<span class="cart-item-final-price-extra"></span>

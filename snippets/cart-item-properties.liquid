@@ -1,0 +1,41 @@
+<!-- snippets/cart-item-properties.liquid -->
+
+{% comment %}
+	Required:
+		properties {Object} The line_item properties object
+
+	Notes: This snippet assumes it's being conditionaly
+		   placed inside an ordered or unordered list.
+{% endcomment %}
+
+{% for property in properties %}
+
+	{% liquid 
+		assign key_first_letter = property.first | slice: 0 
+		assign value_last_letter = property.last | slice: -1, 1
+		assign value_last_two_letters = property.last | slice: -2, 2
+	%}
+
+	{% unless key_first_letter == '_' %}
+		<li {%if property.first == 'custom_key' or property.first == 'main_handle' %}style="display:none"{% endif %}>
+			{{ property.first }}: 
+
+			{% if property.last contains '/uploads/' %}
+				<a href="{{ property.last }}">{{ property.last | split: '/' | last }}</a>
+			{% else %}
+				{%- if value_last_letter == "," or value_last_two_letters contains "," -%}
+					<li>{{ property.last | remove_last: "," }}</li>
+				{%- else -%}
+				 	{% if property.last contains ']' %}
+						{% assign description = property.last | split: ']' %}
+						{{ description[1] }}
+					{% else %}
+						{{ property.last }}
+					{% endif %}
+				{%- endif -%}
+			{% endif %}
+		</li>
+
+	{% endunless %}
+
+{% endfor %}

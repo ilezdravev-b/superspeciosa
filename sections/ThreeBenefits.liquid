@@ -1,0 +1,290 @@
+{% assign space_above = section.settings.space_above %}
+{% assign space_below = section.settings.space_below %}
+{% assign same_as_mob = section.settings.same_as_mob %}
+{% assign space_above_mob = section.settings.space_above_mob %}
+{% assign space_below_mob = section.settings.space_below_mob %}
+{% assign same_as_desk = section.settings.same_as_desk %}
+
+<style>
+    @media only screen and (min-width: 768px) {
+        #shopify-section-{{ section.id }} .benefits-container {
+            padding-top: {% if same_as_mob %}{{ space_above_mob | append: 'px' }}{% else %}{{ space_above | append: 'px' }}{% endif %};
+            padding-bottom: {% if same_as_mob %}{{ space_below_mob | append: 'px' }}{% else %}{{ space_below | append: 'px' }}{% endif %};
+        }
+    }
+    @media only screen and (max-width: 767px) {
+        #shopify-section-{{ section.id }} .benefits-container {
+            padding-top: {% if same_as_desk %}{{ space_above | append: 'px' }}{% else %}{{ space_above_mob | append: 'px' }}{% endif %};
+            padding-bottom: {% if same_as_desk %}{{ space_below | append: 'px' }}{% else %}{{ space_below_mob | append: 'px' }}{% endif %};
+        }
+    }
+    #shopify-section-{{ section.id }} .benefits-container{
+        color: {{ section.settings.text_color }};
+        {% if section.settings.background_color != blank %}background: {{ section.settings.background_color }};{% endif %}
+    }
+</style>
+
+<div class="benefits-container">
+    <div class="logo_section">
+        {% assign background_image1 = section.settings.background_image1 %}
+        <!--<img class="logo_img lozad" data-srcset="{% render 'lozad-srcset', image: background_image1 %}" alt="{{ background_image1.alt | escape }}"> -->
+        {% assign image_url = image | background_image1: '1x1' | replace: '_1x1.', '_{width}x.' %}
+        <img
+            loading="lazy"
+            class="Image--lazyLoad Image--fadeIn"
+            src="{{ background_image1 | img_url: '250x' }}"
+            data-src="{{ image_url }}"
+            data-widths="[{{ supported_sizes }}]"
+            data-sizes="auto"
+            data-expand="-100"
+            alt="{{ background_image1.alt | escape }}"
+            data-max-width="{{ background_image1.width }}"
+            data-max-height="{{ background_image1.height }}"
+            data-original-src="{{ background_image1 | img_url: 'master' }}"
+            width="auto"
+            height="auto"
+          />
+
+        <h5>{{ section.settings.title_text1 }}</h5>
+        <p>{{ section.settings.logo_text1 }}</p>
+    </div>
+    <div class="logo_section">
+        {% assign background_image2 = section.settings.background_image2 %}
+        <!--<img class="logo_img lozad" data-srcset="{% render 'lozad-srcset', image: background_image2 %}" alt="{{ background_image2.alt | escape }}">-->
+        {% assign image_url = image | background_image2: '1x1' | replace: '_1x1.', '_{width}x.' %}
+        <img
+            class="Image--lazyLoad Image--fadeIn"
+            src="{{ background_image2 | img_url: '250x' }}"
+            data-src="{{ image_url }}"
+            data-sizes="auto"
+            data-expand="-100"
+            alt="{{ background_image2.alt | escape }}"
+            data-max-width="{{ background_image2.width }}"
+            data-max-height="{{ background_image2.height }}"
+            data-original-src="{{ background_image2 | img_url: 'master' }}"
+          />
+        <h5>{{ section.settings.title_text2 }}</h5>
+        <p>{{ section.settings.logo_text2 }}</p>
+    </div>
+    <div class="logo_section">
+        {% assign background_image3 = section.settings.background_image3 %}
+        <!--<img class="logo_img lozad" data-srcset="{% render 'lozad-srcset', image: background_image3 %}" alt="{{ background_image3.alt | escape }}"> -->
+        {% assign image_url = image | background_image3: '1x1' | replace: '_1x1.', '_{width}x.' %}
+        <img
+            loading="lazy"
+            class="Image--lazyLoad Image--fadeIn"
+            src="{{ background_image3 | img_url: '250x' }}"
+            data-src="{{ image_url }}"
+            data-widths="[{{ supported_sizes }}]"
+            data-sizes="auto"
+            data-expand="-100"
+            alt="{{ background_image3.alt | escape }}"
+            data-max-width="{{ background_image3.width }}"
+            data-max-height="{{ background_image3.height }}"
+            data-original-src="{{ background_image3 | img_url: 'master' }}"
+            width="auto"
+            height="auto"
+          />
+        <h5>{{ section.settings.title_text3 }}</h5>
+        <p>{{ section.settings.logo_text3 }}</p>
+    </div>
+</div>
+
+<style>
+  @media only screen and (min-width: 921px) {
+    .benefits-container {
+        display: flex;
+        justify-content: space-around;
+        flex-wrap: nowrap;
+        text-align: center;
+        margin: 0 auto;
+    padding: 0 20px;  } }
+
+@media only screen and (min-width: 852px) and (max-width: 920px) {
+  .benefits-container {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    text-align: center;
+    margin: 0 auto;
+    padding: 0 20px;  } }
+
+@media only screen and (max-width: 851px) {
+  .benefits-container {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    text-align: center;
+    margin: 0 auto;
+    padding: 0 20px;  } }
+    
+    .logo_section {
+  max-width: 350px;
+  margin: 20px; }
+
+.logo_img {
+  height: 60px; }
+
+.logo_section h5 {
+  margin: 12px;
+  font-size: 20px;
+  font-weight: bold; }
+
+.logo_section p {
+  font-size: 16px; }
+</style>
+
+{% schema %}
+{
+    "name": "Three Benefits",
+    "settings": [
+        {
+            "type": "header",
+            "content": "Section Size"
+        },
+        {
+            "type": "paragraph",
+            "content": "[Desktop]"
+        },
+        {
+            "type": "checkbox",
+            "id": "same_as_mob",
+            "label": "Same as Mobile",
+            "default": false
+        },
+        {
+            "type": "range",
+            "id": "space_above",
+            "min": 0,
+            "max": 200,
+            "step": 2,
+            "unit": "px",
+            "label": "Space above",
+            "default": 80
+        },
+        {
+            "type": "range",
+            "id": "space_below",
+            "min": 0,
+            "max": 200,
+            "step": 2,
+            "unit": "px",
+            "label": "Space below",
+            "default": 80
+        },
+        {
+            "type": "paragraph",
+            "content": "[Mobile]"
+        },
+        {
+            "type": "checkbox",
+            "id": "same_as_desk",
+            "label": "Same as Desktop",
+            "default": false
+        },
+        {
+            "type": "range",
+            "id": "space_above_mob",
+            "min": 0,
+            "max": 200,
+            "step": 2,
+            "unit": "px",
+            "label": "Space above",
+            "default": 80
+        },
+        {
+            "type": "range",
+            "id": "space_below_mob",
+            "min": 0,
+            "max": 200,
+            "step": 2,
+            "unit": "px",
+            "label": "Space below",
+            "default": 80
+        },
+        {
+            "type": "header",
+            "content": "Section Settings"
+        },
+        {
+            "type": "color",
+            "id": "background_color",
+            "label": "Background color"
+        },
+        {
+            "type": "color",
+            "id": "text_color",
+            "label": "Text color",
+            "default": "#0C2A3E"
+        },
+        {
+        "type": "header",
+        "content": "Box 1"
+        },
+        {
+            "type": "image_picker",
+            "id": "background_image1",
+            "label": "Image"
+        },
+        {
+            "type": "text",
+            "id": "title_text1",
+            "label": "Title text",
+            "default": "Title"
+        },
+        {
+            "type": "textarea",
+            "id": "logo_text1",
+            "label": "Logo text",
+            "default": "Text"
+        },
+        {
+            "type": "header",
+            "content": "Box 2"
+        },
+        {
+            "type": "image_picker",
+            "id": "background_image2",
+            "label": "Image"
+        },
+        {
+            "type": "text",
+            "id": "title_text2",
+            "label": "Title text",
+            "default": "Title"
+        },
+        {
+            "type": "textarea",
+            "id": "logo_text2",
+            "label": "Logo text",
+            "default": "Text"
+        },
+        {
+            "type": "header",
+            "content": "Box 3"
+        },
+        {
+            "type": "image_picker",
+            "id": "background_image3",
+            "label": "Image"
+        },
+        {
+            "type": "text",
+            "id": "title_text3",
+            "label": "Title text",
+            "default": "Title"
+        },
+        {
+            "type": "textarea",
+            "id": "logo_text3",
+            "label": "Logo text",
+            "default": "Text"
+        }
+    ],
+    "presets": [
+        {
+            "name": "Three Benefits"
+        }
+    ]
+}
+{% endschema %}

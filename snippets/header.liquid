@@ -1,0 +1,132 @@
+<!-- snippets/header.liquid -->
+
+<style>
+
+</style>
+
+{%- assign desktopBreakpoint = "desktop-up" -%}
+{%- assign mobileDownBreakpoint = "tablet-lg-down" -%}
+
+<header class="header header-mega-menu" id="primaryHeader" aria-label="Header">
+	
+	<div class="container">
+		<div class="header__container">
+			{% comment %}
+				Mobile Menu Button, Header Search
+			{% endcomment %}
+
+			<div class="header__nav header__menu ss-desktop-hidden">
+				{% render 'header-button-mobile-menu' %}
+
+				{%- if shop.customer_accounts_enabled -%}
+					<div class="tablet-sm-down mobile-lg-down">
+						{% render 'header-link-account' %}
+					</div>
+				{%- endif -%}
+			
+				{% comment %}
+					Search Dropdown
+					Desktop up
+				{% endcomment %}
+
+				
+	
+				<div class="{{ desktopBreakpoint }}">
+					<div id="headerSearch" class="header__search">
+						{% render 'search-bar-small' %}
+					</div>
+				</div>
+			</div> 
+
+			{% comment %}
+				Logo
+			{% endcomment %}
+
+			<a class="header__logo" href="{{ routes.root_url }}" title="{{ shop.name }} logo">
+				<span class="sr-only">
+					View Homepage
+				</span>
+				{% render "logo" %}
+			</a>
+
+			{% comment %} 
+				desktop nav
+			{% endcomment %}
+
+
+			{% section "menu-desktop" %}
+
+
+			{% comment %}
+				Utility Menu
+			{% endcomment %}
+
+			<nav class="header__nav header__utilities" aria-label="Utility">
+
+				{% comment %}
+					Contact Us Link
+					Desktop up
+				{% endcomment %}
+
+				{% comment %} {%- if settings.page_contact_us != blank -%}
+					<div class="{{ desktopBreakpoint }}">
+						<a href="{{ settings.page_contact_us }}" class="btn btn--icon">
+							{% render 'icon-info', class: 'icon' %}
+							<span class="sr-only">{{ settings.page_contact_us_text }}</span>
+						</a>
+					</div>
+				{%- endif -%} {% endcomment %}
+
+				{% comment %}
+					Account Link
+					Desktop up
+				{% endcomment %}
+
+				{%- if shop.customer_accounts_enabled -%}
+					<div class="{{ desktopBreakpoint }} tablet-sm-up">
+						{% render 'header-link-account' %}
+					</div>
+				{%- endif -%}
+
+				{% comment %}
+					Search and dropdown
+					Mobile/tablet-lg down
+				{% endcomment %}
+
+				<div class="{{ mobileDownBreakpoint }}">
+					{% comment %} <button class="header__search btn btn--icon" type="button" data-behavior="toggle-dropdown" aria-expanded="false" aria-controls="headerSearchDropdown" data-overlay="underHeaderOverlay">
+						{% render 'icon-search', class: 'icon icon-search' %}
+						<span class="sr-only">
+							Toggle Search
+						</span>
+					</button> {% endcomment %}
+
+					<div class="js-toggle-dropdown header__search-dropdown" style="display: block;padding-bottom: 5px;">
+						<div class="header__search-dropdown-wrapper">
+							{% render 'search-bar-small', id_suffix: "Mobile", placeholder: "Search e.g. kratom powder" %}
+						</div>
+
+						{% comment %} <div class="header__search-dropdown__search-term-list">
+							{% section 'header-high-value-links' %}
+						</div> {% endcomment %}
+					</div>
+				</div>
+
+				{% comment %}
+					Cart Button/Link
+				{% endcomment %}
+
+				<div class="{{ desktopBreakpoint }} ss-search-bar">
+					<div id="headerSearch" class="header__search">
+						{% render 'search-bar-small' %}
+					</div>
+				</div>
+
+				{% section 'ajax-cart-button' %}
+
+			</nav>
+		</div>
+	</div>
+</header>
+
+{% comment %} {% section "menu-desktop" %} {% endcomment %}

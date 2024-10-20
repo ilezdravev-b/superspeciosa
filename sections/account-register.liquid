@@ -1,0 +1,78 @@
+<!-- sections/account-register.liquid -->
+
+{%- liquid 
+    assign data = section.settings
+    assign title = data.title | default: "Sign Up"
+    assign description = data.description
+    assign call_to_action = data.call_to_action
+    assign back_to_login_prompt = data.back_to_login | default: "Already have an account?"
+    assign login_call_to_action = data.login_link_label | default: "Sign In"
+-%}
+
+<h1 class="sr-only">Account Registration</h1>
+
+<div class="account-login section container">
+
+    {% comment %}
+        Register
+    {% endcomment %}
+
+	<section class="account-login__section">
+        <header class="account-login__header">
+
+            <h2 class="account__heading">
+                {{ title }}
+            </h2>
+
+            {%- if description != blank -%}
+                <div class="rte account-login__description">
+                    {{ description }}
+                </div>
+            {%- endif -%}
+        </header>
+
+		{% render 'form-customer-register', submit_text: call_to_action %}
+
+        <footer class="account-login__footnote rte">
+            {{ back_to_login_prompt }} <a href="{{ routes.account_login_url }}">{{ login_call_to_action }}</a>
+        </footer>
+
+	</section>
+</div>
+
+{% schema %}
+{
+    "name": "Register",
+    "settings": [
+        {
+            "type": "text",
+            "id": "title",
+            "label": "Title",
+            "default": "Sign Up"
+        },
+        {
+            "type": "richtext",
+            "id": "description",
+            "label": "Description"
+        },
+        {
+            "type": "text",
+            "id": "call_to_action",
+            "label": "Call to action",
+            "default": "Sign up"
+        },
+        {
+            "type": "text",
+            "id": "back_to_login",
+            "label": "Back to login prompt",
+            "default": "Already have an account?"
+        },
+        {
+            "type": "text",
+            "id": "login_link_label",
+            "label": "Login link label",
+            "default": "Log In"
+        }
+    ]
+}
+{% endschema %}

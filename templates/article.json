@@ -1,0 +1,21 @@
+{
+  "sections": {
+    "main": {
+      "type": "article",
+      "settings": {
+        "include_latest_news": true,
+        "show_blog_url": true,
+        "show_table_contents": true,
+        "show_social_facebook": true,
+        "show_social_twitter": true,
+        "show_social_email": true,
+        "show_social_Reddit": true,
+        "show_social_whatsapp": true,
+        "show_social_pinterest": true
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

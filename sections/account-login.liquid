@@ -1,0 +1,153 @@
+<!-- sections/account-login.liquid -->
+
+{% liquid 
+	assign data = section.settings 
+    assign title = data.login_title | default: "Sign In"
+    assign description = data.login_description
+    assign call_to_action = data.call_to_action
+    assign register_prompt = data.register_prompt | default: "Don't have an account?"
+    assign register_link_label = data.register_link_label | default: "Register"
+%}
+
+<h1 class="sr-only">Account Login</h1>
+
+<div class="account-login section container">
+
+    {% comment %}
+        Login
+    {% endcomment %}
+
+    <section class="account-login__section js-view-container">
+    
+        <header class="account-login__header">
+
+            <h2 class="account__heading">
+                {{ title }}
+            </h2>
+
+            {%- if description != blank -%}
+                <div class="rte account-login__description">
+                    {{ description }}
+                </div>
+            {%- endif -%}
+        </header>
+
+        {% render 'form-customer-login', password_text: data.forgot_password, submit_text: data.login_call_to_action %}
+
+        <footer class="account-login__footnote rte">
+			{{ register_prompt }} <a href="{{ routes.account_register_url }}">{{ register_link_label }}</a>
+		</footer>
+
+    </section>
+
+    {% comment %}
+        Reset Password (hidden by default)
+    {% endcomment %}
+
+    <section class="js-view-container account-login__section account-login__section--reset-password hide" id="recover">
+
+        <button data-behavior="toggle-forms">
+			<span class="sr-only">{{ back_text }}</span>
+            {% render "icon-arrow-left-thin" %}
+		</button>
+
+        <header class="account-login__header">
+
+            <h2 class="account__heading">
+                {{ data.recover_title }}
+            </h2>
+
+            {%- if data.recover_description -%}
+                <div class="rte account-login__description">
+                    {{ data.recover_description }}
+                </div>
+            {%- endif -%}
+        </header>
+
+		{% render 'form-customer-recover-password', submit_text: data.recover_call_to_action, success_text: data.recover_success, back_text: data.back_to_login %}
+    </section>
+</div>
+
+
+{% schema %}
+{
+    "name": "Login",
+    "settings": [
+        {
+            "type": "header",
+            "content": "Login Form"
+        },
+        {
+            "type": "text",
+            "id": "login_title",
+            "label": "Title",
+            "default": "Sign In"
+        },
+        {
+            "type": "richtext",
+            "id": "login_description",
+            "label": "Description",
+            "info": "Optional. Can be left blank.", 
+            "default": "<p>Sign in with your email and password.</p>"
+        },
+        {
+            "type": "text",
+            "id": "login_call_to_action",
+            "label": "Call to Action",
+            "default": "Sign In"
+        },
+        {
+            "type": "text",
+            "id": "register_prompt",
+            "label": "Register prompt",
+            "default": "Don’t have an account?"
+        },
+        {
+            "type": "text",
+            "id": "register_link_label",
+            "label": "Register link label",
+            "default": "Register"
+        }, 
+        {
+            "type": "text",
+            "id": "forgot_password",
+            "label": "Question to prompt user to use forgot password form",
+            "default": "Forgot your password?"
+        },
+        {
+            "type": "header",
+            "content": "Recover Password"
+        },
+        {
+            "type": "text",
+            "id": "recover_title",
+            "label": "Title",
+            "default": "Recover password"
+        },
+        {
+            "type": "richtext",
+            "id": "recover_description",
+            "label": "Description",
+            "default": "<p>Please enter your email below and we will send you instructions to reset your password.</p>"
+        },
+        {
+            "type": "text",
+            "id": "recover_call_to_action",
+            "label": "Call to Action",
+            "default": "Submit"
+        }, 
+        {
+            "type": "text",
+            "id": "recover_success_title",
+            "label": "Success Title",
+            "default": "Instructions sent to your email!"
+        },
+        {
+            "type": "richtext",
+            "id": "recover_success",
+            "label": "Success Message",
+            "default": "<p>We have sent the instructions to your email.</p>"
+        }
+    ]
+}
+{% endschema %}

@@ -1,0 +1,126 @@
+<!-- sections/value-props.liquid -->
+
+{% comment %}
+	Load Assets
+{% endcomment %}
+
+{% render 'theme-load-assets', style: 'section-value-props.min.css' %}
+
+{% comment %}
+	Initial Liquid Variables
+{% endcomment %}
+
+{%- liquid
+	assign data = section.settings
+	-%}
+
+{% comment %}
+	Section Markup
+{% endcomment %}
+
+<section class="value-props" aria-labelledby="ValuePropsTitle{{ section.id }}">
+
+	<h2 class="sr-only" id="ValuePropsTitle{{ section.id }}">
+		{{ data.heading }}
+	</h2>
+
+    <div class="container">
+        <ul class="value-props__list" aria-label="Value Propositions">
+
+            {% comment %}
+                Individual Value Prop
+            {% endcomment %}
+
+            {%- for block in section.blocks -%}
+
+                {% liquid 
+                    assign block_data = block.settings
+                %}
+
+                <li class="value-props__item">
+                    {%- if block_data.svg_markup != blank -%}
+                        <span class="value-props__icon-wrapper">
+                            {{ block_data.svg_markup }}
+                        </span>
+
+                    {%- elsif block_data.image != blank -%}
+                        <span class="value-props__icon-wrapper">
+                            {% render 'image-simple', image: block_data.image, width: 168, height: 168, class: 'value-props__icon' %}
+                        </span>
+                    {%- endif -%}
+
+                    <div>
+                        <h3 class="value-props__title">
+                            {{ block_data.title }}
+                        </h3>
+
+                        {% if block_data.subtitle != blank %}
+                            <p class="value-props__subtitle">
+                                {{ block_data.subtitle }}
+                            </p>
+                        {% endif %}
+                    </div>
+                </li>
+
+            {%- endfor -%}
+
+        </ul>
+    </div>
+
+</section>
+
+{% schema %}
+{
+    "name": "Value Props",
+    "max_blocks": 5,
+	"settings": [
+		{
+			"type": "header",
+			"content": "General Settings"
+		},
+		{
+			"type": "text",
+			"id": "heading",
+			"label": "Section Heading",
+			"info": "This must be included, even though it's not visually seen, for the sake of SEO and accessibility.",
+			"default": "Value Propositions"
+		}
+	],
+    "blocks": [
+        {
+            "name": "Value Prop",
+            "type": "value_prop",
+            "limit": 3, 
+            "settings": [
+                {
+                    "type": "image_picker",
+                    "id": "image",
+                    "label": "Image",
+                    "info": "Images will be constrained to 84px height. Please upload a transparent PNG with height dimensions of at least 168px."
+                },
+                { 
+                    "type": "html", 
+                    "id": "svg_markup", 
+                    "label": "SVG markup", 
+                    "info": "If populated, this will replace any image"
+                }, 
+                {
+                    "label": "Title",
+                    "id": "title",
+                    "type": "text",
+					"default": "Value Prop Title"
+                }, 
+                {
+                    "label": "Subtitle",
+                    "id": "subtitle",
+                    "type": "textarea",
+					"default": "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+                }
+            ]
+        }
+    ], 
+    "enabled_on": {
+		"groups": ["footer"]
+	}
+}
+{% endschema %}

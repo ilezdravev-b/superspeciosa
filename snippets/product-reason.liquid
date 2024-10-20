@@ -1,0 +1,80 @@
+<!-- snippets/product-reason.liquid -->
+
+{% comment %}
+	Required:
+		nothing
+{% endcomment %}
+
+<div class="product-reason-panel">
+    <div class="product-reason-content">
+        <h5 class="product-reason-subtitle">{{ subtitle }}</h5>
+        <h2 class="product-reason-title">{{ title }}</h2>
+        {%- if reason1_title and reason1_text and reason1_icon -%}
+            <div class="product-reason-item">
+                <div class="product-reason-item-icon">
+                    <img src="{{ reason1_icon | image_url }}" 
+                        alt="reason1_icon" />
+                </div>
+                <div class="product-reason-item-desc">
+                    <div class="product-reason-item-title">
+                        {{reason1_title}}
+                    </div>
+                    <div class="product-reason-item-content">
+                        {{reason1_text}}
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+        
+        {%- if reason2_title and reason2_text and reason2_icon -%}
+            <div class="product-reason-item">
+                <div class="product-reason-item-icon">
+                    <img src="{{ reason2_icon | image_url }}" 
+                        alt="reason2_icon" />
+                </div>
+                <div class="product-reason-item-desc">
+                    <div class="product-reason-item-title">
+                        {{reason2_title}}
+                    </div>
+                    <div class="product-reason-item-content">
+                        {{reason2_text}}
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+
+        {%- if reason3_title and reason3_text and reason3_icon -%}
+            <div class="product-reason-item">
+                <div class="product-reason-item-icon">
+                    <img src="{{ reason3_icon | image_url }}" 
+                        alt="reason3_icon" />
+                </div>
+                <div class="product-reason-item-desc">
+                    <div class="product-reason-item-title">
+                        {{reason3_title}}
+                    </div>
+                    <div class="product-reason-item-content">
+                        {{reason3_text}}
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+        
+        {%- if reason4_title and reason4_text and reason4_icon -%}
+            <div class="product-reason-item">
+                <div class="product-reason-item-icon">
+                    <img src="{{ reason4_icon | image_url }}" 
+                        alt="reason4_icon" />
+                </div>
+                <div class="product-reason-item-desc">
+                    <div class="product-reason-item-title">
+                        {{reason4_title}}
+                    </div>
+                    <div class="product-reason-item-content">
+                        {{reason4_text}}
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</div>

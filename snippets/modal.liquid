@@ -1,0 +1,73 @@
+<!-- snippets/modal.liquid -->
+
+{% comment %}
+	Required:
+		id {String} Unique ID for the modal
+		label {String} Text to be used for modal aria-label. Defaults to the heading if passed.
+		type {String} What type of modal this is. Options are "standard", "youtube", "vimeo", or "tooltip". Defaults to "standard".
+		content {String} Content to put inside modal. Comes before a video, if modal type is youtube or vimeo.
+		video_id {String} Video ID to embed. Either Vimeo or YouTube. Only required if non-standard modal.
+
+	Optional:
+		heading {String} Heading for the modal
+		class {String} Classes to apply to modal
+		class_wrapper {String} Classes to apply to inner wrapper
+{% endcomment %} 
+
+{% liquid 
+	assign class = class | default: "modal modal--standard"
+	assign label = label | default: heading
+
+	if type == "tooltip"
+		assign class = "modal modal--tooltip"
+	endif 
+%}
+
+{% comment %}
+	Modal Markup 
+{% endcomment %}
+
+<div class="{{ class }}" id="{{ id }}" data-aria-label="{{ label }}">
+	<div class="{{ class_wrapper }}">
+
+		{% comment %}
+			Optional Heading and Required Close Button
+		{% endcomment %}
+
+		{% if heading != blank %}
+			<header class="modal__header">
+				<h3 class="modal__title">
+					{{ heading }}
+				</h3>
+
+				<button type="button" class="btn btn--icon" data-behavior="close-modal">
+					{% render 'icon-close', class: 'icon' %}
+					<span class="sr-only">Close Modal</span>
+				</button>
+			</header>
+		{% endif %}
+
+		{% comment %}
+			Content
+		{% endcomment %}
+
+		{{ content }}
+
+		{% case type %}
+			{% when 'youtube' %}
+
+				<div class="modal__video">
+					<iframe width="560" height="315" tabindex="0" data-src-asset="https://www.youtube.com/embed/{{ video_id }}?enablejsapi=1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+				</div>
+
+			{% when 'vimeo' %}
+
+				<div class="modal__video">
+					<iframe tabindex="0" data-src-asset="https://player.vimeo.com/video/{{ video_id }}?title=0&byline=0&portrait=0" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+					<script data-src-asset="https://player.vimeo.com/api/player.js"></script>
+				</div>
+
+		{% endcase %}
+
+	</div>
+</div>

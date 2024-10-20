@@ -1,0 +1,91 @@
+<!-- sections/product-compare.liquid -->
+
+{% comment %}
+    Product feaures - Compare
+{% endcomment %}
+
+<div class="product-compare-panel">
+    <div class="product-compare-content">
+        <div class="product-compare-subtitle">{{ subtitle }}</div>
+        <div class="product-compare-title">{{ title }}</div>
+        <div class="product-compare-content">
+            <table class="product-compare-table">
+                <tr>
+                    <td class="product-compare-table-td-first"></td>
+                    <td class="product-compare-table-td-second"><img src="https://cdn.shopify.com/s/files/1/0700/8953/9805/files/LogoDarkGreen.png?v=1726110895" alt="SuperSpeciosa"></td>
+                    <td class="product-compare-table-td-third">OTHER BRANDS</td>
+                </tr>
+                {%- if compare1 != null and compare1 != empty -%}
+                    <tr class="product-compare-table-tr-tf">
+                        <td class="product-compare-table-td-first">{{ compare1 }}</td>
+                        <td class="product-compare-table-td-second">{% render 'icon-true', image: image %}</td>
+                        <td class="product-compare-table-td-third">{% render 'icon-false', image: image %}</td>
+                    </tr>
+                {%- endif -%}
+                {%- if compare2 != null and compare2 != empty -%}
+                    <tr class="product-compare-table-tr-tf">
+                        <td class="product-compare-table-td-first">{{ compare2 }}</td>
+                        <td class="product-compare-table-td-second">{% render 'icon-true', image: image %}</td>
+                        <td class="product-compare-table-td-third">{% render 'icon-false', image: image %}</td>
+                    </tr>
+                {%- endif -%}
+                {%- if compare3 != null and compare3 != empty -%}
+                    <tr class="product-compare-table-tr-tf">
+                        <td class="product-compare-table-td-first">{{ compare3 }}</td>
+                        <td class="product-compare-table-td-second">{% render 'icon-true', image: image %}</td>
+                        <td class="product-compare-table-td-third">{% render 'icon-false', image: image %}</td>
+                    </tr>
+                {%- endif -%}
+                {%- if compare4 != null and compare4 != empty -%}
+                    <tr class="product-compare-table-tr-tf">
+                        <td class="product-compare-table-td-first">{{ compare4 }}</td>
+                        <td class="product-compare-table-td-second">{% render 'icon-true', image: image %}</td>
+                        <td class="product-compare-table-td-third">{% render 'icon-false', image: image %}</td>
+                    </tr>
+                {%- endif -%}
+                {%- if compare5 != null and compare5 != empty -%}
+                    <tr class="product-compare-table-tr-tf">
+                        <td class="product-compare-table-td-first">{{ compare5 }}</td>
+                        <td class="product-compare-table-td-second">{% render 'icon-true', image: image %}</td>
+                        <td class="product-compare-table-td-third">{% render 'icon-false', image: image %}</td>
+                    </tr>
+                {%- endif -%}
+                {%- if compare6 != null and compare6 != empty -%}
+                    <tr class="product-compare-table-tr-tf">
+                        <td class="product-compare-table-td-first">{{ compare6 }}</td>
+                        <td class="product-compare-table-td-second">{% render 'icon-true', image: image %}</td>
+                        <td class="product-compare-table-td-third">{% render 'icon-false', image: image %}</td>
+                    </tr>
+                {%- endif -%}
+                {%- if compare7 != null and compare7 != empty -%}
+                    <tr class="product-compare-table-tr-tf">
+                        <td class="product-compare-table-td-first">{{ compare7 }}</td>
+                        <td class="product-compare-table-td-second">{% render 'icon-true', image: image %}</td>
+                        <td class="product-compare-table-td-third">{% render 'icon-false', image: image %}</td>
+                    </tr>
+                {%- endif -%}
+                {%- if compare8 != null and compare8 != empty -%}
+                    <tr class="product-compare-table-tr-tf">
+                        <td class="product-compare-table-td-first">{{ compare8 }}</td>
+                        <td class="product-compare-table-td-second">{% render 'icon-true', image: image %}</td>
+                        <td class="product-compare-table-td-third">{% render 'icon-false', image: image %}</td>
+                    </tr>
+                {%- endif -%}
+                {%- if compare9 != null and compare9 != empty -%}
+                    <tr class="product-compare-table-tr-tf">
+                        <td class="product-compare-table-td-first">{{ compare9 }}</td>
+                        <td class="product-compare-table-td-second">{% render 'icon-true', image: image %}</td>
+                        <td class="product-compare-table-td-third">{% render 'icon-false', image: image %}</td>
+                    </tr>
+                {%- endif -%}
+                {%- if compare10 != null and compare10 != empty -%}
+                    <tr class="product-compare-table-tr-tf">
+                        <td class="product-compare-table-td-first">{{ compare10 }}</td>
+                        <td class="product-compare-table-td-second">{% render 'icon-true', image: image %}</td>
+                        <td class="product-compare-table-td-third">{% render 'icon-false', image: image %}</td>
+                    </tr>
+                {%- endif -%}
+            </table>
+        </div>
+    </div>
+</div>

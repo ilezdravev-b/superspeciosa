@@ -1,0 +1,35 @@
+<!-- snippets/collection-filters-data.liquid -->
+
+{% comment %}
+	Required:
+		nothing
+
+	Notes: This creates a JSON object with data on
+		   the current filtered view, which can then
+		   be used by the filters script as needed.
+{% endcomment %}
+
+{%- assign active_tags = '' -%}
+
+{%- for tag in current_tags -%}
+    {%- assign tag_as_handle = tag | replace: '&#39;', '' | replace: '&#34;', '' | handle -%}
+    {%- assign active_tags = active_tags | append: tag_as_handle -%}
+
+    {%- unless forloop.last -%}
+        {%- assign active_tags = active_tags | append: '+' -%}
+    {%- endunless -%}
+{%- endfor -%}
+
+{%- assign active_tags = active_tags | split: '+' -%}
+
+{%- assign active_values = active_tags | size -%}
+
+{% comment %}
+	Generated object
+{% endcomment %}
+
+<script type="application/json" id="filterData">{ 
+	"totalResults": {{ collection.products_count }},
+	"activeValues": {{ active_values }},
+	"active_tags": {{ active_tags | json }}
+}</script>

@@ -1,0 +1,48 @@
+<!-- snippets/product-options-select.liquid -->
+
+{% comment %}
+	Required:
+		id_prefix {String} Prefix to use for the ID
+		current_variant {Object} The variant object
+		product {Object} The product object
+		show_label {Boolean} Whether to visually show label
+{% endcomment %}
+
+{% liquid 
+	assign id_prefix = id_prefix | default: 'prodSelect'
+%}
+
+{% comment %}
+	Snippet Markup
+{% endcomment %}
+
+{% for num in (1..product.options.size) %}
+    {% liquid 
+        assign option_title = product.options[forloop.index0] | default: false
+        assign option_handle = option_title | handle
+        assign option_number = "option" | append: num
+        assign options = product.variants | map: option_number | uniq
+    %}
+
+	<div class="input-group">
+
+        <label for="{{ id_prefix }}{{ product.id }}{{ option_handle }}" class="{% if show_label == true %}prod-options__title{% else %}sr-only{% endif %}">{{ option_title }}</label>
+        <div class="input-select">
+            <select class="js-product-option" name="{{ option_number }}" id="{{ id_prefix }}{{ product.id }}{{ option_handle }}">
+                {% for option in options %}
+
+                    {% liquid 
+                        assign selected = false 
+                        if option == current_variant[option_number]
+                            assign selected = true
+                        endif
+                    %}
+
+                    <option value="{{ option | escape }}"{% if selected %} selected{% endif %}>{{ option }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+    </div>
+
+{% endfor %}

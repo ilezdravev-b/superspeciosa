@@ -1,0 +1,51 @@
+<!-- snippets/collection-sort.liquid -->
+
+{% comment %}
+	Required: 
+		button {String} markup
+
+	Optional:
+		id_suffix {String} Suffix to add to select ID
+{% endcomment %}
+
+{% comment %}
+	Load Assets
+{% endcomment %}
+
+{% render 'theme-load-assets', script: 'section-collection-sort.min.js' %}
+
+{% assign sort_by = collection.sort_by | default: collection.default_sort_by %}
+
+{% assign modal_id = "collectionSort" | append: id_suffix %}
+
+{% capture collection_sort_content %}
+	{%- for option in collection.sort_options -%}
+		{%- assign num = forloop.index -%}
+		<div class="input-radio">
+			<input type="radio" 
+				id="sort-{{ num }}{{ id_suffix }}" 
+				name="sortOptions{{ id_suffix }}"
+				value="{{ option.value | escape }}"
+				{% if sort_by == option.value %} checked="checked"{% endif %}>
+			<label for="sort-{{ num }}{{ id_suffix }}">{{ option.name | escape }}</label>
+		</div>
+	{%- endfor -%}
+{% endcapture %}
+
+{% comment %}
+	Sort Modal Markup
+
+	Note: type "tooltip" for modal snippet means that 
+	the modal needs to be inside a relative positioned container
+	with overflow visible
+{% endcomment %}
+
+<collection-sort class="collection-sort" data-id="{{ modal_id }}">
+	{{ button }}
+
+	{% comment %}
+		Modal
+	{% endcomment %}
+
+	{% render "modal", id: modal_id, heading: "", content: collection_sort_content, type: "tooltip", label: "Sorting Options" %}
+</collection-sort>

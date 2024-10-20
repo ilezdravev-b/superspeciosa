@@ -1,0 +1,222 @@
+<!-- snippets/theme-schema-header.liquid -->
+
+{% comment %}
+    Required:
+        nothing
+
+    Notes: This schema data was originally pulled from Dawn,
+    and has been modified. Note that the logo file setup may differ
+    by project, so update accordingly.
+
+    Additionally, below we're programmatically creating the social links
+    array for the sake of a correct JSON array regardless of how many
+    links are filled out in Theme Settings.
+{% endcomment %}
+
+{% liquid 
+    assign logo = settings.theme_logo
+    assign logo_url = logo | image_url | prepend: "https:"
+
+    assign social_link_count = 0
+    assign social_links_array = ''
+    assign social_link_names = 'social_twitter,social_facebook,social_pinterest,social_instagram,social_youtube,social_tiktok' | split: ','
+
+    for platform in social_link_names
+        assign social_link = settings[platform]
+        if social_link != blank 
+            assign social_link = social_link | json
+            if social_link_count > 0
+                assign social_links_array = social_links_array | append: ','
+            endif
+            assign social_links_array = social_links_array | append: social_link
+
+            assign social_link_count = social_link_count | plus: 1
+        endif
+    endfor
+%}
+
+{% comment %}
+    Organization Schema
+{% endcomment %}
+
+<script type="application/ld+json">
+	{
+		"@context": "http://schema.org",
+		"@type": "Organization",
+		"name": {{ shop.name | json }},
+		{% if logo != blank %}
+            "logo": {
+                "@type": "ImageObject", 
+                "height": {{ logo.height | json }}, 
+                "url": {{ logo_url | json }},
+                "width": {{ logo.width | json }}
+            }, 
+        {% endif %}
+        {% if social_link_count > 0 %}"sameAs": [
+			{{ social_links_array }}
+		],{% endif %}
+		"url": {{ request.origin | append: page.url | json }}
+	}
+</script>
+
+{%- if request.page_type == 'index' -%}
+
+    {% comment %}
+        Homepage Schema
+    {% endcomment %}
+
+	{% assign potential_action_target = request.origin | append: routes.search_url | append: "?q={search_term_string}" %}
+	<script type="application/ld+json">
+        {
+            "@context": "http://schema.org",
+            "@type": "WebSite",
+            "name": {{ shop.name | json }},
+            "potentialAction": {
+                "@type": "SearchAction",
+                "target": {{ potential_action_target | json }},
+                "query-input": "required name=search_term_string"
+            },
+            "url": {{ request.origin | append: page.url | json }}
+        }
+    </script>
+{%- else -%}
+
+    {% comment %}
+        Breadcrumb Schema (exists everywhere except homepage)
+    {% endcomment %}
+
+    <script type="application/ld+json">
+        {
+            "@context": "http://schema.org",
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+                {
+                    "@type": "ListItem",
+                    "position": 1,
+                    "item": "{{ shop.secure_url }}",
+                    "name": {{ shop.name | json }}
+                }{% if template.name == "collection" and current_tags %},
+                {
+                    "@type": "ListItem",
+                    "position": 2,
+                    "item": "{{ shop.secure_url | append: collection.url }}", 
+                    "name": {{ collection.title | json }}
+                },
+                {
+                    "@type": "ListItem",
+                    "position": 3,
+                    "item": "https:{{ collection.url }}/{{ current_tags | join: '+' }}",
+                    "name": {{ current_tags | join: ' + ' | json }}
+                }{% elsif template.name == "product" and collection %},
+                {
+                    "@type": "ListItem",
+                    "position": 2,
+                    "item": "{{ shop.secure_url | append: collection.url }}",
+                    "name": {{ collection.title | json }}
+                },
+                {
+                    "@type": "ListItem",
+                    "position": 3,
+                    "item": "{{ shop.secure_url | append: product.url }}",
+                    "name": {{ product.title | json }}
+                }{% elsif template.name == "product" %},
+                {
+                    "@type": "ListItem",
+                    "position": 2,
+                    "item": "{{ shop.secure_url }}{% if product.type == blank %}{{ product.vendor | url_for_vendor }}{% else %}{{ product.type | url_for_type }}{% endif %}",
+                    "name": {{ product.type | default: product.vendor | json }}
+                },
+                {
+                    "@type": "ListItem",
+                    "position": 3,
+                    "item": "{{ shop.secure_url | append: product.url }}",
+                    "name": {{ product.title | json }}
+                }{% elsif template.name == "blog" and current_tags %},
+                {
+                    "@type": "ListItem",
+                    "position": 2,
+                    "item": "{{ shop.secure_url | append: blog.url }}",
+                    "name": {{ blog.title | json }}
+                },
+                {
+                    "@type": "ListItem",
+                    "position": 3,
+                    "item": "{{ shop.secure_url }}{{ blog.url }}/tagged/{{ current_tag_handles | join: '+' }}",
+                    "name": {{ current_tags | join: " + " | json }}
+                }{% elsif template.name == "article" %},
+                {
+                    "@type": "ListItem",
+                    "position": 2,
+                    "item": "{{ shop.secure_url | append: blog.url }}",
+                    "name": {{ blog.title | json }}
+                },
+                {
+                    "@type": "ListItem",
+                    "position": 3,
+                    "item": "{{ shop.secure_url | append: article.url }}",
+                    "name": {{ article.title | json }}
+                }{% else %},
+                {
+                    "@type": "ListItem",
+                    "position": 2,
+                    "item": "{{ shop.secure_url | append: current_url }}",
+                    "name": {{ page_title | json }}
+                }{% endif %}
+            ]
+        }
+    </script>
+{%- endif -%}
+
+{% comment %}
+    Product Schema
+{% endcomment %}
+
+{%- if request.page_type == 'product' -%}
+	{% render 'theme-schema-product' %}
+{%- endif -%}
+
+{% comment %}
+    Article Schema
+{% endcomment %}
+
+{%- if request.page_type == 'article' -%}
+    <script type="application/ld+json">
+        {
+            "@context": "http://schema.org",
+            "@type": "Article",
+            "articleBody": {{ article.content | strip_html | json }},
+            "mainEntityOfPage": {
+                "@type": "WebPage",
+                "@id": {{ request.origin | append: page.url | json }}
+            },
+            "headline": {{ article.title | json }},
+            {% if article.excerpt != blank %}
+                "description": {{ article.excerpt | strip_html | json }},
+            {% endif %}
+            {% if article.image %}
+                "image": [
+                    {{ article | image_url: width: article.image.width | prepend: "https:" | json }}
+                ],
+            {% endif %}
+            "datePublished": {{ article.published_at | date: '%Y-%m-%dT%H:%M:%SZ' | json }},
+            "dateCreated": {{ article.created_at | date: '%Y-%m-%dT%H:%M:%SZ' | json }},
+            "author": {
+                "@type": "Person",
+                "name": {{ article.author | json }}
+            },
+            "publisher": {
+                "@type": "Organization",
+                {% if logo != blank %}
+                    "logo": {
+                        "@type": "ImageObject", 
+                        "height": {{ logo.height | json }}, 
+                        "url": {{ logo_url | json }},
+                        "width": {{ logo.width | json }}
+                    }, 
+                {% endif %}
+                "name": {{ shop.name | json }}
+            }
+        }
+    </script>
+
+{%- endif -%}

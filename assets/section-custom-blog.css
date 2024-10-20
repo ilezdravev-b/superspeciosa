@@ -1,0 +1,75 @@
+.blog-items {
+    display: flex;
+}
+
+.blog-item {
+    width: 33.3%;
+    position: relative;
+    padding: 0 5px;
+}
+
+.txt-blog-item {
+    position: absolute;
+    bottom: 0;
+    color: #fff;
+    z-index: 10;
+    padding: 0 25px 25px;
+    font-family: sans-serif;
+}
+
+.txt-blog-item p {
+    margin: 0;
+}
+
+.article-item-img {
+    width: 100%;
+    height: 310px;
+    object-fit: cover;
+    filter: brightness(0.7);
+}
+
+.custom-article-link {
+    display: block;
+}
+
+.custom-blog-date {
+    font-family: "Dilemma", sans-serif;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.custom-blog-date svg {
+    width: 20px;
+    height: 20px;
+    fill: #fff;
+}
+
+.blog-items .custom-blog-title {
+    font-family: "Dilemma", sans-serif;
+    font-size: 17px;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.custom-blogs-section .blog-items.slider {
+    overflow: visible;
+}
+
+.custom-btn-slide {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.custom-btn-slide svg path {
+    fill: #008000;
+}
+
+.custom-btn-slide.custom-prev-icon {
+    left: 0;
+}
+
+.custom-btn-slide.custom-next-icon {
+    right: 0;
+}

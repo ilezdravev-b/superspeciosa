@@ -1,0 +1,184 @@
+{{ 'featured-category.css' |  asset_url | stylesheet_tag}}
+
+
+{%- liquid
+  assign  desktop_padding_top = section.settings.desktop_padding_top
+  assign  desktop_padding_bottom = section.settings.desktop_padding_bottom
+  assign  mobile_padding_top = section.settings.mobile_padding_top
+  assign  mobile_padding_bottom = section.settings.mobile_padding_bottom
+-%}
+
+{%  style  %} 
+ #shopify-section-{{ section.id }} .featured-category {
+      display: flex;
+      padding-top: {{ desktop_padding_top }}px;
+      padding-bottom: {{ desktop_padding_bottom }}px;
+  }
+
+  @media (max-width : 768px) {
+      #shopify-section-{{ section.id }} .featured-category {
+          padding-top: {{ mobile_padding_top }}px;
+          padding-bottom: {{ mobile_padding_bottom }}px;
+      }
+  }
+    .text-color {
+        color: {{ section.settings.text_clr }};
+    }
+    .bg-color {
+        background-color: {{ section.settings.bg_clr }};
+    }
+
+    {% for block in section.blocks %}
+        {% if block.type == 'collection' %}
+            .block-text-color {
+                color: {{ block.settings.btn_text_clr }};
+            }
+            .block-bg-color {
+                background-color: {{ block.settings.btn_bg_clr }};
+            }
+        {% endif %}
+    {% endfor %}
+{% endstyle %}
+
+<div class="featured-category">
+    <div class="featureds-category container">
+        <div class="featured-category-wapper bg-color">
+            {% if section.settings.title %}
+                <div class="featured-category--title text-color">{{  section.settings.title }}</div>
+            {% endif %}
+            {% if section.settings.text %}
+                <div class="featured-category--text text-color">{{ section.settings.text }}</div>
+            {% endif %}
+
+            <div class="collections-category">
+                {% for block in section.blocks %}                        
+                    {%  style  %} 
+                            .collection-category {
+                            width: calc(100% / {{ forloop.index }});
+                            }  
+                    {% endstyle %}
+                    {% if block.type == 'collection' %}
+                        <div class="collection-category ">
+                            <a href="{{ block.settings.collection.url }}">
+                                <div class="category-img">
+                                    <img src="{{ block.settings.collection.featured_image |  image_url: width: 1000  }}" width="1000" height="1000" alt="No product Image">                                       
+                                </div>
+                                <div class="category-btn category-title block-text-color block-bg-color">
+                                    <span>{{ block.settings.collection.title }}</span>
+                                </div>
+                            </a>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
+{% schema %}
+    {
+        "name": "Featured Category",
+        "class": "section shopify-section--featured-category",
+        "settings": [
+            {
+                "type": "header",
+                "content": "Header"
+            },
+            {
+                "type": "text",
+                "id": "title",
+                "label": "Title",
+                "default": "SHOP KRATOM BY CATEGORY"
+            },
+            {
+                "type": "text",
+                "id": "text",
+                "label": "Text",
+                "default": "Our kratom leaf products come in different forms. Pick what suits you best."
+            },
+            {
+                "type": "color",
+                "id": "bg_clr",
+                "label": "Background Color",
+                "default": "#FFFFFf"
+            },
+            {
+                "type": "color",
+                "id": "text_clr",
+                "label": "Text color",
+                "default": "#000000"
+            },
+            {
+            "type": "range",
+            "id" : "desktop_padding_top",
+            "min": 0,
+            "max": 500,
+            "step" : 5,
+            "default" : 40,
+            "label": "Padding Top(desktop)"
+            },
+            {
+                "type": "range",
+                "id" : "mobile_padding_top",
+                "min": 0,
+                "max": 500,
+                "step" : 5,
+                "default" : 40,
+                "label": "Padding Top(mobile)"
+            },
+            {
+                "type": "range",
+                "id" : "desktop_padding_bottom",
+                "min": 0,
+                "max": 500,
+                "step" : 5,
+                "default" : 30,
+                "label": "Padding Bottom(desktop)"
+            },
+            {
+                "type": "range",
+                "id" : "mobile_padding_bottom",
+                "min": 0,
+                "max": 500,
+                "step" : 5,
+                "default" : 30,
+                "label": "Padding Bottom(mobile)"
+            }
+    ],
+    "blocks": [
+    {
+        "type": "collection",
+        "name": "collection",
+        "settings": [
+            {
+                "type": "collection",
+                "id": "collection",
+                "label": "Collection"
+            },
+            {
+                "type": "color",
+                "id": "btn_bg_clr",
+                "label": "Button background color",
+                "default": "#000000"
+            },
+            {
+                "type": "color",
+                "id": "btn_text_clr",
+                "label": "Button text color",
+                "default": "#ffffff"
+            }
+        ]
+    }
+],
+"presets": [
+    {
+        "name": "Featured Category",
+        "blocks": [
+            {
+                "type": "collection"
+            }
+        ]
+    }
+]
+    }
+{% endschema %}

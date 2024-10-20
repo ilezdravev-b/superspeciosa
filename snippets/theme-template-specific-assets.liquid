@@ -1,0 +1,132 @@
+<!-- snippets/theme-template-specific-assets.liquid -->
+
+{% comment %}
+  Required:
+  	nothing
+
+  Notes: This file exists to preload template-specific,
+  	   above-the-fold assets if they exist. We're querying
+  	   whether ?v= is included in the asset file URL, and if
+  	   so, the file exists and is used. Otherwise, nothing is output.
+
+  	   Note that this supports custom templates as well. For example,
+  	   if we have collection.json and collection.custom.json, the system
+  	   will check to see if template-collection.min.css/js exists, as well as
+  	   template-collection-custom.min.css/js. Both will be loaded if they both
+  	   exist.
+{% endcomment %}
+
+{%- liquid
+  assign suffix = ''
+  assign prefix = 'template-'
+  if template contains 'customers/'
+    assign prefix = 'template-customers-'
+  endif
+  assign templateFile = prefix | append: template.name | replace: '_', '-'
+
+  comment
+    Determine whether this template is a root template,
+    such as collection, or a variation of it, such as
+    collection.alternate.liquid.
+  endcomment
+
+  if template.suffix
+    assign suffix = '-' | append: template.suffix | replace: '.', '-'
+    assign templateFileVariation = templateFile | append: suffix
+  endif
+-%}
+
+{% comment %}
+  Capture all of the file URLs
+{% endcomment %}
+
+{%- capture stylesheet -%}
+		{% assign fileName = templateFile | append: '.min.css' %}
+		{{ fileName | asset_url }}
+	{%- endcapture %}
+
+{%- capture scriptFile -%}
+		{% assign fileName = templateFile | append: '.min.js' %}
+		{{ fileName | asset_url }}
+	{%- endcapture -%}
+
+{% comment %}
+  If we have have a custom version of the template,
+  such as collection.alternate.liquid, we'll grab it here
+  so it is loaded along with the base template assets.
+{% endcomment %}
+
+{%- capture variationStylesheet -%}
+		{% assign fileName = templateFileVariation | append: '.min.css' %}
+		{{ fileName | asset_url }}
+	{%- endcapture -%}
+
+{%- capture variationScriptFile -%}
+		{% assign fileName = templateFileVariation | append: '.min.js' %}
+		{{ fileName | asset_url }}
+	{%- endcapture -%}
+
+{% comment %}
+
+
+{% endcomment %}
+
+{%- if stylesheet contains '?v=' or stylesheet contains 'editor_asset' -%}
+  <style id="preventFouc">
+    .js main {
+      opacity: 0;
+    }
+  </style>
+  <link
+    rel="preload"
+    href="{{ stylesheet }}"
+    as="style"
+    onload="this.onload=null;this.rel='stylesheet';document.getElementById('preventFouc').remove()"
+  >
+{%- endif -%}
+
+{%- if scriptFile contains '?v=' or scriptFile contains 'editor_asset' -%}
+  <link rel="preload" as="script" href="{{ scriptFile }}">
+  <script src="{{ scriptFile }}" defer></script>
+{%- endif -%}
+
+{% comment %}
+  Load the custom versions of the base template
+{% endcomment %}
+
+{% if suffix != blank %}
+  {%- if variationStylesheet contains '?v=' or variationStylesheet contains 'editor_asset' -%}
+    <link rel="preload" href="{{ variationStylesheet }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  {%- endif -%}
+
+  {%- if variationScriptFile contains '?v=' or variationScriptFile contains 'editor_asset' -%}
+    <link rel="preload" as="script" href="{{ variationScriptFile }}">
+    <script src="{{ variationScriptFile }}" defer></script>
+  {%- endif -%}
+{% endif %}
+
+{% comment %}
+  Policy (request path specific)
+{% endcomment %}
+
+{%- if request.path contains '/policies/' -%}
+  <link
+    rel="preload"
+    href="{{ 'template-policy.min.css' | asset_url }}"
+    as="style"
+    onload="this.onload=null;this.rel='stylesheet'"
+  >
+{%- endif -%}
+
+{% comment %}
+  Challenge (request path specific)
+{% endcomment %}
+
+{%- if request.path contains '/challenge' -%}
+  <link
+    rel="preload"
+    href="{{ 'template-challenge.min.css' | asset_url }}"
+    as="style"
+    onload="this.onload=null;this.rel='stylesheet'"
+  >
+{%- endif -%}

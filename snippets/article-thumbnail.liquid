@@ -1,0 +1,78 @@
+<!-- snippets/article-thumb.liquid -->
+
+{% comment %}
+	Required:
+		article {Object} The article object
+		cta_text {String} Text for CTA button
+{% endcomment %}
+
+{%- liquid 
+	assign image = article.image
+	assign title = article.title
+-%}
+
+<div class="article-thumb">
+
+	{% comment %}
+		Image, Title, and Excerpt
+	{% endcomment %}
+
+	<div class="article-thumb__content">
+
+		{%- if image != blank -%}
+			{% render 'image', image: image, picture_class: 'article-thumb__image' %}
+		{%- endif -%}
+
+		<div class="article-thumb__contents">
+			<h3 class="article-thumb__title">
+				<a href="{{ article.url }}">
+					{{ title }}
+				</a>
+			</h3>
+
+			<div class="article-thumb__element ">
+				{{ article.excerpt_or_content | strip_html | truncatewords: 25 }}
+			</div>
+			<a class="article-thumb__element btn btn--primary" href="{{ article.url }}" tabindex="-1" aria-hidden="true">
+				{{ cta_text }}		
+				<span class="sr-only">about {{ title }}</span>
+			</a>
+		</div>
+	</div>
+</div>
+
+<style>
+	.blog-articles__grid.custom-blog__style {
+		row-gap: 2rem;
+	}
+	.custom-blog__style .article-thumb {
+		background-color: #212c1c;
+	}
+	.custom-blog__style .article-thumb__contents {
+		padding: 15px;
+		text-align: center;
+	}
+	.custom-blog__style .article-thumb__title {
+		margin-bottom: 30px;
+		color: #f4f1de;
+		font-family: "Dilemma", Sans-serif;
+		font-size: 18px;
+		font-weight: 700;
+		text-transform: uppercase;
+		letter-spacing: 1px;
+		word-spacing: 3px;
+	}
+	.custom-blog__style .article-thumb__element  {
+		color: #f4f1de;
+		font-size: 14px;
+		margin-bottom: 10px;
+		text-transform: capitalize;
+	}
+	.custom-blog__style .article-thumb__element.btn {
+		font-size: 12px;
+		font-weight: 700;
+		color: #658b27;
+		background-color: transparent;
+		border: none;
+	}
+</style>

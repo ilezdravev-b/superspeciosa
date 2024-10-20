@@ -1,0 +1,25 @@
+<!-- snippets/collection-thumbnail-large.liquid -->
+
+{% comment %}
+	Required:
+		collection_title {String} The collection title
+        collection_url {String} The collection URL (can be any page)
+		collection_image {Object} The image object
+{% endcomment %}
+
+{%- liquid 
+    assign title = collection_title
+	assign url = collection_url
+    assign image = collection_image
+-%}
+
+<div class="collection-thumb--large">
+	<div class="collection-thumb--large__image">
+		{% render 'image-simple', image: image, width: 610, height: 300 %}
+	</div>
+
+	<a href="{{ url }}" class="collection-thumb--large__title">
+        {{ title }} 
+        {% render "icon-arrow-right-thin" %}
+    </a>
+</div>

@@ -1,0 +1,30 @@
+<!-- snippets/modal-button.liquid -->
+
+{% comment %}
+	Required: 
+		modalId {String} Unique ID for the modal the button controls
+		text {String} Button text
+
+	Optional:
+		class {String} Classes to pass to button. Defaults to primary button
+		overlay {String} ID of overlay to show on modal opening. Defaults to the "above the header" overlay.
+		id {String} ID to apply to the button
+		data {String} Data attributes and values to add to the button
+
+{% endcomment %} 
+
+{% liquid 
+	assign class = class | default: 'btn btn--primary'
+	assign overlay = overlay | default: "aboveHeaderOverlay"
+%}
+
+<button type="button" aria-controls="{{ modalId }}"
+	{% if id != blank %}id="{{ id }}"{% endif %}
+	class="{{ class }}" aria-expanded="false"
+	aria-haspopup="dialog" data-behavior="modal"
+	data-overlay="{{ overlay }}"
+	{{ data }}>
+
+	{{ text }}
+
+</button>

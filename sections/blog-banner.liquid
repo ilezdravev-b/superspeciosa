@@ -1,0 +1,58 @@
+<!-- sections/blog-banner.liquid -->
+
+<header class="container section">
+	<div class="blog-heading">{{ section.settings.blog_heading }}</div>
+	<div class="blog_subtitle">{{ section.settings.blog_subtitle }}</div>
+</header>
+
+<style>
+	header.container.section {
+		text-align: center;
+	}
+	.blog-heading h1 {
+		font-family: "Dilemma",sans-serif;
+		font-size: 50px;
+		font-weight: 700;
+		text-transform: uppercase;
+		line-height: 1.1em;
+		letter-spacing: 1.3px;
+		color: #231f20;
+	}
+	.blog_subtitle p {
+		font-family: "Courier Prime",Sans-serif;
+		font-size: 18px;
+		line-height: 1.3em;
+		color: #212c1c;
+	}
+	@media (max-width: 767px){
+		.blog-heading h1 {
+			font-size: 36px;
+			padding: 15px;
+		}
+	}
+</style>
+
+{% schema %}
+{
+	"name": "Blog Banner",
+	"settings": [
+		{
+			"type": "richtext",
+			"id": "blog_heading",
+			"label": "Blog Heading",
+			"default": "<h1>Get the latest from our blog</h1>"
+		},
+		{
+			"type": "richtext",
+			"id": "blog_subtitle",
+			"label": "Text",
+			"default": "<p>Kratom discussion, updates on our products, and more.</p>"
+		}
+	],
+	"presets": [
+		{
+			"name": "Blog Banner"
+		}
+	]
+}
+{% endschema %}

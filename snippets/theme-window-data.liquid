@@ -1,0 +1,47 @@
+<!-- snippets/theme-window-data.liquid -->
+
+{% comment %}
+  All data attached to the window object
+  that is used by the theme. Add as needed!
+
+  Note: All data exists inside the window.fmData object for the 
+  sake of organization and namespacing. Note that some scripts
+  are using the data inside this object, so before removing anything,
+  check to make sure that no scripts need to be modified as a result.
+
+  Note: localeRootUrl copied from previous Prestige theme
+{% endcomment %}
+
+<script>
+  window.fmData = {
+	theme: {
+		template: {{ template | json }},
+		shopUrl: {{ request.origin | json }},
+		SpSliderStylesheetLink: {{ 'sp-slider-index.min.css' | asset_url | json }}, 
+		localeRootUrl: {% if request.locale.primary %}''{% else %}{{ request.locale.root_url | json }}{% endif %},
+	},
+
+	cartStrings: {
+	  error: {{ 'sections.cart.cart_error' | t | json }},
+	  quantityError: {{ 'sections.cart.cart_quantity_error_html' | t: quantity: '[quantity]' | json }},
+	},
+
+	variantStrings: {
+	  addToCart: {{ 'products.product.add_to_cart' | t | json }},
+	  soldOut: {{ 'products.product.sold_out' | t | json }},
+	  unavailable: {{ 'products.product.unavailable' | t | json }},
+	},
+
+	a11yStrings: {
+		shareSuccess: {{ 'general.share.success_message' | t | json }},
+		cartUpdating: {{ 'accessibility.cart_updating' | t | json }},
+		quantityUpdated: {{ 'accessibility.quantity_changed' | t: quantity: '[quantity]' | json }},
+	},
+
+	klaviyo: {
+		lazyloadOnsiteScript: {{ settings.klaviyo_manual_onsite_script | default: false | json }},
+		apiKey: {{ settings.klaviyo_api_key | default: false | json }},
+		klaviyoSubscribe: {{ 'klaviyo_subscribe.js' | asset_url | default: false | json }},
+	}
+  }
+</script>

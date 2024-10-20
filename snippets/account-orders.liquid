@@ -1,0 +1,116 @@
+<!-- snippets/account-orders.liquid -->
+
+<div class="account__section">
+	<h2 class="account__heading">
+		Orders
+	</h2>
+
+	{%- unless customer.orders.size == 0 -%}
+
+		{%- paginate customer.orders by 20 -%}
+		
+			{% comment %}
+				Large Tablet and Desktop (table)
+			{% endcomment %}
+
+			<div class="tablet-lg-up">
+				<table>
+					<thead>
+						<tr>
+							<th>{{ 'customer.orders.order_number' | t }}</th>
+							<th>{{ 'customer.orders.date' | t }}</th>
+							<th>{{ 'customer.orders.fulfillment_status' | t }}</th>
+							<th>{{ 'customer.orders.total' | t }}</th>
+							<th>{{ 'customer.orders.tracking' | t }}</th>
+						</tr>
+					</thead>
+
+					<tbody>
+						{%- for order in customer.orders -%}
+
+							{% liquid 
+								assign tracking_url = order.line_items[0].fulfillment.tracking_url
+							%}
+
+							<tr>
+								<td>
+									<a href="{{ order.customer_url }}">{{ order.name }}</a>
+								</td>
+								<td>{{ order.created_at | time_tag: "%m/%d/%Y" }}</td>
+								<td>{{ order.fulfillment_status | capitalize }}</td>
+								<td>{{ order.total_price | money_without_trailing_zeros }}</td>
+								<td>
+									{%- if tracking_url != blank -%}
+										<a href="{{ tracking_url }}" target="_blank" rel="noreferrer noopener">{{ 'customer.order.track_shipment' | t }}</a>
+									{%- else -%}
+										{{ 'customer.order.tracking_unavailable' | t }}
+									{%- endif -%}
+								</td>
+							</tr>
+						{%- endfor -%}
+					</tbody>
+				</table>
+			</div>
+
+			{% comment %}
+				Small Tablet and Mobile (accordion)
+			{% endcomment %}
+
+			<div class="tablet-sm-down">
+
+				<ol class="accordion account-orders" aria-label="Orders">
+
+					{%- for order in customer.orders -%}
+
+						{% liquid 
+							assign tracking_url = order.line_items[0].fulfillment.tracking_url
+						%}
+
+						<li class="account-orders__order js-accordion-parent">
+							<h3 class="accordion__heading"> 
+								<button type="button" class="accordion__btn js-accordion-btn" aria-controls="order{{ forloop.index }}" aria-expanded="false">
+									{{ order.name }}
+								</button>
+							</h3>
+
+							<div class="accordion__content" id="order{{ forloop.index }}">
+								<p class="account-orders__details">
+									{{ 'customer.orders.order_number_title' | t }}: <a href="{{ order.customer_url }}">{{ order.order_number }}</a><br />
+									{{ 'customer.orders.date' | t }}: {{ order.created_at | time_tag: "%m/%d/%Y" }}<br />
+									{{ 'customer.orders.fulfillment_status' | t }}: <span>{{ order.fulfillment_status | capitalize }}</span><br />
+									{{ 'customer.orders.total' | t }}: {{ order.total_price | money_without_trailing_zeros }}<br />
+									{{ 'customer.orders.tracking' | t }}: {% if tracking_url != blank %}<a href="{{ tracking_url }}" target="_blank" rel="noreferrer noopener">{{ 'customer.order.track_shipment' | t }}</a>{% else %}{{ 'customer.order.tracking_unavailable' | t }}{% endif %}<br />
+
+								</p>
+								<p>
+									<a class="btn btn--primary btn--wide" href="{{ order.customer_url }}">
+										{{ 'customer.orders.view_details' | t }}
+									</a>
+								</p>
+							</div>
+						</li>
+					{%- endfor -%}
+
+				</ol>
+			</div>
+
+			{% comment %}
+				Pagination for all screen sizes (desktop/mobile)
+			{% endcomment %}
+
+			{%- if paginate.pages > 1 -%}
+				{% render 'pagination', paginate: paginate %}             
+			{%- endif -%}
+		{%- endpaginate -%}
+
+	{%- else -%}
+
+		{% comment %}
+			No Orders
+		{% endcomment %}
+
+		<p>{{ 'customer.orders.none' | t }}</p>
+		
+	{%- endunless -%}
+
+</div>

@@ -1,0 +1,98 @@
+{%- liquid 
+	assign image = article.image
+	assign title = article.title
+-%}
+
+<div class="custom-article-item">
+
+	{% comment %}
+		Image, Title, and Excerpt
+	{% endcomment %}
+
+	<div class="custom-article-thumb__content">
+
+		{%- if image != blank -%}
+			<a href="{{ article.url }}" class="custom-article-thumb__image">
+                {% render 'image', image: image %}
+            </a>
+		{%- endif -%}
+        
+        <div class="custom-article-thumb__contents">
+            <div class="custom-article-thumb__text">
+                <h3 class="custom-article-thumb__title">
+                    <a href="{{ article.url }}">
+                        {{ title }}
+                    </a>
+                </h3>
+                <div class="custom-article-thumb__element ">
+                    {{ article.excerpt_or_content | strip_html | truncatewords: 25 }}
+                </div>
+                <a class="custom-article-thumb__element custom-btn" href="{{ article.url }}" tabindex="-1" aria-hidden="true">
+                    {{ cta_text }}<span class="sr-only">about {{ title }}</span>
+                </a>
+            </div>
+        </div>
+	</div>
+</div>
+
+<style>
+    .custom-article-item {
+        margin-bottom: 70px;
+    }
+    .custom-article-thumb__content {
+        display: flex;
+        background-color: #212c1c;
+    }
+    .custom-article-thumb__image {
+        display: block;
+        width: 50%;
+        height: 425px;
+    }
+    .custom-article-thumb__contents {
+        width: 50%;
+        text-align: center;
+        display: flex;
+        padding: 0 40px;
+    }
+    .custom-article-thumb__text {
+        margin-top: auto;
+        margin-bottom: auto;
+    }
+    .custom-article-thumb__title  {
+        font-family: "Dilemma", Sans-serif;
+        margin: 0 0 40px 0;
+        color: #f4f1de;
+        font-size: 24px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        word-spacing: 3px;
+    }
+    .custom-article-thumb__element  {
+        color: #f4f1de;
+        line-height: 1.5em;
+        font-size: 14px;
+    }
+    .custom-article-thumb__element.custom-btn {
+        font-family: "Dilema", Sans-serif;
+        font-size: 18px;
+        font-weight: 600;
+        text-transform: uppercase;
+        color: #658b27;
+    }
+    .custom-article-thumb__image picture {
+        height: 100%;
+    }
+    .custom-article-thumb__image picture img {
+        height: 100%;
+        object-fit: cover;
+    }
+    @media (max-width: 767px){
+        .custom-article-thumb__content {
+            display: block;
+        }
+        .custom-article-thumb__image, .custom-article-thumb__contents {
+            width: 100%;
+        }
+    }
+</style>

@@ -82,7 +82,7 @@
 	{% endcomment %}
 
 
-	<div class="product__details{% if image_count == 0 %} product__details--no-image{% endif %}" style="max-width: 100vw; width: 100%;">
+	<div class="product__details{% if image_count == 0 %} product__details--no-image{% endif %}">
         {%  assign reviews_rating =  product.metafields.reviews.rating.value %}
         {%  assign review_rating_count =  product.metafields.reviews.rating_count %}
         {% if reviews_rating != blank and review_rating_count != blank %}
@@ -248,7 +248,8 @@
           item3: block.settings.ingredient_item3,
           item4: block.settings.ingredient_item4,
           item5: block.settings.ingredient_item5,
-          item6: block.settings.ingredient_item6
+          item6: block.settings.ingredient_item6,
+          product_image: block.settings.product_image
         %}
     {% endif %}
 {%- endfor -%}
@@ -615,6 +616,12 @@
                         }
                     ], 
                     "default": "v1"
+                },
+
+                {
+                    "label": "Product Image",
+                    "id": "product_image",
+                    "type": "image_picker"
                 },
                 {
                     "label": "Subtitle",

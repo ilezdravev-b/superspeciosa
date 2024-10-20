@@ -13,7 +13,8 @@ nothing
     </div>
     <div class="product-usage-content">
         <img class="product-usage-image"
-                src="{{image |  img_url: '1000x'}}" width="480px"
+                src="{% if image == blank %}https://superspeciosa.com/cdn/shop/files/super-speciosa-signature-reserve-12_3_1000x.jpg{% else %}{{image |  img_url: '1000x'}}{% endif %}" 
+                width="480px"
                 height="350px" alt="Product Usage"/>
 
         <div class="product-usage-description">

@@ -9,9 +9,7 @@
         <h2 class="lab-pdp__heading">{{ section.settings.heading }}</h2>
       {% endif %}
       <div class="lab-pdp__content"></div>
-      <div id="pdf-container" class="lab__pdf-container">
-        <!-- PDF will be rendered here -->
-      </div>
+      <div id="pdf-viewer" class="pdf-viewer"></div>
       {% assign icon_with_texts = section.blocks | where: 'type', 'icon_with_text' %}
       {% assign socials = section.blocks | where: 'type', 'social_link' %}
       {% for icon_with_text in icon_with_texts %}
@@ -72,38 +70,230 @@
       .then((response) => response.json())
       .then((result) => {
         const pdfBase64 = result.pdfBase64;
-        const pdfContainer = document.getElementById('pdf-container');
-        pdfContainer.innerHTML = `<canvas id="pdf-canvas" style="width:100%; height:900px; border: 1px solid black;"></canvas>`;
+        const pdfViewer = document.getElementById('pdf-viewer');
+        pdfViewer.innerHTML = `
+          <div id="pdf-toolbar" class="pdf-toolbar">
+            <button id="zoominbutton" type="button" class="zoom-button zoom-in">
+              <span class="button-text">Zoom In</span>
+              <svg class="button-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                <line x1="11" y1="8" x2="11" y2="14"></line>
+                <line x1="8" y1="11" x2="14" y2="11"></line>
+              </svg>
+            </button>
+            <button id="zoomoutbutton" type="button" class="zoom-button zoom-out">
+              <span class="button-text">Zoom Out</span>
+              <svg class="button-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                <line x1="8" y1="11" x2="14" y2="11"></line>
+              </svg>
+            </button>
+            <span id="page-info"></span>
+          </div>
+          <div id="scrollable-area" class="scrollable-area">
+            <div id="pdf-content" class="pdf-content">
+              <!-- PDF pages will be rendered here -->
+            </div>
+          </div>
+        `;
 
         // convert base64 to binary
         const pdfData = atob(pdfBase64);
 
         // Load and render the PDF using pdf.js
-        const loadingTask = pdfjsLib.getDocument({ data: pdfData });
-        loadingTask.promise.then((pdf) => {
-          // Fetch the first page
-          pdf.getPage(1).then((page) => {
-            const scale = 1.5;
-            const viewport = page.getViewport({ scale: scale });
-
-            // Prepare canvas using PDF page dimensions
-            const canvas = document.getElementById('pdf-canvas');
-            const context = canvas.getContext('2d');
-            canvas.height = viewport.height;
-            canvas.width = viewport.width;
-
-            // Render PDF page into canvas context
-            const renderContext = {
-              canvasContext: context,
-              viewport: viewport,
-            };
-            page.render(renderContext);
-          });
+        pdfjsLib.getDocument({ data: pdfData }).promise.then((pdf) => {
+          renderPDF(pdf);
         });
       })
       .catch((error) => console.error(error));
   }
+
+  function renderPDF(pdf) {
+    const pdfContent = document.getElementById('pdf-content');
+    let pdfScale = 1;
+
+    function renderPage(pageNum) {
+      pdf.getPage(pageNum).then(function (page) {
+        const viewport = page.getViewport({ scale: pdfScale });
+        const canvas = document.createElement('canvas');
+        const context = canvas.getContext('2d');
+        canvas.height = viewport.height;
+        canvas.width = viewport.width;
+        const renderContext = {
+          canvasContext: context,
+          viewport: viewport,
+        };
+
+        canvas.setAttribute('data-page-number', pageNum);
+        pdfContent.appendChild(canvas);
+
+        page.render(renderContext);
+      });
+    }
+
+    function renderAllPages() {
+      pdfContent.innerHTML = '';
+      for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
+        renderPage(pageNum);
+      }
+      updatePageInfo();
+    }
+
+    function updatePageInfo() {
+      const pageInfo = document.getElementById('page-info');
+      pageInfo.textContent = `Total Pages: ${pdf.numPages}`;
+    }
+
+    function zoom(factor) {
+      pdfScale = Math.max(0.25, Math.min(3, pdfScale + factor));
+      renderAllPages();
+      updateScrollableArea();
+    }
+
+    function updateScrollableArea() {
+      const firstCanvas = pdfContent.querySelector('canvas');
+      if (firstCanvas) {
+        const scrollableArea = document.getElementById('scrollable-area');
+        scrollableArea.style.width = `${firstCanvas.width}px`;
+        scrollableArea.style.height = `${firstCanvas.height * pdf.numPages}px`;
+      }
+    }
+
+    // Initial render
+    renderAllPages();
+
+    document.getElementById('zoominbutton').addEventListener('click', () => zoom(0.25));
+    document.getElementById('zoomoutbutton').addEventListener('click', () => zoom(-0.25));
+
+    // Touch events for mobile zooming
+    let initialPinchDistance, initialScale;
+
+    pdfContent.addEventListener('touchstart', handleTouchStart);
+    pdfContent.addEventListener('touchmove', handleTouchMove);
+
+    function handleTouchStart(e) {
+      if (e.touches.length === 2) {
+        e.preventDefault();
+        initialPinchDistance = getPinchDistance(e);
+        initialScale = pdfScale;
+      }
+    }
+
+    function handleTouchMove(e) {
+      if (e.touches.length === 2) {
+        e.preventDefault();
+        const currentPinchDistance = getPinchDistance(e);
+        const scaleDiff = currentPinchDistance / initialPinchDistance;
+        pdfScale = Math.max(0.25, Math.min(3, initialScale * scaleDiff));
+        renderAllPages();
+        updateScrollableArea();
+      }
+    }
+
+    function getPinchDistance(e) {
+      return Math.hypot(e.touches[0].pageX - e.touches[1].pageX, e.touches[0].pageY - e.touches[1].pageY);
+    }
+
+    // Resize handler
+    window.addEventListener('resize', () => {
+      renderAllPages();
+      updateScrollableArea();
+    });
+  }
+
+  initializePDFRendering();
 </script>
+
+<style>
+  .pdf-viewer {
+    width: 100%;
+    max-width: 100%;
+    margin: 0 auto;
+    overflow: hidden;
+  }
+
+  .scrollable-area {
+    overflow: auto;
+    max-height: 80vh;
+    max-width: 100%;
+  }
+
+  .pdf-toolbar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    background-color: #212c1c;
+    border-bottom: 1px solid #ccc;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+  }
+
+  .zoom-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 5px;
+    padding: 5px 10px;
+    background-color: #8ab83f;
+    color: #212c1c;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 14px;
+  }
+
+  .button-icon {
+    display: none;
+    width: 24px;
+    height: 24px;
+  }
+
+  #page-info {
+    margin-left: 10px;
+    font-weight: bold;
+    color: #f4f1de;
+  }
+
+  .pdf-content canvas {
+    display: block;
+    margin: 10px auto;
+  }
+
+  @media (max-width: 768px) {
+    .scrollable-area {
+      max-height: 70vh;
+    }
+
+    .pdf-toolbar {
+      flex-wrap: wrap;
+    }
+
+    .zoom-button {
+      margin: 5px;
+      padding: 8px;
+      background-color: transparent;
+    }
+
+    .button-text {
+      display: none;
+    }
+
+    .button-icon {
+      display: block;
+      width: 28px;
+      height: 28px;
+      color: #8ab83f;
+    }
+
+    .pdf-content {
+      max-height: 70vh;
+    }
+  }
+</style>
 
 {% schema %}
 {

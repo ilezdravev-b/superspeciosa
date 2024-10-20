@@ -21,7 +21,11 @@ nothing
 	</div>
 	<div class="product-ingredient-content">
 		<div class="product-ingredient-image-wrapper">
-			<canvas id="product-ingredient-canvas" width="500" height="700">
+			<canvas 
+				{% if product_image %}
+					style="background-image: url('{{ product_image | image_url}}');"
+				{% endif %}
+			id="product-ingredient-canvas" width="500" height="700">
         	</canvas>
 		</div>
 		<div class="product-ingredient-description">
@@ -83,7 +87,11 @@ nothing
 		</div>
 		
 		<div class="product-ingredient-desktop-image-wrapper">
-			<canvas id="product-ingredient-desktop-canvas" width="500" height="700">
+			<canvas 
+				{% if product_image %}
+					style="background-image: url('{{ product_image | image_url}}');"
+				{% endif %}
+			id="product-ingredient-desktop-canvas" width="500" height="700">
         	</canvas>
 		</div>
 		<div class="product-ingredient-desktop-description2">
@@ -114,21 +122,20 @@ nothing
 <script type="text/javascript">
 	ctx = document.getElementById("product-ingredient-canvas").getContext("2d");
 	//ctx.beginPath();
-	canvas_arrow(ctx, 150, 250, 517, 90);
-	canvas_circle(ctx, 150, 250, 4);
-	canvas_arrow(ctx, 75, 355, 517, 250);
-	canvas_circle(ctx, 75, 355, 4);
-	canvas_arrow(ctx, 80, 390, 517, 715)
-	canvas_circle(ctx, 80, 390, 4);
+		canvas_arrow(ctx, 150, 250, 517, 90);
+		canvas_circle(ctx, 150, 250, 4);
+		canvas_arrow(ctx, 75, 355, 517, 250);
+		canvas_circle(ctx, 75, 355, 4);
+		canvas_arrow(ctx, 80, 390, 517, 715)
+		canvas_circle(ctx, 80, 390, 4);
 
-	canvas_arrow(ctx, 330, 300, 517, 500);
-	canvas_circle(ctx, 330, 300, 4);
-	canvas_arrow(ctx, 250, 300, 517, 370);
-	canvas_circle(ctx, 250, 300, 4);
-	canvas_arrow(ctx, 300, 360, 517, 625)
-	canvas_circle(ctx, 300, 360, 4);
+		canvas_arrow(ctx, 330, 300, 517, 500);
+		canvas_circle(ctx, 330, 300, 4);
+		canvas_arrow(ctx, 250, 300, 517, 370);
+		canvas_circle(ctx, 250, 300, 4);
+		canvas_arrow(ctx, 300, 360, 517, 625)
+		canvas_circle(ctx, 300, 360, 4);
 	//ctx.stroke();
-
 
 	function canvas_arrow(ctx, fromx, fromy, tox, toy) {
 		ctx.strokeStyle = "#222D1C";
@@ -151,21 +158,18 @@ nothing
 
 	ctxDesktop = document.getElementById("product-ingredient-desktop-canvas").getContext("2d");
 	//ctxDesktop.beginPath();
-	canvas_arrow(ctxDesktop, 150, 250, 0, 180);
-	canvas_circle(ctxDesktop, 150, 250, 4);
-	canvas_arrow(ctxDesktop, 75, 370, 0, 380);
-	canvas_circle(ctxDesktop, 75, 370, 4);
-	canvas_arrow(ctxDesktop, 80, 510, 0, 590)
-	canvas_circle(ctxDesktop, 80, 510, 4);
+		canvas_arrow(ctxDesktop, 150, 250, 0, 180);
+		canvas_circle(ctxDesktop, 150, 250, 4);
+		canvas_arrow(ctxDesktop, 75, 370, 0, 380);
+		canvas_circle(ctxDesktop, 75, 370, 4);
+		canvas_arrow(ctxDesktop, 80, 510, 0, 590)
+		canvas_circle(ctxDesktop, 80, 510, 4);
 
-	canvas_arrow(ctxDesktop, 330, 300, 517, 430);
-	canvas_circle(ctxDesktop, 330, 300, 4);
-	canvas_arrow(ctxDesktop, 250, 300, 517, 240);
-	canvas_circle(ctxDesktop, 250, 300, 4);
-	canvas_arrow(ctxDesktop, 300, 360, 517, 610)
-	canvas_circle(ctxDesktop, 300, 360, 4);
+		canvas_arrow(ctxDesktop, 330, 300, 517, 430);
+		canvas_circle(ctxDesktop, 330, 300, 4);
+		canvas_arrow(ctxDesktop, 250, 300, 517, 240);
+		canvas_circle(ctxDesktop, 250, 300, 4);
+		canvas_arrow(ctxDesktop, 300, 360, 517, 610)
+		canvas_circle(ctxDesktop, 300, 360, 4);
 	//ctx.stroke();
-
-
-
 </script>

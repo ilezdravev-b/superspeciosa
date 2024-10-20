@@ -1,378 +1,363 @@
 <!-- sections/article.liquid -->
 
 {% comment %}
-  Section Markup
+	Section Markup
 {% endcomment %}
 <div class="container">
-  <article class="article">
-    <div class="article-panel">
-      {% if section.settings.show_blog_url == true %}
-        <div class="article-urls">
-          <a href="{{ shop.url }}">Home</a>
-          /
-          <p>{{ article.title }}</p>
+    <article class="article">
+        <div class="article-panel">
+            {% if section.settings.show_blog_url == true %}
+                <div class="article-urls">
+                    <a href="{{ shop.url }}">Home</a>
+                    /
+                    <p>{{ article.title }}</p>
+                </div>
+            {% endif %}
+            <h1 class="artitle-title">{{ article.title | upcase }}</h1>
+            <div class="article__meta">
+                <address>By {{ article.author }}</address>
+                <time datetime="{{ article.published_at | date: '%Y-%m-%d' }}">
+                    {{ article.published_at | date: '%b %d, %Y' }}
+                </time>
+            </div>
+            <div class="article-social-icons">
+                {% if section.settings.show_social_facebook == true %}
+                    <span class="article-social-icon">{% render 'icon-article-facebook' %}</span>
+                {% endif %}
+                {% if section.settings.show_social_twitter == true %}
+                    <span class="article-social-icon">{% render 'icon-article-twitter' %}</span>
+                {% endif %}
+                {% if section.settings.show_social_email == true %}
+                    <span class="article-social-icon">{% render 'icon-article-email' %}</span>
+                {% endif %}
+                {% if section.settings.show_social_Reddit == true %}
+                    <span class="article-social-icon">{% render 'icon-article-reddit' %}</span>
+                {% endif %}
+                {% if section.settings.show_social_whatsapp == true %}
+                    <span class="article-social-icon">{% render 'icon-article-whatsapp' %}</span>
+                {% endif %}
+                {% if section.settings.show_social_pinterest == true %}
+                    <span class="article-social-icon">{% render 'icon-article-pinterest' %}</span>
+                {% endif %}
+            </div>
+            {% if section.settings.show_table_contents %}
+                <div class="article-heading-accordion">
+                    <a href="javascript:;" class="btn-article-heading-accordion"><span>Table of Contents</span>{% render 'icon-arrow-top' %}</a>
+                    <div class="article-heading-contents">
+                    </div>
+                </div>
+            {% endif %}
+            <div class="article-featured-image">
+                {% if article.image != blank %}
+                    {% render 'image', image: article.image, class: 'media-cover' %}
+                {% endif %}
+            </div>
+            <div class="article-main-contents">
+                <div class="container-text">
+					<div class="rte">
+                    	{{ article.content }}
+					</div>
+                </div>
+            </div>
         </div>
-      {% endif %}
-      <h1 class="artitle-title">{{ article.title | upcase }}</h1>
-      <div class="article__meta">
-        <address>By {{ article.author }}</address>
-        <time datetime="{{ article.published_at | date: '%Y-%m-%d' }}">
-          {{ article.published_at | date: '%b %d, %Y' }}
-        </time>
-      </div>
-      <div class="article-social-icons">
-        {% if section.settings.show_social_facebook == true %}
-          <span class="article-social-icon">{% render 'icon-article-facebook' %}</span>
+        {% if section.settings.include_latest_news == true %}
+            <div class="latest-news-panel">
+                <p class="ln-heading">Latest News</p>
+                {% assign blog_handle = 'news' %}
+                {% assign articles_limit = 15 %}
+                {% assign displayed_articles = '' %}
+                {% for article in blogs[blog_handle].articles limit: articles_limit %}                    
+                   {% unless displayed_articles contains article.id %}
+                            <a href="{{ article.url }}" class="latest-news-item">
+                                <div class="latest-news-image"><img src="{{ article.image | image_url }}" ></div>
+                                <p>{{ article.title }}</p>
+                                <time datetime="{{ article.published_at | date: '%Y-%m-%d' }}">
+                                    {{ article.published_at | date: '%b %d, %Y' }}
+                                </time>
+                            </a>
+                    {% endunless %}
+                {% endfor %}
+            </div>
         {% endif %}
-        {% if section.settings.show_social_twitter == true %}
-          <span class="article-social-icon">{% render 'icon-article-twitter' %}</span>
-        {% endif %}
-        {% if section.settings.show_social_email == true %}
-          <span class="article-social-icon">{% render 'icon-article-email' %}</span>
-        {% endif %}
-        {% if section.settings.show_social_Reddit == true %}
-          <span class="article-social-icon">{% render 'icon-article-reddit' %}</span>
-        {% endif %}
-        {% if section.settings.show_social_whatsapp == true %}
-          <span class="article-social-icon">{% render 'icon-article-whatsapp' %}</span>
-        {% endif %}
-        {% if section.settings.show_social_pinterest == true %}
-          <span class="article-social-icon">{% render 'icon-article-pinterest' %}</span>
-        {% endif %}
-      </div>
-      {% if section.settings.show_table_contents %}
-        <div class="article-heading-accordion">
-          <a href="javascript:;" class="btn-article-heading-accordion">
-            <span>Table of Contents</span>
-            {% render 'icon-arrow-top' %}</a>
-          <div class="article-heading-contents"></div>
-        </div>
-      {% endif %}
-      <div class="article-featured-image">
-        {% if article.image != blank %}
-          {% render 'image'
-            , image: article.image
-            , class: 'media-cover' %}
-        {% endif %}
-      </div>
-      <div class="article-main-contents">
-        <div class="container-text">
-          <div class="rte">
-            {{ article.content }}
-          </div>
-        </div>
-      </div>
-    </div>
-    {% if section.settings.include_latest_news == true %}
-      <div class="latest-news-panel">
-        <p class="ln-heading">Latest News</p>
-        {% assign blog_handle = 'news' %}
-        {% assign articles_limit = 15 %}
-        {% assign displayed_articles = '' %}
-        {% for article in blogs[blog_handle].articles limit: articles_limit %}
-          {% unless displayed_articles contains article.id %}
-            <a
-              href="{{ article.url }}"
-              class="latest-news-item"
-              style="max-width: 100vw; display: block; width: 100%;">
-              <div class="latest-news-image"><img src="{{ article.image | image_url }}"></div>
-              <p>{{ article.title }}</p>
-              <time datetime="{{ article.published_at | date: '%Y-%m-%d' }}">
-                {{ article.published_at | date: '%b %d, %Y' }}
-              </time>
-            </a>
-          {% endunless %}
-        {% endfor %}
-      </div>
-    {% endif %}
-  </article>
-  <nav class="article__nav container" aria-label="Article Navigation">
+    </article>
+    <nav class="article__nav container" aria-label="Article Navigation">
 
-    <div class="article__nav-prev">
-      {% if blog.previous_article %}
-        <a href="{{ blog.previous_article.url }}" class="btn-prev-article">{% render 'icon-arrow-top' %}</a>
-        <a href="{{ blog.previous_article.url }}" class="link-basic">
-          <p>Previous</p>
-          <p>{{ blog.previous_article.title | truncate: 40 }}</p>
-        </a>
-      {% endif %}
-    </div>
+        <div class="article__nav-prev">
+            {% if blog.previous_article %}
+                <a href="{{ blog.previous_article.url }}" class="btn-prev-article">{% render 'icon-arrow-top' %}</a>
+                <a href="{{ blog.previous_article.url }}" class="link-basic">
+                    <p>Previous</p>
+                    <p>{{ blog.previous_article.title | truncate: 40 }}</p>
+                </a>    
+            {% endif %}
+        </div>
 
-    <div class="article__nav-next">
-      {% if blog.next_article %}
-        <a href="{{ blog.next_article.url }}" class="link-basic">
-          <p>Next</p>
-          <p>{{ blog.next_article.title | truncate: 40 }}</p>
-        </a>
-        <a href="{{ blog.next_article.url }}" class="btn-next-article">{% render 'icon-arrow-top' %}</a>
-      {% endif %}
-    </div>
-  </nav>
+        <div class="article__nav-next">
+            {% if blog.next_article %}   
+                <a href="{{ blog.next_article.url }}" class="link-basic">
+                    <p>Next</p>
+                    <p>{{ blog.next_article.title | truncate: 40 }}</p>
+                </a>
+                <a href="{{ blog.next_article.url }}" class="btn-next-article">{% render 'icon-arrow-top' %}</a>
+            {% endif %}
+        </div>
+    </nav>
 </div>
 
 <style>
-  article.article {
-    display: flex;
-    background-color: #fff;
-    gap: 30px;
-    padding: 30px;
-    margin-top: 50px;
-  }
-  .btn-article-heading-accordion svg {
-    width: 20px;
-    height: 20px;
-  }
-  .article-social-icon svg {
-    width: 20px;
-    height: 20px;
-    fill: #f4f1de;
-  }
-  .article-panel {
-    width: 75%;
-  }
-  .latest-news-panel {
-    width: 25%;
-    padding-left: 25px;
-  }
-  .article-urls {
-    display: flex;
-    gap: 20px;
-  }
-  .article-urls p {
-    margin: 0;
-  }
-  article.article__meta {
-    color: #212c1c;
-  }
-  h1.artitle-title {
-    color: #231f20;
-    font-family: "Dilemma"
-    , Sans-serif;
-    font-size: 50px;
-    font-weight: 700;
-    text-transform: uppercase;
-    line-height: 1.1em;
-    letter-spacing: 1.3px;
-    padding-right: 90px;
-    margin: 10px 0 20px;
-  }
-  .article-social-icon {
-    background-color: #8ab83f;
-    width: 42px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 35px;
-  }
-  .article-heading-accordion {
-    background-color: #f4f1de;
-    margin-bottom: 25px;
-  }
-  .btn-article-heading-accordion {
-    font-family: "Dilemma"
-    , Sans-serif;
-    font-size: 20px;
-    font-weight: 700;
-    text-transform: uppercase;
-    line-height: 13px;
-    display: flex;
-    justify-content: space-between;
-    padding: 20px;
-  }
-  .article-heading-contents {
-    padding: 0 20px 20px;
-  }
-  .article-heading-contents a {
-    display: block;
-    color: #333;
-    font-family: "Dilemma"
-    , Sans-serif;
-    font-size: 14px;
-    font-weight: 600;
-    text-transform: uppercase;
-    line-height: 14px;
-    letter-spacing: 1px;
-    margin-bottom: 10px;
-  }
-  .article-social-icons {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 20px;
-  }
-  .article-urls a {
-    color: #8ab83f;
-  }
-  .btn-article-heading-accordion .icon-rotate {
-    rotate: 180deg;
-    transition: all 0.3s;
-  }
-  .article-main-contents .rte p {
-    font-family: "Open Sans"
-    , Sans-serif;
-    font-size: 15px;
-    line-height: 28px;
-  }
-  .article-main-contents .rte h2 {
-    color: #231f20;
-    font-family: "Dilemma"
-    , Sans-serif;
-    font-size: 35px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    word-spacing: 3px;
-    margin-top: 10px;
-  }
-  .article-main-contents .rte a {
-    color: #658b27;
-    text-decoration: none;
-  }
-  .ln-heading {
-    color: #231f20;
-    font-family: Dilemma;
-    font-size: 18px;
-    font-weight: 700;
-    text-transform: uppercase;
-    font-style: normal;
-    letter-spacing: 2.2px;
-    margin-bottom: 0;
-  }
-  .latest-news-item p {
-    font-size: 11px;
-    color: #658b27;
-    font-family: "Dilemma";
-    font-weight: 700;
-    text-transform: uppercase;
-    font-style: normal;
-    letter-spacing: 2.2px;
-    margin-bottom: 0;
-  }
-  .latest-news-item time {
-    line-height: 1.3em;
-    font-size: 12px;
-    color: #adadad;
-  }
-  .latest-news-image {
-    margin-top: 20px;
-  }
-  .article__nav-next {
-    justify-content: end;
-    border-left: 1px solid #d5d8dc;
-  }
-  .article__nav-next svg {
-    width: 20px;
-    height: 20px;
-    rotate: 90deg;
-  }
-  .article__nav-prev svg {
-    width: 20px;
-    height: 20px;
-    rotate: -90deg;
-  }
-  .article__nav.container {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    background-color: #fff;
-    padding-top: 10px;
-    padding-bottom: 5px;
-  }
-  .article__nav-next,
-  .article__nav-prev {
-    display: flex;
-    gap: 10px;
-    align-items: center;
-  }
-  .article__nav-next p,
-  .article__nav-prev p {
-    margin: 0;
-  }
-  .article .article-main-contents .container-text table {
+    article.article {
+        display: flex;
+        background-color: #fff;
+        gap: 30px;
+        padding: 30px;
+        margin-top: 50px;
+    }
+    .btn-article-heading-accordion svg {
+        width: 20px;
+        height: 20px;
+    }
+    .article-social-icon svg {
+        width: 20px;
+        height: 20px;
+        fill: #f4f1de;
+    }
+    .article-panel {
+        width: 75%;
+    }
+    .latest-news-panel {
+        width: 25%;
+        padding-left: 25px;
+    }
+    .article-urls {
+        display: flex;
+        gap: 20px;
+    }
+    .article-urls p {
+        margin: 0;
+    }
+    article.article__meta {
+        color: #212c1c;
+    }
+    h1.artitle-title {
+        color: #231f20;
+        font-family: "Dilemma", Sans-serif;
+        font-size: 50px;
+        font-weight: 700;
+        text-transform: uppercase;
+        line-height: 1.1em;
+        letter-spacing: 1.3px;
+        padding-right: 90px;
+        margin: 10px 0 20px;
+    }
+    .article-social-icon {
+        background-color: #8ab83f;
+        width: 42px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 35px;
+    }
+    .article-heading-accordion {
+        background-color: #f4f1de;
+        margin-bottom: 25px;
+    }
+    .btn-article-heading-accordion {
+        font-family: "Dilemma", Sans-serif;
+        font-size: 20px;
+        font-weight: 700;
+        text-transform: uppercase;
+        line-height: 13px;
+        display: flex;
+        justify-content: space-between;
+        padding: 20px;
+    }
+    .article-heading-contents {
+        padding: 0 20px 20px 20px;
+    }
+    .article-heading-contents a {
+        display: block;
+        color: #333;
+        font-family: "Dilemma", Sans-serif;
+        font-size: 14px;
+        font-weight: 600;
+        text-transform: uppercase;
+        line-height: 14px;
+        letter-spacing: 1px;
+        margin-bottom: 10px;
+    }
+    .article-social-icons {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 20px;
+    }
+    .article-urls a {
+        color: #8ab83f;
+    }
+    .btn-article-heading-accordion .icon-rotate {
+        rotate: 180deg;
+        transition: all 0.3s;
+    }
+    .article-main-contents .rte p {
+        font-family: "Open Sans", Sans-serif;
+        font-size: 15px;
+        line-height: 28px;
+    }
+    .article-main-contents .rte h2 {
+        color: #231f20;
+        font-family: "Dilemma", Sans-serif;
+        font-size: 35px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        word-spacing: 3px;
+        margin-top: 10px;
+    }
+    .article-main-contents .rte a {
+        color: #658b27;
+        text-decoration: none;
+    }
+    .ln-heading {
+        color: #231f20;
+        font-family: Dilemma;
+        font-size: 18px;
+        font-weight: 700;
+        text-transform: uppercase;
+        font-style: normal;
+        letter-spacing: 2.2px;
+        margin-bottom: 0px;
+    }
+    .latest-news-item p {
+        font-size: 11px;
+        color: #658b27;
+        font-family: "Dilemma";
+        font-weight: 700;
+        text-transform: uppercase;
+        font-style: normal;
+        letter-spacing: 2.2px;
+        margin-bottom: 0;
+    }
+    .latest-news-item time {
+        line-height: 1.3em;
+        font-size: 12px;
+        color: #adadad;
+    }
+    .latest-news-image {
+        margin-top: 20px;
+    }
+    .article__nav-next {
+        justify-content: end;
+        border-left: 1px solid #d5d8dc;
+    }
+    .article__nav-next svg {
+        width: 20px;
+        height: 20px;
+        rotate: 90deg;
+    }
+    .article__nav-prev svg {
+        width: 20px;
+        height: 20px;
+        rotate: -90deg;
+    }
+    .article__nav.container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        background-color: #fff;
+        padding-top: 10px;
+        padding-bottom: 5px;
+    }
+    .article__nav-next, .article__nav-prev {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+    }
+    .article__nav-next p, .article__nav-prev p {
+        margin: 0;
+    }
+   .article .article-main-contents .container-text table {
     border-collapse: collapse;
-  }
-  .article .article-main-contents .container-text table tbody tr:first-child {
+}
+.article .article-main-contents .container-text table tbody tr:first-child {
     background-color: #212c1c;
-  }
-  .article .article-main-contents .container-text table tbody tr td p {
+}
+.article .article-main-contents .container-text table tbody tr td p {
     line-height: 20px;
-  }
-  .article .article-main-contents .container-text table tbody tr:first-child td p,
+}
+.article .article-main-contents .container-text table tbody tr:first-child td p,
   .article .article-main-contents .container-text table tbody tr:first-child td,
-  .article .article-main-contents .container-text table tbody tr:first-child td p strong {
-    font-family: Dilemma
-    , sans-serif;
+  .article .article-main-contents .container-text table tbody tr:first-child td p strong{
+    font-family: Dilemma, sans-serif;
     color: #fff;
     font-size: 15px;
     font-weight: 700;
     line-height: 24px;
     text-transform: capitalize;
-  }
-  .article .article-main-contents .container-text table tbody tr td p strong {
-    font-family: Dilemma
-    , sans-serif;
+}
+.article .article-main-contents .container-text table tbody tr td p strong{
+	font-family: Dilemma, sans-serif;
     color: #212c1c;
     display: block;
     font-size: 15px;
     font-weight: 700;
     line-height: 24px;
     text-transform: capitalize;
-  }
-  .article .article-main-contents .container-text table tbody tr td p a {
-    font-weight: 600;
-  }
-  .article .article-main-contents .container-text table tbody tr td {
+}
+  .article .article-main-contents .container-text table tbody tr td p a{
+	    font-weight: 600;
+}
+.article .article-main-contents .container-text table tbody tr td {
     padding: 8px;
     border: 2px solid #212c1c;
-  }
+}
   .article .article-main-contents .container-text table tbody tr:first-child td h5 strong {
     background-color: transparent !important;
-  }
-  .article .article-main-contents .container-text table tbody tr td h5 {
+}
+    .article .article-main-contents .container-text table tbody tr td h5 {
     margin: 0;
-  }
-  /* -- Custom Css For Mobile -- */
-  @media (max-width: 768px) {
-    article.article {
-      padding: 15px;
-      flex-direction: column;
+}
+  /* -- Custom Css For Mobile -- */    
+    @media (max-width:768px){
+      article.article{
+        padding: 15px;
+        flex-direction: column;
+      }
+      .article-panel {
+        width: 100%;
+      }
+      .latest-news-panel {
+        width: 100%;
+        padding-left: 0;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+      .article-panel .container-text {
+        max-width: 100%;
+        padding: 0;
+        width: 100%;
+      }
+      .article-panel h1.artitle-title,
+      .article-panel .article-main-contents .rte h2{
+        padding: 0;
+        font-size: 24px;
+      }
+      .latest-news-panel p.ln-heading {
+        width: 100%;
+        margin: 0;
+      }
+      .latest-news-panel a.latest-news-item {
+        width: calc(50% - 5px);
+      }
+      .latest-news-panel a.latest-news-item .latest-news-image {
+        margin: 0;
+        height: 150px;
+      }
+      .latest-news-panel a.latest-news-item .latest-news-image img {
+        object-fit: cover;
+        height: 100%;
+        width: 100%;
+        object-position: top;
+      }
     }
-    .article-panel {
-      width: 100%;
-    }
-    .latest-news-panel {
-      width: 100%;
-      padding-left: 0;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-    }
-    .article-panel .container-text {
-      max-width: 100%;
-      padding: 0;
-      width: 100%;
-    }
-    .article-panel h1.artitle-title,
-    .article-panel .article-main-contents .rte h2 {
-      padding: 0;
-      font-size: 24px;
-    }
-    .latest-news-panel p.ln-heading {
-      width: 100%;
-      margin: 0;
-    }
-    .latest-news-panel a.latest-news-item {
-      width: calc(50% - 5px);
-    }
-    .latest-news-panel a.latest-news-item .latest-news-image {
-      margin: 0;
-      height: 150px;
-    }
-    .latest-news-panel a.latest-news-item .latest-news-image img {
-      object-fit: cover;
-      height: 100%;
-      width: 100%;
-      object-position: top;
-    }
-  }
 </style>
 
 <script>
@@ -399,49 +384,54 @@
 </script>
 
 {% schema %}
-  {
+{
     "name": "Article",
     "settings": [
-      {
-        "type": "checkbox",
-        "id": "include_latest_news",
-        "label": "Include Latest News"
-      },
-      {
-        "type": "checkbox",
-        "id": "show_blog_url",
-        "label": "Show Blog URL"
-      },
-      {
-        "type": "checkbox",
-        "id": "show_table_contents",
-        "label": "Show Table of Contents"
-      },
-      {
-        "type": "checkbox",
-        "id": "show_social_facebook",
-        "label": "Show FaceBook Icon"
-      }, {
-        "type": "checkbox",
-        "id": "show_social_twitter",
-        "label": "Show Twitter Icon"
-      }, {
-        "type": "checkbox",
-        "id": "show_social_email",
-        "label": "Show FaceBook Icon"
-      }, {
-        "type": "checkbox",
-        "id": "show_social_Reddit",
-        "label": "Show Reddit Icon"
-      }, {
-        "type": "checkbox",
-        "id": "show_social_whatsapp",
-        "label": "Show Whatsapp Icon"
-      }, {
-        "type": "checkbox",
-        "id": "show_social_pinterest",
-        "label": "Show Pinterest Icon"
-      }
+        {
+            "type": "checkbox",
+            "id": "include_latest_news",
+            "label": "Include Latest News"
+        },
+        {
+            "type": "checkbox",
+            "id": "show_blog_url",
+            "label": "Show Blog URL"
+        },
+        {
+            "type": "checkbox",
+            "id": "show_table_contents",
+            "label": "Show Table of Contents"
+        },
+        {
+            "type": "checkbox",
+            "id": "show_social_facebook",
+            "label": "Show FaceBook Icon"
+        },
+        {
+            "type": "checkbox",
+            "id": "show_social_twitter",
+            "label": "Show Twitter Icon"
+        },
+        {
+            "type": "checkbox",
+            "id": "show_social_email",
+            "label": "Show FaceBook Icon"
+        },
+        {
+            "type": "checkbox",
+            "id": "show_social_Reddit",
+            "label": "Show Reddit Icon"
+        },
+        {
+            "type": "checkbox",
+            "id": "show_social_whatsapp",
+            "label": "Show Whatsapp Icon"
+        },
+        {
+            "type": "checkbox",
+            "id": "show_social_pinterest",
+            "label": "Show Pinterest Icon"
+        }
     ]
-  }
+}
 {% endschema %}

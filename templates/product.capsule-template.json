@@ -32,6 +32,15 @@
             "add_variant_disabled_text_color": "#222d1c"
           }
         },
+        "media_with_text_Pz8zzF": {
+          "type": "media_with_text",
+          "settings": {
+            "video": "shopify:\/\/files\/videos\/copy_69A79839-7CB7-415D-855B-B6B5DAC0F59F.MOV",
+            "subtitle": "Powered by nature, backed by science",
+            "title": "See our manufacturing process",
+            "description": "<p>Take a peek into our thoughtful manufacturing choices — we’re proud to share how we create our high-quality kratom products.<\/p>"
+          }
+        },
         "product_reason_jG7jFr": {
           "type": "product_reason",
           "settings": {
@@ -141,6 +150,7 @@
       },
       "block_order": [
         "abra_promotions_banner_gift_B7KzJt",
+        "media_with_text_Pz8zzF",
         "product_reason_jG7jFr",
         "product_compare_JMmCLA",
         "product_usage_H9mwMb",

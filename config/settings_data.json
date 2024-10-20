@@ -4,7 +4,7 @@
     "logo": "shopify:\/\/shop_images\/Super-Speciosa-1-600x437.png",
     "favicon": "shopify:\/\/shop_images\/cropped-602647_Favicon_120919.png",
     "klaviyo_api_key": "RrYBDX",
-    "klaviyo_list_id": "X8wDXe",
+    "klaviyo_list_id": "YrzAMw",
     "social_instagram": "https:\/\/www.instagram.com\/superspeciosa\/",
     "social_facebook": "https:\/\/www.facebook.com\/botanicalssuper",
     "social_pinterest": "#",
@@ -79,8 +79,8 @@
             "type": "promo_text_list",
             "settings": {
               "promo_text": "<p>VOLT Powder IS HERE ⚡1.74% MIT – <a href=\"https:\/\/superspeciosa.com\/products\/special-release-volt-kratom-powder\/\">GET IT WHILE IT LASTS!<\/a><\/p>",
-              "start_date": "10\/12\/2024",
-              "end_date": "10\/14\/2024"
+              "start_date": "10\/17\/2024",
+              "end_date": "10\/18\/2024"
             }
           },
           "promo_text_list_QYVXqf": {
@@ -94,7 +94,7 @@
           "promo_text_list_BQmdFP": {
             "type": "promo_text_list",
             "settings": {
-              "promo_text": "<p>GET 4, 250G BAGS FOR $99❗ <a href=\"https:\/\/superspeciosa.com\/collections\/kratom-powder\/\">USE CODE KILO99<\/a><\/p>",
+              "promo_text": "<p>GET 4, 250G BAGS FOR $99❗ <a href=\"https:\/\/superspeciosa.com\/collections\/kratom-powder\/\">USE CODE 99KILO<\/a><\/p>",
               "start_date": "10\/14\/2024",
               "end_date": "10\/15\/2024"
             }
@@ -114,6 +114,30 @@
               "start_date": "10\/18\/2024",
               "end_date": "10\/19\/2024"
             }
+          },
+          "promo_text_list_ehtqed": {
+            "type": "promo_text_list",
+            "settings": {
+              "promo_text": "<p>Free shipping on all orders $39+ 🚚 <a href=\"https:\/\/superspeciosa.com\/collections\/best-sellers\/\">USE CODE FREESHIP<\/a><\/p>",
+              "start_date": "10\/21\/2024",
+              "end_date": "10\/21\/2024"
+            }
+          },
+          "promo_text_list_W9TGRn": {
+            "type": "promo_text_list",
+            "settings": {
+              "promo_text": "<p>🫐 20% OFF KRATOM GUMMIES🍓 <a href=\"https:\/\/superspeciosa.com\/collections\/kratom-gummies\/\">USE CODE GUMMY20 🥭<\/a><\/p>",
+              "start_date": "10\/23\/2024",
+              "end_date": "10\/24\/2024"
+            }
+          },
+          "promo_text_list_rHTn6P": {
+            "type": "promo_text_list",
+            "settings": {
+              "promo_text": "<p>Free KRATOM on all orders $49+ 🎁 <a href=\"https:\/\/superspeciosa.com\/collections\/best-sellers\/\">USE CODE sample65<\/a><\/p>",
+              "start_date": "10\/25\/2024",
+              "end_date": "10\/26\/2024"
+            }
           }
         },
         "block_order": [
@@ -122,7 +146,10 @@
           "promo_text_list_QYVXqf",
           "promo_text_list_BQmdFP",
           "promo_text_list_fTqQzk",
-          "promo_text_list_NKEadq"
+          "promo_text_list_NKEadq",
+          "promo_text_list_ehtqed",
+          "promo_text_list_W9TGRn",
+          "promo_text_list_rHTn6P"
         ],
         "custom_css": [
 
